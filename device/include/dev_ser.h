@@ -45,12 +45,23 @@ typedef enum {
 #ifdef CPU_TMPM367FDFG
 #include "../ser/sysdepend/tx03_m367/ser_mode_m367.h"
 #endif		/* CPU_TMPM367FDFG */
+
 #ifdef CPU_RX231
 #include "../ser/sysdepend/rx231/ser_mode_rx231.h"
 #endif	/* CPU_RX231 */
+
 #ifdef CPU_STM32L4
 #include "../ser/sysdepend/stm32l4/ser_mode_stm32l4.h"
 #endif	/* CPU_STM32L4 */
+
+#ifdef CPU_STM32L4
+#include "../ser/sysdepend/stm32l4/ser_mode_stm32l4.h"
+#endif	/* CPU_STM32L4 */
+
+#ifdef CPU_STM32H7
+#include "../ser/sysdepend/stm32h7/ser_mode_stm32h7.h"
+#endif	/* CPU_STM32H7 */
+
 #ifdef CPU_RZA2M
 #include "../ser/sysdepend/rza2m/ser_mode_rza2m.h"
 #endif	/* CPU_RZA2M */

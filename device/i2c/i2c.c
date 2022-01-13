@@ -305,4 +305,35 @@ err_2:
 	return err;
 }
 
+EXPORT ER i2c_read_reg(ID dd, UW sadr, UW radr, UB *data)
+{
+	T_I2C_EXEC	exec;
+	SZ		asz;
+	ER		err;
+
+	exec.sadr	= sadr;
+	exec.snd_size	= 1;
+	exec.snd_data	= (UB*)&radr;
+	exec.rcv_size	= 1;
+	exec.rcv_data	= data;
+
+	err = tk_swri_dev(dd, TDN_I2C_EXEC, &exec, sizeof(T_I2C_EXEC), &asz);
+
+	return err;
+}
+
+EXPORT ER i2c_write_reg(ID dd, UW sadr, UW radr, UB data)
+{
+	UB	snd_data[2];
+	SZ	asz;
+	ER	err;
+
+	snd_data[0] = radr;
+	snd_data[1] = data;
+	
+	err = tk_swri_dev(dd, sadr, snd_data, sizeof(snd_data), &asz);
+
+	return err;
+}
+
 #endif		/* DEV_IIC_ENABLE */

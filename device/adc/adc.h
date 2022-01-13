@@ -36,6 +36,9 @@
 #ifdef CPU_STM32L4
 #include "sysdepend/stm32l4/adc_stm32l4.h"
 #endif	/* CPU_STM32L4 */
+#ifdef CPU_STM32H7
+#include "sysdepend/stm32h7/adc_stm32h7.h"
+#endif	/* CPU_STM32H7 */
 #ifdef CPU_RZA2M
 #include "sysdepend/rza2m/adc_rza2m.h"
 #endif	/* CPU_RZA2M */

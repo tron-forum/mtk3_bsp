@@ -39,12 +39,19 @@
 #ifdef CPU_TMPM367FDFG
 #include "sysdepend/tx03_m367/ser_cnf_m367.h"
 #endif		/* CPU_TMPM367FDFG */
+
 #ifdef CPU_RX231
 #include "sysdepend/rx231/ser_cnf_rx231.h"
 #endif		/* CPU_RX231 */
+
 #ifdef CPU_STM32L4
 #include "sysdepend/stm32l4/ser_cnf_stm32l4.h"
 #endif		/* CPU_STM32L4 */
+
+#ifdef CPU_STM32H7
+#include "sysdepend/stm32h7/ser_cnf_stm32h7.h"
+#endif		/* CPU_STM32H7 */
+
 #ifdef CPU_RZA2M
 #include "sysdepend/rza2m/ser_cnf_rza2m.h"
 #endif		/* CPU_RZA2M */

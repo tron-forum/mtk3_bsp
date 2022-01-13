@@ -116,7 +116,7 @@ EXPORT void knl_startup_hw(void)
 	const T_SETUP_REG	*p;
 
 	/* Startup clock : Use HSI clock, Use PLL, Flash latency 4 */
-	startup_clock(CLKATR_HSI | CLKATR_USE_PLL | CLKATR_LATENCY_4);
+//	startup_clock(CLKATR_HSI | CLKATR_USE_PLL | CLKATR_LATENCY_4);
 //	startup_clock(CLKATR_MSI);
 
 	/* Startup module clock */
