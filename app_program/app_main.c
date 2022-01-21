@@ -13,42 +13,52 @@ ID	tskid1;
 
 void task1(INT stacd, void *exinf)
 {
-	UB	buf[]	= {'T','E','S','T','\n','\r'};
+	ID	dd;
+	UW	data[2];
 	SZ	asz;
 	ER	err;
-	ID	dd;
 
-	err = dev_init_ser(1);
-	if(err < E_OK) tm_printf((UB*)"Init error %d\n", err);
+	err = dev_init_adc(0);
+	if(err < E_OK) {
+		tm_printf((UB*)"ADC init error%d(%x)\n", err, err);
+	} else {
+		tm_printf((UB*)"ADC-1 init OK\n");
+	}
 
-	dd = tk_opn_dev((UB*)"serb", TD_UPDATE);
-	if(dd < E_OK) tm_printf((UB*)"Open error %d\n", dd);
+	dd = tk_opn_dev((UB*)"adca", TD_UPDATE);
+	if(dd < E_OK) {
+		tm_printf((UB*)"ADC open error %d(%x)\n", dd, dd);
+	} else {
+		tm_printf((UB*)"ADC open OK\n");
+	}
 
-	err = tk_swri_dev(dd, 0, buf, sizeof(buf), NULL);
-	if(err < E_OK) tm_printf((UB*)"Write Eroor %d\n", err);
-
-	for(INT i = 0; i < 10; i++) {
-		for(INT j = 0; j <10; j++) {
-			buf[0] = '0' + j;
-			err = tk_swri_dev(dd, 0, buf, 1, NULL);
-			if(err < E_OK) tm_printf((UB*)"Write Error %d\n", err);
+	while(1) {
+#if 1
+		err = tk_srea_dev(dd, 5, data, 1, &asz);
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A0 %d(%x)  ", data[0], data[0]);
 		}
-		buf[0] = '\n';
-		tk_swri_dev(dd, 0, buf, 1, NULL);
+
+		err = tk_srea_dev(dd, 6, data, 1, &asz);
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A1 %d(%x)  ", data[0], data[0]);
+		}
+		tk_dly_tsk(500);
+#endif
+		err = tk_srea_dev(dd, 5, data, 2, &asz);
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A0 %d(%x)  A1 %d(%x)", data[0], data[0], data[1], data[1]);
+		}
+		tm_putchar('\n');
+
+		tk_dly_tsk(500);
 	}
-
-	for(INT i = 0; i < 10; i++) {
-		err = tk_srea_dev(dd, 0, buf, 1, &asz);
-		if(err < E_OK) tm_printf((UB*)"Read error %d\n", dd);
-		tk_swri_dev(dd, 0, buf, 1, NULL);
-	}
-
-	tk_dly_tsk(1);
-	err = tk_cls_dev(dd, 0);
-	if(dd < E_OK) tm_printf((UB*)"Close error %d\n", dd);
-
-	tk_dly_tsk(500);
-	tm_printf((UB*)"\nEnd task\n");
 	tk_ext_tsk();
 }
 

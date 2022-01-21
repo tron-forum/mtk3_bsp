@@ -1,12 +1,12 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00.03
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.00
  *
- *    Copyright (C) 2021 by Ken Sakamura.
+ *    Copyright (C) 2021-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -15,7 +15,7 @@
 /*
  *	adc_cnf_stm32l4.h 
  *	A/D converter device driver configuration file
- *		for TX03_M367 (STM32L4)
+ *		for STM32L4
  */
 #ifndef	__DEV_ADC_CNF_STM32L4_H__
 #define	__DEV_ADC_CNF_STM32L4_H__
@@ -23,8 +23,8 @@
 /* Device initialization */
 #define DEVCONF_ADC_INIT_MCLK	TRUE		// Initialize module clock
 
-/* ADC Clock (RCC) */
-#define	DEVCNF_ADCSEL		1		// ADC clock source
+/* ADC clock source (RCC) */
+#define	DEVCNF_ADCSEL		1		// 1:PLLADC1CLK  2:PLLADC2CLK 3:System Clock
 
 /* Device control data */
 /* Common */
