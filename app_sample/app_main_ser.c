@@ -2,6 +2,13 @@
 #include <tm/tmonitor.h>
 #include <tk/device.h>
 
+/* Device Name */
+#ifdef NUCLEO_L476
+#define	DEV_SER_NAME	"serb"
+#elif NUCLEO_H723
+#define	DEV_SER_NAME	"serc"
+#endif
+
 LOCAL void task1(INT, void*);
 T_CTSK	ctsk1 = {
 	.tskatr		= TA_HLNG | TA_RNG3,
@@ -18,10 +25,7 @@ void task1(INT stacd, void *exinf)
 	ER	err;
 	ID	dd;
 
-	err = dev_init_ser(1);
-	if(err < E_OK) tm_printf((UB*)"Init error %d\n", err);
-
-	dd = tk_opn_dev((UB*)"serb", TD_UPDATE);
+	dd = tk_opn_dev((UB*)DEV_SER_NAME, TD_UPDATE);
 	if(dd < E_OK) tm_printf((UB*)"Open error %d\n", dd);
 
 	err = tk_swri_dev(dd, 0, buf, sizeof(buf), NULL);

@@ -2,12 +2,6 @@
 #include <tm/tmonitor.h>
 #include <tk/device.h>
 
-#include "gesture.h"
-
-#define	I2C_SADR			(0x73)
-#define	PAJ7620_REGITER_BANK_SEL	(0xEF)
-#define	PAJ7620_ADDR_GES_PS_DET_FLAG_0	(0x43)
-
 LOCAL void task1(INT, void*);
 T_CTSK	ctsk1 = {
 	.tskatr		= TA_HLNG | TA_RNG3,
@@ -17,40 +11,58 @@ T_CTSK	ctsk1 = {
 };
 ID	tskid1;
 
+void ptmrhdr(void *exinf)
+{
+	static UW	si = 0;
+
+	if( (++si) % 100 == 0) {
+		tk_wup_tsk(tskid1);
+	}
+}
+
 void task1(INT stacd, void *exinf)
 {
-	UW	val;
+	T_DPTMR	dptmr;
+	SYSTIM	systim;
+	UW	old;
+	ER	ercd;
 
-	tm_printf((UB*)"Start Task1\n");
-
-	gesture_sensor_init(0);
-
-	while(1) {
-		gesture_sensor_get(&val);
-
-		if(val & GES_RIGHT_FLAG ) {
-			tm_printf((UB*)"Right\n");
-		} else if(val & GES_LEFT_FLAG) {
-			tm_printf((UB*)"Left\n");
-		} else if(val & GES_UP_FLAG) {
-			tm_printf((UB*)"Up\n");
-		} else if(val & GES_DOWN_FLAG) {
-			tm_printf((UB*)"Down\n");
-		}
-
-		if(val & GES_FORWARD_FLAG) {
-			tm_printf((UB*)"Forward\n");
-		} else if(val & GES_BACKWARD_FLAG) {
-			tm_printf((UB*)"Balckward\n");
-		}
-		if(val & GES_CLOCKWISE_FLAG) {
-			tm_printf((UB*)"Clockwise\n");
-		} else if(val & GES_COUNT_CLOCKWISE_FLAG) {
-			tm_printf((UB*)"Anti-Cockwise\n");
-		}
-
-		tk_dly_tsk(500);
+	tm_printf((UB*)"*** System Timer\n");
+	tk_get_tim(&systim);
+	old = systim.lo;
+	for( INT i= 0; i <10; i++) {
+		tk_dly_tsk(100);
+		tk_get_tim(&systim);
+		tm_printf((UB*)"%u\n", systim.lo - old);
+		old = systim.lo;
 	}
+
+	tm_printf((UB*)"*** Physical Timer\n");
+	for(INT tno = 1; tno <= TK_MAX_PTIMER + 1; tno++) {
+		tm_printf((UB*)"\nStart ptim-%d\n", tno);
+
+		dptmr.ptmratr = TA_HLNG;
+		dptmr.ptmrhdr = ptmrhdr;
+		DefinePhysicalTimerHandler(tno, &dptmr);
+
+		ercd = StartPhysicalTimer( tno, 10000, TA_CYC_PTMR);
+		if(ercd != E_OK) {
+			tm_printf((UB*)"Err %d\n", ercd);
+			continue;
+		}
+
+		tk_get_tim(&systim);
+		old = systim.lo;
+		for(INT i = 0; i < 10; i++) {
+			tk_slp_tsk(TMO_FEVR);
+			tk_get_tim(&systim);
+			tm_printf((UB*)"%u\n", systim.lo - old);
+			old = systim.lo;
+		}
+		StopPhysicalTimer(tno);
+		DefinePhysicalTimerHandler(tno, 0);
+	}
+
 	tk_ext_tsk();
 }
 
