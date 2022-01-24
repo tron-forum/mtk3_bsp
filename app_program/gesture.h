@@ -6,7 +6,7 @@
  *----------------------------------------------------------------------
  */
 
-IMPORT ER gesture_sensor_init(INT i2c_ch);
+IMPORT	ER gesture_sensor_init(INT i2c_ch);
 IMPORT	ER gesture_sensor_start(void);
 IMPORT	ER gesture_sensor_stop(void);
 IMPORT	ER gesture_sensor_get(UW *val);
