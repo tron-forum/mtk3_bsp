@@ -146,7 +146,7 @@ EXPORT void knl_startup_hw(void)
 	}
 
 	/* Startup clock */
-	startup_clock();
+	startup_clock(CLKATR_HSE | CLKATR_HSEBYP | CLKATR_PLL1 | CLKATR_PLL2);
 
 	/* Setup Pin Function */
 	for(p = pinfnc_tbl; p->addr != 0; p++) {

@@ -24,7 +24,7 @@
 #define DEVCONF_I2C_INIT_MCLK	TRUE	// Initialize module clock
 
 /* ADC Clock (I2C) */
-#define	DEVCNF_I2CSEL		0	// I2C clock source  0: PCLK1
+#define	DEVCNF_I2CSEL		0	// I2C clock source  0 = PCLK1
 
 /* Register initial value */
 #define	I2C_TIMINGR_INIT	0x60404E72	// Standard mode, 100KHz

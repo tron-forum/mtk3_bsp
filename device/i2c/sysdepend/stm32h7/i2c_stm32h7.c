@@ -312,11 +312,18 @@ EXPORT ER dev_i2c_llinit( T_I2C_DCB *p_dcb)
 	unit = p_dcb->unit;
 
 #if DEVCONF_I2C_INIT_MCLK
-	if(unit != DEV_I2C_4) {		// I2C 1,2,3,5
+	if(unit != DEV_I2C_4) {	// I2C 1,2,3,5
+		/* Select clock source */
 		out_w(RCC_D2CCIP2R, (in_w(RCC_D2CCIP2R) & ~RCC_D2CCIP2R_I2C1235SEL) |(DEVCNF_I2CSEL << 12));
+		
+		/* Enable module clock */
 		*(_UW*)RCC_APB1LENR |= (RCC_APB1LENR_I2C1EN<<unit);
-	} else {			// I2C4
+		
+	} else {		// I2C4
+		/* Select clock source */
 		out_w(RCC_D3CCIPR, (in_w(RCC_D3CCIPR) & ~RCC_D3CCIPR_I2C4SEL) |(DEVCNF_I2CSEL << 8));
+
+		/* Enable module clock */
 		*(_UW*)RCC_APB4ENR |= RCC_APB4ENR_I2C4EN;
 	}
 #endif

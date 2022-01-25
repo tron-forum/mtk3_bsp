@@ -1,12 +1,12 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00.05
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.00
  *
- *    Copyright (C) 2020-2021 by Ken Sakamura.
+ *    Copyright (C) 2020-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -79,9 +79,10 @@ typedef struct {
 	TMO	snd_tmo;	/* Send timeout */
 	TMO	rcv_tmo;	/* Receive timeout */
 
-	/* Intrrupt number */
-	UINT	intno_rcv;
-	UINT	intno_snd;
+	/* Intrrupt */
+	UINT	intno_rcv;	/* Receive interrupt number */
+	UINT	intno_snd;	/* Send interrupt number */
+	UINT	int_pri;	/* Interrupt priority */
 
 	/* Communication data buffer */
 	T_SER_BUFF	snd_buff;

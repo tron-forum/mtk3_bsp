@@ -245,21 +245,53 @@
 #define	RCC_PLLCKSELR_PLLSRC	0x00000003	// DIVMx and PLLs clock source
 
 /* RCC_CFGR bit definition */
-#define	RCC_CFGR_SW		0x00000003	// System clock switch
+#define	RCC_CFGR_SWS		0x00000038	// System clock switch status
+#define	RCC_CFGR_SW		0x00000007	// System clock switch
 
 /* RCC_PLLCFGR bit definition */
-#define RCC_PLLCFGR_PLL1FRACEN	0x00000001	// PLL1 fractional latch enable
-#define RCC_PLLCFGR_PLL2FRACEN	0x00000010	// PLL2 fractional latch enable
+#define	RCC_PLLCFGR_DIVR3EN	0x01000000	// PLL3 DIVR divider output enable
+#define	RCC_PLLCFGR_DIVQ3EN	0x00800000	// PLL3 DIVQ divider output enable
+#define	RCC_PLLCFGR_DIVP3EN	0x00400000	// PLL3 DIVP divider output enable
+#define	RCC_PLLCFGR_DIVR2EN	0x00200000	// PLL2 DIVR divider output enable
+#define	RCC_PLLCFGR_DIVQ2EN	0x00100000	// PLL2 DIVQ divider output enable
+#define	RCC_PLLCFGR_DIVP2EN	0x00080000	// PLL2 DIVP divider output enable
+#define	RCC_PLLCFGR_DIVR1EN	0x00040000	// PLL1 DIVR divider output enable
+#define	RCC_PLLCFGR_DIVQ1EN	0x00020000	// PLL1 DIVQ divider output enable
+#define	RCC_PLLCFGR_DIVP1EN	0x00010000	// PLL1 DIVP divider output enable
+#define RCC_PLLCFGR_PLL3RGE	0x00000C00	// PLL3 input frequency range
+#define RCC_PLLCFGR_PLL3VCOSEL	0x00000200	// PLL3 VCO selection
+#define RCC_PLLCFGR_PLL3FRACEN	0x00000100	// PLL3 fractional latch enable
 #define RCC_PLLCFGR_PLL2RGE	0x000000C0	// PLL2 input frequency range
 #define RCC_PLLCFGR_PLL2VCOSEL	0x00000020	// PLL2 VCO selection
-#define	RCC_PLLCFGR_DIVP2EN	0x00080000	// PLL2 DIVP divider output enable
+#define RCC_PLLCFGR_PLL2FRACEN	0x00000010	// PLL2 fractional latch enable
+#define RCC_PLLCFGR_PLL1RGE	0x0000000C	// PLL1 input frequency range
+#define RCC_PLLCFGR_PLL1VCOSEL	0x00000002	// PLL1 VCO selection
+#define RCC_PLLCFGR_PLL1FRACEN	0x00000001	// PLL1 fractional latch enable
 
 /* RCC_PLL2FRACR bit definition */
 #define RCC_PLL2FRACR_FRACN2	0x0000FFF8	// Fractional part of the multiplication factor for PLL2 VCO
 
+/* RCC_D2CCIP2R bit definition */
+#define	RCC_D2CCIP2R_USARTxSEL	0x0000003F	// USARTx/UARTx clock select
+#define RCC_D2CCIP2R_I2C1235SEL	0x00003000	// I2C1/2/3/5 clock select
+
+/* RCC_D3CCIPR bit definition */
+#define RCC_D3CCIPR_ADCSEL	0x00030000	// ADC clock select
+#define RCC_D3CCIPR_I2C4SEL	0x00000300	// I2C4 clock select
+
+/* RCC_AHB1ENR bit definition */
+#define	RCC_AHB1ENR_ADC12EN	0x00000020	// ADC1/2 clock enable
+
+/* RCC_AHB4ENR bit definition */
+#define	RCC_AHB4ENR_ADC3EN	0x01000000	// ADC3 clock enable
+
 /* RCC_APB1LENR bit definition */
 #define RCC_APB1LENR_UART8EN	0x80000000	// UART8 clock enable
 #define RCC_APB1LENR_UART7EN	0x40000000	// UART7 clock enable
+#define	RCC_APB1LENR_I2C5EN	0x02000000	// I2C5 clock enable
+#define	RCC_APB1LENR_I2C3EN	0x00800000	// I2C3 clock enable
+#define	RCC_APB1LENR_I2C2EN	0x00400000	// I2C2 clock enable
+#define	RCC_APB1LENR_I2C1EN	0x00200000	// I2C1 clock enable
 #define RCC_APB1LENR_UART5EN	0x00100000	// UART5 clock enable
 #define RCC_APB1LENR_UART4EN	0x00080000	// UART4 clock enable
 #define RCC_APB1LENR_USART3EN	0x00040000	// USART3 clock enable
@@ -270,6 +302,9 @@
 #define RCC_APB2ENR_UART9EN	0x00000040	// UART9 clock enable
 #define RCC_APB2ENR_USART6EN	0x00000020	// USART6 clock enable
 #define RCC_APB2ENR_USART1EN	0x00000010	// USART1 clock enable
+
+/* RCC_APB4ENR bit definition */
+#define	RCC_APB4ENR_I2C4EN	0x00000080	// I2C4 clock enable
 
 /* ------------------------------------------------------------------------ */
 /*

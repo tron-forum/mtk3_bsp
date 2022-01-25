@@ -1,12 +1,12 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.03.B0
+ *    micro T-Kernel 3.00.06.B0
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2006-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/01.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -17,10 +17,20 @@
 /*
  *	hw_setting.c (Nucleo-64 STM32L476)
  *	startup / shoutdown processing for hardware
- *		PA5  : GPIO Out(LED)
- *		PC13 : GPIO In(Push Button)
+ *	
+ *	Pin function Setting
  *		PA2  : USART2 TX
  *		PA3  : USART2 RX
+ *		PA5  : GPIO Out(LED)
+ *		PC13 : GPIO In(Push Button)
+ *
+ *		(USE_SDEV_DRV)	
+ *		PA0  : A/DC12 IN5
+ *		PA1  : A/DC12 IN6
+ *		PA4  : A/DC12 IN9
+ *		PB0  : A/DC12 IN15
+ *		PB8  : I2C1 DCL
+ *		PB9  : I2C1 SDA
  */
 
 #include <kernel.h>
@@ -78,16 +88,16 @@ LOCAL const T_SETUP_REG pinfnc_tbl[] = {
 #else			// Use the device sample driver
 
 	// Serial debug I/F : PA2 -> USART2_TX, PA3 -> USART2_RX
-	// GPIOA out : PA5, PA8, PA9
+	// GPIOA out : PA5
 	// A/DC in : PA0, PA1, PA4
-	{GPIO_MODER(A),		0xABF5F7AF},	// GPIOA mode
+	{GPIO_MODER(A),		0xABFFF7AF},	// GPIOA mode
 	{GPIO_OTYPER(A),	0x00000000},	// GPIOA output type
 	{GPIO_OSPEEDR(A),	0x0C000050},	// GPIOA output speed
 	{GPIO_PUPDR(A),		0x64000050},	// GPIOA Pull-up/down
 	{GPIO_AFRL(A),		0x00007700},	// GPIOA Alternate function
 	{GPIO_ASCR(A),		0x00000013},	// GPIOA Analog switch control
 
-	// I2C : PB8 DCL, PB9 SDA
+	// I2C1 : PB8 DCL, PB9 SDA
 	// A/DC in : PB0
 	{GPIO_MODER(B),		0xFFFAFFBF},	// GPIOB mode
 	{GPIO_OTYPER(B),	0x00000300},	// GPIOB output type
@@ -116,8 +126,7 @@ EXPORT void knl_startup_hw(void)
 	const T_SETUP_REG	*p;
 
 	/* Startup clock : Use HSI clock, Use PLL, Flash latency 4 */
-//	startup_clock(CLKATR_HSI | CLKATR_USE_PLL | CLKATR_LATENCY_4);
-//	startup_clock(CLKATR_MSI);
+	startup_clock(CLKATR_HSI | CLKATR_USE_PLL | CLKATR_LATENCY_4);
 
 	/* Startup module clock */
 	for(p = modclk_tbl; p->addr != 0; p++) {

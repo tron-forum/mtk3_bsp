@@ -1,12 +1,12 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.03
+ *    micro T-Kernel 3.00.06.B0
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2006-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -31,7 +31,7 @@ EXPORT void startup_clock(ATR clkatr)
 	UW	clk_sw, pll_src;
 	UW	f_ratency;
 
-	/* Select clock */
+	/* Enable clock source */
 	/* Use HSI clock */
 	if( clkatr & CLKATR_HSI ) {
 		*(_UW*)RCC_CR |= RCC_CR_HSION;			// HSI enable
@@ -51,7 +51,7 @@ EXPORT void startup_clock(ATR clkatr)
 		clk_sw = RCC_CFGR_SW_MSI;
 	}
 
-	/* PLL  Configuration */
+	/* PLL Configuration */
 	if(clkatr & CLKATR_USE_PLL) {
 		pll_src = clk_sw + 1;
 		clk_sw = RCC_CFGR_SW_PLL;
@@ -91,7 +91,7 @@ EXPORT void startup_clock(ATR clkatr)
 	*(_UW*)FLASH_ACR = (*(_UW*)FLASH_ACR & ~FLASH_ACR_LATENCY_MASK)| FLASH_ACR_LATENCY(f_ratency);
 	while( (*(_UW*)FLASH_ACR & FLASH_ACR_LATENCY_MASK) != FLASH_ACR_LATENCY(f_ratency) );
 
-	/* Set CFGR register */
+	/* Clock setting */
 	out_w(RCC_CFGR, (RCC_CFGR_INIT & ~RCC_CFGR_SW) | clk_sw);
 	while((*(_UW*)RCC_CFGR & RCC_CFGR_SW) != clk_sw);
 
