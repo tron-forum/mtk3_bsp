@@ -216,7 +216,11 @@ EXPORT ER dev_ser_llinit( T_SER_DCB *p_dcb)
 
 	unit = p_dcb->unit;
 
-#if DEVCONF_SER_INIT_MCLK
+#if DEVCNF_SER_INIT_MCLK
+	/* Select clock source */
+	out_w(RCC_CCIPR, (in_w(RCC_CCIPR) & ~RCC_CCIPR_USARTxSEL) | DEVCNF_USARTxSEL_INIT );
+
+	/* Enable module clock */
 	switch(unit) {
 	case 0:	// USART1
 		*(_UW*)RCC_APB2ENR |= RCC_APB2ENR_USART1EN;

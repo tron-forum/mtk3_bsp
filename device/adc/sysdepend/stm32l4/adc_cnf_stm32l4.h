@@ -20,16 +20,14 @@
 #ifndef	__DEV_ADC_CNF_STM32L4_H__
 #define	__DEV_ADC_CNF_STM32L4_H__
 
-/* Device initialization */
-#define DEVCONF_ADC_INIT_MCLK	TRUE		// Initialize module clock
-
-/* ADC clock source (RCC) */
-#define	DEVCNF_ADCSEL		1		// 1:PLLADC1CLK  2:PLLADC2CLK 3:System Clock
+/* Device clock initialization */
+#define DEVCONF_ADC_INIT_MCLK	TRUE	// Initialize module clock
+#define	DEVCNF_ADCSEL		1	// ADC clock source   1:PLLADC1CLK  2:PLLADC2CLK  3:SYSCLK
 
 /* Device control data */
 /* Common */
-#define	DEVCNF_ADC_CKMODE	0		// ADC clock mode
-#define	DEVCNF_ADC_PRESC	0		// ADC prescaler
+#define	DEVCNF_ADC_CKMODE	0	// ADC clock mode  0:Asynchronous clock mode
+#define	DEVCNF_ADC_PRESC	0	// ADC prescaler  0:Do not divide
 
 /* ADC1 */
 #define	DEVCONF_ADC1_SMPR1	0x00000000	// Sampling time (ADC_SMPR1 initial value)

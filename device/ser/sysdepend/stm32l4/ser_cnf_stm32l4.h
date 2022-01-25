@@ -20,12 +20,11 @@
 #ifndef	__DEV_SER_CNF_STM32L4_H__
 #define	__DEV_SER_CNF_STM32L4_H__
 
-/* Device initialization */
-#define DEVCONF_SER_INIT_MCLK	TRUE		// Initialize module clock
+/* Device clock initialization */
+#define DEVCNF_SER_INIT_MCLK		TRUE		// Initialize module clock
+#define DEVCNF_USARTxSEL_INIT		0x00000000	// All UART clocks are PCLK (bit 0-9)
 
-/* Device control data */
-//#define	DEVCNF_SER_INTPRI	5		// Interrupt priority
-
+/* Interrupt priority */
 #define	DEVCNF_USART1_INTPRI	5
 #define	DEVCNF_USART2_INTPRI	5
 #define	DEVCNF_USART3_INTPRI	5

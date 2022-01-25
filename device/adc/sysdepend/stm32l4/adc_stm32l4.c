@@ -200,8 +200,6 @@ EXPORT W dev_adc_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
  */
 EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
 {
-	static BOOL	uninit	= TRUE;		// Uninitialized flag
-
 	const T_DINT	dint = {
 		.intatr	= TA_HLNG,
 		.inthdr	= adc_inthdr
@@ -212,43 +210,32 @@ EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
 	unit = p_dcb->unit;
 
 #if DEVCONF_ADC_INIT_MCLK
-	/* Initializes the peripherals clock */
-
-	UW	ccipr;
-
-	if(uninit) {
-		switch(DEVCNF_ADCSEL) {	// ADC clock source
-		case 1:
-			*(_UW*)RCC_CR |= RCC_CR_PLLSAI1ON;	// PLLSA1 enable
-			*(_UW*)RCC_PLLSAI1CFGR |= 1<<24;	// PLLADC1CLK enable
-			break;
-		case 2:
-			*(_UW*)RCC_CR |= RCC_CR_PLLSAI2ON;	// PLLSA2 enable
-			*(_UW*)RCC_PLLSAI2CFGR |= 1<<24;	// PLLADC2CLK enable
-			break;
-		default:
-			if(DEVCNF_ADCSEL > 3) return E_IO;	// 3: System clock
-		}
-		ccipr = in_w(RCC_CCIPR) & ~RCC_CCIPR_ADCSEL;
-		out_w(RCC_CCIPR, ccipr | (DEVCNF_ADCSEL << 28));
-
+	/* Select clock source */
+	switch(DEVCNF_ADCSEL) {
+	case 1:		/* PLLADC1CLK */
+		*(_UW*)RCC_PLLSAI1CFGR |= 1<<24;	// PLLADC1CLK enable
+		break;
+	case 2:		/* PLLADC3CLK */
+		*(_UW*)RCC_PLLSAI2CFGR |= 1<<24;	// PLLADC2CLK enable
+		break;
+	default:	/* 3: System clock, > 3 Error */
+		if(DEVCNF_ADCSEL > 3) return E_IO;
 	}
+	out_w(RCC_CCIPR, (in_w(RCC_CCIPR) & ~RCC_CCIPR_ADCSEL) | (DEVCNF_ADCSEL << 28));
+
+	/* Enable module clock */
+	*(_UW*)RCC_AHB2ENR |= RCC_AHB2ENR_ADCEN;	// ADC enable
 #endif
-	if(uninit) {
-		*(_UW*)RCC_AHB2ENR |= RCC_AHB2ENR_ADCEN;	// ADC enable
-	}
 
 	/* ADC Power-On */
-	out_w(ADC_CR(unit), 0);					// DEEPPWD = 0 
-	out_w(ADC_CR(unit), ADC_CR_ADVREGEN);			// ADVREGEN = 1
+	out_w(ADC_CR(unit), 0);				// DEEPPWD = 0 
+	out_w(ADC_CR(unit), ADC_CR_ADVREGEN);		// ADVREGEN = 1
 
 	/* Common ADC settings */
-	if(uninit) {
-		out_w(ADC_CCR, 
-			((DEVCNF_ADC_CKMODE & 0x03)<< 16)	// ADC clock mode
-			|((DEVCNF_ADC_PRESC & 0x0F)<< 18)	// ADC prescaler
-		);
-	}
+	out_w(ADC_CCR, 
+		((DEVCNF_ADC_CKMODE & 0x03)<< 16)	// ADC clock mode
+		|((DEVCNF_ADC_PRESC & 0x0F)<< 18)	// ADC prescaler
+	);
 
 	/* ADC calibration */
 	out_w(ADC_CR(unit), ADC_CR_ADVREGEN | ADC_CR_ADCAL);	// ADCAL = 1
@@ -257,7 +244,6 @@ EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
 	/* Interrupt handler definition */
 	err = tk_def_int((unit == DEV_ADC_3)?INTNO_INTADC3:INTNO_INTADC1_2, &dint);
 
-	uninit = FALSE;
 	return err;
 }
 

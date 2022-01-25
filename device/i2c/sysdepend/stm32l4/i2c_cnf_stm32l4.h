@@ -20,11 +20,9 @@
 #ifndef	__DEV_I2C_CNF_STM32L4_H__
 #define	__DEV_I2C_CNF_STM32L4_H__
 
-/* Device initialization */
-#define DEVCONF_I2C_INIT_MCLK	TRUE		// Initialize module clock
-
-/* I2C clock setting */
-#define	DEVCNF_I2CSEL		0		// I2C clock source  0: PCLK
+/* Device clock initialization */
+#define DEVCNF_I2C_INIT_MCLK		TRUE		// Initialize module clock
+#define	DEVCNF_I2CxSEL_INIT		0x00000000	// All I2C clocks are PCLK (bit 12-17)
 
 /* Register initial value */
 #define	I2C_TIMINGR_INIT		0x10909CEC	// Standard mode, 100KHz

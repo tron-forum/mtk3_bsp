@@ -301,11 +301,14 @@ EXPORT ER dev_i2c_llinit( T_I2C_DCB *p_dcb)
 
 	unit = p_dcb->unit;
 
-#if DEVCONF_I2C_INIT_MCLK
-	out_w(RCC_CCIPR, (in_w(RCC_CCIPR) & ~(RCC_CCIPR_I2CSEL << (unit<<1)))
-						|(DEVCNF_I2CSEL << (12 + (unit<<1))));
+#if DEVCNF_I2C_INIT_MCLK
+	/* Select clock source */
+	out_w(RCC_CCIPR, (in_w(RCC_CCIPR) & ~RCC_CCIPR_I2CxSEL) | DEVCNF_I2CxSEL_INIT );
+
+	/* Enable module clock */
 	*(_UW*)RCC_APB1ENR1 |= (RCC_APB1ENR1_I2C1EN << unit);
 #endif
+
 	out_w(I2C_CR1(unit), 0);				// I2C disable
 	out_w(I2C_TIMINGR(unit), I2C_TIMINGR_INIT);		// I2C Initial setting
 

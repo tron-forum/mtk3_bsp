@@ -11,58 +11,103 @@ T_CTSK	ctsk1 = {
 };
 ID	tskid1;
 
-void ptmrhdr(void *exinf)
-{
-	static UW	si = 0;
-
-	if( (++si) % 100 == 0) {
-		tk_wup_tsk(tskid1);
-	}
-}
-
 void task1(INT stacd, void *exinf)
 {
-	T_DPTMR	dptmr;
-	SYSTIM	systim;
-	UW	old;
-	ER	ercd;
+	UW	data[2];
+	SZ	asz;
+	ER	err;
 
-	tm_printf((UB*)"*** System Timer\n");
-	tk_get_tim(&systim);
-	old = systim.lo;
-	for( INT i= 0; i <10; i++) {
-		tk_dly_tsk(100);
-		tk_get_tim(&systim);
-		tm_printf((UB*)"%u\n", systim.lo - old);
-		old = systim.lo;
+#ifdef NUCLEO_L476
+	ID	dd;
+
+	dd = tk_opn_dev((UB*)"adca", TD_UPDATE);
+	if(dd < E_OK) {
+		tm_printf((UB*)"ADC open error %d(%x)\n", dd, dd);
+	} else {
+		tm_printf((UB*)"ADC open OK\n");
 	}
 
-	tm_printf((UB*)"*** Physical Timer\n");
-	for(INT tno = 1; tno <= TK_MAX_PTIMER + 1; tno++) {
-		tm_printf((UB*)"\nStart ptim-%d\n", tno);
-
-		dptmr.ptmratr = TA_HLNG;
-		dptmr.ptmrhdr = ptmrhdr;
-		DefinePhysicalTimerHandler(tno, &dptmr);
-
-		ercd = StartPhysicalTimer( tno, 10000, TA_CYC_PTMR);
-		if(ercd != E_OK) {
-			tm_printf((UB*)"Err %d\n", ercd);
-			continue;
+	while(1) {
+		err = tk_srea_dev(dd, 5, data, 1, &asz);
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A0 %d(%x)  ", data[0], data[0]);
 		}
 
-		tk_get_tim(&systim);
-		old = systim.lo;
-		for(INT i = 0; i < 10; i++) {
-			tk_slp_tsk(TMO_FEVR);
-			tk_get_tim(&systim);
-			tm_printf((UB*)"%u\n", systim.lo - old);
-			old = systim.lo;
+		err = tk_srea_dev(dd, 6, data, 1, &asz);
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A1 %d(%x)  ", data[0], data[0]);
 		}
-		StopPhysicalTimer(tno);
-		DefinePhysicalTimerHandler(tno, 0);
+		tk_dly_tsk(500);
+
+		err = tk_srea_dev(dd, 5, data, 2, &asz);
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A0 %d(%x)  A1 %d(%x)", data[0], data[0], data[1], data[1]);
+		}
+		tm_putchar('\n');
+
+		tk_dly_tsk(500);
+	}
+#elif NUCLEO_H723
+	ID	dd2, dd3;
+
+	err = dev_init_adc(2);
+	if(err < E_OK) {
+		tm_printf((UB*)"ADC init error%d(%x)\n", err, err);
+	} else {
+		tm_printf((UB*)"ADC-3 init OK\n");
 	}
 
+	dd2 = tk_opn_dev((UB*)"adca", TD_UPDATE);
+	if(dd2 < E_OK) {
+		tm_printf((UB*)"ADC open error %d(%x)\n", dd2, dd2);
+	} else {
+		tm_printf((UB*)"ADC open OK\n");
+	}
+	dd3 = tk_opn_dev((UB*)"adcc", TD_UPDATE);
+	if(dd3 < E_OK) {
+		tm_printf((UB*)"ADC open error %d(%x)\n", dd3, dd3);
+	} else {
+		tm_printf((UB*)"ADC open OK\n");
+	}
+
+	while(1) {
+		err = tk_srea_dev(dd2, 15, &data, 1, &asz);	// A0:  PA3  ADC12_INP15
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A0 %d(%x)  ", data, data);
+		}
+
+		err = tk_srea_dev(dd2, 10, &data, 1, &asz);	// A1:  PC0  ADC123_INP10
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A1 %d(%x)  ", data, data);
+		}
+
+		err = tk_srea_dev(dd3, 1, &data, 1, &asz);	// A2:  PC3  ADC3_INP1
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A2 %d(%x)  ", data, data);
+		}
+
+		err = tk_srea_dev(dd2, 5, &data, 1, &asz);	// A3:  PB1  ADC12_INP5
+		if(err < E_OK) {
+			tm_printf((UB*)"read error %d(%x)\n", err, err);
+		} else {
+			tm_printf((UB*)"A3 %d(%x)\n", data, data);
+		}
+		tk_dly_tsk(1000);
+	}
+
+#endif
 	tk_ext_tsk();
 }
 

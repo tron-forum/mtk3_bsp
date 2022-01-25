@@ -1,6 +1,6 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.05
+ *    micro T-Kernel 3.00.06.B0
  *
  *    Copyright (C) 2006-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -127,7 +127,6 @@ EXPORT void knl_startup_hw(void)
 
 	/* Startup clock : Use HSI clock, Use PLL, Flash latency 4 */
 	startup_clock(CLKATR_HSI | CLKATR_USE_PLL | CLKATR_LATENCY_4);
-//	startup_clock(CLKATR_MSI);
 
 	/* Startup module clock */
 	for(p = modclk_tbl; p->addr != 0; p++) {
