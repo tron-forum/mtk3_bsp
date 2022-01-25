@@ -1,12 +1,12 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.03
+ *    micro T-Kernel 3.00.06.B0
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2006-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -316,6 +316,18 @@
 #define	RCC_AHB2ENR_GPIOHEN	0x00000080	// GPIOH clock enable
 #define	RCC_AHB2ENR_GPIOIEN	0x00000100	// GPIOI clock enable
 #define	RCC_AHB2ENR_ADCEN	0x00002000	// ADC clock enable
+
+/* RCC_CCIPR bit definition */
+#define	RCC_CCIPR_USARTxSEL	0x000003FF	// USART clock select
+#define	RCC_CCIPR_LPUART1SEL	0x00000C00	// LPUART1 clock select
+#define	RCC_CCIPR_I2CxSEL	0x0003F000	// I2Cx clock select
+#define	RCC_CCIPR_LPTIMxSEL	0x003C0000	// LPTIMx clock select
+#define	RCC_CCIPR_SAIxSEL	0x03C00000	// SAIx clock select
+#define	RCC_CCIPR_CLK48SEL	0x0C000000	// CLK48 clock select
+#define	RCC_CCIPR_ADCSEL	0x30000000	// ADC clock select
+#define	RCC_CCIPR_SWPMI1SEL	0x40000000	// SWPMI1 clock select
+#define	RCC_CCIPR_DFSDM1SEL	0x80000000	// DFSDM1 clock select
+
 
 /* ------------------------------------------------------------------------ */
 /*
