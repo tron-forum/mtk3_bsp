@@ -51,11 +51,11 @@ LOCAL struct {
 	ID	wait_tskid;
 	UW	cfgr, cfgr2;
 	UW	smpr1, smpr2;
+	UW	*buf;
 } ll_devcb[DEV_ADC_UNITNM] = {
-
-	{0, DEVCNF_ADC1_CFGR, DEVCNF_ADC1_CFGR2, DEVCNF_ADC1_SMPR1, DEVCNF_ADC1_SMPR2},
-	{0, DEVCNF_ADC2_CFGR, DEVCNF_ADC2_CFGR2, DEVCNF_ADC2_SMPR1, DEVCNF_ADC2_SMPR2},
-	{0, DEVCNF_ADC3_CFGR, DEVCNF_ADC3_CFGR2, DEVCNF_ADC3_SMPR1, DEVCNF_ADC3_SMPR2}
+	{0, DEVCNF_ADC1_CFGR, DEVCNF_ADC1_CFGR2, DEVCNF_ADC1_SMPR1, DEVCNF_ADC1_SMPR2, 0},
+	{0, DEVCNF_ADC2_CFGR, DEVCNF_ADC2_CFGR2, DEVCNF_ADC2_SMPR1, DEVCNF_ADC2_SMPR2, 0},
+	{0, DEVCNF_ADC3_CFGR, DEVCNF_ADC3_CFGR2, DEVCNF_ADC3_SMPR1, DEVCNF_ADC3_SMPR2, 0}
 };
 
 
@@ -64,6 +64,7 @@ LOCAL struct {
  */
 void adc_inthdr( UINT intno)
 {
+	UW	isr;
 	UW	unit;
 
 	if(intno == INTNO_INTADC3) {
@@ -77,11 +78,18 @@ void adc_inthdr( UINT intno)
 		return;
 	}
 
-	if(ll_devcb[unit].wait_tskid) {
-		tk_wup_tsk(ll_devcb[unit].wait_tskid);
+	isr = in_w(ADC_ISR(unit));
+	if(isr & (ADC_ISR_ADRDY | ADC_ISR_EOS)) {
+		if(ll_devcb[unit].wait_tskid) {
+			tk_wup_tsk(ll_devcb[unit].wait_tskid);
+		}
+	}
+	if(isr & ADC_ISR_EOC) {
+		*(ll_devcb[unit].buf++) = in_w(ADC_DR(unit));
+		isr &= ~ADC_ISR_EOC;
 	}
 
-	out_w(ADC_ISR(unit), 0x000007FF);	// Clear all interrupt flag.
+	out_w(ADC_ISR(unit), isr);	// Clear all interrupt flag.
 	ClearInt(intno);
 }
 
@@ -93,7 +101,6 @@ LOCAL UW adc_convert( UINT unit, INT ch, INT size, UW *buf )
 	_UW	*sqr;
 	UINT	sqsz, sqch, sqpos;
 	UW	pcsel;
-	UW	rtn;
 	ER	err;
 
 	if((ch >= ADC_CH_NUM) || (size > ADC_MAX_SQ) || ((ch+size) > ADC_CH_NUM)) return (UW)E_PAR;
@@ -116,19 +123,14 @@ LOCAL UW adc_convert( UINT unit, INT ch, INT size, UW *buf )
 	}
 
 	ll_devcb[unit].wait_tskid = tk_get_tid();
+	ll_devcb[unit].buf = buf;
+
 	tk_can_wup(TSK_SELF);
 	out_w(ADC_CR(unit), ADC_CR_ADSTART | ADC_CR_ADVREGEN);	// Start Covert
-	for( rtn = 0; rtn < size; rtn++) {
-		err = tk_slp_tsk(DEVCNF_ADC_TMOSCAN);
-		if(err < E_OK) {
-			rtn = err;
-			break;
-		}
-		*buf++ = in_w(ADC_DR(unit));			// Read deta
-	}
+	err = tk_slp_tsk(DEVCNF_ADC_TMOSCAN);
 	ll_devcb[unit].wait_tskid = 0;
 
-	return rtn;
+	return (err < E_OK)? err:size;
 }
 
 
