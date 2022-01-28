@@ -81,28 +81,28 @@ void task1(INT stacd, void *exinf)
 		if(err < E_OK) {
 			tm_printf((UB*)"read error %d(%x)\n", err, err);
 		} else {
-			tm_printf((UB*)"A0 %d(%x)  ", data, data);
+			tm_printf((UB*)"A0 %d(%x)  ", data[0], data[0]);
 		}
 
 		err = tk_srea_dev(dd2, 10, &data, 1, &asz);	// A1:  PC0  ADC123_INP10
 		if(err < E_OK) {
 			tm_printf((UB*)"read error %d(%x)\n", err, err);
 		} else {
-			tm_printf((UB*)"A1 %d(%x)  ", data, data);
+			tm_printf((UB*)"A1 %d(%x)  ", data[0], data[0]);
 		}
 
 		err = tk_srea_dev(dd3, 1, &data, 1, &asz);	// A2:  PC3  ADC3_INP1
 		if(err < E_OK) {
 			tm_printf((UB*)"read error %d(%x)\n", err, err);
 		} else {
-			tm_printf((UB*)"A2 %d(%x)  ", data, data);
+			tm_printf((UB*)"A2 %d(%x)  ", data[0], data[0]);
 		}
 
 		err = tk_srea_dev(dd2, 5, &data, 1, &asz);	// A3:  PB1  ADC12_INP5
 		if(err < E_OK) {
 			tm_printf((UB*)"read error %d(%x)\n", err, err);
 		} else {
-			tm_printf((UB*)"A3 %d(%x)\n", data, data);
+			tm_printf((UB*)"A3 %d(%x)\n", data[0], data[0]);
 		}
 		tk_dly_tsk(1000);
 	}

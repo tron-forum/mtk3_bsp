@@ -1,12 +1,12 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00.05
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.00
  *
- *    Copyright (C) 2021 by Ken Sakamura.
+ *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/12.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -22,19 +22,21 @@
 
 /* Device initialization */
 #define DEVCNF_ADC_INIT_MCLK	TRUE	// Initialize module clock
+#define	DEVCNF_ADCSEL		0	// ADC clock source   0:PLL2P  1:PLL3R  2: PER_CK
+
 
 /* ADC peripherals clock configuration */
-#define ADC_PLL2_DIVM2		0	// RCC_PLLCKSELR_DIVM2
+//#define ADC_PLL2_DIVM2		0	// RCC_PLLCKSELR_DIVM2
 
-#define ADC_PLL2DIVR_INIT	((1<<24)|(1<<16)|(1<<9)|(23))
+//#define ADC_PLL2DIVR_INIT	((1<<24)|(1<<16)|(1<<9)|(23))
 				// PLL2 N = 24	
 				// PLL2 P = 2	
 				// PLL2 Q= 2	
 				// PLL2 R = 2	
 
-#define ADC_PLL2_RGE		3	// 8 ~ 16 MHz
-#define ADC_PLL2_VCOSEL		0	// Wide VCO range
-#define ADC_PLL2_FRACN		0
+//#define ADC_PLL2_RGE		3	// 8 ~ 16 MHz
+//#define ADC_PLL2_VCOSEL		0	// Wide VCO range
+//#define ADC_PLL2_FRACN		0
 
 #define	ADC_PCLK	96000000UL	// 96MHz
 #if (ADC_PCLK/2) <= 6250000UL

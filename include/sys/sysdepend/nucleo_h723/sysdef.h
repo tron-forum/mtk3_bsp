@@ -1,12 +1,12 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.05
+ *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/12
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -34,25 +34,26 @@
 #define	PWR_D3CR_INIT		(0x00)		// VOS Scale 0
 
 /* RCC register initial value */
-#define	RCC_CFGR_MCO2_VAL	(0x0)		// sys_ck
-#define	RCC_CFGR_MCO2PRE_VAL	(0x0)		// disabled
-#define	RCC_CFGR_MCO1_VAL	(0x0)		// hsi_clk
-#define	RCC_CFGR_MCO1PRE_VAL	(0x0)		// disabeld
-#define	RCC_CFGR_RTCPRE_VAL	(0x0)		// no clock
-#define	RCC_CFGR_SW_VAL		(0x3)		// pll1_p_ck
+#define	RCC_CFGR_SW_INIT	(0x3)		// System clock switch  3 = pll1_p_ck
 
-#define	RCC_CFGR_INIT_VAL	((RCC_CFGR_MCO2_VAL<<29) \
-				|(RCC_CFGR_MCO2PRE_VAL<<25) \
-				|(RCC_CFGR_MCO1_VAL<<22) \
-				|(RCC_CFGR_MCO1PRE_VAL<<18) \
-				|(RCC_CFGR_RTCPRE_VAL<<8) \
-				|RCC_CFGR_SW_VAL)
-
-#define RCC_PLLCKSELR_INIT1	(0x02020202)	// SRC = hse_ck, M = 4
-#define RCC_PLLCKSELR_INIT2	(0x02020042)	// SRC = hse_ck, M = 4
+#define RCC_PLLCKSELR_INIT	(0x02020042)	// PLL SRC = hse_ck, M = 4
 #define	RCC_PLL1DIVR_INIT	(0x01030112)	// N = 275, P = 1, Q = 4, R = 2
 #define	RCC_PLL1FRACR_INIT	(0x00000000)	// FRACN = 0
-#define	RCC_PLLCFGR_INIT	(0x01FF0004)	// PLL1RGE = 1, PLLVCOSEL = 0
+#define	RCC_PLLCFGR_INIT	(0x01FF0004)	// PLL1RGE = 1, PLL1VCOSEL = 0
+
+#define RCC_PLL2DIVR_INIT	(0x01010117)	// PLL2 N = 24, P = 2, Q = 2, R = 2
+#define	RCC_PLL2FRACR_INIT	(0x00000000)	// FRACN = 0
+
+#define RCC_PLLCKSELR_DIVM2_INIT	(1)	// Prescaler for PLL2
+#define RCC_PLLCFGR_PLL2RGE_INIT	(3)	// 8 ~ 16 MHz
+#define RCC_PLLCFGR_PLL2VCOSEL_INIT	(0)	// Wide VCO range
+
+#define RCC_PLL3DIVR_INIT	(0x01010280)	// PLL3 N = 129, P = 2, Q = 2, R = 2
+#define	RCC_PLL3FRACR_INIT	(0x00000000)	// FRACN = 0
+
+#define RCC_PLLCKSELR_DIVM3_INIT	(32)	// Prescaler for PLL3
+#define RCC_PLLCFGR_PLL3RGE_INIT	(0)	// PLL3 input frequency range
+#define RCC_PLLCFGR_PLL3VCOSEL_INIT	(0)	// Wide VCO range
 
 #define	RCC_D1CFGR_INIT		(0x00000048)	// HPRE = div2, D1PPRE = div2, D1CPRE = div1
 #define	RCC_D1CFGR_PPRE		(0x00000040)	// D1PPRE = div2
