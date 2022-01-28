@@ -1,12 +1,12 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00.05
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.0
  *
- *    Copyright (C) 2020-2021 by Ken Sakamura.
+ *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/12.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -38,10 +38,6 @@
 /*
  * RCC registers ( I2C Clock setting )
  */
-#define RCC_D2CCIP2R_I2C1235SEL	0x00003000	// I2C1/2/3/5 kernel clock source
-#define RCC_D3CCIPR_I2C4SEL	0x00000300	// I2C4 kernel clock source
-#define	RCC_APB1LENR_I2C1EN	0x00200000	// I2C1 Peripheral Clocks Enable
-#define	RCC_APB4ENR_I2C4EN	0x00000080	// I2C4 Peripheral Clocks Enable
 
 /*----------------------------------------------------------------------
  * I2C registers

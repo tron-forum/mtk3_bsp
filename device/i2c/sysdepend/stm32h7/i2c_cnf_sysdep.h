@@ -1,16 +1,15 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00.05
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.0
  *
- *    Copyright (C) 2020-2021 by Ken Sakamura.
+ *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/12
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02
  *
  *----------------------------------------------------------------------
  */
-
 
 /*
  *	i2c_cnf_stm32h7.h 
@@ -24,7 +23,7 @@
 #define DEVCONF_I2C_INIT_MCLK	TRUE	// Initialize module clock
 
 /* ADC Clock (I2C) */
-#define	DEVCNF_I2CSEL		0	// I2C clock source  0: PCLK1
+#define	DEVCNF_I2CSEL		0	// I2C clock source  0 = PCLK1
 
 /* Register initial value */
 #define	I2C_TIMINGR_INIT	0x60404E72	// Standard mode, 100KHz

@@ -1,12 +1,12 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00.05
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.0
  *
- *    Copyright (C) 2020-2022 by Ken Sakamura.
+ *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -238,30 +238,34 @@ EXPORT ER dev_ser_llinit( T_SER_DCB *p_dcb)
 	unit = p_dcb->unit;
 
 #if DEVCONF_SER_INIT_MCLK
+	/* Select clock source */
+	out_w(RCC_D2CCIP2R, (in_w(RCC_D2CCIP2R) & ~RCC_D2CCIP2R_USARTxSEL) | DEVCNF_USARTxSEL_INIT );
+
+	/* Enable module clock */
 	switch(unit) {
 	case 0:	// USART1
 		*(_UW*)RCC_APB2ENR |= RCC_APB2ENR_USART1EN;
 		break;
 	case 1:	// USART2
-		*(_UW*)RCC_APB1LENR1 |= RCC_APB1LENR1_USART2EN;
+		*(_UW*)RCC_APB1LENR |= RCC_APB1LENR_USART2EN;
 		break;
 	case 2:	// USART3
-		*(_UW*)RCC_APB1LENR1 |= RCC_APB1LENR1_USART3EN;
+		*(_UW*)RCC_APB1LENR |= RCC_APB1LENR_USART3EN;
 		break;
 	case 3:	// UART4
-		*(_UW*)RCC_APB1LENR1 |= RCC_APB1LENR1_UART4EN;
+		*(_UW*)RCC_APB1LENR |= RCC_APB1LENR_UART4EN;
 		break;
 	case 4:	// UART5
-		*(_UW*)RCC_APB1LENR1 |= RCC_APB1LENR1_UART5EN;
+		*(_UW*)RCC_APB1LENR |= RCC_APB1LENR_UART5EN;
 		break;
 	case 5:	// USART6
 		*(_UW*)RCC_APB2ENR |= RCC_APB2ENR_USART6EN;
 		break;
 	case 6:	// UART7
-		*(_UW*)RCC_APB1LENR1 |= RCC_APB1LENR1_UART7EN;
+		*(_UW*)RCC_APB1LENR |= RCC_APB1LENR_UART7EN;
 		break;
 	case 7:	// UART8
-		*(_UW*)RCC_APB1LENR1 |= RCC_APB1LENR1_UART8EN;
+		*(_UW*)RCC_APB1LENR |= RCC_APB1LENR_UART8EN;
 		break;
 	case 8:	// UART9
 		*(_UW*)RCC_APB2ENR |= RCC_APB2ENR_UART9EN;
@@ -277,6 +281,7 @@ EXPORT ER dev_ser_llinit( T_SER_DCB *p_dcb)
 
 	/* Initizlize Device Control block */
 	p_dcb->intno_rcv = p_dcb->intno_snd = INTNO_USART1 + unit;
+	p_dcb->int_pri = ll_devdat[unit].intpri;
 
 	/* Interrupt handler definition */
 	err = tk_def_int(ll_devdat[unit].intno, &dint);

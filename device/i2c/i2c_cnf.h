@@ -1,6 +1,6 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.0
  *
  *    Copyright (C) 2020-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -10,7 +10,6 @@
  *
  *----------------------------------------------------------------------
  */
-
 
 /*
  *	i2c_cnf.h 
@@ -27,21 +26,12 @@
 #define	DEVCNF_I2C_MAX_RDATSZ	100		// Maximum received data size
 
 
-/* Hardware dependent definition */
-#ifdef CPU_TMPM367FDFG
-#include "sysdepend/tx03_m367/i2c_cnf_m367.h"
-#endif		/* CPU_TMPM367FDFG */
-
-#ifdef CPU_STM32L4
-#include "sysdepend/stm32l4/i2c_cnf_stm32l4.h"
-#endif		/* CPU_STM32L4 */
-
-#ifdef CPU_STM32H7
-#include "sysdepend/stm32h7/i2c_cnf_stm32h7.h"
-#endif		/* CPU_STM32H7 */
-
-#ifdef CPU_RX231
-#include "sysdepend/rx231/i2c_cnf_rx231.h"
-#endif		/* CPU_RX231 */
+/*----------------------------------------------------------------------*/
+/* Hardware dependent definition
+ */
+#define DEVDEF_I2C_CNF_PATH_(a)	#a
+#define DEVDEF_I2C_CNF_PATH(a)	DEVDEF_I2C_CNF_PATH_(a)
+#define DEVDEF_I2C_CNF_SYSDEP()	DEVDEF_I2C_CNF_PATH(sysdepend/TARGET_CPU_DIR/i2c_cnf_sysdep.h)
+#include DEVDEF_I2C_CNF_SYSDEP()
 
 #endif		/* __DEVCNF_I2C_H__ */

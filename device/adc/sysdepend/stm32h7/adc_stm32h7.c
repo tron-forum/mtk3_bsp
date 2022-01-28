@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    Device Driver for micro T-Kernel for μT-Kernel 3.0
  *
- *    Copyright (C) 2020-2021 by Ken Sakamura.
+ *    Copyright (C) 2020-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/12.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -51,11 +51,11 @@ LOCAL struct {
 	ID	wait_tskid;
 	UW	cfgr, cfgr2;
 	UW	smpr1, smpr2;
+	UW	*buf;
 } ll_devcb[DEV_ADC_UNITNM] = {
-
-	{0, DEVCNF_ADC1_CFGR, DEVCNF_ADC1_CFGR2, DEVCNF_ADC1_SMPR1, DEVCNF_ADC1_SMPR2},
-	{0, DEVCNF_ADC2_CFGR, DEVCNF_ADC2_CFGR2, DEVCNF_ADC2_SMPR1, DEVCNF_ADC2_SMPR2},
-	{0, DEVCNF_ADC3_CFGR, DEVCNF_ADC3_CFGR2, DEVCNF_ADC3_SMPR1, DEVCNF_ADC3_SMPR2}
+	{0, DEVCNF_ADC1_CFGR, DEVCNF_ADC1_CFGR2, DEVCNF_ADC1_SMPR1, DEVCNF_ADC1_SMPR2, 0},
+	{0, DEVCNF_ADC2_CFGR, DEVCNF_ADC2_CFGR2, DEVCNF_ADC2_SMPR1, DEVCNF_ADC2_SMPR2, 0},
+	{0, DEVCNF_ADC3_CFGR, DEVCNF_ADC3_CFGR2, DEVCNF_ADC3_SMPR1, DEVCNF_ADC3_SMPR2, 0}
 };
 
 
@@ -64,6 +64,7 @@ LOCAL struct {
  */
 void adc_inthdr( UINT intno)
 {
+	UW	isr;
 	UW	unit;
 
 	if(intno == INTNO_INTADC3) {
@@ -77,11 +78,18 @@ void adc_inthdr( UINT intno)
 		return;
 	}
 
-	if(ll_devcb[unit].wait_tskid) {
-		tk_wup_tsk(ll_devcb[unit].wait_tskid);
+	isr = in_w(ADC_ISR(unit));
+	if(isr & (ADC_ISR_ADRDY | ADC_ISR_EOS)) {
+		if(ll_devcb[unit].wait_tskid) {
+			tk_wup_tsk(ll_devcb[unit].wait_tskid);
+		}
+	}
+	if(isr & ADC_ISR_EOC) {
+		*(ll_devcb[unit].buf++) = in_w(ADC_DR(unit));
+		isr &= ~ADC_ISR_EOC;
 	}
 
-	out_w(ADC_ISR(unit), 0x000007FF);	// Clear all interrupt flag.
+	out_w(ADC_ISR(unit), isr);	// Clear all interrupt flag.
 	ClearInt(intno);
 }
 
@@ -93,7 +101,6 @@ LOCAL UW adc_convert( UINT unit, INT ch, INT size, UW *buf )
 	_UW	*sqr;
 	UINT	sqsz, sqch, sqpos;
 	UW	pcsel;
-	UW	rtn;
 	ER	err;
 
 	if((ch >= ADC_CH_NUM) || (size > ADC_MAX_SQ) || ((ch+size) > ADC_CH_NUM)) return (UW)E_PAR;
@@ -116,19 +123,14 @@ LOCAL UW adc_convert( UINT unit, INT ch, INT size, UW *buf )
 	}
 
 	ll_devcb[unit].wait_tskid = tk_get_tid();
+	ll_devcb[unit].buf = buf;
+
 	tk_can_wup(TSK_SELF);
 	out_w(ADC_CR(unit), ADC_CR_ADSTART | ADC_CR_ADVREGEN);	// Start Covert
-	for( rtn = 0; rtn < size; rtn++) {
-		err = tk_slp_tsk(DEVCNF_ADC_TMOSCAN);
-		if(err < E_OK) {
-			rtn = err;
-			break;
-		}
-		*buf++ = in_w(ADC_DR(unit));			// Read deta
-	}
+	err = tk_slp_tsk(DEVCNF_ADC_TMOSCAN);
 	ll_devcb[unit].wait_tskid = 0;
 
-	return rtn;
+	return (err < E_OK)? err:size;
 }
 
 
@@ -210,8 +212,7 @@ EXPORT W dev_adc_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
  */
 EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
 {
-	static BOOL	uninit_12	= TRUE;		// Uninitialized flag (ADC12)
-	static BOOL	uninit_3	= TRUE;		// Uninitialized flag (ADC3)
+	static BOOL init_12	= FALSE;
 
 	const T_DINT	dint = {
 		.intatr	= TA_HLNG,
@@ -223,30 +224,14 @@ EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
 	unit = p_dcb->unit;
 
 #if DEVCNF_ADC_INIT_MCLK
-	/* Initializes the peripherals clock */
-	if(uninit_12 && uninit_3) {
-		*(_UW*)RCC_CR &= ~RCC_CR_PLL2ON;			// PLL2 disable
-		while( (*((_UW*)RCC_CR) & RCC_CR_PLL2RDY) != 0 );	// Wait PLL2 ready
+	/* Select clock source */
+	out_w(RCC_D3CCIPR, (in_w(RCC_D3CCIPR) & ~RCC_D3CCIPR_ADCSEL) | (DEVCNF_ADCSEL));
 
-		out_w(RCC_PLLCKSELR, (in_w(RCC_PLLCKSELR) & ~RCC_PLLCKSELR_DIVM2)|(ADC_PLL2_DIVM2<<12));
-		out_w(RCC_PLL2DIVR, ADC_PLL2DIVR_INIT);
-		out_w(RCC_PLLCFGR, (in_w(RCC_PLLCFGR) & ~RCC_PLLCFGR_PLL2RGE)|(ADC_PLL2_RGE<<6));
-		out_w(RCC_PLLCFGR, (in_w(RCC_PLLCFGR) & ~RCC_PLLCFGR_PLL2VCOSEL)|(ADC_PLL2_VCOSEL<<5));
-
-		out_w(RCC_PLLCFGR, in_w(RCC_PLLCFGR) & ~RCC_PLLCFGR_PLL2FRACEN);	// Disable PLL2FRACN
-		out_w(RCC_PLL2FRACR, (in_w(RCC_PLL2FRACR) & ~RCC_PLL2FRACR_FRACN2)|(ADC_PLL2_FRACN<<3));
-		out_w(RCC_PLLCFGR, in_w(RCC_PLLCFGR) | RCC_PLLCFGR_PLL2FRACEN);		// Enable PLL2FRACN
-
-		out_w(RCC_PLLCFGR, in_w(RCC_PLLCFGR) | RCC_PLLCFGR_DIVP2EN);
-
-		*(_UW*)RCC_CR |= RCC_CR_PLL2ON;				// PLL2 Enable
-		while( (*((_UW*)RCC_CR) & RCC_CR_PLL2RDY) != 0 );	// Wait PLL2 ready
-	}
-
-	if((unit != DEV_ADC_3) && uninit_12) {
-		*(_UW*)RCC_AHB1ENR |= (1<<5);		// ADC1_2 enable
-	} else if((unit == DEV_ADC_3) && uninit_3) {
-		*(_UW*)RCC_AHB4ENR |= (1<<24);		// ADC3 enable
+	/* Enable module clock */
+	if(unit < DEV_ADC_3) {		// ADC1_2
+		*(_UW*)RCC_AHB1ENR |= RCC_AHB1ENR_ADC12EN;
+	} else  {			// ADC3
+		*(_UW*)RCC_AHB4ENR |= RCC_AHB4ENR_ADC3EN;
 	}
 
 #endif
@@ -259,8 +244,8 @@ EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
 	while(wait_cnt-- != 0);
 
 	/* Common ADC settings */
-	if(unit != DEV_ADC_3) {		// ADC1 or ADC2
-		if(uninit_12) {
+	if(unit < DEV_ADC_3) {		// ADC1 or ADC2
+		if(!init_12) {
 			out_w(ADC_CCR(unit), 
 				((DEVCNF_ADC12_CKMODE & 0x03)<< 16)	// ADC clock mode
 				|((DEVCNF_ADC12_PRESC & 0x0F)<< 18)	// ADC prescaler
@@ -283,9 +268,7 @@ EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
 	/* Interrupt handler definition */
 	err = tk_def_int((unit != DEV_ADC_3 )? INTNO_INTADC1_2: INTNO_INTADC3, &dint);
 
-	if(unit != DEV_ADC_3) 	uninit_12 = FALSE;
-	else			uninit_3 = FALSE;
-
+	init_12 = TRUE;
 	return err;
 }
 

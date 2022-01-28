@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    Device Driver for micro T-Kernel for μT-Kernel 3.0
  *
- *    Copyright (C) 2020-2021 by Ken Sakamura.
+ *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/12.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -312,11 +312,18 @@ EXPORT ER dev_i2c_llinit( T_I2C_DCB *p_dcb)
 	unit = p_dcb->unit;
 
 #if DEVCONF_I2C_INIT_MCLK
-	if(unit != DEV_I2C_4) {		// I2C 1,2,3,5
+	if(unit != DEV_I2C_4) {	// I2C 1,2,3,5
+		/* Select clock source */
 		out_w(RCC_D2CCIP2R, (in_w(RCC_D2CCIP2R) & ~RCC_D2CCIP2R_I2C1235SEL) |(DEVCNF_I2CSEL << 12));
+		
+		/* Enable module clock */
 		*(_UW*)RCC_APB1LENR |= (RCC_APB1LENR_I2C1EN<<unit);
-	} else {			// I2C4
+		
+	} else {		// I2C4
+		/* Select clock source */
 		out_w(RCC_D3CCIPR, (in_w(RCC_D3CCIPR) & ~RCC_D3CCIPR_I2C4SEL) |(DEVCNF_I2CSEL << 8));
+
+		/* Enable module clock */
 		*(_UW*)RCC_APB4ENR |= RCC_APB4ENR_I2C4EN;
 	}
 #endif
@@ -338,4 +345,4 @@ EXPORT ER dev_i2c_llinit( T_I2C_DCB *p_dcb)
 }
 
 #endif		/* DEV_IIC_ENABLE */
-#endif		/* CPU_TMPM367FDFG */
+#endif		/* CPU_STM32H7 */
