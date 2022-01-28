@@ -1,6 +1,6 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.0
  *
  *    Copyright (C) 2020-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -10,7 +10,6 @@
  *
  *----------------------------------------------------------------------
  */
-
 
 /*
  *	dev_ser.h
@@ -25,29 +24,13 @@
 #include "../common/drvif/msdrvif.h"
 #include "ser_cnf.h"
 
-/*----------------------------------------------------------------------
- * Hardware dependent definition
+/*----------------------------------------------------------------------*/
+/* Hardware dependent definition
  */
-#ifdef CPU_TMPM367FDFG
-#include "sysdepend/tx03_m367/ser_m367.h"
-#endif		/* CPU_TMPM367FDFG */
-
-#ifdef CPU_RX231
-#include "sysdepend/rx231/ser_rx231.h"
-#endif	/* CPU_RX231 */
-
-#ifdef CPU_STM32L4
-#include "sysdepend/stm32l4/ser_stm32l4.h"
-#endif	/* CPU_STM32L4 */
-
-#ifdef CPU_STM32H7
-#include "sysdepend/stm32h7/ser_stm32h7.h"
-#endif	/* CPU_STM32H7 */
-
-#ifdef CPU_RZA2M
-#include "sysdepend/rza2m/ser_rza2m.h"
-#endif	/* CPU_RZA2M */
-
+#define DEVDEF_SER_PATH_(a)	#a
+#define DEVDEF_SER_PATH(a)	DEVDEF_SER_PATH_(a)
+#define DEVDEF_SER_SYSDEP()	DEVDEF_SER_PATH(sysdepend/TARGET_CPU_DIR/ser_sysdep.h)
+#include DEVDEF_SER_SYSDEP()
 
 /*----------------------------------------------------------------------
  * Communication data buffer
