@@ -1,15 +1,16 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.05
+ *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/12.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
+
 #include <sys/machine.h>
 #ifdef NUCLEO_H723
 
@@ -48,19 +49,19 @@ EXPORT ER knl_start_device( void )
 
 	/* A/D Converter unit.0 "adca" */
 	#if DEVCNF_USE_ADC
-//		err = dev_init_adc(0);
-//		if(err < E_OK) return err;
+		err = dev_init_adc(0);
+		if(err < E_OK) return err;
 	#endif
 
 	/* I2C unit.0 "iica" */
 	#if DEVCNF_USE_IIC
-//		err = dev_init_i2c(0);
-//		if(err < E_OK) return err;
+		err = dev_init_i2c(0);
+		if(err < E_OK) return err;
 	#endif
 
-	/* Serial ch.2 "serb" */
+	/* Serial ch.2 "serc" */
 	#if DEVCNF_USE_SER
-		err = dev_init_ser(1);
+		err = dev_init_ser(2);
 		if(err < E_OK) return err;
 	#endif
 
