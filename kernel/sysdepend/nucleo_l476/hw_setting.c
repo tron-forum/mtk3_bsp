@@ -1,8 +1,8 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.06.B0
+ *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2006-2022 by Ken Sakamura.
+ *    Copyright (C) 2021-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
@@ -58,7 +58,7 @@ LOCAL const T_SETUP_REG modclk_tbl[] = {
 
 #else			// Use the sample device driver
 	{RCC_AHB2ENR,		0x00000007},	// GPIOA, B, C enable
-	{RCC_APB1ENR1,		0x0022000F},	// USART2, I2C1, TIM2-TIM5 enable
+	{RCC_APB1ENR1,		0x0002000F},	// USART2, TIM2-TIM5 enable
 	{RCC_APB2ENR,		0x00000001},	// SYSCFG enable
 #endif /* !USE_SDEV_DRV */
 
@@ -72,17 +72,18 @@ LOCAL const T_SETUP_REG pinfnc_tbl[] = {
 
 #if !USE_SDEV_DRV	// Do not use device sample driver
 
-	/* GPIOA Setting   PA5:LED */
+	// Serial debug I/F : PA2 -> USART2_TX, PA3 -> USART2_RX
+	// GPIOA out : PA5 -> LED
 	{GPIO_MODER(A),		0xABFFF7AF},	// GPIOA mode
-	{GPIO_OSPEEDR(A),	0x0C000000},	// GPIOA output speed
 	{GPIO_OTYPER(A),	0x00000000},	// GPIOA output type
+	{GPIO_OSPEEDR(A),	0x0C000000},	// GPIOA output speed
 	{GPIO_PUPDR(A),		0x64000000},	// GPIOA Pull-up/down
 	{GPIO_AFRL(A),		0x00007700},
 
-	/* GPIOC Setting   PC13:Push button */
+	// GPIOC in   PC13 -> Push button
 	{GPIO_MODER(C),		0xF3FFFFFF},	// GPIOC mode
-	{GPIO_OSPEEDR(C),	0x00000000},	// GPIOC output speed
 	{GPIO_OTYPER(C),	0x00000000},	// GPIOC output type
+	{GPIO_OSPEEDR(C),	0x00000000},	// GPIOC output speed
 	{GPIO_PUPDR(C),		0x00000000},	// GPIOC Pull-up/down
 
 #else			// Use the device sample driver
@@ -97,7 +98,7 @@ LOCAL const T_SETUP_REG pinfnc_tbl[] = {
 	{GPIO_AFRL(A),		0x00007700},	// GPIOA Alternate function
 	{GPIO_ASCR(A),		0x00000013},	// GPIOA Analog switch control
 
-	// I2C1 : PB8 DCL, PB9 SDA
+	// I2C I/F : PB8 -> I2C1_DCL, PB9 -> I2C1_SDA
 	// A/DC in : PB0
 	{GPIO_MODER(B),		0xFFFAFFBF},	// GPIOB mode
 	{GPIO_OTYPER(B),	0x00000300},	// GPIOB output type
@@ -107,7 +108,7 @@ LOCAL const T_SETUP_REG pinfnc_tbl[] = {
 	{GPIO_AFRH(B),		0x00000044},	// GPIOB Alternate function
 	{GPIO_ASCR(B),		0x00000001},	// GPIOB Analog switch control
 
-	/* GPIOC Setting   PC13:Push button */
+	// GPIOC in   PC13 -> Push button
 	{GPIO_MODER(C),		0xF3FFFFFF},	// GPIOC mode
 	{GPIO_OSPEEDR(C),	0x00000000},	// GPIOC output speed
 	{GPIO_OTYPER(C),	0x00000000},	// GPIOC output type
@@ -126,7 +127,7 @@ EXPORT void knl_startup_hw(void)
 	const T_SETUP_REG	*p;
 
 	/* Startup clock : Use HSI clock, Use PLL, Flash latency 4 */
-	startup_clock(CLKATR_HSI | CLKATR_USE_PLL | CLKATR_LATENCY_4);
+	startup_clock(CLKATR_HSI | CLKATR_USE_PLL | CLKATR_USE_PLLSAI1 |CLKATR_USE_PLLSAI2 | CLKATR_LATENCY_4);
 
 	/* Startup module clock */
 	for(p = modclk_tbl; p->addr != 0; p++) {

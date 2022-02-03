@@ -1,8 +1,8 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.06.B0
+ *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2006-2022 by Ken Sakamura.
+ *    Copyright (C) 2021-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
@@ -35,6 +35,9 @@
 #define	RCC_PLLCFGR_INIT	(0x00000A00)	// M = 1, N = 10, P = 7, Q = 2, R =2
 #define	RCC_PLLSAI1CFGR_INIT	(0x00000800)	// N = 8, P = 7, Q = 2, R =2
 #define	RCC_PLLSAI2CFGR_INIT	(0x00000800)	// N = 8, P = 7, R =2
+
+#define RCC_CFGR_SW_INIT	(RCC_CFGR_SW_PLL)
+#define	RCC_PLLCFGR_PLLSRC_INIT	(RCC_PLLCFGR_PLLSRC_HSI)
 
 /* Clock frequency 　*/
 #define	SYSCLK			(80)		/* System clock */

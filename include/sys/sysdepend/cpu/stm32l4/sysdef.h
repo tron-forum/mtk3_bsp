@@ -259,6 +259,11 @@
 #define RCC_PLLCFGR_PLLM	0x000000F0	// Division factor for the main PLLinput clock
 #define RCC_PLLCFGR_PLLSRC	0x00000003	// Main PLL entry clock source
 
+#define RCC_PLLCFGR_PLLSRC_NON	0x00000000	// No clock
+#define RCC_PLLCFGR_PLLSRC_MSI	0x00000001	// Use MSI for system clock
+#define RCC_PLLCFGR_PLLSRC_HSI	0x00000002	// Use HSI16 for system clock
+#define RCC_PLLCFGR_PLLSRC_HSE	0x00000003	// Use HSE for system clock
+
 /* RCC_APB1ENR1 bit definition */
 #define RCC_APB1ENR1_LPTIM1EN	0x80000000	// Low power timer 1 clock enable
 #define RCC_APB1ENR1_OPAMPEN	0x40000000	// OPAMP interface clock enable

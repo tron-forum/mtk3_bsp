@@ -1,8 +1,8 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.05
+ *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2006-2022 by Ken Sakamura.
+ *    Copyright (C) 2021-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
@@ -32,9 +32,10 @@
 #define CPU_STM32L4		1		/* Target CPU : STM32L4 series */
 #define CPU_STM32L476		1		/* Target CPU : STM32L476 */
 #define CPU_CORE_ARMV7M		1		/* Target CPU-Core type : ARMv7-M */
-#define CPU_CORE_ACM4		1		/* Target CPU-Core : ARM Cortex-M4 */
+#define CPU_CORE_ACM4F		1		/* Target CPU-Core : ARM Cortex-M4 */
 
 #define TARGET_DIR		nucleo_l476	/* Sysdepend-Directory name */
+#define	TARGET_CPU_DIR		stm32l4		/* Sysdepend-CPU-Directory name */
 
 /*
  **** CPU-depeneded profile (STM32L4)
