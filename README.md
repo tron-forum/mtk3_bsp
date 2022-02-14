@@ -11,3 +11,4 @@ Please download from the following branch for each development board.
 | Branch | CPU | Board | Development environment |
 | --- | ----------------------- | ------ | -------- |
 | nucleo_stm32l476 | STM32L476 | Nucleo-64 | STM32CubeIDE |
+| nucleo_stm32h723 | STM32H723 | Nucleo-144 | STM32CubeIDE |

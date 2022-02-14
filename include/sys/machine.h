@@ -1,6 +1,6 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00 BSP
+ *    micro T-Kernel 3.0 BSP
  *
  *    Copyright (C) 2021-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
