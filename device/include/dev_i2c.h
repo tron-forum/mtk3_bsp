@@ -42,5 +42,8 @@ typedef struct {
 	UB		*rcv_data;
 } T_I2C_EXEC;
 
+EXPORT ER i2c_read_reg(ID dd, UW sadr, UW radr, UB *data);
+EXPORT ER i2c_write_reg(ID dd, UW sadr, UW radr, UB data);
+
 
 #endif	/* __DEVINC_I2C_H__ */

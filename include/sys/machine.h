@@ -1,12 +1,12 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.05
+ *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2021-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -42,8 +42,14 @@
 #define Csym(sym) sym
 #endif
 
+/* ----- μT-Kernel BSP ------------------------------------------------- */
 #ifdef _NUCLEO_L476_
 #include "sysdepend/nucleo_l476/machine.h"
+#define Csym(sym) sym
+#endif
+
+#ifdef _NUCLEO_H723_
+#include "sysdepend/nucleo_h723/machine.h"
 #define Csym(sym) sym
 #endif
 
