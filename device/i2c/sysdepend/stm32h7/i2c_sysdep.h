@@ -1,29 +1,31 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00.03
+ *    Device Driver for micro T-Kernel for μT-Kernel 3.0
  *
- *    Copyright (C) 2020-2021 by Ken Sakamura.
+ *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
 
 /*
- *	i2c_stml4.h
+ *	i2c_stmh7.h
  *	I2C device driver
- *	System-dependent definition for STM32L4
+ *	System-dependent definition for STM32H7
  */
 
-#ifndef	__DEV_I2C_STM32L4_H__
-#define	__DEV_I2C_STM32L4_H__
+#ifndef	__DEV_I2C_STM32H7_H__
+#define	__DEV_I2C_STM32H7_H__
 
-#define	DEV_I2C_UNITNM		(3)	/* Number of devive units */
+#define	DEV_I2C_UNITNM		(5)	/* Number of devive units */
 #define	DEV_I2C_1		(0)	/* I2C1 */
 #define	DEV_I2C_2		(1)	/* I2C2 */
 #define	DEV_I2C_3		(2)	/* I2C3 */
+#define	DEV_I2C_4		(3)	/* I2C4 */
+#define	DEV_I2C_5		(4)	/* I2C5 */
 
 /* I2C device driver operating state */
 #define	I2C_STS_START		0x0000
@@ -34,9 +36,8 @@
 #define	I2C_STS_TOP		0x8000
 
 /*
- * I2C Clock source
+ * RCC registers ( I2C Clock setting )
  */
-#define	RCC_CCIPR_I2CSEL	0x00003000	// I2C Clock source
 
 /*----------------------------------------------------------------------
  * I2C registers
@@ -46,6 +47,8 @@
 #define	I2C1_BASE		0x40005400
 #define	I2C2_BASE		0x40005800
 #define	I2C3_BASE		0x40005C00
+#define	I2C4_BASE		0x58001C00
+#define	I2C5_BASE		0x40006400
 
 /* Register offset */
 #define	I2Cx_CR1		(0x00)		// Control register 1
@@ -95,4 +98,10 @@
 #define	INTNO_I2C3_EV		72		// I2C3 event interrupt
 #define	ININO_I2C3_ER		73		// I2C3 error interrupt
 
-#endif		/* __DEV_I2C_STM32L4_H__ */
+#define	INTNO_I2C4_EV		95		// I2C4 event interrupt
+#define	ININO_I2C4_ER		96		// I2C4 error interrupt
+
+#define	INTNO_I2C5_EV		157		// I2C5 event interrupt
+#define	ININO_I2C5_ER		158		// I2C5 error interrupt
+
+#endif		/* __DEV_I2C_STM32H7_H__ */
