@@ -1,6 +1,6 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.0
+ *    Device Driver for μT-Kernel 3.0
  *
  *    Copyright (C) 2020-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -45,11 +45,12 @@ LOCAL struct {
 	ID	wait_tskid;
 	UW	smpr1, smpr2;
 	UW	*buf;
+	SZ	asz;
 } ll_devcb[DEV_ADC_UNITNM] = {
 
-	{0, DEVCONF_ADC1_SMPR1, DEVCONF_ADC1_SMPR2},
-	{0, DEVCONF_ADC2_SMPR1, DEVCONF_ADC2_SMPR2},
-	{0, DEVCONF_ADC3_SMPR1, DEVCONF_ADC3_SMPR2}	
+	{0, DEVCONF_ADC1_SMPR1, DEVCONF_ADC1_SMPR2, NULL, 0},
+	{0, DEVCONF_ADC2_SMPR1, DEVCONF_ADC2_SMPR2, NULL, 0},
+	{0, DEVCONF_ADC3_SMPR1, DEVCONF_ADC3_SMPR2, NULL, 0}	
 };
 
 /*----------------------------------------------------------------------
@@ -79,7 +80,7 @@ void adc_inthdr( UINT intno)
 	}
 	if(isr & ADC_ISR_EOC) {
 		*(ll_devcb[unit].buf++) = in_w(ADC_DR(unit));
-		isr &= ~ADC_ISR_EOC;
+		ll_devcb[unit].asz++;
 	}
 
 	out_w(ADC_ISR(unit), isr);	// Clear interrupt flag.
@@ -92,7 +93,7 @@ void adc_inthdr( UINT intno)
 LOCAL UW adc_convert( UINT unit, INT ch, INT size, UW *buf )
 {
 	_UW	*sqr;
-	UINT	sqsz, sqch, sqpos;
+	UINT	sqch, sqpos;
 	ER	err;
 
 	if((ch >= ADC_CH_NUM) || (size > ADC_MAX_SQ) || ((ch+size) > ADC_CH_NUM)) return (UW)E_PAR;
@@ -101,8 +102,8 @@ LOCAL UW adc_convert( UINT unit, INT ch, INT size, UW *buf )
 	
 	/* Set channel sequence */
 	sqr = (UW*)ADC_SQR1(unit);
-	sqsz = size; sqch = ch; sqpos = 6;
-	while(sqsz--) {
+	sqch = ch; sqpos = 6;
+	while(size--) {
 		*sqr |= (sqch++)<<sqpos;
 		if((sqpos += 6) >= 32) {
 			sqpos = 0;
@@ -112,13 +113,14 @@ LOCAL UW adc_convert( UINT unit, INT ch, INT size, UW *buf )
 
 	ll_devcb[unit].wait_tskid = tk_get_tid();
 	ll_devcb[unit].buf = buf;
+	ll_devcb[unit].asz = 0;
 
 	tk_can_wup(TSK_SELF);
 	out_w(ADC_CR(unit), ADC_CR_ADSTART | ADC_CR_ADVREGEN);	// Start Covert
 	err = tk_slp_tsk(DEVCNF_ADC_TMOSCAN);
 	ll_devcb[unit].wait_tskid = 0;
 
-	return (err < E_OK)? err:size;
+	return (err < E_OK)? err: ll_devcb[unit].asz;
 }
 
 
@@ -145,6 +147,7 @@ LOCAL ER adc_open(UW unit)
 
 	/* Enable ADC */
 	ll_devcb[unit].wait_tskid = tk_get_tid();
+	out_w(ADC_ISR(unit), in_w(ADC_ISR(unit)));		// Clear ADC_ISR
 	out_w(ADC_CR(unit), ADC_CR_ADEN | ADC_CR_ADVREGEN);	// Set ADEN
 
 	err = tk_slp_tsk(DEVCNF_ADC_TMOSCAN);
