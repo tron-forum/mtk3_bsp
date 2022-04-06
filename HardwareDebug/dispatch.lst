@@ -1,20 +1,21 @@
-   1                             	# 1 "../kernel/sysdepend/cpu/core/armv7a/dispatch.S"
+   1                             	# 1 "../kernel/sysdepend/cpu/core/rxv2/dispatch.S"
    1                             	﻿/*
    0                             	
    0                             	
    0                             	
    2                             	 *----------------------------------------------------------------------
-   3                             	 *    micro T-Kernel 3.00.05
+   3                             	 *    micro T-Kernel 3.00.01
    4                             	 *
    5                             	 *    Copyright (C) 2006-2020 by Ken Sakamura.
    6                             	 *    This software is distributed under the T-License 2.2.
    7                             	 *----------------------------------------------------------------------
    8                             	 *
-   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2021/11.
+   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2020/05/29.
   10                             	 *
   11                             	 *----------------------------------------------------------------------
   12                             	 */
-  13                             	#include <sys/machine.h>
+  13                             	
+  14                             	#include <sys/machine.h>
    1                             	/*
    2                             	 *----------------------------------------------------------------------
    3                             	 *    micro T-Kernel 3.0 BSP
@@ -307,3 +308,247 @@
   28                             	
   41                             	
   58                             	#define Csym(sym) _##sym
+  15                             	#ifdef CPU_CORE_RXV2
+  16                             	
+  17                             	/*
+  18                             	 *	dispatch.S (RXv2 core)
+  19                             	 *	Dispatcher
+  20                             	 */
+  21                             	
+  22                             	#define	_in_asm_source_
+  23                             	
+  24                             	#include <sys/machine.h>
+  25                             	#include <tk/errno.h>
+   1                             	/*
+  26                             	#include <sys/sysdef.h>
+   1                             	/*
+   2                             	 *----------------------------------------------------------------------
+   3                             	 *    micro T-Kernel 3.00.00
+   4                             	 *
+   5                             	 *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6                             	 *    This software is distributed under the T-License 2.1.
+   7                             	 *----------------------------------------------------------------------
+   8                             	 *
+   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10                             	 *
+  11                             	 *----------------------------------------------------------------------
+  12                             	 */
+  13                             	
+  14                             	/*
+  15                             	 *	sysdef.h
+  16                             	 *
+  17                             	 *	System dependencies definition.
+  18                             	 *	Included also from assembler program.
+  19                             	 */
+  20                             	
+  21                             	#ifndef __SYS_SYSDEF_H__
+  22                             	#define __SYS_SYSDEF_H__
+  23                             	
+  24                             	/* System dependencies */
+  25                             	#define SYSDEF_PATH_(a)		#a
+  26                             	#define SYSDEF_PATH(a)		SYSDEF_PATH_(a)
+  27                             	#define SYSDEF_SYSDEP()		SYSDEF_PATH(sysdepend/TARGET_DIR/sysdef.h)
+  28                             	#include SYSDEF_SYSDEP()
+   1                             	/*
+   2                             	 *----------------------------------------------------------------------
+   3                             	 *    micro T-Kernel 3.0 BSP
+   4                             	 *
+   5                             	 *    Copyright (C) 2022 by Ken Sakamura.
+   6                             	 *    This software is distributed under the T-License 2.2.
+   7                             	 *----------------------------------------------------------------------
+   8                             	 *
+   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10                             	 *
+  11                             	 *----------------------------------------------------------------------
+  12                             	 */
+  13                             	
+  14                             	/*
+  15                             	 *	sysdef.h
+  16                             	 *
+  17                             	 *	System dependencies definition (Renesas Target Board for RX65N depended)
+  18                             	 *	Included also from assembler program.
+  19                             	 */
+  20                             	
+  21                             	#ifndef __SYS_SYSDEF_DEPEND_H__
+  22                             	#define __SYS_SYSDEF_DEPEND_H__
+  23                             	
+  24                             	
+  25                             	/* CPU-dependent definition */
+  26                             	#include "../cpu/rx65n/sysdef.h"
+   1                             	﻿/*
+   2                             	 *----------------------------------------------------------------------
+   3                             	 *    micro T-Kernel 3.00.06.B0
+   4                             	 *
+   5                             	 *    Copyright (C) 2022 by Ken Sakamura.
+   6                             	 *    This software is distributed under the T-License 2.2.
+   7                             	 *----------------------------------------------------------------------
+   8                             	 *
+   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10                             	 *
+  11                             	 *----------------------------------------------------------------------
+  12                             	 */
+  13                             	
+  14                             	/*
+  15                             	 *	sysdef.h
+  16                             	 *
+  17                             	 *	System dependencies definition (RX65N CPU depended)
+  18                             	 *	Included also from assembler program.
+  19                             	 */
+  20                             	
+  21                             	#ifndef __TK_SYSDEF_DEPEND_CPU_H__
+  22                             	#define __TK_SYSDEF_DEPEND_CPU_H__
+  23                             	
+  24                             	
+  25                             	/* CPU Core-dependent definition */
+  26                             	#include "../core/rxv2/sysdef.h"
+   1                             	/*
+  27                             	
+  27                             	
+  29                             	
+  27                             	#include <sys/knldef.h>
+   1                             	/*
+  28                             	
+  29                             	#include "offset.h"
+   1                             	/*
+  30                             	
+  31                             		.extern	Csym(knl_tmp_stack)
+  32                             		.extern	Csym(knl_dispatch_disabled)
+  33                             		.extern	Csym(knl_ctxtsk)
+  34                             		.extern	Csym(knl_schedtsk)
+  35                             		.extern	Csym(knl_lowpow_discnt)
+  36                             		.extern	Csym(low_pow)
+  37                             	
+  38                             	/* ------------------------------------------------------------------------*/
+  39                             	/*
+  40                             	 * Dispatcher
+  41                             	 *	dispatch_to_schedtsk:
+  42                             	 *		Destroys the current context and forces dispatch to "schedtsk".
+  43                             	 *			Called directly by a jump (jmp), but does not return.
+  44                             	 *			Called with an undefined stack state (undefined 'ssp').
+  45                             	 *			Called when interrupts are disabled.
+  46                             	 *	dispatch_entry:
+  47                             	 *		Normal dispatch processing.
+  48                             	 *	ret_int_dispatch:
+  49                             	 *		Called when dispatch is required with "tk_ret_int ()".
+  50                             	 *
+  51                             	 *	Contexts to save
+  52                             	 *		Saves registers other than SP to the stack. Save the SP to TCB.
+  53                             	 *
+  54                             	 *		   High Address	+---------------+
+  55                             	 *				| SPSW(32bit)	| Saved by interrupt entry
+  56                             	 *				| SPC(32bit)	| routines until here.
+  57                             	 *				+---------------+
+  58                             	 *				| R15		|
+  59                             	 *				| R14		|
+  60                             	 *				| R13		|
+  61                             	 *				|  :		|
+  62                             	 *				| R3		|
+  63                             	 *				| R2		|
+  64                             	 *	Saved to TCB  SP =>	| R1		|-> If USE_FPU,	  | R1		  |-> If USE_DSP,  | R1		   |
+  65                             	 *		    Low Address	+---------------+	 SP =>	  | FPSW	  |		   | ACC1	   |
+  66                             	 *						      Low Address +---------------+	SP =>	   | ACC0	   |
+  67                             	 *										       Low Address +---------------+
+  68                             	 */
+  69                             		.globl Csym(knl_dispatch_to_schedtsk)
+  70                             		.globl Csym(knl_dispatch_entry)
+  71                             		.globl Csym(ret_int_dispatch)
+  72                             	
+  73                             		.section .text
+  74                             	Csym(knl_dispatch_to_schedtsk):				// Forces dispatch entry
+  75                             		; During interrupt disable (PSW.I=0)
+  76 0000 FB 02 00 00 00 00       		mov.l	#(Csym(knl_tmp_stack) + TMP_STACK_SIZE), r0	// Set temporal stack
+  77                             	
+  78 0006 FB 12 00 00 00 00       		mov.l	#Csym(knl_dispatch_disabled), r1
+  79 000c F8 16 01                		mov.l	#1, [r1]				// Dispatch disable
+  80                             	
+  81 000f FB 72 00 00 00 00       		mov.l	#Csym(knl_ctxtsk), r7			
+  82                             	#if USE_DBGSPT != 0
+  83                             		mov.l	[r7], r2				// r2 := ctxtsk
+  84                             	#endif
+  85 0015 F8 76 00                		mov.l	#0, [r7]				// ctxtsk = NULL
+  86 0018 75 70 00                		mvtipl	#0					// IPL = 0 (Lowest level)
+  87 001b 2E 27                   		bra	l_dispatch1
+  88                             	
+  89                             	Csym(knl_dispatch_entry):				// Normal dispatch entry
+  90                             		// During interrupt disable (PSW.I=0).
+  91 001d FD 6A 01                		mvfc	psw, r1
+  92 0020 79 01                   		bset	#16, r1					// PSW compensation (I=1)
+  93 0022 06 A0 10 01             		xchg	[r0], r1
+  94 0026 7E A1                   		push.l	r1
+  95                             	
+  96                             	Csym(ret_int_dispatch):					// tk_ret_int() dispatch entry
+  97                             		// During interrupt disable (PSW.I=0).
+  98 0028 6E EF                   		pushm	r14-r15
+  99 002a FB F2 00 00 00 00       		mov.l	#Csym(knl_dispatch_disabled), r15
+ 100 0030 F8 F6 01                		mov.l	#1, [r15]				// Dispatch disable
+ 101 0033 6E 1D                   		pushm	r1-r13					// Context save
+ 102                             	
+ 103                             	#if USE_FPU						// Save FPU registers
+ 104                             		mvfc	fpsw, r1
+ 105                             		push.l	r1
+ 106                             	#endif
+ 107                             	
+ 108                             	#if USE_DSP						// Save DSP registers
+ 109                             		mvfaclo #0,a1,r2
+ 110                             		mvfachi #0,a1,r3
+ 111                             		mvfacgu	#0,a1,r4
+ 112                             		pushm	r2-r4
+ 113                             		mvfaclo #0,a0,r2
+ 114                             		mvfachi #0,a0,r3
+ 115                             		mvfacgu	#0,a0,r4
+ 116                             		pushm	r2-r4
+ 117                             	#endif
+ 118 0035 FB 72 00 00 00 00       		mov.l	#Csym(knl_ctxtsk), r7
+ 119 003b EC 72                   		mov.l	[r7], r2
+ 120 003d A1 A0                   		mov.l	r0, (TCB_tskctxb + CTXB_ssp)[r2]	// Save SSP to ctxtsk's TCB
+ 121                             	
+ 122 003f 75 70 00                		mvtipl	#0				// IPL = 0 (Lowest level)
+ 123                             	l_dispatch1:
+ 124 0042 7F B8                   		clrpsw	I				// Interrupt disable
+ 125                             	
+ 126 0044 FB 22 00 00 00 00       		mov.l	#Csym(knl_schedtsk), r2
+ 127 004a EC 26                   		mov.l	[r2], r6
+ 128 004c 61 06                   		cmp	#0, r6				// ? schedtsk == NULL
+ 129 004e 21 19                   		bne	l_dispatch2			//	No. goto l_dispatch2
+ 130                             							//	Yes.
+ 131                             		// Move to power saving mode because there are no tasks to perform.
+ 132 0050 FB 12 00 00 00 00       		mov.l	#Csym(knl_lowpow_discnt), r1 
+ 133 0056 EC 11                   		mov.l	[r1], r1			// Is 'low_pow' disabled?
+ 134 0058 61 01                   		cmp	#0, r1
+ 135 005a 19                      		bne	l_dispatch11
+ 136                             	
+ 137 005b FB 12 00 00 00 00       		mov.l	#Csym(low_pow), r1
+ 138 0061 7F 11                   		jsr	r1				// Move to power saving mode. call low_pow().
+ 139                             	l_dispatch11:
+ 140                             	
+ 141 0063 7F A8                   		setpsw	I				// Interrupt enable
+ 142 0065 2E DD                   		bra	l_dispatch1
+ 143                             	
+ 144                             	l_dispatch2:					// Switch to 'schedtsk'
+ 145                             		// During interrupt disable (PSW.I=0).
+ 146 0067 E3 76                   		mov.l	r6, [r7]				// ctxtsk := schedtsk
+ 147 0069 A9 E0                   		mov.l	(TCB_tskctxb + CTXB_ssp)[r6], r0	// Restore SSP from TCB
+ 148                             	
+ 149 006b FB 22 00 00 00 00       		mov.l	#Csym(knl_dispatch_disabled), r2
+ 150 0071 F8 26 00                		mov.l	#0, [r2]				// Dispatch enable
+ 151                             		
+ 152                             	#if USE_DSP					// Restore DSP register.
+ 153                             		popm	r2-r4
+ 154                             		mvtacgu	r4,a0
+ 155                             		mvtachi r3,a0
+ 156                             		mvtaclo r2,a0
+ 157                             		popm	r2-r4
+ 158                             		mvtacgu	r4,a1
+ 159                             		mvtachi r3,a1
+ 160                             		mvtaclo r2,a1
+ 161                             	#endif
+ 162                             	
+ 163                             	#if USE_FPU					// Restore FPU register.
+ 164                             		pop	r1
+ 165                             		mvtc	r1, fpsw
+ 166                             	#endif
+ 167                             	
+ 168 0074 6F 1F                   		popm	r1-r15				// Restore context.
+ 169 0076 7F 95                   		rte
+ 170                             	
+ 171                             		.end

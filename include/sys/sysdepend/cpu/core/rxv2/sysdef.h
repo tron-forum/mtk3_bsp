@@ -39,6 +39,9 @@
  * SYSTEM module registers
  */
 
+/* Register write protection register */
+#define SYSTEM_PRCR	(0x000803FE)
+
 /* Clock generation registers */
 #define SYSTEM_SCKCR	(0x00080020)
 #define SYSTEM_SCKCR2	(0x00080024)
@@ -61,9 +64,11 @@
 #define SYSTEM_MOFCR	(0x0008C293)
 #define SYSTEM_HOCOPCR	(0x0008C294)
 
-
-/* Register write protection register */
-#define SYSTEM_PRCR	(0x000803FE)
+/* Reset control registers */
+#define SYSTEM_RSTSR0	(0x0008C290)
+#define SYSTEM_RSTSR1	(0x0008C291)
+#define SYSTEM_RSTSR2	(0x000800C0)
+#define SYSTEM_SWRR	(0x000800C2)
 
 /* ------------------------------------------------------------------------ */
 /*

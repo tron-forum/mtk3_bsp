@@ -1,4 +1,377 @@
    1                             		.file	"reset_main.c"
    2                             		.section P,"ax"
    3                             	.Ltext0:
-   4                             	.Letext0:
+   5                             	_knl_set_intb:
+   6                             	.LFB15:
+   7                             		.file 1 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *    micro T-Kernel 3.00.03
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** /*
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *	sysdepend.h (RXv2)
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *	System-Dependent local defined
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** #ifndef _SYSDEPEND_CPU_CORE_SYSDEPEND_
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** #define _SYSDEPEND_CPU_CORE_SYSDEPEND_
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** /*
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *    Reset Handler (reset_hdl.S)
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  */
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void Reset_Handler(void);		/* Reset Handler */
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** /*
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *    Exception Handler (exc_hdr.c)
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  */
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void SuperVisorInst_Handler(void) __attribute__ ((interrupt));	/* Supervisor Instruction Exc
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void AccessInst_Handler(void) __attribute__ ((interrupt));	/* Access Instruction Exception *
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void UndefinedInst_Handler(void) __attribute__ ((interrupt));	/* Undefined Instruction Excep
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void FloatingPoint_Handler(void) __attribute__ ((interrupt));	/* Floating Point Exception */
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void NMI_Handler(void) __attribute__ ((interrupt));		/* NMI Handler */
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void Default_Handler(UW intno);	/* Default HLL Interrupt Handler (Undefine Interrupt) */
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** /*
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  * Dispatcher (dispatch.S)
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  */
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void knl_dispatch_entry(void);		/* dispatch entry */
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void knl_dispatch_to_schedtsk(void);	/* force dispatch */
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** /*
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  * Interrupt Control (interrupt.c)
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  */
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT FP knl_int_vect_ram[N_INTVEC];		/* Interrupt Vector table (RAM) */
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT FP knl_hll_inthdr_ram[N_INTVEC];		/* HLL Interrupt Handler Table (RAM) */
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT	W knl_int_nest;			/* Interrupt nest counter */
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** IMPORT void knl_systim_inthdr(void);		/* System-timer Interrupt handler */
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** /*
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  * Task context block
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  */
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** typedef struct {
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 	void	*ssp;		/* System stack pointer */
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** } CTXB;
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** /*
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  *	Control register operation
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h ****  */
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** Inline void knl_set_intb(UW intb)
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** {
+   8                             		.loc 1 66 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A FC                		add	#-4, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E3 A1                   		mov.L	r1, [r10]
+  67:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** 	Asm("mvtc %0, intb":: "r"(intb));
+  15                             		.loc 1 67 2
+  16 0009 EC A5                   		mov.L	[r10], r5
+  17                             	 ; 67 "d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h" 1
+  18 000b FD 68 5C                		mvtc r5, intb
+  19                             	 ; 0 "" 2
+  68:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\sysdepend.h **** }
+  20                             		.loc 1 68 1
+  21 000e 03                      		nop
+  22 000f 3F AA 02                		rtsd	#8, r10-r10
+  23                             	.LFE15:
+  25                             		.comm	_knl_lowmem_top,4,4
+  26                             		.comm	_knl_lowmem_limit,4,4
+  27                             		.global	_reset_main
+  29                             	_reset_main:
+  30                             	.LFB19:
+  31                             		.file 2 "../kernel/sysdepend/cpu/core/rxv2/reset_main.c"
+   1:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** /*
+   2:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *----------------------------------------------------------------------
+   3:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *    micro T-Kernel 3.00.03
+   4:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *
+   5:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *    This software is distributed under the T-License 2.2.
+   7:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *----------------------------------------------------------------------
+   8:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *
+   9:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *
+  11:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *----------------------------------------------------------------------
+  12:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  */
+  13:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  14:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #include <sys/machine.h>
+  15:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #ifdef CPU_CORE_RXV2
+  16:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  17:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** /*
+  18:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *	reset_main.c (RXv2)
+  19:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  *	Reset handler Main routine (Called from reset_hdl.S)
+  20:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  */
+  21:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  22:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #include "kernel.h"
+  23:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #include "../../../sysdepend.h"
+  24:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  25:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #include <tm/tmonitor.h>
+  26:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  27:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  28:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** /* Low level memory manager information */
+  29:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** EXPORT	void	*knl_lowmem_top;		// Head of area (Low address)
+  30:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** EXPORT	void	*knl_lowmem_limit;		// End of area (High address)
+  31:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  32:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** IMPORT	const void *_data_org;
+  33:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** IMPORT	const void *_data_start;
+  34:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** IMPORT	const void *_data_end;
+  35:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** IMPORT	const void *_bss_start;
+  36:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** IMPORT	const void *_bss_end;
+  37:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #if USE_NOINIT
+  38:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** IMPORT	const void *_noinit_end;
+  39:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #endif
+  40:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  41:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** /* ------------------------------------------------------------------------ */
+  42:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** /*
+  43:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  * Reset Handler Main routine (Called from reset_hdl.S)
+  44:../kernel/sysdepend/cpu/core/rxv2/reset_main.c ****  */
+  45:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  46:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** EXPORT void reset_main(void)
+  47:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** {
+  32                             		.loc 2 47 1
+  33 0012 7E AA                   		push.l	r10
+  34                             	.LCFI2:
+  35 0014 71 0A F0                		add	#-16, r0, r10
+  36                             	.LCFI3:
+  37 0017 EF A0                   		mov.L	r10, r0
+  48:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	UW	*src, *top, *end;
+  49:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	INT	i;
+  50:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  51:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	/* Startup Hardware */
+  52:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	knl_startup_hw();
+  38                             		.loc 2 52 2
+  39 0019 05 00 00 00             		bsr	_knl_startup_hw
+  53:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  54:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #if !USE_STATIC_IVT
+  55:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	/* Load Interrupt Vector Table from ROM to RAM */
+  56:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	src = (UW*)knl_int_vect_rom;;
+  40                             		.loc 2 56 6
+  41 001d F8 A2 00 00 00 00       		mov.L	#_knl_int_vect_rom, [r10]
+  57:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	top = (UW*)knl_int_vect_ram;
+  42                             		.loc 2 57 6
+  43 0023 F9 A2 01 00 00 00 00    		mov.L	#_knl_int_vect_ram, 4[r10]
+  58:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	for(i=0; i < (N_INTVEC); i++) {
+  44                             		.loc 2 58 7
+  45 002a F9 A6 02 00             		mov.L	#0, 8[r10]
+  46                             		.loc 2 58 2
+  47 002e 2E 1E                   		bra	.L3
+  48                             	.L4:
+  59:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		*top++ = *src++;
+  49                             		.loc 2 59 16 discriminator 3
+  50 0030 EC A4                   		mov.L	[r10], r4
+  51 0032 71 45 04                		add	#4, r4, r5
+  52 0035 E3 A5                   		mov.L	r5, [r10]
+  53                             		.loc 2 59 7 discriminator 3
+  54 0037 ED A5 01                		mov.L	4[r10], r5
+  55 003a 71 53 04                		add	#4, r5, r3
+  56 003d E7 A3 01                		mov.L	r3, 4[r10]
+  57                             		.loc 2 59 12 discriminator 3
+  58 0040 EC 44                   		mov.L	[r4], r4
+  59                             		.loc 2 59 10 discriminator 3
+  60 0042 E3 54                   		mov.L	r4, [r5]
+  58:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	for(i=0; i < (N_INTVEC); i++) {
+  61                             		.loc 2 58 28 discriminator 3
+  62 0044 ED A5 02                		mov.L	8[r10], r5
+  63 0047 62 15                   		add	#1, r5
+  64 0049 E7 A5 02                		mov.L	r5, 8[r10]
+  65                             	.L3:
+  58:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	for(i=0; i < (N_INTVEC); i++) {
+  66                             		.loc 2 58 2 discriminator 1
+  67 004c ED A5 02                		mov.L	8[r10], r5
+  68 004f 75 55 FF                		cmp	#0xff, r5
+  69 0052 2B DE                   		ble	.L4
+  60:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	}
+  61:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	/* Set Vector Table offset to SRAM */
+  62:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	knl_set_intb((UW)knl_int_vect_ram);
+  70                             		.loc 2 62 2
+  71 0054 FB 52 00 00 00 00       		mov.L	#_knl_int_vect_ram, r5
+  72 005a EF 51                   		mov.L	r5, r1
+  73 005c 39 A4 FF                		bsr	_knl_set_intb
+  63:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  64:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	/* Load HLL-Interrupt Handler Table from ROM to RAM */
+  65:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	src = (UW*)knl_hll_inthdr_rom;;
+  74                             		.loc 2 65 6
+  75 005f F8 A2 00 00 00 00       		mov.L	#_knl_hll_inthdr_rom, [r10]
+  66:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	top = (UW*)knl_hll_inthdr_ram;
+  76                             		.loc 2 66 6
+  77 0065 F9 A2 01 00 00 00 00    		mov.L	#_knl_hll_inthdr_ram, 4[r10]
+  67:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	for(i=0; i < (N_INTVEC); i++) {
+  78                             		.loc 2 67 7
+  79 006c F9 A6 02 00             		mov.L	#0, 8[r10]
+  80                             		.loc 2 67 2
+  81 0070 2E 1E                   		bra	.L5
+  82                             	.L6:
+  68:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		*top++ = *src++;
+  83                             		.loc 2 68 16 discriminator 3
+  84 0072 EC A4                   		mov.L	[r10], r4
+  85 0074 71 45 04                		add	#4, r4, r5
+  86 0077 E3 A5                   		mov.L	r5, [r10]
+  87                             		.loc 2 68 7 discriminator 3
+  88 0079 ED A5 01                		mov.L	4[r10], r5
+  89 007c 71 53 04                		add	#4, r5, r3
+  90 007f E7 A3 01                		mov.L	r3, 4[r10]
+  91                             		.loc 2 68 12 discriminator 3
+  92 0082 EC 44                   		mov.L	[r4], r4
+  93                             		.loc 2 68 10 discriminator 3
+  94 0084 E3 54                   		mov.L	r4, [r5]
+  67:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	for(i=0; i < (N_INTVEC); i++) {
+  95                             		.loc 2 67 28 discriminator 3
+  96 0086 ED A5 02                		mov.L	8[r10], r5
+  97 0089 62 15                   		add	#1, r5
+  98 008b E7 A5 02                		mov.L	r5, 8[r10]
+  99                             	.L5:
+  67:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	for(i=0; i < (N_INTVEC); i++) {
+ 100                             		.loc 2 67 2 discriminator 1
+ 101 008e ED A5 02                		mov.L	8[r10], r5
+ 102 0091 75 55 FF                		cmp	#0xff, r5
+ 103 0094 2B DE                   		ble	.L6
+  69:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	}
+  70:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #endif
+  71:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  72:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	/* Load .data to ram */
+  73:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	src = (UW*)&_data_org;;
+ 104                             		.loc 2 73 6
+ 105 0096 F8 A2 00 00 00 00       		mov.L	#__data_org, [r10]
+  74:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	top = (UW*)&_data_start;
+ 106                             		.loc 2 74 6
+ 107 009c F9 A2 01 00 00 00 00    		mov.L	#__data_start, 4[r10]
+  75:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	end = (UW*)&_data_end;
+ 108                             		.loc 2 75 6
+ 109 00a3 F9 A2 03 00 00 00 00    		mov.L	#__data_end, 12[r10]
+  76:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	while(top != end) {
+ 110                             		.loc 2 76 7
+ 111 00aa 2E 16                   		bra	.L7
+ 112                             	.L8:
+  77:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		*top++ = *src++;
+ 113                             		.loc 2 77 16
+ 114 00ac EC A4                   		mov.L	[r10], r4
+ 115 00ae 71 45 04                		add	#4, r4, r5
+ 116 00b1 E3 A5                   		mov.L	r5, [r10]
+ 117                             		.loc 2 77 7
+ 118 00b3 ED A5 01                		mov.L	4[r10], r5
+ 119 00b6 71 53 04                		add	#4, r5, r3
+ 120 00b9 E7 A3 01                		mov.L	r3, 4[r10]
+ 121                             		.loc 2 77 12
+ 122 00bc EC 44                   		mov.L	[r4], r4
+ 123                             		.loc 2 77 10
+ 124 00be E3 54                   		mov.L	r4, [r5]
+ 125                             	.L7:
+  76:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	while(top != end) {
+ 126                             		.loc 2 76 7
+ 127 00c0 ED A4 01                		mov.L	4[r10], r4
+ 128 00c3 ED A5 03                		mov.L	12[r10], r5
+ 129 00c6 47 54                   		cmp	r5, r4
+ 130 00c8 21 E4                   		bne	.L8
+  78:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	}
+  79:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  80:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	/* Initialize .bss */
+  81:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #if USE_NOINIT
+  82:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	top = (UW*)&_noinit_end;
+  83:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #else 
+  84:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	top = (UW*)&_bss_start;
+ 131                             		.loc 2 84 6
+ 132 00ca F9 A2 01 00 00 00 00    		mov.L	#__bss_start, 4[r10]
+  85:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #endif
+  86:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	for(i = ((INT)&_bss_end - (INT)&_bss_start)/sizeof(UW); i > 0 ; i--) {
+ 133                             		.loc 2 86 11
+ 134 00d1 FB 42 00 00 00 00       		mov.L	#__bss_end, r4
+ 135                             		.loc 2 86 28
+ 136 00d7 FB 52 00 00 00 00       		mov.L	#__bss_start, r5
+ 137                             		.loc 2 86 26
+ 138 00dd FF 05 54                		sub	r5, r4, r5
+ 139                             		.loc 2 86 45
+ 140 00e0 68 25                   		shlr	#2, r5
+ 141                             		.loc 2 86 8
+ 142 00e2 E7 A5 02                		mov.L	r5, 8[r10]
+ 143                             		.loc 2 86 2
+ 144 00e5 2E 16                   		bra	.L9
+ 145                             	.L10:
+  87:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		*top++ = 0;
+ 146                             		.loc 2 87 7 discriminator 3
+ 147 00e7 ED A5 01                		mov.L	4[r10], r5
+ 148 00ea 71 54 04                		add	#4, r5, r4
+ 149 00ed E7 A4 01                		mov.L	r4, 4[r10]
+ 150                             		.loc 2 87 10 discriminator 3
+ 151 00f0 F8 56 00                		mov.L	#0, [r5]
+  86:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		*top++ = 0;
+ 152                             		.loc 2 86 67 discriminator 3
+ 153 00f3 ED A5 02                		mov.L	8[r10], r5
+ 154 00f6 60 15                   		sub	#1, r5
+ 155 00f8 E7 A5 02                		mov.L	r5, 8[r10]
+ 156                             	.L9:
+  86:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		*top++ = 0;
+ 157                             		.loc 2 86 2 discriminator 1
+ 158 00fb ED A5 02                		mov.L	8[r10], r5
+ 159 00fe 61 05                   		cmp	#0, r5
+ 160 0100 2A E7                   		bgt	.L10
+  88:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	}
+  89:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+  90:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #if USE_IMALLOC
+  91:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	/* Set System memory area */
+  92:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	if(INTERNAL_RAM_START > SYSTEMAREA_TOP) {
+  93:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		knl_lowmem_top = (UW*)INTERNAL_RAM_START;
+  94:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	} else {
+  95:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		knl_lowmem_top = (UW*)SYSTEMAREA_TOP;
+ 161                             		.loc 2 95 18
+ 162 0102 FB 52 00 00 00 00       		mov.L	#_knl_lowmem_top, r5
+ 163 0108 F8 56 00                		mov.L	#0, [r5]
+  96:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	}
+  97:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	if((UW)knl_lowmem_top < (UW)&_bss_end) {
+ 164                             		.loc 2 97 5
+ 165 010b FB 52 00 00 00 00       		mov.L	#_knl_lowmem_top, r5
+ 166 0111 EC 55                   		mov.L	[r5], r5
+ 167 0113 EF 54                   		mov.L	r5, r4
+ 168                             		.loc 2 97 26
+ 169 0115 FB 52 00 00 00 00       		mov.L	#__bss_end, r5
+ 170                             		.loc 2 97 4
+ 171 011b 47 54                   		cmp	r5, r4
+ 172 011d 22 0E                   		bgeu	.L13
+  98:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		knl_lowmem_top = (UW*)&_bss_end;
+ 173                             		.loc 2 98 18
+ 174 011f FB 52 00 00 00 00       		mov.L	#_knl_lowmem_top, r5
+ 175 0125 F8 52 00 00 00 00       		mov.L	#__bss_end, [r5]
+ 176                             	.L13:
+  99:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	}
+ 100:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+ 101:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	if((SYSTEMAREA_END != 0) && (INTERNAL_RAM_END > CNF_SYSTEMAREA_END)) {
+ 102:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		knl_lowmem_limit = (UW*)(SYSTEMAREA_END - EXC_STACK_SIZE);
+ 103:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	} else {
+ 104:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 		knl_lowmem_limit = (UW*)(INTERNAL_RAM_END - EXC_STACK_SIZE);
+ 177                             		.loc 2 104 20
+ 178 012b FB 52 00 00 00 00       		mov.L	#_knl_lowmem_limit, r5
+ 179 0131 F8 5E FF F7 03          		mov.L	#0x3f7ff, [r5]
+ 105:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	}
+ 106:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** #endif
+ 107:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 
+ 108:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	/* Startup Kernel */
+ 109:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	main();		/**** No return ****/
+ 180                             		.loc 2 109 2
+ 181 0136 05 00 00 00             		bsr	_main
+ 182                             	.L12:
+ 110:../kernel/sysdepend/cpu/core/rxv2/reset_main.c **** 	while(1);	/* guard - infinite loops */
+ 183                             		.loc 2 110 7 discriminator 1
+ 184 013a 2E 00                   		bra	.L12
+ 185                             	.LFE19:
+ 243                             	.Letext0:
+ 244                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 245                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 246                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+ 247                             		.file 6 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 248                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 249                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 250                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 251                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
+ 252                             		.file 11 "../kernel/sysdepend/cpu/core/rxv2/../../../rtb_rx65n/../cpu/rx65n/sysdepend.h"

@@ -10,7 +10,6 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include lib/libtm/sysdepend/rtb_rz65n/subdir.mk
 -include lib/libtm/sysdepend/nucleo_l476/subdir.mk
 -include lib/libtm/sysdepend/nucleo_h723/subdir.mk
 -include lib/libtm/sysdepend/no_device/subdir.mk

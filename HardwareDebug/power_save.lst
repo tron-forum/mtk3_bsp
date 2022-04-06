@@ -1,77 +1,13 @@
    1                             		.file	"power_save.c"
    2                             		.section P,"ax"
    3                             	.Ltext0:
-   4                             		.global	_low_pow
-   6                             	_low_pow:
-   7                             	.LFB19:
-   8                             		.file 1 "../kernel/sysdepend/rtb_rx65n/power_save.c"
-   1:../kernel/sysdepend/rtb_rx65n/power_save.c **** /*
-   2:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *----------------------------------------------------------------------
-   3:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *    micro T-Kernel 3.00.06.B0
-   4:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *
-   5:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *    Copyright (C) 2022 by Ken Sakamura.
-   6:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *    This software is distributed under the T-License 2.2.
-   7:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *----------------------------------------------------------------------
-   8:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *
-   9:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
-  10:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *
-  11:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *----------------------------------------------------------------------
-  12:../kernel/sysdepend/rtb_rx65n/power_save.c ****  */
-  13:../kernel/sysdepend/rtb_rx65n/power_save.c **** 
-  14:../kernel/sysdepend/rtb_rx65n/power_save.c **** #include <tk/tkernel.h>
-  15:../kernel/sysdepend/rtb_rx65n/power_save.c **** #include <kernel.h>
-  16:../kernel/sysdepend/rtb_rx65n/power_save.c **** 
-  17:../kernel/sysdepend/rtb_rx65n/power_save.c **** #ifdef RTB_RX65N
-  18:../kernel/sysdepend/rtb_rx65n/power_save.c **** 
-  19:../kernel/sysdepend/rtb_rx65n/power_save.c **** /*
-  20:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *	power_save.c (Renesas Target Board for RX65N)
-  21:../kernel/sysdepend/rtb_rx65n/power_save.c ****  *	Power-Saving Function
-  22:../kernel/sysdepend/rtb_rx65n/power_save.c ****  */
-  23:../kernel/sysdepend/rtb_rx65n/power_save.c **** 
-  24:../kernel/sysdepend/rtb_rx65n/power_save.c **** #include "sysdepend.h"
-  25:../kernel/sysdepend/rtb_rx65n/power_save.c **** 
-  26:../kernel/sysdepend/rtb_rx65n/power_save.c **** /*
-  27:../kernel/sysdepend/rtb_rx65n/power_save.c ****  * Switch to power-saving mode
-  28:../kernel/sysdepend/rtb_rx65n/power_save.c ****  */
-  29:../kernel/sysdepend/rtb_rx65n/power_save.c **** EXPORT void low_pow( void )
-  30:../kernel/sysdepend/rtb_rx65n/power_save.c **** {
-   9                             		.loc 1 30 1
-  10 0000 7E AA                   		push.l	r10
-  11                             	.LCFI0:
-  12 0002 EF 0A                   		mov.L	r0, r10
-  13                             	.LCFI1:
-  31:../kernel/sysdepend/rtb_rx65n/power_save.c **** }
-  14                             		.loc 1 31 1
-  15 0004 03                      		nop
-  16 0005 3F AA 01                		rtsd	#4, r10-r10
-  17                             	.LFE19:
-  19                             		.global	_off_pow
-  21                             	_off_pow:
-  22                             	.LFB20:
-  32:../kernel/sysdepend/rtb_rx65n/power_save.c **** 
-  33:../kernel/sysdepend/rtb_rx65n/power_save.c **** /*
-  34:../kernel/sysdepend/rtb_rx65n/power_save.c ****  * Move to suspend mode
-  35:../kernel/sysdepend/rtb_rx65n/power_save.c ****  */
-  36:../kernel/sysdepend/rtb_rx65n/power_save.c **** EXPORT void off_pow( void )
-  37:../kernel/sysdepend/rtb_rx65n/power_save.c **** {
-  23                             		.loc 1 37 1
-  24 0008 7E AA                   		push.l	r10
-  25                             	.LCFI2:
-  26 000a EF 0A                   		mov.L	r0, r10
-  27                             	.LCFI3:
-  38:../kernel/sysdepend/rtb_rx65n/power_save.c **** }
-  28                             		.loc 1 38 1
-  29 000c 03                      		nop
-  30 000d 3F AA 01                		rtsd	#4, r10-r10
-  31                             	.LFE20:
-  87                             	.Letext0:
-  88                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
-  89                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
-  90                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
-  91                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
-  92                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
-  93                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
-  94                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
-  95                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
-  96                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
-  97                             		.file 11 "../kernel/sysdepend/rtb_rx65n/../cpu/rx65n/sysdepend.h"
+   4                             	.Letext0:
+   5                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+   6                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+   7                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+   8                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+   9                             		.file 5 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+  10                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+  11                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+  12                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
+  13                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_st

@@ -1,310 +1,56 @@
-   1                             	# 1 "../kernel/sysdepend/cpu/core/armv7a/vector_tbl.S"
-   1                             	﻿/*
-   0                             	
-   0                             	
-   0                             	
-   2                             	 *----------------------------------------------------------------------
-   3                             	 *    micro T-Kernel 3.00.05
-   4                             	 *
-   5                             	 *    Copyright (C) 2006-2021 by Ken Sakamura.
-   6                             	 *    This software is distributed under the T-License 2.2.
-   7                             	 *----------------------------------------------------------------------
-   8                             	 *
-   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2021/11.
-  10                             	 *
-  11                             	 *----------------------------------------------------------------------
-  12                             	 */
-  13                             	
-  14                             	#include <sys/machine.h>
-   1                             	/*
-   2                             	 *----------------------------------------------------------------------
-   3                             	 *    micro T-Kernel 3.0 BSP
-   4                             	 *
-   5                             	 *    Copyright (C) 2021-2022 by Ken Sakamura.
-   6                             	 *    This software is distributed under the T-License 2.2.
-   7                             	 *----------------------------------------------------------------------
-   8                             	 *
-   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2022/04.
-  10                             	 *
-  11                             	 *----------------------------------------------------------------------
-  12                             	 */
-  13                             	
-  14                             	/*
-  15                             	 *	machine.h
-  16                             	 *	Machine type definition 
-  17                             	 */
-  18                             	
-  19                             	#ifndef __SYS_MACHINE_H__
-  20                             	#define __SYS_MACHINE_H__
-  21                             	
-  22                             	/* ===== System dependencies definitions ================================ */
-  23                             	#include <config.h>
-   1                             	/*
-   2                             	 *----------------------------------------------------------------------
-   3                             	 *    micro T-Kernel 3.00.05
-   4                             	 *
-   5                             	 *    Copyright (C) 2006-2021 by Ken Sakamura.
-   6                             	 *    This software is distributed under the T-License 2.2.
-   7                             	 *----------------------------------------------------------------------
-   8                             	 *
-   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2021/11.
-  10                             	 *
-  11                             	 *----------------------------------------------------------------------
-  12                             	 */
-  13                             	
-  14                             	/*
-  15                             	 *	config.h
-  16                             	 *	User Configuration Definition
-  17                             	 */
-  18                             	
-  19                             	#ifndef __TK_CONFIG__
-  20                             	#define __TK_CONFIG__
-  21                             	
-  22                             	/*---------------------------------------------------------------------- */
-  23                             	/*  Target Name
-  24                             		Define the system target name. Alternatively, define the target name 
-  25                             		in the development environment.
-  26                             	 */
-  27                             	//#define _IOTE_M367_
-  28                             	//#define _IOTE_RX231_
-  29                             	//#define _IOTE_STM32L4_
-  30                             	//#define _IOTE_RZA2M_
-  31                             	
-  32                             	/*---------------------------------------------------------------------- */
-  33                             	/* SYSCONF : micro T-Kernel system configuration
-  34                             	 */
-  35                             	
-  36                             	#define	CNF_SYSTEMAREA_TOP	0	/* 0: Use system default address */
-  37                             	#define CNF_SYSTEMAREA_END	0	/* 0: Use system default address */
-  38                             	
-  39                             	#define	CNF_MAX_TSKPRI		32	/* Task Max priority */
-  40                             	
-  41                             	#define CNF_TIMER_PERIOD	10	/* System timer period */
-  42                             	
-  43                             	/* Maximum number of kernel objects */
-  44                             	#define CNF_MAX_TSKID		32	/* Task */
-  45                             	#define CNF_MAX_SEMID		16	/* Semaphore */
-  46                             	#define CNF_MAX_FLGID		16	/* Event flag */
-  47                             	#define CNF_MAX_MBXID		8	/* Mailbox*/
-  48                             	#define CNF_MAX_MTXID		4	/* Mutex */
-  49                             	#define CNF_MAX_MBFID		8	/* Message buffer */
-  50                             	#define CNF_MAX_MPLID		4	/* Memory pool */
-  51                             	#define CNF_MAX_MPFID		8	/* Fixed size memory pool */
-  52                             	#define CNF_MAX_CYCID		4	/* Cyclic handler */
-  53                             	#define CNF_MAX_ALMID		8	/* Alarm handler */
-  54                             	
-  55                             	/* Device configuration */
-  56                             	#define CNF_MAX_REGDEV		(8)	/* Max registered device */
-  57                             	#define CNF_MAX_OPNDEV		(16)	/* Max open device */
-  58                             	#define CNF_MAX_REQDEV		(16)	/* Max request device */
-  59                             	#define CNF_DEVT_MBFSZ0		(-1)	/* message buffer size for event notification */
-  60                             	#define CNF_DEVT_MBFSZ1		(-1)	/* message max size for event notification */
-  61                             	
-  62                             	/* Version Number */
-  63                             	#define CNF_VER_MAKER		0
-  64                             	#define CNF_VER_PRID		0
-  65                             	#define CNF_VER_PRVER		3
-  66                             	#define CNF_VER_PRNO1		0
-  67                             	#define CNF_VER_PRNO2		0
-  68                             	#define CNF_VER_PRNO3		0
-  69                             	#define CNF_VER_PRNO4		0
-  70                             	
-  71                             	
-  72                             	/*---------------------------------------------------------------------- */
-  73                             	/* Backwards compatible api support 
-  74                             	 *      micro T-Kernel2.0 API support (Rendezvous)
-  75                             	 */
-  76                             	#define USE_LEGACY_API		(0)	/* 1: Valid  0: Invalid */
-  77                             	#define CNF_MAX_PORID		(0)	/* Maximum number of Rendezvous */
-  78                             	
-  79                             	
-  80                             	/*---------------------------------------------------------------------- */
-  81                             	/* Stack size definition
-  82                             	 */
-  83                             	#define CNF_EXC_STACK_SIZE	(2048)	/* Exception stack size */
-  84                             	#define	CNF_TMP_STACK_SIZE	(256)	/* Temporary stack size */
-  85                             	
-  86                             	
-  87                             	/*---------------------------------------------------------------------- */
-  88                             	/* System function selection
-  89                             		1: Use function.  0: No use function.
-  90                             	 */
-  91                             	#define USE_NOINIT		(0)	/* Use zero-clear bss section */
-  92                             	#define USE_IMALLOC		(1)	/* Use dynamic memory allocation */
-  93                             	#define USE_SHUTDOWN		(1)	/* Use System shutdown */
-  94                             	#define USE_STATIC_IVT		(0)	/* Use static interrupt vector table */
-  95                             	
-  96                             	
-  97                             	/*---------------------------------------------------------------------- */
-  98                             	/* Check API parameter
-  99                             	 *   1: Check parameter  0: Do not check parameter
- 100                             	 */
- 101                             	#define CHK_NOSPT		(1)	/* Check unsupported function (E_NOSPT) */
- 102                             	#define CHK_RSATR		(1)	/* Check reservation attribute error (E_RSATR) */
- 103                             	#define CHK_PAR			(1)	/* Check parameter (E_PAR) */
- 104                             	#define CHK_ID			(1)	/* Check object ID range (E_ID) */
- 105                             	#define CHK_OACV		(1)	/* Check Object Access Violation (E_OACV) */
- 106                             	#define CHK_CTX			(1)	/* Check whether task-independent part is running (E_CTX) */
- 107                             	#define CHK_CTX1		(1)	/* Check dispatch disable part */
- 108                             	#define CHK_CTX2		(1)	/* Check task independent part */
- 109                             	#define CHK_SELF		(1)	/* Check if its own task is specified (E_OBJ) */
- 110                             	
- 111                             	#define	CHK_TKERNEL_CONST	(1)	/* Check const-type parameter */
- 112                             	
- 113                             	/*---------------------------------------------------------------------- */
- 114                             	/* User initialization program (UserInit)
- 115                             	 *
- 116                             	 */
- 117                             	#define	USE_USERINIT		(0)	/*  1: Use UserInit  0: Do not use UserInit */
- 118                             	#define RI_USERINIT		(0)	/* UserInit start address */
- 119                             	
- 120                             	
- 121                             	/*---------------------------------------------------------------------- */
- 122                             	/* Debugger support function
- 123                             	 *   1: Valid  0: Invalid
- 124                             	 */
- 125                             	#define USE_DBGSPT		(0)	/* Use mT-Kernel/DS */
- 126                             	#define USE_OBJECT_NAME		(0)	/* Use DS object name */
- 127                             	
- 128                             	#define OBJECT_NAME_LENGTH	(8)	/* DS Object name length */
- 129                             	
- 130                             	/*---------------------------------------------------------------------- */
- 131                             	/* Use T-Monitor Compatible API Library  & Message to terminal.
- 132                             	　*  1: Valid  0: Invalid
- 133                             	 */
- 134                             	#define	USE_TMONITOR		(1)	/* T-Monitor API */
- 135                             	#define USE_SYSTEM_MESSAGE	(1)	/* System Message */
- 136                             	#define USE_EXCEPTION_DBG_MSG	(1)	/* Excepttion debug message */
- 137                             	#define USE_TASK_DBG_MSG	(0)	/* Tsak debug message */
- 138                             	
- 139                             	/*---------------------------------------------------------------------- */
- 140                             	/* Use Co-Processor.
- 141                             	　*  1: Valid  0: Invalid
- 142                             	 */
- 143                             	#define	USE_FPU			(0)	/* Use FPU */
- 144                             	#define	USE_DSP			(0)	/* Use DSP */
- 145                             	
- 146                             	/*---------------------------------------------------------------------- */
- 147                             	/* Use Physical timer.
- 148                             	　*  1: Valid  0: Invalid
- 149                             	 */
- 150                             	#define USE_PTMR		(1)	/* Use Physical timer */
- 151                             	
- 152                             	/*---------------------------------------------------------------------- */
- 153                             	/* Use Sample device driver.
- 154                             	　*  1: Valid  0: Invalid
- 155                             	 */
- 156                             	#define USE_SDEV_DRV		(1)	/* Use Sample device driver */
- 157                             	
- 158                             	/*---------------------------------------------------------------------- */
- 159                             	/*
- 160                             	 *	Use function Definition
- 161                             	 */
- 162                             	#include "config_func.h"
-   1                             	/*
- 163                             	
-  24                             	
-  25                             	#ifdef _IOTE_M367_
-  26                             	#include "sysdepend/iote_m367/machine.h"
-  27                             	#define Csym(sym) sym
-  28                             	#endif
-  29                             	
-  30                             	#ifdef _IOTE_STM32L4_
-  31                             	#include "sysdepend/iote_stm32l4/machine.h"
-  32                             	#define Csym(sym) sym
-  33                             	#endif
-  34                             	
-  35                             	#ifdef _IOTE_RX231_
-  36                             	#include "sysdepend/iote_rx231/machine.h"
-  37                             	#define Csym(sym) _##sym
-  38                             	#endif
-  39                             	
-  40                             	#ifdef _IOTE_RZA2M_
-  41                             	#include "sysdepend/iote_rza2m/machine.h"
-  42                             	#define Csym(sym) sym
-  43                             	#endif
-  44                             	
-  45                             	/* ----- μT-Kernel BSP ------------------------------------------------- */
-  46                             	#ifdef _NUCLEO_L476_
-  47                             	#include "sysdepend/nucleo_l476/machine.h"
-  48                             	#define Csym(sym) sym
-  49                             	#endif
-  50                             	
-  51                             	#ifdef _NUCLEO_H723_
-  52                             	#include "sysdepend/nucleo_h723/machine.h"
-  53                             	#define Csym(sym) sym
-  54                             	#endif
-  55                             	
-  56                             	#ifdef _RTB_RX65N_
-  57                             	#include "sysdepend/rtb_rx65n/machine.h"
-   1                             	/*
-   2                             	 *----------------------------------------------------------------------
-   3                             	 *    micro T-Kernel 3.0 BSP
-   4                             	 *
-   5                             	 *    Copyright (C) 2022 by Ken Sakamura.
-   6                             	 *    This software is distributed under the T-License 2.2.
-   7                             	 *----------------------------------------------------------------------
-   8                             	 *
-   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2022/04.
-  10                             	 *
-  11                             	 *----------------------------------------------------------------------
-  12                             	 */
-  13                             	
-  14                             	/*
-  15                             	 *	machine.h
-  16                             	 *
-  17                             	 *	Machine type definition (Renesas Target Board for RX65N depended)
-  18                             	 */
-  19                             	
-  20                             	#ifndef __SYS_SYSDEPEND_MACHINE_H__
-  21                             	#define __SYS_SYSDEPEND_MACHINE_H__
-  22                             	
-  23                             	/*
-  24                             	 * [TYPE]_[CPU]		TARGET SYSTEM
-  25                             	 * CPU_xxxx		CPU type
-  26                             	 * CPU_CORE_xxx		CPU core type
-  27                             	 */
-  28                             	
-  29                             	/* ----- Renesas Target Board for RX65N (CPU: RX65N) definition ----- */
-  30                             	
-  31                             	#define RTB_RX65N		1		/* Target system : Target Board */
-  32                             	#define CPU_RX65N		1		/* Target CPU : Renesas RX65N */
-  33                             	#define CPU_CORE_RXV2		1		/* Target CPU-Core : RX200 series*/
-  34                             	
-  35                             	#define TARGET_DIR		rtb_rx65n	/* Sysdepend-Directory name */
-  36                             	
-  37                             	/*
-  38                             	 **** CPU-depeneded profile (RX65N)
-  39                             	 */
-  40                             	#include "../cpu/rx65n/machine.h"
-   1                             	/*
-   2                             	 *----------------------------------------------------------------------
-   3                             	 *    micro T-Kernel 3.00.06.B0
-   4                             	 *
-   5                             	 *    Copyright (C) 2022 by Ken Sakamura.
-   6                             	 *    This software is distributed under the T-License 2.2.
-   7                             	 *----------------------------------------------------------------------
-   8                             	 *
-   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2022/04.
-  10                             	 *
-  11                             	 *----------------------------------------------------------------------
-  12                             	 */
-  13                             	
-  14                             	/*
-  15                             	 *	machine_depend.h
-  16                             	 *
-  17                             	 *	Machine type definition (RX65N depended)
-  18                             	 */
-  19                             	
-  20                             	#ifndef __SYS_SYSDEPEND_MACHINE_CPU_H__
-  21                             	#define __SYS_SYSDEPEND_MACHINE_CPU_H__
-  22                             	
-  23                             	/*
-  24                             	 **** CPU core-depeneded profile (RXv2)
-  25                             	 */
-  26                             	
-  27                             	#include "../core/rxv2/machine.h"
-   1                             	/*
-  28                             	
-  41                             	
-  58                             	#define Csym(sym) _##sym
+   1                             		.file	"vector_tbl.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.global	_reset_vect
+   5                             		.section	.fvectors,"a"
+   6                             		.balign 4
+   9                             	_reset_vect:
+  10 0000 00 00 00 00             		.long	_Reset_Handler
+  11                             		.global	_exvect_tbl
+  12                             		.section	.exvectors,"a"
+  13                             		.balign 4
+  16                             	_exvect_tbl:
+  17 0000 FF FF FF FF             		.long	-1
+  18 0004 00 00 00 00             		.long	0
+  19 0008 FF FF FF FF             		.long	-1
+  20 000c FF FF FF FF             		.long	-1
+  21 0010 00 00 00 00             		.long	0
+  22 0014 00 00 00 00             		.long	0
+  23 0018 00 00 00 00             		.long	0
+  24 001c 00 00 00 00             		.long	0
+  25 0020 FF FF FF FF             		.long	-1
+  26 0024 FF FF FF FF             		.long	-1
+  27 0028 FF FF FF FF             		.long	-1
+  28 002c FF FF FF FF             		.long	-1
+  29 0030 00 00 00 00             		.long	0
+  30 0034 00 00 00 00             		.long	0
+  31 0038 00 00 00 00             		.long	0
+  32 003c 00 00 00 00             		.long	0
+  33 0040 00 00 00 00             		.long	0
+  34 0044 00 00 00 00             		.long	0
+  35 0048 00 00 00 00             		.long	0
+  36 004c 00 00 00 00             		.long	0
+  37 0050 00 00 00 00             		.long	_SuperVisorInst_Handler
+  38 0054 00 00 00 00             		.long	_AccessInst_Handler
+  39 0058 00 00 00 00             		.long	0
+  40 005c 00 00 00 00             		.long	_UndefinedInst_Handler
+  41 0060 00 00 00 00             		.long	0
+  42 0064 00 00 00 00             		.long	_FloatingPoint_Handler
+  43 0068 00 00 00 00             		.long	0
+  44 006c 00 00 00 00             		.long	0
+  45 0070 00 00 00 00             		.long	0
+  46 0074 00 00 00 00             		.long	0
+  47 0078 00 00 00 00             		.long	_NMI_Handler
+  48                             		.section P,"ax"
+  49                             	.Letext0:
+  50                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+  51                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+  52                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+  53                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+  54                             		.file 5 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+  55                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+  56                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+  57                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
+  58                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_st
+  59                             		.file 10 "../kernel/sysdepend/cpu/core/rxv2/../../../rtb_rx65n/../cpu/rx65n/sysdepend.h"
+  60                             		.file 11 "../kernel/sysdepend/cpu/core/rxv2/vector_tbl.c"

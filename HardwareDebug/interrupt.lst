@@ -1,4 +1,214 @@
    1                             		.file	"interrupt.c"
    2                             		.section P,"ax"
    3                             	.Ltext0:
-   4                             	.Letext0:
+   4                             		.global	_knl_int_nest
+   5                             		.section B,"w",@nobits
+   6                             		.p2align 2
+   7                             		.balign 4
+  10                             	_knl_int_nest:
+  11 0000 00 00 00 00             		.zero	4
+  12                             		.global	_knl_int_vect_ram
+  13                             		.section	.data_ivector,"aw"
+  14                             		.balign 4
+  17                             	_knl_int_vect_ram:
+  18 0000 00 00 00 00 00 00 00 00 		.zero	1024
+  18      00 00 00 00 00 00 00 00 
+  18      00 00 00 00 00 00 00 00 
+  18      00 00 00 00 00 00 00 00 
+  18      00 00 00 00 00 00 00 00 
+  19                             		.global	_knl_hll_inthdr_ram
+  20                             		.section	.data_hvector,"aw"
+  21                             		.balign 4
+  24                             	_knl_hll_inthdr_ram:
+  25 0000 00 00 00 00 00 00 00 00 		.zero	1024
+  25      00 00 00 00 00 00 00 00 
+  25      00 00 00 00 00 00 00 00 
+  25      00 00 00 00 00 00 00 00 
+  25      00 00 00 00 00 00 00 00 
+  26                             		.section P,"ax"
+  27                             		.global	_knl_define_inthdr
+  29                             	_knl_define_inthdr:
+  30                             	.LFB19:
+  31                             		.file 1 "../kernel/sysdepend/cpu/core/rxv2/interrupt.c"
+   1:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /*
+   2:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *----------------------------------------------------------------------
+   3:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *    micro T-Kernel 3.00.03
+   4:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *
+   5:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *    This software is distributed under the T-License 2.2.
+   7:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *----------------------------------------------------------------------
+   8:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *
+   9:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *
+  11:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *----------------------------------------------------------------------
+  12:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  */
+  13:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  14:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** #include <sys/machine.h>
+  15:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** #ifdef CPU_CORE_RXV2
+  16:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /*
+  17:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *	interrupt.c (RXv2)
+  18:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  *	Interrupt control
+  19:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  */
+  20:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  21:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** #include "kernel.h"
+  22:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** #include "../../../sysdepend.h"
+  23:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  24:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /* ------------------------------------------------------------------------ */
+  25:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /*
+  26:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  * Interrupt nest counter
+  27:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  */
+  28:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** EXPORT	W	knl_int_nest = 0;	/* Interrupt nest counter */
+  29:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  30:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  31:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** #if !USE_STATIC_IVT
+  32:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /* ------------------------------------------------------------------------ */
+  33:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /*
+  34:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  * Interrupt Vector table (RAM)
+  35:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  */
+  36:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  37:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** EXPORT FP knl_int_vect_ram[N_INTVEC] __attribute__ ((section (".data_ivector")));
+  38:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  39:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /* ------------------------------------------------------------------------ */
+  40:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /*
+  41:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  * HLL(High level programming language) Interrupt Handler Table (RAM)
+  42:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  */
+  43:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** EXPORT FP knl_hll_inthdr_ram[N_INTVEC] __attribute__ ((section (".data_hvector")));
+  44:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  45:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** #endif	/* !USE_STATIC_IVT */
+  46:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  47:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /* ----------------------------------------------------------------------- */
+  48:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /*
+  49:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  * Set interrupt handler (Used in tk_def_int())
+  50:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  */
+  51:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** #if !USE_STATIC_IVT
+  52:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** EXPORT ER knl_define_inthdr( INT intno, ATR intatr, FP inthdr )
+  53:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** {
+  32                             		.loc 1 53 1
+  33 0000 7E AA                   		push.l	r10
+  34                             	.LCFI0:
+  35 0002 71 0A F4                		add	#-12, r0, r10
+  36                             	.LCFI1:
+  37 0005 EF A0                   		mov.L	r10, r0
+  38 0007 E3 A1                   		mov.L	r1, [r10]
+  39 0009 E7 A2 01                		mov.L	r2, 4[r10]
+  40 000c E7 A3 02                		mov.L	r3, 8[r10]
+  54:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	/* check system interrupt number */
+  55:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	if((intno < INTNO_USER_MIN) || (intno == INTNO_SYS_TICK)) {
+  41                             		.loc 1 55 4
+  42 000f EC A5                   		mov.L	[r10], r5
+  43 0011 61 45                   		cmp	#4, r5
+  44 0013 2B 08                   		ble	.L2
+  45                             		.loc 1 55 30 discriminator 1
+  46 0015 EC A5                   		mov.L	[r10], r5
+  47 0017 75 55 1C                		cmp	#28, r5
+  48 001a 1E                      		bne	.L3
+  49                             	.L2:
+  56:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 		return E_PAR;
+  50                             		.loc 1 56 10
+  51 001b FB 56 EF                		mov.L	#-17, r5
+  52 001e 2E 66                   		bra	.L4
+  53                             	.L3:
+  57:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	}
+  58:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  59:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	if(inthdr != NULL) {	/* define intrrupt handler */
+  54                             		.loc 1 59 4
+  55 0020 ED A5 02                		mov.L	8[r10], r5
+  56 0023 61 05                   		cmp	#0, r5
+  57 0025 20 29                   		beq	.L5
+  60:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 		if ( (intatr & TA_HLNG) != 0 ) {
+  58                             		.loc 1 60 16
+  59 0027 ED A5 01                		mov.L	4[r10], r5
+  60 002a 64 15                   		and	#1, r5
+  61                             		.loc 1 60 6
+  62 002c 61 05                   		cmp	#0, r5
+  63 002e 20 46                   		beq	.L7
+  61:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 			knl_hll_inthdr_ram[intno] = inthdr;
+  64                             		.loc 1 61 30
+  65 0030 FB 52 00 00 00 00       		mov.L	#_knl_hll_inthdr_ram, r5
+  66 0036 EC A4                   		mov.L	[r10], r4
+  67 0038 ED A3 02                		mov.L	8[r10], r3
+  68 003b FE 24 53                		mov.L	r3, [r4,r5]
+  62:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 			inthdr = knl_int_vect_rom[intno];	/* set HLL-Int handler entry */
+  69                             		.loc 1 62 11
+  70 003e FB 52 00 00 00 00       		mov.L	#_knl_int_vect_rom, r5
+  71 0044 EC A4                   		mov.L	[r10], r4
+  72 0046 FE 64 55                		mov.L	[r4,r5], r5
+  73 0049 E7 A5 02                		mov.L	r5, 8[r10]
+  74 004c 2E 28                   		bra	.L7
+  75                             	.L5:
+  63:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 		}
+  64:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	} else 	{		/* Clear interrupt handler */
+  65:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 		knl_hll_inthdr_ram[intno] = knl_hll_inthdr_rom[intno - INTNO_USER_MIN];
+  76                             		.loc 1 65 56
+  77 004e EC A5                   		mov.L	[r10], r5
+  78 0050 60 55                   		sub	#5, r5
+  79                             		.loc 1 65 49
+  80 0052 FB 42 00 00 00 00       		mov.L	#_knl_hll_inthdr_rom, r4
+  81 0058 FE 65 43                		mov.L	[r5,r4], r3
+  82                             		.loc 1 65 29
+  83 005b FB 52 00 00 00 00       		mov.L	#_knl_hll_inthdr_ram, r5
+  84 0061 EC A4                   		mov.L	[r10], r4
+  85 0063 FE 24 53                		mov.L	r3, [r4,r5]
+  66:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 		inthdr = knl_int_vect_rom[intno];	/* set HLL-Int handler entry */
+  86                             		.loc 1 66 10
+  87 0066 FB 52 00 00 00 00       		mov.L	#_knl_int_vect_rom, r5
+  88 006c EC A4                   		mov.L	[r10], r4
+  89 006e FE 64 55                		mov.L	[r4,r5], r5
+  90 0071 E7 A5 02                		mov.L	r5, 8[r10]
+  91                             	.L7:
+  67:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	}
+  68:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  69:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	knl_int_vect_ram[intno] = inthdr;
+  92                             		.loc 1 69 26
+  93 0074 FB 52 00 00 00 00       		mov.L	#_knl_int_vect_ram, r5
+  94 007a EC A4                   		mov.L	[r10], r4
+  95 007c ED A3 02                		mov.L	8[r10], r3
+  96 007f FE 24 53                		mov.L	r3, [r4,r5]
+  70:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  71:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	return E_OK;
+  97                             		.loc 1 71 9
+  98 0082 66 05                   		mov.L	#0, r5
+  99                             	.L4:
+  72:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** }
+ 100                             		.loc 1 72 1
+ 101 0084 EF 51                   		mov.L	r5, r1
+ 102 0086 3F AA 04                		rtsd	#16, r10-r10
+ 103                             	.LFE19:
+ 105                             		.global	_knl_init_interrupt
+ 107                             	_knl_init_interrupt:
+ 108                             	.LFB20:
+  73:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** #endif
+  74:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  75:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /* ------------------------------------------------------------------------ */
+  76:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** /*
+  77:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  * Interrupt initialize
+  78:../kernel/sysdepend/cpu/core/rxv2/interrupt.c ****  */
+  79:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** EXPORT ER knl_init_interrupt( void )
+  80:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** {
+ 109                             		.loc 1 80 1
+ 110 0089 7E AA                   		push.l	r10
+ 111                             	.LCFI2:
+ 112 008b EF 0A                   		mov.L	r0, r10
+ 113                             	.LCFI3:
+  81:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	/* Register exception handler used on OS			*/
+  82:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	/* There is no exception handler used in this implementation.	*/
+  83:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 
+  84:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** 	return E_OK;
+ 114                             		.loc 1 84 9
+ 115 008d 66 05                   		mov.L	#0, r5
+  85:../kernel/sysdepend/cpu/core/rxv2/interrupt.c **** }
+ 116                             		.loc 1 85 1
+ 117 008f EF 51                   		mov.L	r5, r1
+ 118 0091 3F AA 01                		rtsd	#4, r10-r10
+ 119                             	.LFE20:
+ 176                             	.Letext0:
+ 177                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 178                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 179                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+ 180                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 181                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 182                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 183                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 184                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
+ 185                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
+ 186                             		.file 11 "../kernel/sysdepend/cpu/core/rxv2/../../../rtb_rx65n/../cpu/rx65n/sysdepend.h"

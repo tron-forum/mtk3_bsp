@@ -19,8 +19,9 @@
  *	startup / shoutdown processing for hardware
  *	
  *	Pin function Setting (for IoT-Engine Starter board)
- *		PJ1  : SCI8 RXD8
- *		PJ2  : SCI8 TXD8
+ *		PB1  : SW1
+ *		PD6  : LED0
+ *		PD7  : LED1
  *
  *		(USE_SDEV_DRV)
  *		P12  : RIIC0 SCL0
@@ -49,13 +50,13 @@ LOCAL const T_SETUP_REG mstop_tbl[] = {
 #if !USE_SDEV_DRV	// Do not use sample device driver
 	{ MSTPCRA, 0x46FF7FCF },	/* Enable EXDMAC, DMAC/DTC, CMT0-1, TMR0-3 */
 	{ MSTPCRB, 0xFFFFFFFF },
-	{ MSTPCRC, 0xF7FF0000 },	/* Enable SCI8, Disable Deep-Sleep mode, Enable RAM */
+	{ MSTPCRC, 0xFFFF0000 },
 	{ MSTPCRD, 0xFFFFFF00 },
 
 #else			// Use the sample device driver
-	{ MSTPCRA, 0x46F57FCF },	/* Enable EXDMAC, DMAC/DTC, S12SD0, CMT0-1, TMR0-3 */
-	{ MSTPCRB, 0xFFDFFFFF },	/* Enable RIIC0 */
-	{ MSTPCRC, 0xF7FF0000 },	/* Enable SCI8, Disable Deep-Sleep mode, Enable RAM */
+	{ MSTPCRA, 0x46FF7FCF },	/* Enable EXDMAC, DMAC/DTC, CMT0-1, TMR0-3 */
+	{ MSTPCRB, 0xFFFFFFFF },
+	{ MSTPCRC, 0xFFFF0000 },
 	{ MSTPCRD, 0xFFFFFF00 },
 
 #endif /* !USE_SDEV_DRV */
@@ -66,13 +67,8 @@ LOCAL const T_SETUP_REG mstop_tbl[] = {
  * Setup pin functions Tadle
  */
 LOCAL const T_SETUP_REG pinfnc_tbl[] = {
-	{MPC_PJnPFS(1), 0x0A},		/* PJ1 = SCI8 RXD8 */
-	{MPC_PJnPFS(2), 0x0A},		/* PJ2 = SCI8 TXD8 */
 
 #if USE_SDEV_DRV	// Use the sample device driver
-	{MPC_P1nPFS(2), 0x0F},		/* P12 = RIIC0 SCL0 */
-	{MPC_P1nPFS(3), 0x0F},		/* P13 = RIIC0 SDA0 */
-	{MPC_P4nPFS(0), 0x80},		/* P40 = AN000 */
 
 #endif /* USE_SDEV_DRV */
 	{0, 0}
@@ -82,14 +78,11 @@ LOCAL const T_SETUP_REG pinfnc_tbl[] = {
  * Setup port mode Tadle
  */
 LOCAL const T_SETUP_REG portmode_tbl[] = {
-	{PORTJ_PMR, 0x06},		/* PJ1&PJ2 peripheral function. */
-	{PORTJ_PODR, 0x04},		/* PJ2 = 'H' */
-	{PORTJ_PDR, 0x04},		/* PJ2 output port */
 
 #if USE_SDEV_DRV	// Use the sample device driver
-	{PORT1_PMR, 0x0C},		/* P12&P13  peripheral function. */
-	{PORT4_PMR, 0x00},		/* P40  A/DC */
-	{PORT4_PDR, 0x00},
+	/* PD6-7 : LED0-1 */
+	{PORTD_PODR, 0xC0},	
+	{PORTD_PDR, 0xC0},
 #endif /* USE_SDEV_DRV */
 
 	{0, 0}

@@ -1,16 +1,16 @@
-   1                             	# 1 "../kernel/sysdepend/cpu/core/armv7a/int_asm.S"
+   1                             	# 1 "../kernel/sysdepend/cpu/core/rxv2/int_asm.S"
    1                             	﻿/*
    0                             	
    0                             	
    0                             	
    2                             	 *----------------------------------------------------------------------
-   3                             	 *    micro T-Kernel 3.00.05
+   3                             	 *    micro T-Kernel 3.00.01
    4                             	 *
-   5                             	 *    Copyright (C) 2006-2021 by Ken Sakamura.
+   5                             	 *    Copyright (C) 2006-2020 by Ken Sakamura.
    6                             	 *    This software is distributed under the T-License 2.2.
    7                             	 *----------------------------------------------------------------------
    8                             	 *
-   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2021/11.
+   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2020/05/29.
   10                             	 *
   11                             	 *----------------------------------------------------------------------
   12                             	 */
@@ -308,3 +308,203 @@
   28                             	
   41                             	
   58                             	#define Csym(sym) _##sym
+  15                             	#ifdef CPU_CORE_RXV2
+  16                             	/*
+  17                             	 *	int_asm.S (RXv2)
+  18                             	 *	Interrupt control assembler routine
+  19                             	 */
+  20                             	#define	_in_asm_source_
+  21                             	
+  22                             	#include <sys/sysdef.h>
+   1                             	/*
+   2                             	 *----------------------------------------------------------------------
+   3                             	 *    micro T-Kernel 3.00.00
+   4                             	 *
+   5                             	 *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6                             	 *    This software is distributed under the T-License 2.1.
+   7                             	 *----------------------------------------------------------------------
+   8                             	 *
+   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10                             	 *
+  11                             	 *----------------------------------------------------------------------
+  12                             	 */
+  13                             	
+  14                             	/*
+  15                             	 *	sysdef.h
+  16                             	 *
+  17                             	 *	System dependencies definition.
+  18                             	 *	Included also from assembler program.
+  19                             	 */
+  20                             	
+  21                             	#ifndef __SYS_SYSDEF_H__
+  22                             	#define __SYS_SYSDEF_H__
+  23                             	
+  24                             	/* System dependencies */
+  25                             	#define SYSDEF_PATH_(a)		#a
+  26                             	#define SYSDEF_PATH(a)		SYSDEF_PATH_(a)
+  27                             	#define SYSDEF_SYSDEP()		SYSDEF_PATH(sysdepend/TARGET_DIR/sysdef.h)
+  28                             	#include SYSDEF_SYSDEP()
+   1                             	/*
+   2                             	 *----------------------------------------------------------------------
+   3                             	 *    micro T-Kernel 3.0 BSP
+   4                             	 *
+   5                             	 *    Copyright (C) 2022 by Ken Sakamura.
+   6                             	 *    This software is distributed under the T-License 2.2.
+   7                             	 *----------------------------------------------------------------------
+   8                             	 *
+   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10                             	 *
+  11                             	 *----------------------------------------------------------------------
+  12                             	 */
+  13                             	
+  14                             	/*
+  15                             	 *	sysdef.h
+  16                             	 *
+  17                             	 *	System dependencies definition (Renesas Target Board for RX65N depended)
+  18                             	 *	Included also from assembler program.
+  19                             	 */
+  20                             	
+  21                             	#ifndef __SYS_SYSDEF_DEPEND_H__
+  22                             	#define __SYS_SYSDEF_DEPEND_H__
+  23                             	
+  24                             	
+  25                             	/* CPU-dependent definition */
+  26                             	#include "../cpu/rx65n/sysdef.h"
+   1                             	﻿/*
+   2                             	 *----------------------------------------------------------------------
+   3                             	 *    micro T-Kernel 3.00.06.B0
+   4                             	 *
+   5                             	 *    Copyright (C) 2022 by Ken Sakamura.
+   6                             	 *    This software is distributed under the T-License 2.2.
+   7                             	 *----------------------------------------------------------------------
+   8                             	 *
+   9                             	 *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10                             	 *
+  11                             	 *----------------------------------------------------------------------
+  12                             	 */
+  13                             	
+  14                             	/*
+  15                             	 *	sysdef.h
+  16                             	 *
+  17                             	 *	System dependencies definition (RX65N CPU depended)
+  18                             	 *	Included also from assembler program.
+  19                             	 */
+  20                             	
+  21                             	#ifndef __TK_SYSDEF_DEPEND_CPU_H__
+  22                             	#define __TK_SYSDEF_DEPEND_CPU_H__
+  23                             	
+  24                             	
+  25                             	/* CPU Core-dependent definition */
+  26                             	#include "../core/rxv2/sysdef.h"
+   1                             	/*
+  27                             	
+  27                             	
+  29                             	
+  23                             	
+  24                             		.section .text
+  25                             		.globl Csym(knl_hll_inthdr)
+  26                             		.globl Csym(knl_return_inthdr)
+  27                             	
+  28                             	/* ------------------------------------------------------------------------ */
+  29                             	/*
+  30                             	 * HLL(High level programming language) Interrupt Handler
+  31                             	 *
+  32                             	 */
+  33                             		.extern Csym(knl_hll_inthdr_ram)
+  34                             		.extern Csym(knl_taskindp)
+  35                             		.extern Csym(knl_int_nest)
+  36                             		.extern Csym(ret_int_dispatch)
+  37                             	
+  38                             	Csym(knl_hll_inthdr):
+  39                             		/* During interrupt disable PSW.I=0 */
+  40 0000 6E EF                   		pushm	r14-r15				/* R1-R2 are already saved */
+  41 0002 6E 37                   		pushm	r3-r7
+  42                             	
+  43                             	#if	USE_FPU
+  44                             		mvfc	fpsw, r3
+  45                             		push.l	r3
+  46                             	#endif
+  47                             	
+  48 0004 FB 62 00 00 00 00       		mov.l	#Csym(knl_taskindp), r6		/* enter task independent mode */
+  49 000a EC 67                   		mov.l	[r6], r7
+  50 000c 62 17                   		add	#1, r7
+  51 000e E3 67                   		mov.l	r7, [r6]
+  52                             	
+  53 0010 FB 42 00 00 00 00       		mov.l	#Csym(knl_int_nest), r4		/* interrupt nest count */
+  54 0016 EC 43                   		mov.l	[r4], r3
+  55 0018 EF 36                   		mov.l	r3, r6
+  56 001a 62 13                   		add	#1, r3
+  57 001c E3 43                   		mov.l	r3, [r4]
+  58                             	
+  59 001e 61 06                   		cmp	#0, r6
+  60 0020 21 0C                   		bne	l_no_change_sp			/* multiple interrupt */
+  61 0022 EF 03                   		mov.l	r0, r3
+  62 0024 FB 0E 00 00 04          		mov.l	#INTSTACK_TOP, r0		/* change to ISP */
+  63 0029 FD 26 03                		mov.l	r3, [-r0]			/* SSP save */
+  64                             	l_no_change_sp:
+  65                             	
+  66 002c 7F A8                   		setpsw	I				/* Interrupt enable */
+  67                             	
+  68                             	#if USE_STATIC_IVT
+  69                             		mov.l	#Csym(knl_hll_inthdr_rom), r2	/* call knl_hll_inthdr_rom[n](dintno) */
+  70                             	#else
+  71 002e FB 22 00 00 00 00       		mov.l	#Csym(knl_hll_inthdr_ram), r2	/* call knl_hll_inthdr_rom[n](dintno) */
+  72                             	#endif
+  73 0034 FE 61 24                		mov.l	[r1, r2], r4			/* r1 is dintno. */
+  74 0037 7F 14                   		jsr	r4
+  75                             	
+  76 0039 7F B8                   		clrpsw	I				/* Interrupt disable */
+  77                             	
+  78                             		; During interrupt disable PSW.I=0
+  79 003b 61 06                   		cmp	#0, r6
+  80 003d 1E                      		bne	l_no_change_sp2			/* multiple interrupt */
+  81                             	
+  82 003e FD 2A 03                		mov.l	[r0+], r3			/* r3 = SSP */
+  83 0041 EF 30                   		mov.l	r3, r0
+  84                             	l_no_change_sp2:
+  85 0043 60 17                   		sub	#1, r7
+  86 0045 FB 62 00 00 00 00       		mov.l	#Csym(knl_taskindp), r6
+  87 004b E3 67                   		mov.l	r7, [r6]
+  88                             	
+  89                             	#if	USE_FPU
+  90                             		pop	r3
+  91                             		mvtc	r3, fpsw
+  92                             	#endif
+  93 004d 6F 37                   		popm	r3-r7
+  94 004f 6F EF                   		popm	r14-r15
+  95                             	
+  96                             		/* bra  Cym(knl_return_inthdr) */
+  97                             	
+  98                             	/* ------------------------------------------------------------------------ */
+  99                             	/*
+ 100                             	 * knl_return_inthdr()  Called from tk_ret_int call.
+ 101                             	 *    This call can be called only from a handler with the assembler attribute.
+ 102                             	 */
+ 103                             	Csym(knl_return_inthdr):
+ 104                             		/* During interrupt disable PSW.I=0 */
+ 105 0051 FB 12 00 00 00 00       		mov.l	#Csym(knl_int_nest), r1		/* Is it a nesting interrupt? */
+ 106 0057 EC 12                   		mov.l	[r1], r2
+ 107 0059 60 12                   		sub	#1, r2
+ 108 005b E3 12                   		mov.l	r2, [r1]
+ 109 005d 21 27                   		bne	l_nodispatch
+ 110                             	
+ 111 005f FB 12 00 00 00 00       		mov.l	#Csym(knl_dispatch_disabled), r1	/* Is it during dispatch disable? */
+ 112 0065 EC 11                   		mov.l	[r1], r1
+ 113 0067 61 01                   		cmp	#0, r1
+ 114 0069 21 1B                   		bne	l_nodispatch
+ 115                             	
+ 116 006b FB 12 00 00 00 00       		mov.l	#Csym(knl_ctxtsk), r1		/* Is dispatch required? */
+ 117 0071 EC 11                   		mov.l	[r1], r1
+ 118 0073 FB 22 00 00 00 00       		mov.l	#Csym(knl_schedtsk), r2
+ 119 0079 EC 22                   		mov.l	[r2], r2
+ 120 007b 47 12                   		cmp	r1, r2
+ 121 007d 17                      		beq	l_nodispatch
+ 122                             	
+ 123 007e 6F 12                   		popm	r1-r2				/* R1, R2 restore */
+ 124 0080 04 00 00 00             		bra	Csym(ret_int_dispatch)		/* To dispatch processing */
+ 125                             	
+ 126                             	l_nodispatch:					/* Dispatch not required */
+ 127 0084 6F 12                   		popm	r1-r2				/* R1, R2 restore */
+ 128 0086 7F 95                   		rte
+ 129                             	
+ 130                             		.end

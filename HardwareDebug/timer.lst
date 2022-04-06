@@ -492,16 +492,16 @@
  221                             	.LCFI17:
   28:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/sys_timer.h **** 
   29:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/sys_timer.h **** 	/* set Timer Count */
-  30:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/sys_timer.h **** 	out_h(CMT0_COR, EXTAL_CLOCK/PCLK_DIV/1000*TIMER_PERIOD/CMCR_DIV - 1);
+  30:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/sys_timer.h **** 	out_h(CMT0_COR, SYSCLK_ICLK/PCLK_DIV/1000*TIMER_PERIOD/CMCR_DIV - 1);
  222                             		.loc 5 30 2
- 223 00f5 FB 2A D5 83             		mov	#-31787, r2
+ 223 00f5 FB 2A 3D 49             		mov	#0x493d, r2
  224 00f9 FB 1E 06 80 08          		mov.L	#0x88006, r1
  225 00fe 39 02 FF                		bsr	_out_h
   31:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/sys_timer.h **** 
   32:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/sys_timer.h **** 	/* Interrupt is Enable, Set Frequency Dividing */
   33:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/sys_timer.h **** 	out_h(CMT0_CR, CMT0_CR_CMIE | CMCR_CKS_PLCK8);
  226                             		.loc 5 33 2
- 227 0101 75 42 40                		mov	#0x40, r2
+ 227 0101 75 42 41                		mov	#0x41, r2
  228 0104 FB 1E 02 80 08          		mov.L	#0x88002, r1
  229 0109 39 F7 FE                		bsr	_out_h
   34:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/sys_timer.h **** 
