@@ -1,0 +1,2473 @@
+   1                             		.file	"mutex.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   5                             	_QueInit:
+   6                             	.LFB6:
+   7                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+   1:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+   2:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   3:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    micro T-Kernel 3.00.00
+   4:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+   5:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    This software is distributed under the T-License 2.1.
+   7:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   8:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+   9:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+  11:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+  12:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  13:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  14:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  15:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	queue.h
+  16:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+  17:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Queuing operation
+  18:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  19:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  20:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifndef	__SYS_QUEUE_H__
+  21:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #define __SYS_QUEUE_H__
+  22:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  23:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #include <tk/tkernel.h>
+  24:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  25:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifdef __cplusplus
+  26:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** extern "C" {
+  27:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #endif
+  28:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  29:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  30:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Double-link queue (ring)
+  31:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  32:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** typedef struct queue {
+  33:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*next;
+  34:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*prev;
+  35:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** } QUEUE;
+  36:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  37:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  38:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Queue initialization 
+  39:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  40:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInit( QUEUE *que )
+  41:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+   8                             		.loc 1 41 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A FC                		add	#-4, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E3 A1                   		mov.L	r1, [r10]
+  42:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue *)que;
+  15                             		.loc 1 42 12
+  16 0009 EC A5                   		mov.L	[r10], r5
+  17 000b EC A4                   		mov.L	[r10], r4
+  18 000d E3 54                   		mov.L	r4, [r5]
+  43:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = (struct queue *)que;
+  19                             		.loc 1 43 12
+  20 000f EC A5                   		mov.L	[r10], r5
+  21 0011 EC A4                   		mov.L	[r10], r4
+  22 0013 A0 5C                   		mov.L	r4, 4[r5]
+  44:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  23                             		.loc 1 44 1
+  24 0015 03                      		nop
+  25 0016 3F AA 02                		rtsd	#8, r10-r10
+  26                             	.LFE6:
+  29                             	_isQueEmpty:
+  30                             	.LFB7:
+  45:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  46:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  47:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * TRUE if the queue is empty 
+  48:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  49:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline BOOL isQueEmpty( QUEUE *que )
+  50:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  31                             		.loc 1 50 1
+  32 0019 7E AA                   		push.l	r10
+  33                             	.LCFI2:
+  34 001b 71 0A FC                		add	#-4, r0, r10
+  35                             	.LCFI3:
+  36 001e EF A0                   		mov.L	r10, r0
+  37 0020 E3 A1                   		mov.L	r1, [r10]
+  51:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return ( que->next == que )? TRUE: FALSE;
+  38                             		.loc 1 51 14
+  39 0022 EC A5                   		mov.L	[r10], r5
+  40 0024 EC 55                   		mov.L	[r5], r5
+  41                             		.loc 1 51 35
+  42 0026 EC A4                   		mov.L	[r10], r4
+  43 0028 47 54                   		cmp	r5, r4
+  44 002a FC DB 50                		sceq.L	r5
+  45 002d 5B 55                   		movu.B	r5, r5
+  52:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  46                             		.loc 1 52 1
+  47 002f EF 51                   		mov.L	r5, r1
+  48 0031 3F AA 02                		rtsd	#8, r10-r10
+  49                             	.LFE7:
+  52                             	_QueInsert:
+  53                             	.LFB8:
+  53:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  54:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  55:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Insert in queue 
+  56:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Inserts entry directly prior to que 
+  57:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  58:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInsert( QUEUE *entry, QUEUE *que )
+  59:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  54                             		.loc 1 59 1
+  55 0034 7E AA                   		push.l	r10
+  56                             	.LCFI4:
+  57 0036 71 0A F8                		add	#-8, r0, r10
+  58                             	.LCFI5:
+  59 0039 EF A0                   		mov.L	r10, r0
+  60 003b E3 A1                   		mov.L	r1, [r10]
+  61 003d E7 A2 01                		mov.L	r2, 4[r10]
+  60:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->prev = (struct queue*) que->prev;
+  62                             		.loc 1 60 16
+  63 0040 ED A5 01                		mov.L	4[r10], r5
+  64 0043 A8 5C                   		mov.L	4[r5], r4
+  65                             		.loc 1 60 14
+  66 0045 EC A5                   		mov.L	[r10], r5
+  67 0047 A0 5C                   		mov.L	r4, 4[r5]
+  61:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next = que;
+  68                             		.loc 1 61 14
+  69 0049 EC A5                   		mov.L	[r10], r5
+  70 004b ED A4 01                		mov.L	4[r10], r4
+  71 004e E3 54                   		mov.L	r4, [r5]
+  62:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev->next = entry;
+  72                             		.loc 1 62 5
+  73 0050 ED A5 01                		mov.L	4[r10], r5
+  74 0053 A8 5D                   		mov.L	4[r5], r5
+  75                             		.loc 1 62 18
+  76 0055 EC A4                   		mov.L	[r10], r4
+  77 0057 E3 54                   		mov.L	r4, [r5]
+  63:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = entry;
+  78                             		.loc 1 63 12
+  79 0059 ED A5 01                		mov.L	4[r10], r5
+  80 005c EC A4                   		mov.L	[r10], r4
+  81 005e A0 5C                   		mov.L	r4, 4[r5]
+  64:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  82                             		.loc 1 64 1
+  83 0060 03                      		nop
+  84 0061 3F AA 03                		rtsd	#12, r10-r10
+  85                             	.LFE8:
+  88                             	_QueRemoveNext:
+  89                             	.LFB10:
+  65:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  66:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  67:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Delete from queue 
+  68:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes entry from queue 
+  69:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	No action is performed if entry is empty. 
+  70:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  71:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueRemove( QUEUE *entry )
+  72:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  73:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( entry->next != entry ) {
+  74:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->prev->next = (struct queue*) entry->next;
+  75:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->next->prev = (struct queue*) entry->prev;
+  76:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
+  77:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  78:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  79:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  80:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Remove top entry 
+  81:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes the entry directly after que from the queue,
+  82:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	and returns the deleted entry.
+  83:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Returns NULL if que is empty.
+  84:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  85:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline QUEUE* QueRemoveNext( QUEUE *que )
+  86:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  90                             		.loc 1 86 1
+  91 0064 7E AA                   		push.l	r10
+  92                             	.LCFI6:
+  93 0066 71 0A F8                		add	#-8, r0, r10
+  94                             	.LCFI7:
+  95 0069 EF A0                   		mov.L	r10, r0
+  96 006b E7 A1 01                		mov.L	r1, 4[r10]
+  87:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	QUEUE	*entry;
+  88:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  89:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( que->next == que ) {
+  97                             		.loc 1 89 10
+  98 006e ED A5 01                		mov.L	4[r10], r5
+  99 0071 EC 55                   		mov.L	[r5], r5
+ 100                             		.loc 1 89 5
+ 101 0073 ED A4 01                		mov.L	4[r10], r4
+ 102 0076 47 54                   		cmp	r5, r4
+ 103 0078 1D                      		bne	.L6
+  90:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		return NULL;
+ 104                             		.loc 1 90 10
+ 105 0079 66 05                   		mov.L	#0, r5
+ 106 007b 2E 1D                   		bra	.L7
+ 107                             	.L6:
+  91:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
+  92:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  93:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry = que->next;
+ 108                             		.loc 1 93 8
+ 109 007d ED A5 01                		mov.L	4[r10], r5
+ 110 0080 EC 55                   		mov.L	[r5], r5
+ 111 0082 E3 A5                   		mov.L	r5, [r10]
+  94:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue*)entry->next;
+ 112                             		.loc 1 94 14
+ 113 0084 EC A5                   		mov.L	[r10], r5
+ 114 0086 EC 54                   		mov.L	[r5], r4
+ 115                             		.loc 1 94 12
+ 116 0088 ED A5 01                		mov.L	4[r10], r5
+ 117 008b E3 54                   		mov.L	r4, [r5]
+  95:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next->prev = que;
+ 118                             		.loc 1 95 7
+ 119 008d EC A5                   		mov.L	[r10], r5
+ 120 008f EC 55                   		mov.L	[r5], r5
+ 121                             		.loc 1 95 20
+ 122 0091 ED A4 01                		mov.L	4[r10], r4
+ 123 0094 A0 5C                   		mov.L	r4, 4[r5]
+  96:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  97:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return entry;
+ 124                             		.loc 1 97 9
+ 125 0096 EC A5                   		mov.L	[r10], r5
+ 126                             	.L7:
+  98:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+ 127                             		.loc 1 98 1
+ 128 0098 EF 51                   		mov.L	r5, r1
+ 129 009a 3F AA 03                		rtsd	#12, r10-r10
+ 130                             	.LFE10:
+ 133                             	_knl_isTaskIndependent:
+ 134                             	.LFB16:
+ 135                             		.file 2 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_st
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    micro T-Kernel 3.00.03
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	cpu_status.h (RXv2)
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	CPU-Dependent Status Definition
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #ifndef _SYSDEPEND_CPU_CORE_STATUS_
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define _SYSDEPEND_CPU_CORE_STATUS_
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <tk/syslib.h>
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <sys/sysdef.h>
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include "sysdepend.h"
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End critical section
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_CRITICAL_SECTION	{ UINT _sr_ = disint();
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_CRITICAL_SECTION	if ( !isDI(_sr_)			\
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && knl_ctxtsk != knl_schedtsk		\
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_isTaskIndependent()		\
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_dispatch_disabled ) {		\
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 					knl_dispatch();			\
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				}					\
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				setint(_sr_); }
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End interrupt disable section
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_DISABLE_INTERRUPT	{ UINT _sr_ = disint();
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_DISABLE_INTERRUPT	setint(_sr_); }
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Interrupt enable/disable
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT	{ setint(0); }
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define DISABLE_INTERRUPT	{ disint(); }
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Enable interrupt nesting
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	Enable the interrupt that has a higher priority than 'level.'
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT_UPTO(level)	{ setint(level); }
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *  Task-independent control
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** IMPORT	W	knl_taskindp;		/* Task independent status */
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * If it is the task-independent part, TRUE
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** Inline BOOL knl_isTaskIndependent( void )
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** {
+ 136                             		.loc 2 64 1
+ 137 009d 7E AA                   		push.l	r10
+ 138                             	.LCFI8:
+ 139 009f EF 0A                   		mov.L	r0, r10
+ 140                             	.LCFI9:
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 	return ( knl_taskindp > 0 )? TRUE: FALSE;
+ 141                             		.loc 2 65 35
+ 142 00a1 FB 52 00 00 00 00       		mov.L	#_knl_taskindp, r5
+ 143 00a7 EC 55                   		mov.L	[r5], r5
+ 144 00a9 61 05                   		cmp	#0, r5
+ 145 00ab FC DB 5A                		scgt.L	r5
+ 146 00ae 5B 55                   		movu.B	r5, r5
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** }
+ 147                             		.loc 2 66 1
+ 148 00b0 EF 51                   		mov.L	r5, r1
+ 149 00b2 3F AA 01                		rtsd	#4, r10-r10
+ 150                             	.LFE16:
+ 153                             	_knl_queue_insert_tpri:
+ 154                             	.LFB31:
+ 155                             		.file 3 "../kernel/tkernel/wait.h"
+   1:../kernel/tkernel/wait.h **** /*
+   2:../kernel/tkernel/wait.h ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/wait.h ****  *    micro T-Kernel 3.00.00
+   4:../kernel/tkernel/wait.h ****  *
+   5:../kernel/tkernel/wait.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:../kernel/tkernel/wait.h ****  *    This software is distributed under the T-License 2.1.
+   7:../kernel/tkernel/wait.h ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/wait.h ****  *
+   9:../kernel/tkernel/wait.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:../kernel/tkernel/wait.h ****  *
+  11:../kernel/tkernel/wait.h ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/wait.h ****  */
+  13:../kernel/tkernel/wait.h **** 
+  14:../kernel/tkernel/wait.h **** /*
+  15:../kernel/tkernel/wait.h ****  *	wait.h
+  16:../kernel/tkernel/wait.h ****  *	Definition of Common Routine for Synchronization
+  17:../kernel/tkernel/wait.h ****  */
+  18:../kernel/tkernel/wait.h **** 
+  19:../kernel/tkernel/wait.h **** #ifndef _WAIT_
+  20:../kernel/tkernel/wait.h **** #define _WAIT_
+  21:../kernel/tkernel/wait.h **** 
+  22:../kernel/tkernel/wait.h **** #include <sys/queue.h>
+  23:../kernel/tkernel/wait.h **** #include "timer.h"
+  24:../kernel/tkernel/wait.h **** #include "task.h"
+  25:../kernel/tkernel/wait.h **** 
+  26:../kernel/tkernel/wait.h **** /*
+  27:../kernel/tkernel/wait.h ****  * Release wait state of the task.
+  28:../kernel/tkernel/wait.h ****  *	Remove the task from the timer queue and the wait queue, then
+  29:../kernel/tkernel/wait.h ****  *	update the task state. 'wait_release_ok' sends E_OK to the
+  30:../kernel/tkernel/wait.h ****  *	wait released task.
+  31:../kernel/tkernel/wait.h ****  *	'wait_release_ok_recd' is normal wait release as well as
+  32:../kernel/tkernel/wait.h ****  *	'wait_release_ok', but it sends 'ercd' to the wait released task.
+  33:../kernel/tkernel/wait.h ****  *	It needs to be ercd >= 0. 
+  34:../kernel/tkernel/wait.h ****  *	'wait_release_ng' sends 'ercd' to the wait released task. Use for
+  35:../kernel/tkernel/wait.h ****  *	releasing the forced wait task. It needs to be ercd < 0.
+  36:../kernel/tkernel/wait.h ****  *	'wait_release_tmout' don't remove from the timer queue. Use for
+  37:../kernel/tkernel/wait.h ****  *	time out processing.
+  38:../kernel/tkernel/wait.h ****  */
+  39:../kernel/tkernel/wait.h **** IMPORT void knl_wait_release_ok( TCB *tcb );
+  40:../kernel/tkernel/wait.h **** IMPORT void knl_wait_release_ok_ercd( TCB *tcb, ER ercd );
+  41:../kernel/tkernel/wait.h **** IMPORT void knl_wait_release_ng( TCB *tcb, ER ercd );
+  42:../kernel/tkernel/wait.h **** IMPORT void knl_wait_release_tmout( TCB *tcb );
+  43:../kernel/tkernel/wait.h **** 
+  44:../kernel/tkernel/wait.h **** /*
+  45:../kernel/tkernel/wait.h ****  * Cancel task wait state.
+  46:../kernel/tkernel/wait.h ****  *	Remove the task from the timer queue and the wait queue.
+  47:../kernel/tkernel/wait.h ****  *	Do not update the task state.
+  48:../kernel/tkernel/wait.h ****  */
+  49:../kernel/tkernel/wait.h **** Inline void knl_wait_cancel( TCB *tcb )
+  50:../kernel/tkernel/wait.h **** {
+  51:../kernel/tkernel/wait.h **** 	knl_timer_delete(&tcb->wtmeb);
+  52:../kernel/tkernel/wait.h **** 	QueRemove(&tcb->tskque);
+  53:../kernel/tkernel/wait.h **** }
+  54:../kernel/tkernel/wait.h **** 
+  55:../kernel/tkernel/wait.h **** /*
+  56:../kernel/tkernel/wait.h ****  * Change the active task to wait state and connect to the
+  57:../kernel/tkernel/wait.h ****  * timer event queue.
+  58:../kernel/tkernel/wait.h ****  */
+  59:../kernel/tkernel/wait.h **** IMPORT void knl_make_wait( TMO tmout, ATR atr );
+  60:../kernel/tkernel/wait.h **** IMPORT void knl_make_wait_reltim( RELTIM tmout, ATR atr );
+  61:../kernel/tkernel/wait.h **** 
+  62:../kernel/tkernel/wait.h **** /*
+  63:../kernel/tkernel/wait.h ****  * Release wait state of all tasks connected to the wait queue,
+  64:../kernel/tkernel/wait.h ****  * and set it as E_DLT error.
+  65:../kernel/tkernel/wait.h ****  * Use when synchronization between tasks or communication
+  66:../kernel/tkernel/wait.h ****  * object is deleted.
+  67:../kernel/tkernel/wait.h ****  */
+  68:../kernel/tkernel/wait.h **** IMPORT void knl_wait_delete( QUEUE *wait_queue );
+  69:../kernel/tkernel/wait.h **** 
+  70:../kernel/tkernel/wait.h **** /*
+  71:../kernel/tkernel/wait.h ****  * Get ID of the head task in the wait queue.
+  72:../kernel/tkernel/wait.h ****  */
+  73:../kernel/tkernel/wait.h **** IMPORT ID knl_wait_tskid( QUEUE *wait_queue );
+  74:../kernel/tkernel/wait.h **** 
+  75:../kernel/tkernel/wait.h **** /*
+  76:../kernel/tkernel/wait.h ****  * Connect the task to the prioritized wait queue.
+  77:../kernel/tkernel/wait.h ****  */
+  78:../kernel/tkernel/wait.h **** Inline void knl_queue_insert_tpri( TCB *tcb, QUEUE *queue )
+  79:../kernel/tkernel/wait.h **** {
+ 156                             		.loc 3 79 1
+ 157 00b5 7E AA                   		push.l	r10
+ 158                             	.LCFI10:
+ 159 00b7 71 0A E4                		add	#-28, r0, r10
+ 160                             	.LCFI11:
+ 161 00ba EF A0                   		mov.L	r10, r0
+ 162 00bc E7 A1 05                		mov.L	r1, 20[r10]
+ 163 00bf E7 A2 06                		mov.L	r2, 24[r10]
+  80:../kernel/tkernel/wait.h **** 	QUEUE *q;
+  81:../kernel/tkernel/wait.h **** 	QUEUE *start, *end;
+  82:../kernel/tkernel/wait.h **** 	UB val;
+  83:../kernel/tkernel/wait.h **** 	W offset;
+  84:../kernel/tkernel/wait.h **** 
+  85:../kernel/tkernel/wait.h **** 	start = end = queue;
+ 164                             		.loc 3 85 14
+ 165 00c2 ED A5 06                		mov.L	24[r10], r5
+ 166 00c5 E7 A5 01                		mov.L	r5, 4[r10]
+ 167                             		.loc 3 85 8
+ 168 00c8 ED A5 01                		mov.L	4[r10], r5
+ 169 00cb E7 A5 02                		mov.L	r5, 8[r10]
+  86:../kernel/tkernel/wait.h **** 	val = tcb->priority;
+ 170                             		.loc 3 86 6
+ 171 00ce ED A5 05                		mov.L	20[r10], r5
+ 172 00d1 CD 55 26                		mov.B	38[r5], r5
+ 173 00d4 C7 A5 0C                		mov.B	r5, 12[r10]
+  87:../kernel/tkernel/wait.h **** 	offset = offsetof(TCB, priority);
+ 174                             		.loc 3 87 9
+ 175 00d7 F9 A6 04 26             		mov.L	#38, 16[r10]
+  88:../kernel/tkernel/wait.h **** 
+  89:../kernel/tkernel/wait.h **** 	for ( q = start->next; q != end; q = q->next ) {
+ 176                             		.loc 3 89 10
+ 177 00db ED A5 02                		mov.L	8[r10], r5
+ 178 00de EC 55                   		mov.L	[r5], r5
+ 179 00e0 E3 A5                   		mov.L	r5, [r10]
+ 180                             		.loc 3 89 2
+ 181 00e2 2E 1A                   		bra	.L11
+ 182                             	.L14:
+  90:../kernel/tkernel/wait.h **** 		if ( *(UB*)((VB*)q + offset) > val ) {
+ 183                             		.loc 3 90 9
+ 184 00e4 ED A5 04                		mov.L	16[r10], r5
+ 185 00e7 EC A4                   		mov.L	[r10], r4
+ 186 00e9 4B 45                   		add	r4, r5
+ 187                             		.loc 3 90 8
+ 188 00eb CC 55                   		mov.B	[r5], r5
+ 189                             		.loc 3 90 6
+ 190 00ed 59 A4 0C                		movu.B	12[r10], r4
+ 191 00f0 5B 55                   		movu.B	r5, r5
+ 192 00f2 47 54                   		cmp	r5, r4
+ 193 00f4 23 13                   		bltu	.L15
+  89:../kernel/tkernel/wait.h **** 		if ( *(UB*)((VB*)q + offset) > val ) {
+ 194                             		.loc 3 89 37 discriminator 2
+ 195 00f6 EC A5                   		mov.L	[r10], r5
+ 196 00f8 EC 55                   		mov.L	[r5], r5
+ 197 00fa E3 A5                   		mov.L	r5, [r10]
+ 198                             	.L11:
+  89:../kernel/tkernel/wait.h **** 		if ( *(UB*)((VB*)q + offset) > val ) {
+ 199                             		.loc 3 89 2 discriminator 1
+ 200 00fc EC A4                   		mov.L	[r10], r4
+ 201 00fe ED A5 01                		mov.L	4[r10], r5
+ 202 0101 47 54                   		cmp	r5, r4
+ 203 0103 21 E1                   		bne	.L14
+ 204 0105 2E 03                   		bra	.L13
+ 205                             	.L15:
+  91:../kernel/tkernel/wait.h **** 			break;
+ 206                             		.loc 3 91 4
+ 207 0107 03                      		nop
+ 208                             	.L13:
+  92:../kernel/tkernel/wait.h **** 		}
+  93:../kernel/tkernel/wait.h **** 	}
+  94:../kernel/tkernel/wait.h **** 
+  95:../kernel/tkernel/wait.h **** 	QueInsert(&tcb->tskque, q);
+ 209                             		.loc 3 95 2
+ 210 0108 ED A5 05                		mov.L	20[r10], r5
+ 211 010b EC A2                   		mov.L	[r10], r2
+ 212 010d EF 51                   		mov.L	r5, r1
+ 213 010f 39 25 FF                		bsr	_QueInsert
+  96:../kernel/tkernel/wait.h **** }
+ 214                             		.loc 3 96 1
+ 215 0112 03                      		nop
+ 216 0113 3F AA 08                		rtsd	#32, r10-r10
+ 217                             	.LFE31:
+ 219                             		.global	_knl_mtxcb_table
+ 220                             		.section	.noinit,"aw"
+ 221                             		.balign 4
+ 224                             	_knl_mtxcb_table:
+ 225 0000 00 00 00 00 00 00 00 00 		.zero	128
+ 225      00 00 00 00 00 00 00 00 
+ 225      00 00 00 00 00 00 00 00 
+ 225      00 00 00 00 00 00 00 00 
+ 225      00 00 00 00 00 00 00 00 
+ 226                             		.global	_knl_free_mtxcb
+ 227                             		.balign 4
+ 230                             	_knl_free_mtxcb:
+ 231 0080 00 00 00 00 00 00 00 00 		.zero	8
+ 232                             		.section P,"ax"
+ 233                             		.global	_knl_mutex_initialize
+ 235                             	_knl_mutex_initialize:
+ 236                             	.LFB34:
+ 237                             		.file 4 "../kernel/tkernel/mutex.c"
+   1:../kernel/tkernel/mutex.c **** /*
+   2:../kernel/tkernel/mutex.c ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/mutex.c ****  *    micro T-Kernel 3.00.00
+   4:../kernel/tkernel/mutex.c ****  *
+   5:../kernel/tkernel/mutex.c ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:../kernel/tkernel/mutex.c ****  *    This software is distributed under the T-License 2.1.
+   7:../kernel/tkernel/mutex.c ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/mutex.c ****  *
+   9:../kernel/tkernel/mutex.c ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:../kernel/tkernel/mutex.c ****  *
+  11:../kernel/tkernel/mutex.c ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/mutex.c ****  */
+  13:../kernel/tkernel/mutex.c **** 
+  14:../kernel/tkernel/mutex.c **** /*
+  15:../kernel/tkernel/mutex.c ****  *	mutex.c
+  16:../kernel/tkernel/mutex.c ****  *	Mutex
+  17:../kernel/tkernel/mutex.c ****  */
+  18:../kernel/tkernel/mutex.c **** 
+  19:../kernel/tkernel/mutex.c **** #include "kernel.h"
+  20:../kernel/tkernel/mutex.c **** #include "wait.h"
+  21:../kernel/tkernel/mutex.c **** #include "check.h"
+  22:../kernel/tkernel/mutex.c **** #include "mutex.h"
+  23:../kernel/tkernel/mutex.c **** 
+  24:../kernel/tkernel/mutex.c **** #if USE_MUTEX == 1
+  25:../kernel/tkernel/mutex.c **** 
+  26:../kernel/tkernel/mutex.c **** Noinit(EXPORT MTXCB	knl_mtxcb_table[NUM_MTXID]);	/* Mutex control block */
+  27:../kernel/tkernel/mutex.c **** Noinit(EXPORT QUEUE	knl_free_mtxcb);	/* FreeQue */
+  28:../kernel/tkernel/mutex.c **** 
+  29:../kernel/tkernel/mutex.c **** 
+  30:../kernel/tkernel/mutex.c **** /*
+  31:../kernel/tkernel/mutex.c ****  * Initialization of mutex control block 
+  32:../kernel/tkernel/mutex.c ****  */
+  33:../kernel/tkernel/mutex.c **** EXPORT ER knl_mutex_initialize(void)
+  34:../kernel/tkernel/mutex.c **** {
+ 238                             		.loc 4 34 1
+ 239 0116 7E AA                   		push.l	r10
+ 240                             	.LCFI12:
+ 241 0118 71 0A F8                		add	#-8, r0, r10
+ 242                             	.LCFI13:
+ 243 011b EF A0                   		mov.L	r10, r0
+  35:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb, *end;
+  36:../kernel/tkernel/mutex.c **** 
+  37:../kernel/tkernel/mutex.c **** 	/* Get system information */
+  38:../kernel/tkernel/mutex.c **** 	if ( NUM_MTXID < 1 ) {
+  39:../kernel/tkernel/mutex.c **** 		return E_SYS;
+  40:../kernel/tkernel/mutex.c **** 	}
+  41:../kernel/tkernel/mutex.c **** 
+  42:../kernel/tkernel/mutex.c **** 	/* Register all control blocks onto FreeQue */
+  43:../kernel/tkernel/mutex.c **** 	QueInit(&knl_free_mtxcb);
+ 244                             		.loc 4 43 2
+ 245 011d FB 12 00 00 00 00       		mov.L	#_knl_free_mtxcb, r1
+ 246 0123 39 DD FE                		bsr	_QueInit
+  44:../kernel/tkernel/mutex.c **** 	end = knl_mtxcb_table + NUM_MTXID;
+ 247                             		.loc 4 44 6
+ 248 0126 F9 A2 01 00 00 00 00    		mov.L	#_knl_mtxcb_table+128, 4[r10]
+  45:../kernel/tkernel/mutex.c **** 	for( mtxcb = knl_mtxcb_table; mtxcb < end; mtxcb++ ) {
+ 249                             		.loc 4 45 13
+ 250 012d F8 A2 00 00 00 00       		mov.L	#_knl_mtxcb_table, [r10]
+ 251                             		.loc 4 45 2
+ 252 0133 2E 1B                   		bra	.L17
+ 253                             	.L18:
+  46:../kernel/tkernel/mutex.c **** 		mtxcb->mtxid = 0;
+ 254                             		.loc 4 46 16 discriminator 3
+ 255 0135 EC A5                   		mov.L	[r10], r5
+ 256 0137 3E 52 00                		mov.L	#0, 8[r5]
+  47:../kernel/tkernel/mutex.c **** 		QueInsert(&mtxcb->wait_queue, &knl_free_mtxcb);
+ 257                             		.loc 4 47 3 discriminator 3
+ 258 013a EC A5                   		mov.L	[r10], r5
+ 259 013c FB 22 00 00 00 00       		mov.L	#_knl_free_mtxcb, r2
+ 260 0142 EF 51                   		mov.L	r5, r1
+ 261 0144 39 F0 FE                		bsr	_QueInsert
+  45:../kernel/tkernel/mutex.c **** 	for( mtxcb = knl_mtxcb_table; mtxcb < end; mtxcb++ ) {
+ 262                             		.loc 4 45 50 discriminator 3
+ 263 0147 EC A5                   		mov.L	[r10], r5
+ 264 0149 71 55 20                		add	#32, r5
+ 265 014c E3 A5                   		mov.L	r5, [r10]
+ 266                             	.L17:
+  45:../kernel/tkernel/mutex.c **** 	for( mtxcb = knl_mtxcb_table; mtxcb < end; mtxcb++ ) {
+ 267                             		.loc 4 45 2 discriminator 1
+ 268 014e EC A4                   		mov.L	[r10], r4
+ 269 0150 ED A5 01                		mov.L	4[r10], r5
+ 270 0153 47 54                   		cmp	r5, r4
+ 271 0155 23 E0                   		bltu	.L18
+  48:../kernel/tkernel/mutex.c **** 	}
+  49:../kernel/tkernel/mutex.c **** 
+  50:../kernel/tkernel/mutex.c **** 	return E_OK;
+ 272                             		.loc 4 50 9
+ 273 0157 66 05                   		mov.L	#0, r5
+  51:../kernel/tkernel/mutex.c **** }
+ 274                             		.loc 4 51 1
+ 275 0159 EF 51                   		mov.L	r5, r1
+ 276 015b 3F AA 03                		rtsd	#12, r10-r10
+ 277                             	.LFE34:
+ 279                             		.global	_knl_release_mutex
+ 281                             	_knl_release_mutex:
+ 282                             	.LFB35:
+  52:../kernel/tkernel/mutex.c **** 
+  53:../kernel/tkernel/mutex.c **** 
+  54:../kernel/tkernel/mutex.c **** /*
+  55:../kernel/tkernel/mutex.c ****  * Release the lock and delete it from list, and then adjust the
+  56:../kernel/tkernel/mutex.c ****  * priority of task.
+  57:../kernel/tkernel/mutex.c ****  * Set the highest priority between listed below:
+  58:../kernel/tkernel/mutex.c ****  *	(A) The highest priority in all mutexes in which 'tcb' task locks. 
+  59:../kernel/tkernel/mutex.c ****  *	(B) The base priority of 'tcb' task.
+  60:../kernel/tkernel/mutex.c ****  */
+  61:../kernel/tkernel/mutex.c **** EXPORT void knl_release_mutex( TCB *tcb, MTXCB *relmtxcb )
+  62:../kernel/tkernel/mutex.c **** {
+ 283                             		.loc 4 62 1
+ 284 015e 7E AA                   		push.l	r10
+ 285                             	.LCFI14:
+ 286 0160 71 0A E8                		add	#-24, r0, r10
+ 287                             	.LCFI15:
+ 288 0163 EF A0                   		mov.L	r10, r0
+ 289 0165 E7 A1 04                		mov.L	r1, 16[r10]
+ 290 0168 E7 A2 05                		mov.L	r2, 20[r10]
+  63:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb, **prev;
+  64:../kernel/tkernel/mutex.c **** 	INT	newpri, pri;
+  65:../kernel/tkernel/mutex.c **** 
+  66:../kernel/tkernel/mutex.c **** 	/* (B) The base priority of task */
+  67:../kernel/tkernel/mutex.c **** 	newpri = tcb->bpriority;
+ 291                             		.loc 4 67 14
+ 292 016b ED A5 04                		mov.L	16[r10], r5
+ 293 016e CD 55 25                		mov.B	37[r5], r5
+ 294                             		.loc 4 67 9
+ 295 0171 5B 55                   		movu.B	r5, r5
+ 296 0173 E7 A5 01                		mov.L	r5, 4[r10]
+  68:../kernel/tkernel/mutex.c **** 
+  69:../kernel/tkernel/mutex.c **** 	/* (A) The highest priority in mutex which is locked */
+  70:../kernel/tkernel/mutex.c **** 	pri = newpri;
+ 297                             		.loc 4 70 6
+ 298 0176 ED A5 01                		mov.L	4[r10], r5
+ 299 0179 E7 A5 02                		mov.L	r5, 8[r10]
+  71:../kernel/tkernel/mutex.c **** 	prev = &tcb->mtxlist;
+ 300                             		.loc 4 71 7
+ 301 017c ED A5 04                		mov.L	16[r10], r5
+ 302 017f 71 55 64                		add	#0x64, r5
+ 303 0182 E3 A5                   		mov.L	r5, [r10]
+  72:../kernel/tkernel/mutex.c **** 	while ( (mtxcb = *prev) != NULL ) {
+ 304                             		.loc 4 72 8
+ 305 0184 2E 6A                   		bra	.L21
+ 306                             	.L28:
+  73:../kernel/tkernel/mutex.c **** 		if ( mtxcb == relmtxcb ) {
+ 307                             		.loc 4 73 6
+ 308 0186 ED A4 03                		mov.L	12[r10], r4
+ 309 0189 ED A5 05                		mov.L	20[r10], r5
+ 310 018c 47 54                   		cmp	r5, r4
+ 311 018e 21 0D                   		bne	.L22
+  74:../kernel/tkernel/mutex.c **** 			/* Delete from list */
+  75:../kernel/tkernel/mutex.c **** 			*prev = mtxcb->mtxlist;
+ 312                             		.loc 4 75 17
+ 313 0190 ED A5 03                		mov.L	12[r10], r5
+ 314 0193 A9 DC                   		mov.L	28[r5], r4
+ 315                             		.loc 4 75 10
+ 316 0195 EC A5                   		mov.L	[r10], r5
+ 317 0197 E3 54                   		mov.L	r4, [r5]
+  76:../kernel/tkernel/mutex.c **** 			continue;
+ 318                             		.loc 4 76 4
+ 319 0199 2E 55                   		bra	.L21
+ 320                             	.L22:
+  77:../kernel/tkernel/mutex.c **** 		}
+  78:../kernel/tkernel/mutex.c **** 
+  79:../kernel/tkernel/mutex.c **** 		switch ( mtxcb->mtxatr & TA_CEILING ) {
+ 321                             		.loc 4 79 17
+ 322 019b ED A5 03                		mov.L	12[r10], r5
+ 323 019e A9 55                   		mov.L	16[r5], r5
+ 324                             		.loc 4 79 26
+ 325 01a0 64 35                   		and	#3, r5
+ 326                             		.loc 4 79 3
+ 327 01a2 61 25                   		cmp	#2, r5
+ 328 01a4 20 12                   		beq	.L23
+ 329 01a6 61 35                   		cmp	#3, r5
+ 330 01a8 21 2A                   		bne	.L30
+  80:../kernel/tkernel/mutex.c **** 		  case TA_CEILING:
+  81:../kernel/tkernel/mutex.c **** 			pri = mtxcb->ceilpri;
+ 331                             		.loc 4 81 15
+ 332 01aa ED A5 03                		mov.L	12[r10], r5
+ 333 01ad 8D 55                   		mov.B	20[r5], r5
+ 334                             		.loc 4 81 8
+ 335 01af 5B 55                   		movu.B	r5, r5
+ 336 01b1 E7 A5 02                		mov.L	r5, 8[r10]
+  82:../kernel/tkernel/mutex.c **** 			break;
+ 337                             		.loc 4 82 4
+ 338 01b4 2E 22                   		bra	.L25
+ 339                             	.L23:
+  83:../kernel/tkernel/mutex.c **** 		  case TA_INHERIT:
+  84:../kernel/tkernel/mutex.c **** 			if ( mtx_waited(mtxcb) ) {
+ 340                             		.loc 4 84 9
+ 341 01b6 ED A5 03                		mov.L	12[r10], r5
+ 342 01b9 EF 51                   		mov.L	r5, r1
+ 343 01bb 39 5E FE                		bsr	_isQueEmpty
+ 344 01be EF 15                   		mov.L	r1, r5
+ 345                             		.loc 4 84 7
+ 346 01c0 61 05                   		cmp	#0, r5
+ 347 01c2 21 13                   		bne	.L31
+  85:../kernel/tkernel/mutex.c **** 				pri = mtx_head_pri(mtxcb);
+ 348                             		.loc 4 85 11
+ 349 01c4 ED A5 03                		mov.L	12[r10], r5
+ 350 01c7 EC 55                   		mov.L	[r5], r5
+ 351 01c9 CD 55 26                		mov.B	38[r5], r5
+ 352                             		.loc 4 85 9
+ 353 01cc 5B 55                   		movu.B	r5, r5
+ 354 01ce E7 A5 02                		mov.L	r5, 8[r10]
+  86:../kernel/tkernel/mutex.c **** 			}
+  87:../kernel/tkernel/mutex.c **** 			break;
+ 355                             		.loc 4 87 4
+ 356 01d1 0C                      		bra	.L31
+ 357                             	.L30:
+  88:../kernel/tkernel/mutex.c **** 		  default: /* TA_TFIFO, TA_TPRI */
+  89:../kernel/tkernel/mutex.c **** 			/* nothing to do */
+  90:../kernel/tkernel/mutex.c **** 			break;
+ 358                             		.loc 4 90 4
+ 359 01d2 03                      		nop
+ 360 01d3 2E 03                   		bra	.L25
+ 361                             	.L31:
+  87:../kernel/tkernel/mutex.c **** 		  default: /* TA_TFIFO, TA_TPRI */
+ 362                             		.loc 4 87 4
+ 363 01d5 03                      		nop
+ 364                             	.L25:
+  91:../kernel/tkernel/mutex.c **** 		}
+  92:../kernel/tkernel/mutex.c **** 		if ( newpri > pri ) {
+ 365                             		.loc 4 92 6
+ 366 01d6 ED A4 01                		mov.L	4[r10], r4
+ 367 01d9 ED A5 02                		mov.L	8[r10], r5
+ 368 01dc 47 54                   		cmp	r5, r4
+ 369 01de 2B 08                   		ble	.L27
+  93:../kernel/tkernel/mutex.c **** 			newpri = pri;
+ 370                             		.loc 4 93 11
+ 371 01e0 ED A5 02                		mov.L	8[r10], r5
+ 372 01e3 E7 A5 01                		mov.L	r5, 4[r10]
+ 373                             	.L27:
+  94:../kernel/tkernel/mutex.c **** 		}
+  95:../kernel/tkernel/mutex.c **** 
+  96:../kernel/tkernel/mutex.c **** 		prev = &mtxcb->mtxlist;
+ 374                             		.loc 4 96 8
+ 375 01e6 ED A5 03                		mov.L	12[r10], r5
+ 376 01e9 71 55 1C                		add	#28, r5
+ 377 01ec E3 A5                   		mov.L	r5, [r10]
+ 378                             	.L21:
+  72:../kernel/tkernel/mutex.c **** 		if ( mtxcb == relmtxcb ) {
+ 379                             		.loc 4 72 17
+ 380 01ee EC A5                   		mov.L	[r10], r5
+ 381 01f0 EC 55                   		mov.L	[r5], r5
+ 382 01f2 E7 A5 03                		mov.L	r5, 12[r10]
+  72:../kernel/tkernel/mutex.c **** 		if ( mtxcb == relmtxcb ) {
+ 383                             		.loc 4 72 8
+ 384 01f5 ED A5 03                		mov.L	12[r10], r5
+ 385 01f8 61 05                   		cmp	#0, r5
+ 386 01fa 21 8C                   		bne	.L28
+  97:../kernel/tkernel/mutex.c **** 	}
+  98:../kernel/tkernel/mutex.c **** 
+  99:../kernel/tkernel/mutex.c **** 	if ( newpri != tcb->priority ) {
+ 387                             		.loc 4 99 20
+ 388 01fc ED A5 04                		mov.L	16[r10], r5
+ 389 01ff CD 55 26                		mov.B	38[r5], r5
+ 390 0202 5B 55                   		movu.B	r5, r5
+ 391                             		.loc 4 99 5
+ 392 0204 ED A4 01                		mov.L	4[r10], r4
+ 393 0207 47 54                   		cmp	r5, r4
+ 394 0209 20 0C                   		beq	.L32
+ 100:../kernel/tkernel/mutex.c **** 		/* Change priority of lock get task */
+ 101:../kernel/tkernel/mutex.c **** 		knl_change_task_priority(tcb, newpri);
+ 395                             		.loc 4 101 3
+ 396 020b ED A2 01                		mov.L	4[r10], r2
+ 397 020e ED A1 04                		mov.L	16[r10], r1
+ 398 0211 05 00 00 00             		bsr	_knl_change_task_priority
+ 399                             	.L32:
+ 102:../kernel/tkernel/mutex.c **** 	}
+ 103:../kernel/tkernel/mutex.c **** }
+ 400                             		.loc 4 103 1
+ 401 0215 03                      		nop
+ 402 0216 3F AA 07                		rtsd	#28, r10-r10
+ 403                             	.LFE35:
+ 405                             		.global	_knl_signal_all_mutex
+ 407                             	_knl_signal_all_mutex:
+ 408                             	.LFB36:
+ 104:../kernel/tkernel/mutex.c **** 
+ 105:../kernel/tkernel/mutex.c **** /*
+ 106:../kernel/tkernel/mutex.c ****  * Free mutex when task is terminated
+ 107:../kernel/tkernel/mutex.c ****  *	Free all mutexes which the task holds.
+ 108:../kernel/tkernel/mutex.c ****  *	Do not need to handle mutex list and priority of terminated task.
+ 109:../kernel/tkernel/mutex.c ****  *	
+ 110:../kernel/tkernel/mutex.c ****  */
+ 111:../kernel/tkernel/mutex.c **** EXPORT void knl_signal_all_mutex( TCB *tcb )
+ 112:../kernel/tkernel/mutex.c **** {
+ 409                             		.loc 4 112 1
+ 410 0219 7E AA                   		push.l	r10
+ 411                             	.LCFI16:
+ 412 021b 71 0A F0                		add	#-16, r0, r10
+ 413                             	.LCFI17:
+ 414 021e EF A0                   		mov.L	r10, r0
+ 415 0220 E7 A1 03                		mov.L	r1, 12[r10]
+ 113:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb, *next_mtxcb;
+ 114:../kernel/tkernel/mutex.c **** 	TCB	*next_tcb;
+ 115:../kernel/tkernel/mutex.c **** 
+ 116:../kernel/tkernel/mutex.c **** 	next_mtxcb = tcb->mtxlist;
+ 416                             		.loc 4 116 13
+ 417 0223 ED A5 03                		mov.L	12[r10], r5
+ 418 0226 AE 5D                   		mov.L	100[r5], r5
+ 419 0228 E3 A5                   		mov.L	r5, [r10]
+ 117:../kernel/tkernel/mutex.c **** 	while ( (mtxcb = next_mtxcb) != NULL ) {
+ 420                             		.loc 4 117 8
+ 421 022a 2E 76                   		bra	.L34
+ 422                             	.L37:
+ 118:../kernel/tkernel/mutex.c **** 		next_mtxcb = mtxcb->mtxlist;
+ 423                             		.loc 4 118 14
+ 424 022c ED A5 01                		mov.L	4[r10], r5
+ 425 022f A9 DD                   		mov.L	28[r5], r5
+ 426 0231 E3 A5                   		mov.L	r5, [r10]
+ 119:../kernel/tkernel/mutex.c **** 
+ 120:../kernel/tkernel/mutex.c **** 		if ( mtx_waited(mtxcb) ) {
+ 427                             		.loc 4 120 8
+ 428 0233 ED A5 01                		mov.L	4[r10], r5
+ 429 0236 EF 51                   		mov.L	r5, r1
+ 430 0238 39 E1 FD                		bsr	_isQueEmpty
+ 431 023b EF 15                   		mov.L	r1, r5
+ 432                             		.loc 4 120 6
+ 433 023d 61 05                   		cmp	#0, r5
+ 434 023f 21 5A                   		bne	.L35
+ 121:../kernel/tkernel/mutex.c **** 			next_tcb = (TCB*)mtxcb->wait_queue.next;
+ 435                             		.loc 4 121 13
+ 436 0241 ED A5 01                		mov.L	4[r10], r5
+ 437 0244 EC 55                   		mov.L	[r5], r5
+ 438 0246 E7 A5 02                		mov.L	r5, 8[r10]
+ 122:../kernel/tkernel/mutex.c **** 
+ 123:../kernel/tkernel/mutex.c **** 			/* Wake wait task */
+ 124:../kernel/tkernel/mutex.c **** 			knl_wait_release_ok(next_tcb);
+ 439                             		.loc 4 124 4
+ 440 0249 ED A1 02                		mov.L	8[r10], r1
+ 441 024c 05 00 00 00             		bsr	_knl_wait_release_ok
+ 125:../kernel/tkernel/mutex.c **** 
+ 126:../kernel/tkernel/mutex.c **** 			/* Change mutex get task */
+ 127:../kernel/tkernel/mutex.c **** 			mtxcb->mtxtsk = next_tcb;
+ 442                             		.loc 4 127 18
+ 443 0250 ED A5 01                		mov.L	4[r10], r5
+ 444 0253 ED A4 02                		mov.L	8[r10], r4
+ 445 0256 A1 D4                   		mov.L	r4, 24[r5]
+ 128:../kernel/tkernel/mutex.c **** 			mtxcb->mtxlist = next_tcb->mtxlist;
+ 446                             		.loc 4 128 29
+ 447 0258 ED A5 02                		mov.L	8[r10], r5
+ 448 025b AE 5C                   		mov.L	100[r5], r4
+ 449                             		.loc 4 128 19
+ 450 025d ED A5 01                		mov.L	4[r10], r5
+ 451 0260 A1 DC                   		mov.L	r4, 28[r5]
+ 129:../kernel/tkernel/mutex.c **** 			next_tcb->mtxlist = mtxcb;
+ 452                             		.loc 4 129 22
+ 453 0262 ED A5 02                		mov.L	8[r10], r5
+ 454 0265 ED A4 01                		mov.L	4[r10], r4
+ 455 0268 A6 5C                   		mov.L	r4, 100[r5]
+ 130:../kernel/tkernel/mutex.c **** 
+ 131:../kernel/tkernel/mutex.c **** 			if ( (mtxcb->mtxatr & TA_CEILING) == TA_CEILING ) {
+ 456                             		.loc 4 131 15
+ 457 026a ED A5 01                		mov.L	4[r10], r5
+ 458 026d A9 55                   		mov.L	16[r5], r5
+ 459                             		.loc 4 131 24
+ 460 026f 64 35                   		and	#3, r5
+ 461                             		.loc 4 131 7
+ 462 0271 61 35                   		cmp	#3, r5
+ 463 0273 21 2D                   		bne	.L34
+ 132:../kernel/tkernel/mutex.c **** 				if ( next_tcb->priority > mtxcb->ceilpri ) {
+ 464                             		.loc 4 132 18
+ 465 0275 ED A5 02                		mov.L	8[r10], r5
+ 466 0278 CD 54 26                		mov.B	38[r5], r4
+ 467                             		.loc 4 132 36
+ 468 027b ED A5 01                		mov.L	4[r10], r5
+ 469 027e 8D 55                   		mov.B	20[r5], r5
+ 470                             		.loc 4 132 8
+ 471 0280 5B 44                   		movu.B	r4, r4
+ 472 0282 5B 55                   		movu.B	r5, r5
+ 473 0284 47 54                   		cmp	r5, r4
+ 474 0286 25 1A                   		bleu	.L34
+ 133:../kernel/tkernel/mutex.c **** 					/* Raise the priority for the task
+ 134:../kernel/tkernel/mutex.c **** 					   that got lock to the highest
+ 135:../kernel/tkernel/mutex.c **** 					   priority limit */
+ 136:../kernel/tkernel/mutex.c **** 					knl_change_task_priority(next_tcb,
+ 137:../kernel/tkernel/mutex.c **** 							mtxcb->ceilpri);
+ 475                             		.loc 4 137 13
+ 476 0288 ED A5 01                		mov.L	4[r10], r5
+ 477 028b 8D 55                   		mov.B	20[r5], r5
+ 136:../kernel/tkernel/mutex.c **** 							mtxcb->ceilpri);
+ 478                             		.loc 4 136 6
+ 479 028d 5B 55                   		movu.B	r5, r5
+ 480 028f EF 52                   		mov.L	r5, r2
+ 481 0291 ED A1 02                		mov.L	8[r10], r1
+ 482 0294 05 00 00 00             		bsr	_knl_change_task_priority
+ 483 0298 08                      		bra	.L34
+ 484                             	.L35:
+ 138:../kernel/tkernel/mutex.c **** 				}
+ 139:../kernel/tkernel/mutex.c **** 			}
+ 140:../kernel/tkernel/mutex.c **** 		} else {
+ 141:../kernel/tkernel/mutex.c **** 			/* No wait task */
+ 142:../kernel/tkernel/mutex.c **** 			mtxcb->mtxtsk = NULL;
+ 485                             		.loc 4 142 18
+ 486 0299 ED A5 01                		mov.L	4[r10], r5
+ 487 029c 3E 56 00                		mov.L	#0, 24[r5]
+ 488 029f 03                      		.balign 8,3,1
+ 489                             	.L34:
+ 117:../kernel/tkernel/mutex.c **** 		next_mtxcb = mtxcb->mtxlist;
+ 490                             		.loc 4 117 17
+ 491 02a0 EC A5                   		mov.L	[r10], r5
+ 492 02a2 E7 A5 01                		mov.L	r5, 4[r10]
+ 117:../kernel/tkernel/mutex.c **** 		next_mtxcb = mtxcb->mtxlist;
+ 493                             		.loc 4 117 8
+ 494 02a5 ED A5 01                		mov.L	4[r10], r5
+ 495 02a8 61 05                   		cmp	#0, r5
+ 496 02aa 21 82                   		bne	.L37
+ 143:../kernel/tkernel/mutex.c **** 		}
+ 144:../kernel/tkernel/mutex.c **** 	}
+ 145:../kernel/tkernel/mutex.c **** }
+ 497                             		.loc 4 145 1
+ 498 02ac 03                      		nop
+ 499 02ad 3F AA 05                		rtsd	#20, r10-r10
+ 500                             	.LFE36:
+ 502                             		.global	_knl_chg_pri_mutex
+ 504                             	_knl_chg_pri_mutex:
+ 505                             	.LFB37:
+ 146:../kernel/tkernel/mutex.c **** 
+ 147:../kernel/tkernel/mutex.c **** /*
+ 148:../kernel/tkernel/mutex.c ****  * Limit the priority change by mutex at task priority change
+ 149:../kernel/tkernel/mutex.c ****  *    1.If the 'tcb' task locks mutex, cannot set lower priority than the 
+ 150:../kernel/tkernel/mutex.c ****  *	highest priority in all mutexes which hold lock. In such case, 
+ 151:../kernel/tkernel/mutex.c ****  *	return the highest priority of locked mutex. 
+ 152:../kernel/tkernel/mutex.c ****  *    2.If mutex with TA_CEILING attribute is locked or waiting to be locked, 
+ 153:../kernel/tkernel/mutex.c ****  *	cannot set higher priority than the lowest within the highest 
+ 154:../kernel/tkernel/mutex.c ****  *	priority limit of mutex with TA_CEILING attribute.
+ 155:../kernel/tkernel/mutex.c ****  *	In this case, return E_ILUSE.
+ 156:../kernel/tkernel/mutex.c ****  *    3.Other than above, return the 'priority'.
+ 157:../kernel/tkernel/mutex.c ****  */
+ 158:../kernel/tkernel/mutex.c **** EXPORT INT knl_chg_pri_mutex( TCB *tcb, INT priority )
+ 159:../kernel/tkernel/mutex.c **** {
+ 506                             		.loc 4 159 1
+ 507 02b0 7E AA                   		push.l	r10
+ 508                             	.LCFI18:
+ 509 02b2 71 0A E8                		add	#-24, r0, r10
+ 510                             	.LCFI19:
+ 511 02b5 EF A0                   		mov.L	r10, r0
+ 512 02b7 E7 A1 04                		mov.L	r1, 16[r10]
+ 513 02ba E7 A2 05                		mov.L	r2, 20[r10]
+ 160:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb;
+ 161:../kernel/tkernel/mutex.c **** 	INT	hi_pri, low_pri, pri;
+ 162:../kernel/tkernel/mutex.c **** 
+ 163:../kernel/tkernel/mutex.c **** 	hi_pri  = priority;
+ 514                             		.loc 4 163 10
+ 515 02bd ED A5 05                		mov.L	20[r10], r5
+ 516 02c0 E7 A5 01                		mov.L	r5, 4[r10]
+ 164:../kernel/tkernel/mutex.c **** 	low_pri = int_priority(MIN_TSKPRI);
+ 517                             		.loc 4 164 10
+ 518 02c3 F9 A6 02 00             		mov.L	#0, 8[r10]
+ 165:../kernel/tkernel/mutex.c **** 
+ 166:../kernel/tkernel/mutex.c **** 	/* Mutex lock wait */
+ 167:../kernel/tkernel/mutex.c **** 	if ( (tcb->state & TS_WAIT) != 0 && (tcb->wspec->tskwait & TTW_MTX) != 0 ) {
+ 519                             		.loc 4 167 11
+ 520 02c7 ED A5 04                		mov.L	16[r10], r5
+ 521 02ca CD 55 27                		mov.B	39[r5], r5
+ 522                             		.loc 4 167 19
+ 523 02cd 5B 55                   		movu.B	r5, r5
+ 524 02cf 64 25                   		and	#2, r5
+ 525                             		.loc 4 167 5
+ 526 02d1 61 05                   		cmp	#0, r5
+ 527 02d3 20 45                   		beq	.L39
+ 528                             		.loc 4 167 42 discriminator 1
+ 529 02d5 ED A5 04                		mov.L	16[r10], r5
+ 530 02d8 AA DD                   		mov.L	44[r5], r5
+ 531                             		.loc 4 167 49 discriminator 1
+ 532 02da EC 55                   		mov.L	[r5], r5
+ 533                             		.loc 4 167 59 discriminator 1
+ 534 02dc 76 25 80 00             		and	#0x80, r5
+ 535                             		.loc 4 167 35 discriminator 1
+ 536 02e0 61 05                   		cmp	#0, r5
+ 537 02e2 20 36                   		beq	.L39
+ 168:../kernel/tkernel/mutex.c **** 		mtxcb = get_mtxcb(tcb->wid);
+ 538                             		.loc 4 168 11
+ 539 02e4 ED A5 04                		mov.L	16[r10], r5
+ 540 02e7 AB 55                   		mov.L	48[r5], r5
+ 541 02e9 60 15                   		sub	#1, r5
+ 542                             		.loc 4 168 9
+ 543 02eb 6C 55                   		shll	#5, r5
+ 544 02ed 70 55 00 00 00 00       		add	#_knl_mtxcb_table, r5
+ 545 02f3 E3 A5                   		mov.L	r5, [r10]
+ 169:../kernel/tkernel/mutex.c **** 		if ( (mtxcb->mtxatr & TA_CEILING) == TA_CEILING ) {
+ 546                             		.loc 4 169 14
+ 547 02f5 EC A5                   		mov.L	[r10], r5
+ 548 02f7 A9 55                   		mov.L	16[r5], r5
+ 549                             		.loc 4 169 23
+ 550 02f9 64 35                   		and	#3, r5
+ 551                             		.loc 4 169 6
+ 552 02fb 61 35                   		cmp	#3, r5
+ 553 02fd 21 1B                   		bne	.L39
+ 170:../kernel/tkernel/mutex.c **** 			pri = mtxcb->ceilpri;
+ 554                             		.loc 4 170 15
+ 555 02ff EC A5                   		mov.L	[r10], r5
+ 556 0301 8D 55                   		mov.B	20[r5], r5
+ 557                             		.loc 4 170 8
+ 558 0303 5B 55                   		movu.B	r5, r5
+ 559 0305 E7 A5 03                		mov.L	r5, 12[r10]
+ 171:../kernel/tkernel/mutex.c **** 			if ( pri > low_pri ) {
+ 560                             		.loc 4 171 7
+ 561 0308 ED A4 03                		mov.L	12[r10], r4
+ 562 030b ED A5 02                		mov.L	8[r10], r5
+ 563 030e 47 54                   		cmp	r5, r4
+ 564 0310 2B 08                   		ble	.L39
+ 172:../kernel/tkernel/mutex.c **** 				low_pri = pri;
+ 565                             		.loc 4 172 13
+ 566 0312 ED A5 03                		mov.L	12[r10], r5
+ 567 0315 E7 A5 02                		mov.L	r5, 8[r10]
+ 568                             		.balign 8,3,1
+ 569                             	.L39:
+ 173:../kernel/tkernel/mutex.c **** 			}
+ 174:../kernel/tkernel/mutex.c **** 		}
+ 175:../kernel/tkernel/mutex.c **** 	}
+ 176:../kernel/tkernel/mutex.c **** 
+ 177:../kernel/tkernel/mutex.c **** 	/* Locked Mutex */
+ 178:../kernel/tkernel/mutex.c **** 	pri = hi_pri;
+ 570                             		.loc 4 178 6
+ 571 0318 ED A5 01                		mov.L	4[r10], r5
+ 572 031b E7 A5 03                		mov.L	r5, 12[r10]
+ 179:../kernel/tkernel/mutex.c **** 	for ( mtxcb = tcb->mtxlist; mtxcb != NULL; mtxcb = mtxcb->mtxlist ) {
+ 573                             		.loc 4 179 14
+ 574 031e ED A5 04                		mov.L	16[r10], r5
+ 575 0321 AE 5D                   		mov.L	100[r5], r5
+ 576 0323 E3 A5                   		mov.L	r5, [r10]
+ 577                             		.loc 4 179 2
+ 578 0325 2E 61                   		bra	.L40
+ 579                             	.L47:
+ 180:../kernel/tkernel/mutex.c **** 		switch ( mtxcb->mtxatr & TA_CEILING ) {
+ 580                             		.loc 4 180 17
+ 581 0327 EC A5                   		mov.L	[r10], r5
+ 582 0329 A9 55                   		mov.L	16[r5], r5
+ 583                             		.loc 4 180 26
+ 584 032b 64 35                   		and	#3, r5
+ 585                             		.loc 4 180 3
+ 586 032d 61 25                   		cmp	#2, r5
+ 587 032f 20 21                   		beq	.L41
+ 588 0331 61 35                   		cmp	#3, r5
+ 589 0333 21 37                   		bne	.L50
+ 181:../kernel/tkernel/mutex.c **** 		  case TA_CEILING:
+ 182:../kernel/tkernel/mutex.c **** 			pri = mtxcb->ceilpri;
+ 590                             		.loc 4 182 15
+ 591 0335 EC A5                   		mov.L	[r10], r5
+ 592 0337 8D 55                   		mov.B	20[r5], r5
+ 593                             		.loc 4 182 8
+ 594 0339 5B 55                   		movu.B	r5, r5
+ 595 033b E7 A5 03                		mov.L	r5, 12[r10]
+ 183:../kernel/tkernel/mutex.c **** 			if ( pri > low_pri ) {
+ 596                             		.loc 4 183 7
+ 597 033e ED A4 03                		mov.L	12[r10], r4
+ 598 0341 ED A5 02                		mov.L	8[r10], r5
+ 599 0344 47 54                   		cmp	r5, r4
+ 600 0346 2B 26                   		ble	.L51
+ 184:../kernel/tkernel/mutex.c **** 				low_pri = pri;
+ 601                             		.loc 4 184 13
+ 602 0348 ED A5 03                		mov.L	12[r10], r5
+ 603 034b E7 A5 02                		mov.L	r5, 8[r10]
+ 185:../kernel/tkernel/mutex.c **** 			}
+ 186:../kernel/tkernel/mutex.c **** 			break;
+ 604                             		.loc 4 186 4
+ 605 034e 2E 1E                   		bra	.L51
+ 606                             	.L41:
+ 187:../kernel/tkernel/mutex.c **** 		  case TA_INHERIT:
+ 188:../kernel/tkernel/mutex.c **** 			if ( mtx_waited(mtxcb) ) {
+ 607                             		.loc 4 188 9
+ 608 0350 EC A5                   		mov.L	[r10], r5
+ 609 0352 EF 51                   		mov.L	r5, r1
+ 610 0354 39 C5 FC                		bsr	_isQueEmpty
+ 611 0357 EF 15                   		mov.L	r1, r5
+ 612                             		.loc 4 188 7
+ 613 0359 61 05                   		cmp	#0, r5
+ 614 035b 21 14                   		bne	.L52
+ 189:../kernel/tkernel/mutex.c **** 				pri = mtx_head_pri(mtxcb);
+ 615                             		.loc 4 189 11
+ 616 035d EC A5                   		mov.L	[r10], r5
+ 617 035f EC 55                   		mov.L	[r5], r5
+ 618 0361 CD 55 26                		mov.B	38[r5], r5
+ 619                             		.loc 4 189 9
+ 620 0364 5B 55                   		movu.B	r5, r5
+ 621 0366 E7 A5 03                		mov.L	r5, 12[r10]
+ 190:../kernel/tkernel/mutex.c **** 			}
+ 191:../kernel/tkernel/mutex.c **** 			break;
+ 622                             		.loc 4 191 4
+ 623 0369 0E                      		bra	.L52
+ 624                             	.L50:
+ 192:../kernel/tkernel/mutex.c **** 		  default: /* TA_TFIFO, TA_TPRI */
+ 193:../kernel/tkernel/mutex.c **** 			/* nothing to do */
+ 194:../kernel/tkernel/mutex.c **** 			break;
+ 625                             		.loc 4 194 4
+ 626 036a 03                      		nop
+ 627 036b 0D                      		bra	.L44
+ 628                             	.L51:
+ 186:../kernel/tkernel/mutex.c **** 		  case TA_INHERIT:
+ 629                             		.loc 4 186 4
+ 630 036c 03                      		nop
+ 631 036d 2E 03                   		bra	.L44
+ 632                             	.L52:
+ 191:../kernel/tkernel/mutex.c **** 		  default: /* TA_TFIFO, TA_TPRI */
+ 633                             		.loc 4 191 4
+ 634 036f 03                      		nop
+ 635                             	.L44:
+ 195:../kernel/tkernel/mutex.c **** 		}
+ 196:../kernel/tkernel/mutex.c **** 		if ( pri < hi_pri ) {
+ 636                             		.loc 4 196 6
+ 637 0370 ED A4 03                		mov.L	12[r10], r4
+ 638 0373 ED A5 01                		mov.L	4[r10], r5
+ 639 0376 47 54                   		cmp	r5, r4
+ 640 0378 28 08                   		bge	.L46
+ 197:../kernel/tkernel/mutex.c **** 			hi_pri = pri;
+ 641                             		.loc 4 197 11
+ 642 037a ED A5 03                		mov.L	12[r10], r5
+ 643 037d E7 A5 01                		mov.L	r5, 4[r10]
+ 644                             	.L46:
+ 179:../kernel/tkernel/mutex.c **** 		switch ( mtxcb->mtxatr & TA_CEILING ) {
+ 645                             		.loc 4 179 51 discriminator 2
+ 646 0380 EC A5                   		mov.L	[r10], r5
+ 647 0382 A9 DD                   		mov.L	28[r5], r5
+ 648 0384 E3 A5                   		mov.L	r5, [r10]
+ 649                             	.L40:
+ 179:../kernel/tkernel/mutex.c **** 		switch ( mtxcb->mtxatr & TA_CEILING ) {
+ 650                             		.loc 4 179 2 discriminator 1
+ 651 0386 EC A5                   		mov.L	[r10], r5
+ 652 0388 61 05                   		cmp	#0, r5
+ 653 038a 21 9D                   		bne	.L47
+ 198:../kernel/tkernel/mutex.c **** 		}
+ 199:../kernel/tkernel/mutex.c **** 	}
+ 200:../kernel/tkernel/mutex.c **** 
+ 201:../kernel/tkernel/mutex.c **** 	if ( priority < low_pri ) {
+ 654                             		.loc 4 201 5
+ 655 038c ED A4 05                		mov.L	20[r10], r4
+ 656 038f ED A5 02                		mov.L	8[r10], r5
+ 657 0392 47 54                   		cmp	r5, r4
+ 658 0394 28 06                   		bge	.L48
+ 202:../kernel/tkernel/mutex.c **** 		return E_ILUSE;
+ 659                             		.loc 4 202 10
+ 660 0396 FB 56 E4                		mov.L	#-28, r5
+ 661 0399 0C                      		bra	.L49
+ 662                             	.L48:
+ 203:../kernel/tkernel/mutex.c **** 	}
+ 204:../kernel/tkernel/mutex.c **** 	return hi_pri;
+ 663                             		.loc 4 204 9
+ 664 039a ED A5 01                		mov.L	4[r10], r5
+ 665                             	.L49:
+ 205:../kernel/tkernel/mutex.c **** }
+ 666                             		.loc 4 205 1
+ 667 039d EF 51                   		mov.L	r5, r1
+ 668 039f 3F AA 07                		rtsd	#28, r10-r10
+ 669                             	.LFE37:
+ 671                             		.global	_tk_cre_mtx
+ 673                             	_tk_cre_mtx:
+ 674                             	.LFB38:
+ 206:../kernel/tkernel/mutex.c **** 
+ 207:../kernel/tkernel/mutex.c **** 
+ 208:../kernel/tkernel/mutex.c **** /*
+ 209:../kernel/tkernel/mutex.c ****  * Create mutex
+ 210:../kernel/tkernel/mutex.c ****  */
+ 211:../kernel/tkernel/mutex.c **** SYSCALL ID tk_cre_mtx( CONST T_CMTX *pk_cmtx )
+ 212:../kernel/tkernel/mutex.c **** {
+ 675                             		.loc 4 212 1
+ 676 03a2 6E 7A                   		pushm	r7-r10
+ 677                             	.LCFI20:
+ 678 03a4 71 0A E4                		add	#-28, r0, r10
+ 679                             	.LCFI21:
+ 680 03a7 EF A0                   		mov.L	r10, r0
+ 681 03a9 E7 A1 06                		mov.L	r1, 24[r10]
+ 213:../kernel/tkernel/mutex.c **** #if CHK_RSATR
+ 214:../kernel/tkernel/mutex.c **** 	const ATR VALID_MTXATR = {
+ 682                             		.loc 4 214 12
+ 683 03ac F9 A6 02 03             		mov.L	#3, 8[r10]
+ 215:../kernel/tkernel/mutex.c **** 		 TA_CEILING
+ 216:../kernel/tkernel/mutex.c **** #if USE_OBJECT_NAME
+ 217:../kernel/tkernel/mutex.c **** 		|TA_DSNAME
+ 218:../kernel/tkernel/mutex.c **** #endif
+ 219:../kernel/tkernel/mutex.c **** 	};
+ 220:../kernel/tkernel/mutex.c **** #endif
+ 221:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb;
+ 222:../kernel/tkernel/mutex.c **** 	ID	mtxid;
+ 223:../kernel/tkernel/mutex.c **** 	INT	ceilpri;
+ 224:../kernel/tkernel/mutex.c **** 	ER	ercd;
+ 225:../kernel/tkernel/mutex.c **** 
+ 226:../kernel/tkernel/mutex.c **** 	CHECK_RSATR(pk_cmtx->mtxatr, VALID_MTXATR);
+ 684                             		.loc 4 226 2
+ 685 03b0 ED A5 06                		mov.L	24[r10], r5
+ 686 03b3 A8 5C                   		mov.L	4[r5], r4
+ 687 03b5 ED A5 02                		mov.L	8[r10], r5
+ 688 03b8 7E 05                   		not	r5
+ 689 03ba 53 45                   		and	r4, r5
+ 690 03bc 61 05                   		cmp	#0, r5
+ 691 03be 17                      		beq	.L54
+ 692                             		.loc 4 226 2 is_stmt 0 discriminator 1
+ 693 03bf FB 56 F5                		mov.L	#-11, r5
+ 694 03c2 38 E1 00                		bra	.L55
+ 695                             	.L54:
+ 227:../kernel/tkernel/mutex.c **** 
+ 228:../kernel/tkernel/mutex.c **** 	if ( (pk_cmtx->mtxatr & TA_CEILING) == TA_CEILING ) {
+ 696                             		.loc 4 228 15 is_stmt 1
+ 697 03c5 ED A5 06                		mov.L	24[r10], r5
+ 698 03c8 A8 5D                   		mov.L	4[r5], r5
+ 699                             		.loc 4 228 24
+ 700 03ca 64 35                   		and	#3, r5
+ 701                             		.loc 4 228 5
+ 702 03cc 61 35                   		cmp	#3, r5
+ 703 03ce 21 25                   		bne	.L56
+ 229:../kernel/tkernel/mutex.c **** 		CHECK_PRI(pk_cmtx->ceilpri);
+ 704                             		.loc 4 229 3
+ 705 03d0 ED A5 06                		mov.L	24[r10], r5
+ 706 03d3 A8 D5                   		mov.L	8[r5], r5
+ 707 03d5 61 05                   		cmp	#0, r5
+ 708 03d7 2B 0C                   		ble	.L57
+ 709                             		.loc 4 229 3 is_stmt 0 discriminator 2
+ 710 03d9 ED A5 06                		mov.L	24[r10], r5
+ 711 03dc A8 D5                   		mov.L	8[r5], r5
+ 712 03de 75 55 20                		cmp	#32, r5
+ 713 03e1 2B 08                   		ble	.L58
+ 714                             	.L57:
+ 715                             		.loc 4 229 3 discriminator 3
+ 716 03e3 FB 56 EF                		mov.L	#-17, r5
+ 717 03e6 38 BD 00                		bra	.L55
+ 718                             	.L58:
+ 230:../kernel/tkernel/mutex.c **** 		ceilpri = int_priority(pk_cmtx->ceilpri);
+ 719                             		.loc 4 230 13 is_stmt 1
+ 720 03e9 ED A5 06                		mov.L	24[r10], r5
+ 721 03ec A8 D5                   		mov.L	8[r5], r5
+ 722                             		.loc 4 230 11
+ 723 03ee 60 15                   		sub	#1, r5
+ 724 03f0 E3 A5                   		mov.L	r5, [r10]
+ 725 03f2 0C                      		bra	.L59
+ 726                             	.L56:
+ 231:../kernel/tkernel/mutex.c **** 	} else {
+ 232:../kernel/tkernel/mutex.c **** 		ceilpri = 0;
+ 727                             		.loc 4 232 11
+ 728 03f3 F8 A6 00                		mov.L	#0, [r10]
+ 729                             	.L59:
+ 730                             	.LBB2:
+ 233:../kernel/tkernel/mutex.c **** 	}
+ 234:../kernel/tkernel/mutex.c **** 
+ 235:../kernel/tkernel/mutex.c **** 	BEGIN_CRITICAL_SECTION;
+ 731                             		.loc 4 235 2
+ 732 03f6 05 00 00 00             		bsr	_disint
+ 733 03fa E7 A1 03                		mov.L	r1, 12[r10]
+ 236:../kernel/tkernel/mutex.c **** 	/* Get control block from FreeQue */
+ 237:../kernel/tkernel/mutex.c **** 	mtxcb = (MTXCB*)QueRemoveNext(&knl_free_mtxcb);
+ 734                             		.loc 4 237 18
+ 735 03fd FB 12 00 00 00 00       		mov.L	#_knl_free_mtxcb, r1
+ 736 0403 39 61 FC                		bsr	_QueRemoveNext
+ 737 0406 E7 A1 04                		mov.L	r1, 16[r10]
+ 238:../kernel/tkernel/mutex.c **** 	if ( mtxcb == NULL ) {
+ 738                             		.loc 4 238 5
+ 739 0409 ED A5 04                		mov.L	16[r10], r5
+ 740 040c 61 05                   		cmp	#0, r5
+ 741 040e 1F                      		bne	.L60
+ 239:../kernel/tkernel/mutex.c **** 		ercd = E_LIMIT;
+ 742                             		.loc 4 239 8
+ 743 040f F9 A6 01 DE             		mov.L	#-34, 4[r10]
+ 744 0413 2E 53                   		bra	.L61
+ 745                             	.L60:
+ 240:../kernel/tkernel/mutex.c **** 	} else {
+ 241:../kernel/tkernel/mutex.c **** 		mtxid = ID_MTX(mtxcb - knl_mtxcb_table);
+ 746                             		.loc 4 241 11
+ 747 0415 ED A5 04                		mov.L	16[r10], r5
+ 748 0418 FB 72 00 00 00 00       		mov.L	#_knl_mtxcb_table, r7
+ 749 041e 43 75                   		sub	r7, r5
+ 750 0420 6A 55                   		shar	#5, r5
+ 751                             		.loc 4 241 9
+ 752 0422 62 15                   		add	#1, r5
+ 753 0424 E7 A5 05                		mov.L	r5, 20[r10]
+ 242:../kernel/tkernel/mutex.c **** 
+ 243:../kernel/tkernel/mutex.c **** 		/* Initialize control block */
+ 244:../kernel/tkernel/mutex.c **** 		QueInit(&mtxcb->wait_queue);
+ 754                             		.loc 4 244 3
+ 755 0427 ED A5 04                		mov.L	16[r10], r5
+ 756 042a EF 51                   		mov.L	r5, r1
+ 757 042c 39 D4 FB                		bsr	_QueInit
+ 245:../kernel/tkernel/mutex.c **** 		mtxcb->mtxid   = mtxid;
+ 758                             		.loc 4 245 18
+ 759 042f ED A5 04                		mov.L	16[r10], r5
+ 760 0432 ED A4 05                		mov.L	20[r10], r4
+ 761 0435 A0 D4                   		mov.L	r4, 8[r5]
+ 246:../kernel/tkernel/mutex.c **** 		mtxcb->exinf   = pk_cmtx->exinf;
+ 762                             		.loc 4 246 27
+ 763 0437 ED A5 06                		mov.L	24[r10], r5
+ 764 043a EC 54                   		mov.L	[r5], r4
+ 765                             		.loc 4 246 18
+ 766 043c ED A5 04                		mov.L	16[r10], r5
+ 767 043f A0 DC                   		mov.L	r4, 12[r5]
+ 247:../kernel/tkernel/mutex.c **** 		mtxcb->mtxatr  = pk_cmtx->mtxatr;
+ 768                             		.loc 4 247 27
+ 769 0441 ED A5 06                		mov.L	24[r10], r5
+ 770 0444 A8 5C                   		mov.L	4[r5], r4
+ 771                             		.loc 4 247 18
+ 772 0446 ED A5 04                		mov.L	16[r10], r5
+ 773 0449 A1 54                   		mov.L	r4, 16[r5]
+ 248:../kernel/tkernel/mutex.c **** 		mtxcb->ceilpri = ceilpri;
+ 774                             		.loc 4 248 18
+ 775 044b EC A5                   		mov.L	[r10], r5
+ 776 044d CF 54                   		mov.B	r5, r4
+ 777 044f ED A5 04                		mov.L	16[r10], r5
+ 778 0452 85 54                   		mov.B	r4, 20[r5]
+ 249:../kernel/tkernel/mutex.c **** 		mtxcb->mtxtsk  = NULL;
+ 779                             		.loc 4 249 18
+ 780 0454 ED A5 04                		mov.L	16[r10], r5
+ 781 0457 3E 56 00                		mov.L	#0, 24[r5]
+ 250:../kernel/tkernel/mutex.c **** 		mtxcb->mtxlist = NULL;
+ 782                             		.loc 4 250 18
+ 783 045a ED A5 04                		mov.L	16[r10], r5
+ 784 045d 3E 57 00                		mov.L	#0, 28[r5]
+ 251:../kernel/tkernel/mutex.c **** #if USE_OBJECT_NAME
+ 252:../kernel/tkernel/mutex.c **** 		if ( (pk_cmtx->mtxatr & TA_DSNAME) != 0 ) {
+ 253:../kernel/tkernel/mutex.c **** 			knl_strncpy((char*)mtxcb->name, (char*)pk_cmtx->dsname,
+ 254:../kernel/tkernel/mutex.c **** 				(UINT)OBJECT_NAME_LENGTH);
+ 255:../kernel/tkernel/mutex.c **** 		}
+ 256:../kernel/tkernel/mutex.c **** #endif
+ 257:../kernel/tkernel/mutex.c **** 		ercd = mtxid;
+ 785                             		.loc 4 257 8
+ 786 0460 ED A5 05                		mov.L	20[r10], r5
+ 787 0463 E7 A5 01                		mov.L	r5, 4[r10]
+ 788                             	.L61:
+ 258:../kernel/tkernel/mutex.c **** 	}
+ 259:../kernel/tkernel/mutex.c **** 	END_CRITICAL_SECTION;
+ 789                             		.loc 4 259 2
+ 790 0466 ED A5 03                		mov.L	12[r10], r5
+ 791 0469 61 F5                   		cmp	#15, r5
+ 792 046b 20 2E                   		beq	.L62
+ 793                             		.loc 4 259 2 is_stmt 0 discriminator 1
+ 794 046d FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 795 0473 EC 54                   		mov.L	[r5], r4
+ 796 0475 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 797 047b EC 55                   		mov.L	[r5], r5
+ 798 047d 47 54                   		cmp	r5, r4
+ 799 047f 20 1A                   		beq	.L62
+ 800                             		.loc 4 259 2 discriminator 3
+ 801 0481 39 1C FC                		bsr	_knl_isTaskIndependent
+ 802 0484 EF 15                   		mov.L	r1, r5
+ 803 0486 61 05                   		cmp	#0, r5
+ 804 0488 21 11                   		bne	.L62
+ 805                             		.loc 4 259 2 discriminator 5
+ 806 048a FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 807 0490 EC 55                   		mov.L	[r5], r5
+ 808 0492 61 05                   		cmp	#0, r5
+ 809 0494 1D                      		bne	.L62
+ 810                             		.loc 4 259 2 discriminator 7
+ 811 0495 05 00 00 00             		bsr	_knl_dispatch
+ 812                             		.balign 8,3,1
+ 813                             	.L62:
+ 814                             		.loc 4 259 2 discriminator 9
+ 815 0499 ED A1 03                		mov.L	12[r10], r1
+ 816 049c 05 00 00 00             		bsr	_setint
+ 817                             	.LBE2:
+ 260:../kernel/tkernel/mutex.c **** 
+ 261:../kernel/tkernel/mutex.c **** 	return ercd;
+ 818                             		.loc 4 261 9 is_stmt 1 discriminator 9
+ 819 04a0 ED A5 01                		mov.L	4[r10], r5
+ 820                             	.L55:
+ 262:../kernel/tkernel/mutex.c **** }
+ 821                             		.loc 4 262 1
+ 822 04a3 EF 51                   		mov.L	r5, r1
+ 823 04a5 3F 7A 0B                		rtsd	#44, r7-r10
+ 824                             	.LFE38:
+ 826                             		.global	_tk_del_mtx
+ 828                             	_tk_del_mtx:
+ 829                             	.LFB39:
+ 263:../kernel/tkernel/mutex.c **** 
+ 264:../kernel/tkernel/mutex.c **** #ifdef USE_FUNC_TK_DEL_MTX
+ 265:../kernel/tkernel/mutex.c **** /*
+ 266:../kernel/tkernel/mutex.c ****  * Delete mutex
+ 267:../kernel/tkernel/mutex.c ****  */
+ 268:../kernel/tkernel/mutex.c **** SYSCALL ER tk_del_mtx( ID mtxid )
+ 269:../kernel/tkernel/mutex.c **** {
+ 830                             		.loc 4 269 1
+ 831 04a8 7E AA                   		push.l	r10
+ 832                             	.LCFI22:
+ 833 04aa 71 0A F0                		add	#-16, r0, r10
+ 834                             	.LCFI23:
+ 835 04ad EF A0                   		mov.L	r10, r0
+ 836 04af E7 A1 03                		mov.L	r1, 12[r10]
+ 270:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb;
+ 271:../kernel/tkernel/mutex.c **** 	ER	ercd = E_OK;
+ 837                             		.loc 4 271 5
+ 838 04b2 F8 A6 00                		mov.L	#0, [r10]
+ 272:../kernel/tkernel/mutex.c **** 
+ 273:../kernel/tkernel/mutex.c **** 	CHECK_MTXID(mtxid);
+ 839                             		.loc 4 273 2
+ 840 04b5 ED A5 03                		mov.L	12[r10], r5
+ 841 04b8 61 05                   		cmp	#0, r5
+ 842 04ba 2B 09                   		ble	.L64
+ 843                             		.loc 4 273 2 is_stmt 0 discriminator 2
+ 844 04bc ED A5 03                		mov.L	12[r10], r5
+ 845 04bf 61 45                   		cmp	#4, r5
+ 846 04c1 2B 08                   		ble	.L65
+ 847                             	.L64:
+ 848                             		.loc 4 273 2 discriminator 3
+ 849 04c3 FB 56 EE                		mov.L	#-18, r5
+ 850 04c6 38 97 00                		bra	.L66
+ 851                             	.L65:
+ 274:../kernel/tkernel/mutex.c **** 
+ 275:../kernel/tkernel/mutex.c **** 	mtxcb = get_mtxcb(mtxid);
+ 852                             		.loc 4 275 10 is_stmt 1
+ 853 04c9 ED A5 03                		mov.L	12[r10], r5
+ 854 04cc 60 15                   		sub	#1, r5
+ 855                             		.loc 4 275 8
+ 856 04ce 6C 55                   		shll	#5, r5
+ 857 04d0 70 55 00 00 00 00       		add	#_knl_mtxcb_table, r5
+ 858 04d6 E7 A5 01                		mov.L	r5, 4[r10]
+ 859                             	.LBB3:
+ 276:../kernel/tkernel/mutex.c **** 
+ 277:../kernel/tkernel/mutex.c **** 	BEGIN_CRITICAL_SECTION;
+ 860                             		.loc 4 277 2
+ 861 04d9 05 00 00 00             		bsr	_disint
+ 862 04dd E7 A1 02                		mov.L	r1, 8[r10]
+ 278:../kernel/tkernel/mutex.c **** 	if ( mtxcb->mtxid == 0 ) {
+ 863                             		.loc 4 278 12
+ 864 04e0 ED A5 01                		mov.L	4[r10], r5
+ 865 04e3 A8 D5                   		mov.L	8[r5], r5
+ 866                             		.loc 4 278 5
+ 867 04e5 61 05                   		cmp	#0, r5
+ 868 04e7 1E                      		bne	.L67
+ 279:../kernel/tkernel/mutex.c **** 		ercd = E_NOEXS;
+ 869                             		.loc 4 279 8
+ 870 04e8 F8 A6 D6                		mov.L	#-42, [r10]
+ 871 04eb 2E 36                   		bra	.L68
+ 872                             	.L67:
+ 280:../kernel/tkernel/mutex.c **** 	} else {
+ 281:../kernel/tkernel/mutex.c **** 		/* If there is a task that holds mutex to delete,
+ 282:../kernel/tkernel/mutex.c **** 		 * delete the mutex from the list
+ 283:../kernel/tkernel/mutex.c **** 		 * and adjust the task priority if necessary.
+ 284:../kernel/tkernel/mutex.c **** 		 */
+ 285:../kernel/tkernel/mutex.c **** 		if ( mtxcb->mtxtsk != NULL ) {
+ 873                             		.loc 4 285 13
+ 874 04ed ED A5 01                		mov.L	4[r10], r5
+ 875 04f0 A9 D5                   		mov.L	24[r5], r5
+ 876                             		.loc 4 285 6
+ 877 04f2 61 05                   		cmp	#0, r5
+ 878 04f4 20 10                   		beq	.L69
+ 286:../kernel/tkernel/mutex.c **** 			knl_release_mutex(mtxcb->mtxtsk, mtxcb);
+ 879                             		.loc 4 286 4
+ 880 04f6 ED A5 01                		mov.L	4[r10], r5
+ 881 04f9 A9 D5                   		mov.L	24[r5], r5
+ 882 04fb ED A2 01                		mov.L	4[r10], r2
+ 883 04fe EF 51                   		mov.L	r5, r1
+ 884 0500 05 00 00 00             		bsr	_knl_release_mutex
+ 885                             	.L69:
+ 287:../kernel/tkernel/mutex.c **** 		}
+ 288:../kernel/tkernel/mutex.c **** 
+ 289:../kernel/tkernel/mutex.c **** 		/* Free wait state of task (E_DLT) */
+ 290:../kernel/tkernel/mutex.c **** 		knl_wait_delete(&mtxcb->wait_queue);
+ 886                             		.loc 4 290 3
+ 887 0504 ED A5 01                		mov.L	4[r10], r5
+ 888 0507 EF 51                   		mov.L	r5, r1
+ 889 0509 05 00 00 00             		bsr	_knl_wait_delete
+ 291:../kernel/tkernel/mutex.c **** 
+ 292:../kernel/tkernel/mutex.c **** 		/* Return to FreeQue */
+ 293:../kernel/tkernel/mutex.c **** 		QueInsert(&mtxcb->wait_queue, &knl_free_mtxcb);
+ 890                             		.loc 4 293 3
+ 891 050d ED A5 01                		mov.L	4[r10], r5
+ 892 0510 FB 22 00 00 00 00       		mov.L	#_knl_free_mtxcb, r2
+ 893 0516 EF 51                   		mov.L	r5, r1
+ 894 0518 39 1C FB                		bsr	_QueInsert
+ 294:../kernel/tkernel/mutex.c **** 		mtxcb->mtxid = 0;
+ 895                             		.loc 4 294 16
+ 896 051b ED A5 01                		mov.L	4[r10], r5
+ 897 051e 3E 52 00                		mov.L	#0, 8[r5]
+ 898                             	.L68:
+ 295:../kernel/tkernel/mutex.c **** 	}
+ 296:../kernel/tkernel/mutex.c **** 	END_CRITICAL_SECTION;
+ 899                             		.loc 4 296 2
+ 900 0521 ED A5 02                		mov.L	8[r10], r5
+ 901 0524 61 F5                   		cmp	#15, r5
+ 902 0526 20 2E                   		beq	.L70
+ 903                             		.loc 4 296 2 is_stmt 0 discriminator 1
+ 904 0528 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 905 052e EC 54                   		mov.L	[r5], r4
+ 906 0530 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 907 0536 EC 55                   		mov.L	[r5], r5
+ 908 0538 47 54                   		cmp	r5, r4
+ 909 053a 20 1A                   		beq	.L70
+ 910                             		.loc 4 296 2 discriminator 3
+ 911 053c 39 61 FB                		bsr	_knl_isTaskIndependent
+ 912 053f EF 15                   		mov.L	r1, r5
+ 913 0541 61 05                   		cmp	#0, r5
+ 914 0543 21 11                   		bne	.L70
+ 915                             		.loc 4 296 2 discriminator 5
+ 916 0545 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 917 054b EC 55                   		mov.L	[r5], r5
+ 918 054d 61 05                   		cmp	#0, r5
+ 919 054f 1D                      		bne	.L70
+ 920                             		.loc 4 296 2 discriminator 7
+ 921 0550 05 00 00 00             		bsr	_knl_dispatch
+ 922                             		.balign 8,3,1
+ 923                             	.L70:
+ 924                             		.loc 4 296 2 discriminator 9
+ 925 0554 ED A1 02                		mov.L	8[r10], r1
+ 926 0557 05 00 00 00             		bsr	_setint
+ 927                             	.LBE3:
+ 297:../kernel/tkernel/mutex.c **** 
+ 298:../kernel/tkernel/mutex.c **** 	return ercd;
+ 928                             		.loc 4 298 9 is_stmt 1 discriminator 9
+ 929 055b EC A5                   		mov.L	[r10], r5
+ 930                             	.L66:
+ 299:../kernel/tkernel/mutex.c **** }
+ 931                             		.loc 4 299 1
+ 932 055d EF 51                   		mov.L	r5, r1
+ 933 055f 3F AA 05                		rtsd	#20, r10-r10
+ 934                             	.LFE39:
+ 937                             	_mtx_chg_pri:
+ 938                             	.LFB40:
+ 300:../kernel/tkernel/mutex.c **** #endif /* USE_FUNC_TK_DEL_MTX */
+ 301:../kernel/tkernel/mutex.c **** 
+ 302:../kernel/tkernel/mutex.c **** 
+ 303:../kernel/tkernel/mutex.c **** /*
+ 304:../kernel/tkernel/mutex.c ****  * Processing if the priority of wait task changes
+ 305:../kernel/tkernel/mutex.c ****  */
+ 306:../kernel/tkernel/mutex.c **** LOCAL void mtx_chg_pri( TCB *tcb, INT oldpri )
+ 307:../kernel/tkernel/mutex.c **** {
+ 939                             		.loc 4 307 1
+ 940 0562 7E AA                   		push.l	r10
+ 941                             	.LCFI24:
+ 942 0564 71 0A F0                		add	#-16, r0, r10
+ 943                             	.LCFI25:
+ 944 0567 EF A0                   		mov.L	r10, r0
+ 945 0569 E7 A1 02                		mov.L	r1, 8[r10]
+ 946 056c E7 A2 03                		mov.L	r2, 12[r10]
+ 308:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb;
+ 309:../kernel/tkernel/mutex.c **** 	TCB	*mtxtsk;
+ 310:../kernel/tkernel/mutex.c **** 
+ 311:../kernel/tkernel/mutex.c **** 	mtxcb = get_mtxcb(tcb->wid);
+ 947                             		.loc 4 311 10
+ 948 056f ED A5 02                		mov.L	8[r10], r5
+ 949 0572 AB 55                   		mov.L	48[r5], r5
+ 950 0574 60 15                   		sub	#1, r5
+ 951                             		.loc 4 311 8
+ 952 0576 6C 55                   		shll	#5, r5
+ 953 0578 70 55 00 00 00 00       		add	#_knl_mtxcb_table, r5
+ 954 057e E3 A5                   		mov.L	r5, [r10]
+ 312:../kernel/tkernel/mutex.c **** 	knl_gcb_change_priority((GCB*)mtxcb, tcb);
+ 955                             		.loc 4 312 2
+ 956 0580 ED A2 02                		mov.L	8[r10], r2
+ 957 0583 EC A1                   		mov.L	[r10], r1
+ 958 0585 05 00 00 00             		bsr	_knl_gcb_change_priority
+ 313:../kernel/tkernel/mutex.c **** 
+ 314:../kernel/tkernel/mutex.c **** 	if ( (mtxcb->mtxatr & TA_CEILING) == TA_INHERIT ) {
+ 959                             		.loc 4 314 13
+ 960 0589 EC A5                   		mov.L	[r10], r5
+ 961 058b A9 55                   		mov.L	16[r5], r5
+ 962                             		.loc 4 314 22
+ 963 058d 64 35                   		and	#3, r5
+ 964                             		.loc 4 314 5
+ 965 058f 61 25                   		cmp	#2, r5
+ 966 0591 21 47                   		bne	.L74
+ 315:../kernel/tkernel/mutex.c **** 		mtxtsk = mtxcb->mtxtsk;
+ 967                             		.loc 4 315 10
+ 968 0593 EC A5                   		mov.L	[r10], r5
+ 969 0595 A9 D5                   		mov.L	24[r5], r5
+ 970 0597 E7 A5 01                		mov.L	r5, 4[r10]
+ 316:../kernel/tkernel/mutex.c **** 		if ( mtxtsk->priority > tcb->priority ) {
+ 971                             		.loc 4 316 14
+ 972 059a ED A5 01                		mov.L	4[r10], r5
+ 973 059d CD 54 26                		mov.B	38[r5], r4
+ 974                             		.loc 4 316 30
+ 975 05a0 ED A5 02                		mov.L	8[r10], r5
+ 976 05a3 CD 55 26                		mov.B	38[r5], r5
+ 977                             		.loc 4 316 6
+ 978 05a6 5B 44                   		movu.B	r4, r4
+ 979 05a8 5B 55                   		movu.B	r5, r5
+ 980 05aa 47 54                   		cmp	r5, r4
+ 981 05ac 25 15                   		bleu	.L73
+ 317:../kernel/tkernel/mutex.c **** 			/* Since the highest priority of the lock wait task
+ 318:../kernel/tkernel/mutex.c **** 			   became higher, raise the lock get task priority
+ 319:../kernel/tkernel/mutex.c **** 			   higher */
+ 320:../kernel/tkernel/mutex.c **** 			knl_change_task_priority(mtxtsk, tcb->priority);
+ 982                             		.loc 4 320 40
+ 983 05ae ED A5 02                		mov.L	8[r10], r5
+ 984 05b1 CD 55 26                		mov.B	38[r5], r5
+ 985                             		.loc 4 320 4
+ 986 05b4 5B 55                   		movu.B	r5, r5
+ 987 05b6 EF 52                   		mov.L	r5, r2
+ 988 05b8 ED A1 01                		mov.L	4[r10], r1
+ 989 05bb 05 00 00 00             		bsr	_knl_change_task_priority
+ 321:../kernel/tkernel/mutex.c **** 
+ 322:../kernel/tkernel/mutex.c **** 		} else if ( mtxtsk->priority == oldpri ) {
+ 323:../kernel/tkernel/mutex.c **** 			/* Since the highest priority of the lock wait task
+ 324:../kernel/tkernel/mutex.c **** 			   might become lower, adjust this priority */
+ 325:../kernel/tkernel/mutex.c **** 			reset_priority(mtxtsk);
+ 326:../kernel/tkernel/mutex.c **** 		}
+ 327:../kernel/tkernel/mutex.c **** 	}
+ 328:../kernel/tkernel/mutex.c **** }
+ 990                             		.loc 4 328 1
+ 991 05bf 2E 19                   		bra	.L74
+ 992                             	.L73:
+ 322:../kernel/tkernel/mutex.c **** 			/* Since the highest priority of the lock wait task
+ 993                             		.loc 4 322 21
+ 994 05c1 ED A5 01                		mov.L	4[r10], r5
+ 995 05c4 CD 55 26                		mov.B	38[r5], r5
+ 996 05c7 5B 55                   		movu.B	r5, r5
+ 322:../kernel/tkernel/mutex.c **** 			/* Since the highest priority of the lock wait task
+ 997                             		.loc 4 322 13
+ 998 05c9 ED A4 03                		mov.L	12[r10], r4
+ 999 05cc 47 54                   		cmp	r5, r4
+ 1000 05ce 1A                      		bne	.L74
+ 325:../kernel/tkernel/mutex.c **** 		}
+ 1001                             		.loc 4 325 4
+ 1002 05cf 66 02                   		mov.L	#0, r2
+ 1003 05d1 ED A1 01                		mov.L	4[r10], r1
+ 1004 05d4 05 00 00 00             		bsr	_knl_release_mutex
+ 1005                             	.L74:
+ 1006                             		.loc 4 328 1
+ 1007 05d8 03                      		nop
+ 1008 05d9 3F AA 05                		rtsd	#20, r10-r10
+ 1009                             	.LFE40:
+ 1012                             	_mtx_rel_wai:
+ 1013                             	.LFB41:
+ 329:../kernel/tkernel/mutex.c **** 
+ 330:../kernel/tkernel/mutex.c **** /*
+ 331:../kernel/tkernel/mutex.c ****  * Processing if the wait task is released (For TA_INHERIT only)
+ 332:../kernel/tkernel/mutex.c ****  */
+ 333:../kernel/tkernel/mutex.c **** LOCAL void mtx_rel_wai( TCB *tcb )
+ 334:../kernel/tkernel/mutex.c **** {
+ 1014                             		.loc 4 334 1
+ 1015 05dc 7E AA                   		push.l	r10
+ 1016                             	.LCFI26:
+ 1017 05de 71 0A F4                		add	#-12, r0, r10
+ 1018                             	.LCFI27:
+ 1019 05e1 EF A0                   		mov.L	r10, r0
+ 1020 05e3 E7 A1 02                		mov.L	r1, 8[r10]
+ 335:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb;
+ 336:../kernel/tkernel/mutex.c **** 	TCB	*mtxtsk;
+ 337:../kernel/tkernel/mutex.c **** 
+ 338:../kernel/tkernel/mutex.c **** 	mtxcb = get_mtxcb(tcb->wid);
+ 1021                             		.loc 4 338 10
+ 1022 05e6 ED A5 02                		mov.L	8[r10], r5
+ 1023 05e9 AB 55                   		mov.L	48[r5], r5
+ 1024 05eb 60 15                   		sub	#1, r5
+ 1025                             		.loc 4 338 8
+ 1026 05ed 6C 55                   		shll	#5, r5
+ 1027 05ef 70 55 00 00 00 00       		add	#_knl_mtxcb_table, r5
+ 1028 05f5 E3 A5                   		mov.L	r5, [r10]
+ 339:../kernel/tkernel/mutex.c **** 	mtxtsk = mtxcb->mtxtsk;
+ 1029                             		.loc 4 339 9
+ 1030 05f7 EC A5                   		mov.L	[r10], r5
+ 1031 05f9 A9 D5                   		mov.L	24[r5], r5
+ 1032 05fb E7 A5 01                		mov.L	r5, 4[r10]
+ 340:../kernel/tkernel/mutex.c **** 
+ 341:../kernel/tkernel/mutex.c **** 	if ( mtxtsk->priority == tcb->priority ) {
+ 1033                             		.loc 4 341 13
+ 1034 05fe ED A5 01                		mov.L	4[r10], r5
+ 1035 0601 CD 54 26                		mov.B	38[r5], r4
+ 1036                             		.loc 4 341 30
+ 1037 0604 ED A5 02                		mov.L	8[r10], r5
+ 1038 0607 CD 55 26                		mov.B	38[r5], r5
+ 1039                             		.loc 4 341 5
+ 1040 060a 5B 44                   		movu.B	r4, r4
+ 1041 060c 5B 55                   		movu.B	r5, r5
+ 1042 060e 47 54                   		cmp	r5, r4
+ 1043 0610 1A                      		bne	.L77
+ 342:../kernel/tkernel/mutex.c **** 		/* Since the highest priority of the lock wait task might 
+ 343:../kernel/tkernel/mutex.c **** 		   become lower, adjust this priority */
+ 344:../kernel/tkernel/mutex.c **** 		reset_priority(mtxtsk);
+ 1044                             		.loc 4 344 3
+ 1045 0611 66 02                   		mov.L	#0, r2
+ 1046 0613 ED A1 01                		mov.L	4[r10], r1
+ 1047 0616 05 00 00 00             		bsr	_knl_release_mutex
+ 1048                             	.L77:
+ 345:../kernel/tkernel/mutex.c **** 	}
+ 346:../kernel/tkernel/mutex.c **** }
+ 1049                             		.loc 4 346 1
+ 1050 061a 03                      		nop
+ 1051 061b 3F AA 04                		rtsd	#16, r10-r10
+ 1052                             	.LFE41:
+ 1054                             		.section C,"a",@progbits
+ 1055                             		.p2align 2
+ 1056                             		.balign 4
+ 1059                             	_knl_wspec_mtx_tfifo:
+ 1060 0000 80 00 00 00             		.long	0x80
+ 1061 0004 00 00 00 00             		.long	0
+ 1062 0008 00 00 00 00             		.long	0
+ 1063                             		.balign 4
+ 1066                             	_knl_wspec_mtx_tpri:
+ 1067 000c 80 00 00 00             		.long	0x80
+ 1068 0010 62 05 00 00             		.long	_mtx_chg_pri
+ 1069 0014 00 00 00 00             		.long	0
+ 1070                             		.balign 4
+ 1073                             	_knl_wspec_mtx_inherit:
+ 1074 0018 80 00 00 00             		.long	0x80
+ 1075 001c 62 05 00 00             		.long	_mtx_chg_pri
+ 1076 0020 DC 05 00 00             		.long	_mtx_rel_wai
+ 1077                             		.section P,"ax"
+ 1078                             		.global	_tk_loc_mtx
+ 1080                             	_tk_loc_mtx:
+ 1081                             	.LFB42:
+ 347:../kernel/tkernel/mutex.c **** 
+ 348:../kernel/tkernel/mutex.c **** /*
+ 349:../kernel/tkernel/mutex.c ****  * Definition of mutex wait specification
+ 350:../kernel/tkernel/mutex.c ****  */
+ 351:../kernel/tkernel/mutex.c **** LOCAL CONST WSPEC knl_wspec_mtx_tfifo   = { TTW_MTX, NULL, NULL };
+ 352:../kernel/tkernel/mutex.c **** LOCAL CONST WSPEC knl_wspec_mtx_tpri    = { TTW_MTX, mtx_chg_pri, NULL };
+ 353:../kernel/tkernel/mutex.c **** LOCAL CONST WSPEC knl_wspec_mtx_inherit = { TTW_MTX, mtx_chg_pri, mtx_rel_wai };
+ 354:../kernel/tkernel/mutex.c **** 
+ 355:../kernel/tkernel/mutex.c **** /*
+ 356:../kernel/tkernel/mutex.c ****  * Lock mutex
+ 357:../kernel/tkernel/mutex.c ****  */
+ 358:../kernel/tkernel/mutex.c **** SYSCALL ER tk_loc_mtx( ID mtxid, TMO tmout )
+ 359:../kernel/tkernel/mutex.c **** {
+ 1082                             		.loc 4 359 1
+ 1083 061e 7E AA                   		push.l	r10
+ 1084                             	.LCFI28:
+ 1085 0620 71 0A E4                		add	#-28, r0, r10
+ 1086                             	.LCFI29:
+ 1087 0623 EF A0                   		mov.L	r10, r0
+ 1088 0625 E7 A1 05                		mov.L	r1, 20[r10]
+ 1089 0628 E7 A2 06                		mov.L	r2, 24[r10]
+ 360:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb;
+ 361:../kernel/tkernel/mutex.c **** 	TCB	*mtxtsk;
+ 362:../kernel/tkernel/mutex.c **** 	ATR	mtxatr;
+ 363:../kernel/tkernel/mutex.c **** 	ER	ercd = E_OK;
+ 1090                             		.loc 4 363 5
+ 1091 062b F9 A6 04 00             		mov.L	#0, 16[r10]
+ 364:../kernel/tkernel/mutex.c **** 
+ 365:../kernel/tkernel/mutex.c **** 	CHECK_MTXID(mtxid);
+ 1092                             		.loc 4 365 2
+ 1093 062f ED A5 05                		mov.L	20[r10], r5
+ 1094 0632 61 05                   		cmp	#0, r5
+ 1095 0634 2B 09                   		ble	.L79
+ 1096                             		.loc 4 365 2 is_stmt 0 discriminator 2
+ 1097 0636 ED A5 05                		mov.L	20[r10], r5
+ 1098 0639 61 45                   		cmp	#4, r5
+ 1099 063b 2B 08                   		ble	.L80
+ 1100                             	.L79:
+ 1101                             		.loc 4 365 2 discriminator 3
+ 1102 063d FB 56 EE                		mov.L	#-18, r5
+ 1103 0640 38 1A 02                		bra	.L99
+ 1104                             	.L80:
+ 366:../kernel/tkernel/mutex.c **** 	CHECK_TMOUT(tmout);
+ 1105                             		.loc 4 366 2 is_stmt 1
+ 1106 0643 ED A5 06                		mov.L	24[r10], r5
+ 1107 0646 75 05 FF                		cmp	#-1, r5
+ 1108 0649 28 08                   		bge	.L82
+ 1109                             		.loc 4 366 2 is_stmt 0 discriminator 1
+ 1110 064b FB 56 EF                		mov.L	#-17, r5
+ 1111 064e 38 0C 02                		bra	.L99
+ 1112                             	.L82:
+ 367:../kernel/tkernel/mutex.c **** 	CHECK_DISPATCH();
+ 1113                             		.loc 4 367 2 is_stmt 1
+ 1114 0651 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 1115 0657 EC 55                   		mov.L	[r5], r5
+ 1116 0659 61 05                   		cmp	#0, r5
+ 1117 065b 21 21                   		bne	.L83
+ 1118                             		.loc 4 367 2 is_stmt 0 discriminator 2
+ 1119 065d 39 40 FA                		bsr	_knl_isTaskIndependent
+ 1120 0660 EF 15                   		mov.L	r1, r5
+ 1121 0662 61 05                   		cmp	#0, r5
+ 1122 0664 21 18                   		bne	.L83
+ 1123                             		.loc 4 367 2 discriminator 4
+ 1124 0666 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1125 066c EC 55                   		mov.L	[r5], r5
+ 1126 066e 61 05                   		cmp	#0, r5
+ 1127 0670 20 0C                   		beq	.L83
+ 1128                             		.loc 4 367 2 discriminator 6
+ 1129 0672 05 00 00 00             		bsr	_GetCpuIntLevel
+ 1130 0676 EF 15                   		mov.L	r1, r5
+ 1131 0678 75 55 10                		cmp	#16, r5
+ 1132 067b 1F                      		bne	.L84
+ 1133                             		.balign 8,3,2
+ 1134                             	.L83:
+ 1135                             		.loc 4 367 2 discriminator 7
+ 1136 067c FB 56 E7                		mov.L	#-25, r5
+ 1137 067f 38 DB 01                		bra	.L99
+ 1138                             	.L84:
+ 368:../kernel/tkernel/mutex.c **** 
+ 369:../kernel/tkernel/mutex.c **** 	mtxcb = get_mtxcb(mtxid);
+ 1139                             		.loc 4 369 10 is_stmt 1
+ 1140 0682 ED A5 05                		mov.L	20[r10], r5
+ 1141 0685 60 15                   		sub	#1, r5
+ 1142                             		.loc 4 369 8
+ 1143 0687 6C 55                   		shll	#5, r5
+ 1144 0689 70 55 00 00 00 00       		add	#_knl_mtxcb_table, r5
+ 1145 068f E3 A5                   		mov.L	r5, [r10]
+ 1146                             	.LBB4:
+ 370:../kernel/tkernel/mutex.c **** 
+ 371:../kernel/tkernel/mutex.c **** 	BEGIN_CRITICAL_SECTION;
+ 1147                             		.loc 4 371 2
+ 1148 0691 05 00 00 00             		bsr	_disint
+ 1149 0695 E7 A1 01                		mov.L	r1, 4[r10]
+ 372:../kernel/tkernel/mutex.c **** 	if ( mtxcb->mtxid == 0 ) {
+ 1150                             		.loc 4 372 12
+ 1151 0698 EC A5                   		mov.L	[r10], r5
+ 1152 069a A8 D5                   		mov.L	8[r5], r5
+ 1153                             		.loc 4 372 5
+ 1154 069c 61 05                   		cmp	#0, r5
+ 1155 069e 18                      		bne	.L85
+ 373:../kernel/tkernel/mutex.c **** 		ercd = E_NOEXS;
+ 1156                             		.loc 4 373 8
+ 1157 069f F9 A6 04 D6             		mov.L	#-42, 16[r10]
+ 374:../kernel/tkernel/mutex.c **** 		goto error_exit;
+ 1158                             		.loc 4 374 3
+ 1159 06a3 38 7A 01                		bra	.L86
+ 1160                             	.L85:
+ 375:../kernel/tkernel/mutex.c **** 	}
+ 376:../kernel/tkernel/mutex.c **** 	if ( mtxcb->mtxtsk == knl_ctxtsk ) {
+ 1161                             		.loc 4 376 12
+ 1162 06a6 EC A5                   		mov.L	[r10], r5
+ 1163 06a8 A9 D4                   		mov.L	24[r5], r4
+ 1164                             		.loc 4 376 21
+ 1165 06aa FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1166 06b0 EC 55                   		mov.L	[r5], r5
+ 1167                             		.loc 4 376 5
+ 1168 06b2 47 54                   		cmp	r5, r4
+ 1169 06b4 18                      		bne	.L87
+ 377:../kernel/tkernel/mutex.c **** 		ercd = E_ILUSE;  /* Multiplexed lock */
+ 1170                             		.loc 4 377 8
+ 1171 06b5 F9 A6 04 E4             		mov.L	#-28, 16[r10]
+ 378:../kernel/tkernel/mutex.c **** 		goto error_exit;
+ 1172                             		.loc 4 378 3
+ 1173 06b9 38 64 01                		bra	.L86
+ 1174                             	.L87:
+ 379:../kernel/tkernel/mutex.c **** 	}
+ 380:../kernel/tkernel/mutex.c **** 
+ 381:../kernel/tkernel/mutex.c **** 	mtxatr = mtxcb->mtxatr & TA_CEILING;
+ 1175                             		.loc 4 381 16
+ 1176 06bc EC A5                   		mov.L	[r10], r5
+ 1177 06be A9 55                   		mov.L	16[r5], r5
+ 1178                             		.loc 4 381 9
+ 1179 06c0 64 35                   		and	#3, r5
+ 1180 06c2 E7 A5 02                		mov.L	r5, 8[r10]
+ 382:../kernel/tkernel/mutex.c **** 	if ( mtxatr == TA_CEILING ) {
+ 1181                             		.loc 4 382 5
+ 1182 06c5 ED A5 02                		mov.L	8[r10], r5
+ 1183 06c8 61 35                   		cmp	#3, r5
+ 1184 06ca 21 20                   		bne	.L88
+ 383:../kernel/tkernel/mutex.c **** 		if ( knl_ctxtsk->bpriority < mtxcb->ceilpri ) {
+ 1185                             		.loc 4 383 18
+ 1186 06cc FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1187 06d2 EC 55                   		mov.L	[r5], r5
+ 1188 06d4 CD 54 25                		mov.B	37[r5], r4
+ 1189                             		.loc 4 383 37
+ 1190 06d7 EC A5                   		mov.L	[r10], r5
+ 1191 06d9 8D 55                   		mov.B	20[r5], r5
+ 1192                             		.loc 4 383 6
+ 1193 06db 5B 44                   		movu.B	r4, r4
+ 1194 06dd 5B 55                   		movu.B	r5, r5
+ 1195 06df 47 54                   		cmp	r5, r4
+ 1196 06e1 22 09                   		bgeu	.L88
+ 384:../kernel/tkernel/mutex.c **** 			/* Violation of highest priority limit */
+ 385:../kernel/tkernel/mutex.c **** 			ercd = E_ILUSE;
+ 1197                             		.loc 4 385 9
+ 1198 06e3 F9 A6 04 E4             		mov.L	#-28, 16[r10]
+ 386:../kernel/tkernel/mutex.c **** 			goto error_exit;
+ 1199                             		.loc 4 386 4
+ 1200 06e7 38 36 01                		bra	.L86
+ 1201                             	.L88:
+ 387:../kernel/tkernel/mutex.c **** 		}
+ 388:../kernel/tkernel/mutex.c **** 	}
+ 389:../kernel/tkernel/mutex.c **** 
+ 390:../kernel/tkernel/mutex.c **** 	mtxtsk = mtxcb->mtxtsk;
+ 1202                             		.loc 4 390 9
+ 1203 06ea EC A5                   		mov.L	[r10], r5
+ 1204 06ec A9 D5                   		mov.L	24[r5], r5
+ 1205 06ee E7 A5 03                		mov.L	r5, 12[r10]
+ 391:../kernel/tkernel/mutex.c **** 	if ( mtxtsk == NULL ) {
+ 1206                             		.loc 4 391 5
+ 1207 06f1 ED A5 03                		mov.L	12[r10], r5
+ 1208 06f4 61 05                   		cmp	#0, r5
+ 1209 06f6 21 63                   		bne	.L89
+ 392:../kernel/tkernel/mutex.c **** 		/* Get lock */
+ 393:../kernel/tkernel/mutex.c **** 		mtxcb->mtxtsk = knl_ctxtsk;
+ 1210                             		.loc 4 393 17
+ 1211 06f8 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1212 06fe EC 54                   		mov.L	[r5], r4
+ 1213 0700 EC A5                   		mov.L	[r10], r5
+ 1214 0702 A1 D4                   		mov.L	r4, 24[r5]
+ 394:../kernel/tkernel/mutex.c **** 		mtxcb->mtxlist = knl_ctxtsk->mtxlist;
+ 1215                             		.loc 4 394 30
+ 1216 0704 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1217 070a EC 55                   		mov.L	[r5], r5
+ 1218 070c AE 5C                   		mov.L	100[r5], r4
+ 1219                             		.loc 4 394 18
+ 1220 070e EC A5                   		mov.L	[r10], r5
+ 1221 0710 A1 DC                   		mov.L	r4, 28[r5]
+ 395:../kernel/tkernel/mutex.c **** 		knl_ctxtsk->mtxlist = mtxcb;
+ 1222                             		.loc 4 395 13
+ 1223 0712 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1224 0718 EC 55                   		mov.L	[r5], r5
+ 1225                             		.loc 4 395 23
+ 1226 071a EC A4                   		mov.L	[r10], r4
+ 1227 071c A6 5C                   		mov.L	r4, 100[r5]
+ 396:../kernel/tkernel/mutex.c **** 
+ 397:../kernel/tkernel/mutex.c **** 		if ( mtxatr == TA_CEILING ) {
+ 1228                             		.loc 4 397 6
+ 1229 071e ED A5 02                		mov.L	8[r10], r5
+ 1230 0721 61 35                   		cmp	#3, r5
+ 1231 0723 3B FA 00                		bne	.L86
+ 398:../kernel/tkernel/mutex.c **** 			if ( knl_ctxtsk->priority > mtxcb->ceilpri ) {
+ 1232                             		.loc 4 398 19
+ 1233 0726 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1234 072c EC 55                   		mov.L	[r5], r5
+ 1235 072e CD 54 26                		mov.B	38[r5], r4
+ 1236                             		.loc 4 398 37
+ 1237 0731 EC A5                   		mov.L	[r10], r5
+ 1238 0733 8D 55                   		mov.B	20[r5], r5
+ 1239                             		.loc 4 398 7
+ 1240 0735 5B 44                   		movu.B	r4, r4
+ 1241 0737 5B 55                   		movu.B	r5, r5
+ 1242 0739 47 54                   		cmp	r5, r4
+ 1243 073b 24 05 38 E0 00          		bleu	.L86
+ 399:../kernel/tkernel/mutex.c **** 				/* Raise its own task to the highest
+ 400:../kernel/tkernel/mutex.c **** 				   priority limit */
+ 401:../kernel/tkernel/mutex.c **** 				knl_change_task_priority(knl_ctxtsk, mtxcb->ceilpri);
+ 1244                             		.loc 4 401 5
+ 1245 0740 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1246 0746 EC 54                   		mov.L	[r5], r4
+ 1247                             		.loc 4 401 47
+ 1248 0748 EC A5                   		mov.L	[r10], r5
+ 1249 074a 8D 55                   		mov.B	20[r5], r5
+ 1250                             		.loc 4 401 5
+ 1251 074c 5B 55                   		movu.B	r5, r5
+ 1252 074e EF 52                   		mov.L	r5, r2
+ 1253 0750 EF 41                   		mov.L	r4, r1
+ 1254 0752 05 00 00 00             		bsr	_knl_change_task_priority
+ 1255 0756 38 C7 00                		bra	.L86
+ 1256                             	.L89:
+ 402:../kernel/tkernel/mutex.c **** 			}
+ 403:../kernel/tkernel/mutex.c **** 		}
+ 404:../kernel/tkernel/mutex.c **** 	} else {
+ 405:../kernel/tkernel/mutex.c **** 		ercd = E_TMOUT;
+ 1257                             		.loc 4 405 8
+ 1258 0759 F9 A6 04 CE             		mov.L	#-50, 16[r10]
+ 406:../kernel/tkernel/mutex.c **** 		if ( tmout == TMO_POL ) {
+ 1259                             		.loc 4 406 6
+ 1260 075d ED A5 06                		mov.L	24[r10], r5
+ 1261 0760 61 05                   		cmp	#0, r5
+ 1262 0762 3A BA 00                		beq	.L100
+ 407:../kernel/tkernel/mutex.c **** 			goto error_exit;
+ 408:../kernel/tkernel/mutex.c **** 		}
+ 409:../kernel/tkernel/mutex.c **** 
+ 410:../kernel/tkernel/mutex.c **** 		if ( mtxatr == TA_INHERIT ) {
+ 1263                             		.loc 4 410 6
+ 1264 0765 ED A5 02                		mov.L	8[r10], r5
+ 1265 0768 61 25                   		cmp	#2, r5
+ 1266 076a 21 31                   		bne	.L92
+ 411:../kernel/tkernel/mutex.c **** 			if ( mtxtsk->priority > knl_ctxtsk->priority ) {
+ 1267                             		.loc 4 411 15
+ 1268 076c ED A5 03                		mov.L	12[r10], r5
+ 1269 076f CD 54 26                		mov.B	38[r5], r4
+ 1270                             		.loc 4 411 38
+ 1271 0772 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1272 0778 EC 55                   		mov.L	[r5], r5
+ 1273 077a CD 55 26                		mov.B	38[r5], r5
+ 1274                             		.loc 4 411 7
+ 1275 077d 5B 44                   		movu.B	r4, r4
+ 1276 077f 5B 55                   		movu.B	r5, r5
+ 1277 0781 47 54                   		cmp	r5, r4
+ 1278 0783 25 18                   		bleu	.L92
+ 412:../kernel/tkernel/mutex.c **** 				/* Raise the priority of task during
+ 413:../kernel/tkernel/mutex.c **** 				   locking to the same priority as its
+ 414:../kernel/tkernel/mutex.c **** 				   own task */
+ 415:../kernel/tkernel/mutex.c **** 				knl_change_task_priority(mtxtsk, knl_ctxtsk->priority);
+ 1279                             		.loc 4 415 48
+ 1280 0785 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1281 078b EC 55                   		mov.L	[r5], r5
+ 1282 078d CD 55 26                		mov.B	38[r5], r5
+ 1283                             		.loc 4 415 5
+ 1284 0790 5B 55                   		movu.B	r5, r5
+ 1285 0792 EF 52                   		mov.L	r5, r2
+ 1286 0794 ED A1 03                		mov.L	12[r10], r1
+ 1287 0797 05 00 00 00             		bsr	_knl_change_task_priority
+ 1288                             	.L92:
+ 416:../kernel/tkernel/mutex.c **** 			}
+ 417:../kernel/tkernel/mutex.c **** 		}
+ 418:../kernel/tkernel/mutex.c **** 
+ 419:../kernel/tkernel/mutex.c **** 		/* Ready for wait */
+ 420:../kernel/tkernel/mutex.c **** 		knl_ctxtsk->wspec = ( mtxatr == TA_TFIFO   )? &knl_wspec_mtx_tfifo:
+ 1289                             		.loc 4 420 69
+ 1290 079b ED A5 02                		mov.L	8[r10], r5
+ 1291 079e 61 05                   		cmp	#0, r5
+ 1292 07a0 20 17                   		beq	.L93
+ 421:../kernel/tkernel/mutex.c **** 				( mtxatr == TA_INHERIT )? &knl_wspec_mtx_inherit:
+ 1293                             		.loc 4 421 53
+ 1294 07a2 ED A5 02                		mov.L	8[r10], r5
+ 1295 07a5 61 25                   		cmp	#2, r5
+ 1296 07a7 19                      		bne	.L94
+ 1297                             		.loc 4 421 53 is_stmt 0 discriminator 1
+ 1298 07a8 FB 52 18 00 00 00       		mov.L	#_knl_wspec_mtx_inherit, r5
+ 1299 07ae 2E 0F                   		bra	.L96
+ 1300                             	.L94:
+ 1301                             		.loc 4 421 53 discriminator 2
+ 1302 07b0 FB 52 0C 00 00 00       		mov.L	#_knl_wspec_mtx_tpri, r5
+ 1303 07b6 0F                      		bra	.L96
+ 1304                             	.L93:
+ 420:../kernel/tkernel/mutex.c **** 				( mtxatr == TA_INHERIT )? &knl_wspec_mtx_inherit:
+ 1305                             		.loc 4 420 69 is_stmt 1 discriminator 1
+ 1306 07b7 FB 52 00 00 00 00       		mov.L	#_knl_wspec_mtx_tfifo, r5
+ 1307                             	.L96:
+ 420:../kernel/tkernel/mutex.c **** 				( mtxatr == TA_INHERIT )? &knl_wspec_mtx_inherit:
+ 1308                             		.loc 4 420 13 discriminator 3
+ 1309 07bd FB 42 00 00 00 00       		mov.L	#_knl_ctxtsk, r4
+ 1310 07c3 EC 44                   		mov.L	[r4], r4
+ 420:../kernel/tkernel/mutex.c **** 				( mtxatr == TA_INHERIT )? &knl_wspec_mtx_inherit:
+ 1311                             		.loc 4 420 21 discriminator 3
+ 1312 07c5 A2 CD                   		mov.L	r5, 44[r4]
+ 422:../kernel/tkernel/mutex.c **** 							  &knl_wspec_mtx_tpri;
+ 423:../kernel/tkernel/mutex.c **** 		knl_ctxtsk->wercd = &ercd;
+ 1313                             		.loc 4 423 13 discriminator 3
+ 1314 07c7 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1315 07cd EC 55                   		mov.L	[r5], r5
+ 1316                             		.loc 4 423 21 discriminator 3
+ 1317 07cf 71 A4 10                		add	#16, r10, r4
+ 1318 07d2 A3 DC                   		mov.L	r4, 60[r5]
+ 424:../kernel/tkernel/mutex.c **** 		knl_ctxtsk->wid = mtxcb->mtxid;
+ 1319                             		.loc 4 424 13 discriminator 3
+ 1320 07d4 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1321 07da EC 55                   		mov.L	[r5], r5
+ 1322                             		.loc 4 424 26 discriminator 3
+ 1323 07dc EC A4                   		mov.L	[r10], r4
+ 1324 07de A8 C4                   		mov.L	8[r4], r4
+ 1325                             		.loc 4 424 19 discriminator 3
+ 1326 07e0 A3 54                   		mov.L	r4, 48[r5]
+ 425:../kernel/tkernel/mutex.c **** 		knl_make_wait(tmout, mtxcb->mtxatr);
+ 1327                             		.loc 4 425 3 discriminator 3
+ 1328 07e2 EC A5                   		mov.L	[r10], r5
+ 1329 07e4 A9 55                   		mov.L	16[r5], r5
+ 1330 07e6 EF 52                   		mov.L	r5, r2
+ 1331 07e8 ED A1 06                		mov.L	24[r10], r1
+ 1332 07eb 05 00 00 00             		bsr	_knl_make_wait
+ 426:../kernel/tkernel/mutex.c **** 		if ( mtxatr == TA_TFIFO ) {
+ 1333                             		.loc 4 426 6 discriminator 3
+ 1334 07ef ED A5 02                		mov.L	8[r10], r5
+ 1335 07f2 61 05                   		cmp	#0, r5
+ 1336 07f4 21 15                   		bne	.L97
+ 427:../kernel/tkernel/mutex.c **** 			QueInsert(&knl_ctxtsk->tskque, &mtxcb->wait_queue);
+ 1337                             		.loc 4 427 25
+ 1338 07f6 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1339 07fc EC 55                   		mov.L	[r5], r5
+ 1340                             		.loc 4 427 4
+ 1341 07fe EC A4                   		mov.L	[r10], r4
+ 1342 0800 EF 42                   		mov.L	r4, r2
+ 1343 0802 EF 51                   		mov.L	r5, r1
+ 1344 0804 39 30 F8                		bsr	_QueInsert
+ 1345 0807 2E 16                   		bra	.L86
+ 1346                             	.L97:
+ 428:../kernel/tkernel/mutex.c **** 		} else {
+ 429:../kernel/tkernel/mutex.c **** 			knl_queue_insert_tpri(knl_ctxtsk, &mtxcb->wait_queue);
+ 1347                             		.loc 4 429 4
+ 1348 0809 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1349 080f EC 55                   		mov.L	[r5], r5
+ 1350 0811 EC A4                   		mov.L	[r10], r4
+ 1351 0813 EF 42                   		mov.L	r4, r2
+ 1352 0815 EF 51                   		mov.L	r5, r1
+ 1353 0817 39 9E F8                		bsr	_knl_queue_insert_tpri
+ 1354 081a 2E 03                   		bra	.L86
+ 1355                             	.L100:
+ 407:../kernel/tkernel/mutex.c **** 		}
+ 1356                             		.loc 4 407 4
+ 1357 081c 03                      		nop
+ 1358                             		.balign 8,3,1
+ 1359                             	.L86:
+ 430:../kernel/tkernel/mutex.c **** 		}
+ 431:../kernel/tkernel/mutex.c **** 	}
+ 432:../kernel/tkernel/mutex.c **** 
+ 433:../kernel/tkernel/mutex.c ****     error_exit:
+ 434:../kernel/tkernel/mutex.c **** 	END_CRITICAL_SECTION;
+ 1360                             		.loc 4 434 2
+ 1361 081d ED A5 01                		mov.L	4[r10], r5
+ 1362 0820 61 F5                   		cmp	#15, r5
+ 1363 0822 20 2E                   		beq	.L98
+ 1364                             		.loc 4 434 2 is_stmt 0 discriminator 1
+ 1365 0824 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1366 082a EC 54                   		mov.L	[r5], r4
+ 1367 082c FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 1368 0832 EC 55                   		mov.L	[r5], r5
+ 1369 0834 47 54                   		cmp	r5, r4
+ 1370 0836 20 1A                   		beq	.L98
+ 1371                             		.loc 4 434 2 discriminator 3
+ 1372 0838 39 65 F8                		bsr	_knl_isTaskIndependent
+ 1373 083b EF 15                   		mov.L	r1, r5
+ 1374 083d 61 05                   		cmp	#0, r5
+ 1375 083f 21 11                   		bne	.L98
+ 1376                             		.loc 4 434 2 discriminator 5
+ 1377 0841 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 1378 0847 EC 55                   		mov.L	[r5], r5
+ 1379 0849 61 05                   		cmp	#0, r5
+ 1380 084b 1D                      		bne	.L98
+ 1381                             		.loc 4 434 2 discriminator 7
+ 1382 084c 05 00 00 00             		bsr	_knl_dispatch
+ 1383                             		.balign 8,3,1
+ 1384                             	.L98:
+ 1385                             		.loc 4 434 2 discriminator 9
+ 1386 0850 ED A1 01                		mov.L	4[r10], r1
+ 1387 0853 05 00 00 00             		bsr	_setint
+ 1388                             	.LBE4:
+ 435:../kernel/tkernel/mutex.c **** 
+ 436:../kernel/tkernel/mutex.c **** 	return ercd;
+ 1389                             		.loc 4 436 9 is_stmt 1 discriminator 9
+ 1390 0857 ED A5 04                		mov.L	16[r10], r5
+ 1391                             		.balign 8,3,1
+ 1392                             	.L99:
+ 437:../kernel/tkernel/mutex.c **** }
+ 1393                             		.loc 4 437 1 discriminator 1
+ 1394 085a EF 51                   		mov.L	r5, r1
+ 1395 085c 3F AA 08                		rtsd	#32, r10-r10
+ 1396                             	.LFE42:
+ 1398                             		.global	_tk_unl_mtx
+ 1400                             	_tk_unl_mtx:
+ 1401                             	.LFB43:
+ 438:../kernel/tkernel/mutex.c **** 
+ 439:../kernel/tkernel/mutex.c **** /*
+ 440:../kernel/tkernel/mutex.c ****  * Unlock mutex
+ 441:../kernel/tkernel/mutex.c ****  */
+ 442:../kernel/tkernel/mutex.c **** SYSCALL ER tk_unl_mtx( ID mtxid )
+ 443:../kernel/tkernel/mutex.c **** {
+ 1402                             		.loc 4 443 1
+ 1403 085f 7E AA                   		push.l	r10
+ 1404                             	.LCFI30:
+ 1405 0861 71 0A EC                		add	#-20, r0, r10
+ 1406                             	.LCFI31:
+ 1407 0864 EF A0                   		mov.L	r10, r0
+ 1408 0866 E7 A1 04                		mov.L	r1, 16[r10]
+ 444:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb;	
+ 445:../kernel/tkernel/mutex.c **** 	TCB	*tcb;
+ 446:../kernel/tkernel/mutex.c **** 	ER	ercd = E_OK;
+ 1409                             		.loc 4 446 5
+ 1410 0869 F8 A6 00                		mov.L	#0, [r10]
+ 447:../kernel/tkernel/mutex.c **** 
+ 448:../kernel/tkernel/mutex.c **** 	CHECK_MTXID(mtxid);
+ 1411                             		.loc 4 448 2
+ 1412 086c ED A5 04                		mov.L	16[r10], r5
+ 1413 086f 61 05                   		cmp	#0, r5
+ 1414 0871 2B 09                   		ble	.L102
+ 1415                             		.loc 4 448 2 is_stmt 0 discriminator 2
+ 1416 0873 ED A5 04                		mov.L	16[r10], r5
+ 1417 0876 61 45                   		cmp	#4, r5
+ 1418 0878 2B 08                   		ble	.L103
+ 1419                             	.L102:
+ 1420                             		.loc 4 448 2 discriminator 3
+ 1421 087a FB 56 EE                		mov.L	#-18, r5
+ 1422 087d 38 10 01                		bra	.L104
+ 1423                             	.L103:
+ 449:../kernel/tkernel/mutex.c **** 	CHECK_INTSK();
+ 1424                             		.loc 4 449 2 is_stmt 1
+ 1425 0880 39 1D F8                		bsr	_knl_isTaskIndependent
+ 1426 0883 EF 15                   		mov.L	r1, r5
+ 1427 0885 61 05                   		cmp	#0, r5
+ 1428 0887 21 0D                   		bne	.L105
+ 1429                             		.loc 4 449 2 is_stmt 0 discriminator 2
+ 1430 0889 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1431 088f EC 55                   		mov.L	[r5], r5
+ 1432 0891 61 05                   		cmp	#0, r5
+ 1433 0893 1F                      		bne	.L106
+ 1434                             	.L105:
+ 1435                             		.loc 4 449 2 discriminator 3
+ 1436 0894 FB 56 E7                		mov.L	#-25, r5
+ 1437 0897 38 F6 00                		bra	.L104
+ 1438                             	.L106:
+ 450:../kernel/tkernel/mutex.c **** 
+ 451:../kernel/tkernel/mutex.c **** 	mtxcb = get_mtxcb(mtxid);
+ 1439                             		.loc 4 451 10 is_stmt 1
+ 1440 089a ED A5 04                		mov.L	16[r10], r5
+ 1441 089d 60 15                   		sub	#1, r5
+ 1442                             		.loc 4 451 8
+ 1443 089f 6C 55                   		shll	#5, r5
+ 1444 08a1 70 55 00 00 00 00       		add	#_knl_mtxcb_table, r5
+ 1445 08a7 E7 A5 01                		mov.L	r5, 4[r10]
+ 1446                             	.LBB5:
+ 452:../kernel/tkernel/mutex.c **** 
+ 453:../kernel/tkernel/mutex.c **** 	BEGIN_CRITICAL_SECTION;
+ 1447                             		.loc 4 453 2
+ 1448 08aa 05 00 00 00             		bsr	_disint
+ 1449 08ae E7 A1 02                		mov.L	r1, 8[r10]
+ 454:../kernel/tkernel/mutex.c **** 	if ( mtxcb->mtxid == 0 ) {
+ 1450                             		.loc 4 454 12
+ 1451 08b1 ED A5 01                		mov.L	4[r10], r5
+ 1452 08b4 A8 D5                   		mov.L	8[r5], r5
+ 1453                             		.loc 4 454 5
+ 1454 08b6 61 05                   		cmp	#0, r5
+ 1455 08b8 1F                      		bne	.L107
+ 455:../kernel/tkernel/mutex.c **** 		ercd = E_NOEXS;
+ 1456                             		.loc 4 455 8
+ 1457 08b9 F8 A6 D6                		mov.L	#-42, [r10]
+ 456:../kernel/tkernel/mutex.c **** 		goto error_exit;
+ 1458                             		.loc 4 456 3
+ 1459 08bc 38 95 00                		bra	.L108
+ 1460                             	.L107:
+ 457:../kernel/tkernel/mutex.c **** 	}
+ 458:../kernel/tkernel/mutex.c **** 	if ( mtxcb->mtxtsk != knl_ctxtsk ) {
+ 1461                             		.loc 4 458 12
+ 1462 08bf ED A5 01                		mov.L	4[r10], r5
+ 1463 08c2 A9 D4                   		mov.L	24[r5], r4
+ 1464                             		.loc 4 458 21
+ 1465 08c4 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1466 08ca EC 55                   		mov.L	[r5], r5
+ 1467                             		.loc 4 458 5
+ 1468 08cc 47 54                   		cmp	r5, r4
+ 1469 08ce 16                      		beq	.L109
+ 459:../kernel/tkernel/mutex.c **** 		ercd = E_ILUSE;  /* This is not locked by its own task */
+ 1470                             		.loc 4 459 8
+ 1471 08cf F8 A6 E4                		mov.L	#-28, [r10]
+ 460:../kernel/tkernel/mutex.c **** 		goto error_exit;
+ 1472                             		.loc 4 460 3
+ 1473 08d2 2E 7F                   		bra	.L108
+ 1474                             	.L109:
+ 461:../kernel/tkernel/mutex.c **** 	}
+ 462:../kernel/tkernel/mutex.c **** 
+ 463:../kernel/tkernel/mutex.c **** 	/* Delete the mutex from the list,
+ 464:../kernel/tkernel/mutex.c **** 	   and adjust its own task priority if necessary. */
+ 465:../kernel/tkernel/mutex.c **** 	knl_release_mutex(knl_ctxtsk, mtxcb);
+ 1475                             		.loc 4 465 2
+ 1476 08d4 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1477 08da EC 55                   		mov.L	[r5], r5
+ 1478 08dc ED A2 01                		mov.L	4[r10], r2
+ 1479 08df EF 51                   		mov.L	r5, r1
+ 1480 08e1 05 00 00 00             		bsr	_knl_release_mutex
+ 466:../kernel/tkernel/mutex.c **** 
+ 467:../kernel/tkernel/mutex.c **** 	if ( mtx_waited(mtxcb) ) {
+ 1481                             		.loc 4 467 7
+ 1482 08e5 ED A5 01                		mov.L	4[r10], r5
+ 1483 08e8 EF 51                   		mov.L	r5, r1
+ 1484 08ea 39 2F F7                		bsr	_isQueEmpty
+ 1485 08ed EF 15                   		mov.L	r1, r5
+ 1486                             		.loc 4 467 5
+ 1487 08ef 61 05                   		cmp	#0, r5
+ 1488 08f1 21 5A                   		bne	.L110
+ 468:../kernel/tkernel/mutex.c **** 		tcb = (TCB*)mtxcb->wait_queue.next;
+ 1489                             		.loc 4 468 7
+ 1490 08f3 ED A5 01                		mov.L	4[r10], r5
+ 1491 08f6 EC 55                   		mov.L	[r5], r5
+ 1492 08f8 E7 A5 03                		mov.L	r5, 12[r10]
+ 469:../kernel/tkernel/mutex.c **** 
+ 470:../kernel/tkernel/mutex.c **** 		/* Release wait */
+ 471:../kernel/tkernel/mutex.c **** 		knl_wait_release_ok(tcb);
+ 1493                             		.loc 4 471 3
+ 1494 08fb ED A1 03                		mov.L	12[r10], r1
+ 1495 08fe 05 00 00 00             		bsr	_knl_wait_release_ok
+ 472:../kernel/tkernel/mutex.c **** 
+ 473:../kernel/tkernel/mutex.c **** 		/* Change mutex get task */
+ 474:../kernel/tkernel/mutex.c **** 		mtxcb->mtxtsk = tcb;
+ 1496                             		.loc 4 474 17
+ 1497 0902 ED A5 01                		mov.L	4[r10], r5
+ 1498 0905 ED A4 03                		mov.L	12[r10], r4
+ 1499 0908 A1 D4                   		mov.L	r4, 24[r5]
+ 475:../kernel/tkernel/mutex.c **** 		mtxcb->mtxlist = tcb->mtxlist;
+ 1500                             		.loc 4 475 23
+ 1501 090a ED A5 03                		mov.L	12[r10], r5
+ 1502 090d AE 5C                   		mov.L	100[r5], r4
+ 1503                             		.loc 4 475 18
+ 1504 090f ED A5 01                		mov.L	4[r10], r5
+ 1505 0912 A1 DC                   		mov.L	r4, 28[r5]
+ 476:../kernel/tkernel/mutex.c **** 		tcb->mtxlist = mtxcb;
+ 1506                             		.loc 4 476 16
+ 1507 0914 ED A5 03                		mov.L	12[r10], r5
+ 1508 0917 ED A4 01                		mov.L	4[r10], r4
+ 1509 091a A6 5C                   		mov.L	r4, 100[r5]
+ 477:../kernel/tkernel/mutex.c **** 
+ 478:../kernel/tkernel/mutex.c **** 		if ( (mtxcb->mtxatr & TA_CEILING) == TA_CEILING ) {
+ 1510                             		.loc 4 478 14
+ 1511 091c ED A5 01                		mov.L	4[r10], r5
+ 1512 091f A9 55                   		mov.L	16[r5], r5
+ 1513                             		.loc 4 478 23
+ 1514 0921 64 35                   		and	#3, r5
+ 1515                             		.loc 4 478 6
+ 1516 0923 61 35                   		cmp	#3, r5
+ 1517 0925 21 2C                   		bne	.L108
+ 479:../kernel/tkernel/mutex.c **** 			if ( tcb->priority > mtxcb->ceilpri ) {
+ 1518                             		.loc 4 479 12
+ 1519 0927 ED A5 03                		mov.L	12[r10], r5
+ 1520 092a CD 54 26                		mov.B	38[r5], r4
+ 1521                             		.loc 4 479 30
+ 1522 092d ED A5 01                		mov.L	4[r10], r5
+ 1523 0930 8D 55                   		mov.B	20[r5], r5
+ 1524                             		.loc 4 479 7
+ 1525 0932 5B 44                   		movu.B	r4, r4
+ 1526 0934 5B 55                   		movu.B	r5, r5
+ 1527 0936 47 54                   		cmp	r5, r4
+ 1528 0938 25 19                   		bleu	.L108
+ 480:../kernel/tkernel/mutex.c **** 				/* Raise the priority of the task that
+ 481:../kernel/tkernel/mutex.c **** 				   got lock to the highest priority limit */
+ 482:../kernel/tkernel/mutex.c **** 				knl_change_task_priority(tcb, mtxcb->ceilpri);
+ 1529                             		.loc 4 482 40
+ 1530 093a ED A5 01                		mov.L	4[r10], r5
+ 1531 093d 8D 55                   		mov.B	20[r5], r5
+ 1532                             		.loc 4 482 5
+ 1533 093f 5B 55                   		movu.B	r5, r5
+ 1534 0941 EF 52                   		mov.L	r5, r2
+ 1535 0943 ED A1 03                		mov.L	12[r10], r1
+ 1536 0946 05 00 00 00             		bsr	_knl_change_task_priority
+ 1537 094a 0F                      		bra	.L108
+ 1538                             	.L110:
+ 483:../kernel/tkernel/mutex.c **** 			}
+ 484:../kernel/tkernel/mutex.c **** 		}
+ 485:../kernel/tkernel/mutex.c **** 	} else {
+ 486:../kernel/tkernel/mutex.c **** 		/* No wait task */
+ 487:../kernel/tkernel/mutex.c **** 		mtxcb->mtxtsk = NULL;
+ 1539                             		.loc 4 487 17
+ 1540 094b ED A5 01                		mov.L	4[r10], r5
+ 1541 094e 3E 56 00                		mov.L	#0, 24[r5]
+ 1542                             		.balign 8,3,1
+ 1543                             	.L108:
+ 488:../kernel/tkernel/mutex.c **** 	}
+ 489:../kernel/tkernel/mutex.c **** 
+ 490:../kernel/tkernel/mutex.c ****     error_exit:
+ 491:../kernel/tkernel/mutex.c **** 	END_CRITICAL_SECTION;
+ 1544                             		.loc 4 491 2
+ 1545 0951 ED A5 02                		mov.L	8[r10], r5
+ 1546 0954 61 F5                   		cmp	#15, r5
+ 1547 0956 20 2E                   		beq	.L112
+ 1548                             		.loc 4 491 2 is_stmt 0 discriminator 1
+ 1549 0958 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1550 095e EC 54                   		mov.L	[r5], r4
+ 1551 0960 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 1552 0966 EC 55                   		mov.L	[r5], r5
+ 1553 0968 47 54                   		cmp	r5, r4
+ 1554 096a 20 1A                   		beq	.L112
+ 1555                             		.loc 4 491 2 discriminator 3
+ 1556 096c 39 31 F7                		bsr	_knl_isTaskIndependent
+ 1557 096f EF 15                   		mov.L	r1, r5
+ 1558 0971 61 05                   		cmp	#0, r5
+ 1559 0973 21 11                   		bne	.L112
+ 1560                             		.loc 4 491 2 discriminator 5
+ 1561 0975 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 1562 097b EC 55                   		mov.L	[r5], r5
+ 1563 097d 61 05                   		cmp	#0, r5
+ 1564 097f 1D                      		bne	.L112
+ 1565                             		.loc 4 491 2 discriminator 7
+ 1566 0980 05 00 00 00             		bsr	_knl_dispatch
+ 1567                             		.balign 8,3,1
+ 1568                             	.L112:
+ 1569                             		.loc 4 491 2 discriminator 9
+ 1570 0984 ED A1 02                		mov.L	8[r10], r1
+ 1571 0987 05 00 00 00             		bsr	_setint
+ 1572                             	.LBE5:
+ 492:../kernel/tkernel/mutex.c **** 
+ 493:../kernel/tkernel/mutex.c **** 	return ercd;
+ 1573                             		.loc 4 493 9 is_stmt 1 discriminator 9
+ 1574 098b EC A5                   		mov.L	[r10], r5
+ 1575                             	.L104:
+ 494:../kernel/tkernel/mutex.c **** }
+ 1576                             		.loc 4 494 1
+ 1577 098d EF 51                   		mov.L	r5, r1
+ 1578 098f 3F AA 06                		rtsd	#24, r10-r10
+ 1579                             	.LFE43:
+ 1581                             		.global	_tk_ref_mtx
+ 1583                             	_tk_ref_mtx:
+ 1584                             	.LFB44:
+ 495:../kernel/tkernel/mutex.c **** 
+ 496:../kernel/tkernel/mutex.c **** 
+ 497:../kernel/tkernel/mutex.c **** #ifdef USE_FUNC_TK_REF_MTX
+ 498:../kernel/tkernel/mutex.c **** /*
+ 499:../kernel/tkernel/mutex.c ****  * Refer mutex state
+ 500:../kernel/tkernel/mutex.c ****  */
+ 501:../kernel/tkernel/mutex.c **** SYSCALL ER tk_ref_mtx( ID mtxid, T_RMTX *pk_rmtx )
+ 502:../kernel/tkernel/mutex.c **** {
+ 1585                             		.loc 4 502 1
+ 1586 0992 7E AA                   		push.l	r10
+ 1587                             	.LCFI32:
+ 1588 0994 71 0A EC                		add	#-20, r0, r10
+ 1589                             	.LCFI33:
+ 1590 0997 EF A0                   		mov.L	r10, r0
+ 1591 0999 E7 A1 03                		mov.L	r1, 12[r10]
+ 1592 099c E7 A2 04                		mov.L	r2, 16[r10]
+ 503:../kernel/tkernel/mutex.c **** 	MTXCB	*mtxcb;
+ 504:../kernel/tkernel/mutex.c **** 	ER	ercd = E_OK;
+ 1593                             		.loc 4 504 5
+ 1594 099f F8 A6 00                		mov.L	#0, [r10]
+ 505:../kernel/tkernel/mutex.c **** 
+ 506:../kernel/tkernel/mutex.c **** 	CHECK_MTXID(mtxid);
+ 1595                             		.loc 4 506 2
+ 1596 09a2 ED A5 03                		mov.L	12[r10], r5
+ 1597 09a5 61 05                   		cmp	#0, r5
+ 1598 09a7 2B 09                   		ble	.L114
+ 1599                             		.loc 4 506 2 is_stmt 0 discriminator 2
+ 1600 09a9 ED A5 03                		mov.L	12[r10], r5
+ 1601 09ac 61 45                   		cmp	#4, r5
+ 1602 09ae 2B 08                   		ble	.L115
+ 1603                             	.L114:
+ 1604                             		.loc 4 506 2 discriminator 3
+ 1605 09b0 FB 56 EE                		mov.L	#-18, r5
+ 1606 09b3 38 94 00                		bra	.L116
+ 1607                             	.L115:
+ 507:../kernel/tkernel/mutex.c **** 
+ 508:../kernel/tkernel/mutex.c **** 	mtxcb = get_mtxcb(mtxid);
+ 1608                             		.loc 4 508 10 is_stmt 1
+ 1609 09b6 ED A5 03                		mov.L	12[r10], r5
+ 1610 09b9 60 15                   		sub	#1, r5
+ 1611                             		.loc 4 508 8
+ 1612 09bb 6C 55                   		shll	#5, r5
+ 1613 09bd 70 55 00 00 00 00       		add	#_knl_mtxcb_table, r5
+ 1614 09c3 E7 A5 01                		mov.L	r5, 4[r10]
+ 1615                             	.LBB6:
+ 509:../kernel/tkernel/mutex.c **** 
+ 510:../kernel/tkernel/mutex.c **** 	BEGIN_CRITICAL_SECTION;
+ 1616                             		.loc 4 510 2
+ 1617 09c6 05 00 00 00             		bsr	_disint
+ 1618 09ca E7 A1 02                		mov.L	r1, 8[r10]
+ 511:../kernel/tkernel/mutex.c **** 	if ( mtxcb->mtxid == 0 ) {
+ 1619                             		.loc 4 511 12
+ 1620 09cd ED A5 01                		mov.L	4[r10], r5
+ 1621 09d0 A8 D5                   		mov.L	8[r5], r5
+ 1622                             		.loc 4 511 5
+ 1623 09d2 61 05                   		cmp	#0, r5
+ 1624 09d4 1E                      		bne	.L117
+ 512:../kernel/tkernel/mutex.c **** 		ercd = E_NOEXS;
+ 1625                             		.loc 4 512 8
+ 1626 09d5 F8 A6 D6                		mov.L	#-42, [r10]
+ 1627 09d8 2E 33                   		bra	.L118
+ 1628                             	.L117:
+ 513:../kernel/tkernel/mutex.c **** 	} else {
+ 514:../kernel/tkernel/mutex.c **** 		pk_rmtx->exinf = mtxcb->exinf;
+ 1629                             		.loc 4 514 25
+ 1630 09da ED A5 01                		mov.L	4[r10], r5
+ 1631 09dd A8 DC                   		mov.L	12[r5], r4
+ 1632                             		.loc 4 514 18
+ 1633 09df ED A5 04                		mov.L	16[r10], r5
+ 1634 09e2 E3 54                   		mov.L	r4, [r5]
+ 515:../kernel/tkernel/mutex.c **** 		pk_rmtx->htsk = ( mtxcb->mtxtsk != NULL )?
+ 1635                             		.loc 4 515 26
+ 1636 09e4 ED A5 01                		mov.L	4[r10], r5
+ 1637 09e7 A9 D5                   		mov.L	24[r5], r5
+ 516:../kernel/tkernel/mutex.c **** 					mtxcb->mtxtsk->tskid: 0;
+ 1638                             		.loc 4 516 26
+ 1639 09e9 61 05                   		cmp	#0, r5
+ 1640 09eb 11                      		beq	.L119
+ 1641                             		.loc 4 516 11 discriminator 1
+ 1642 09ec ED A5 01                		mov.L	4[r10], r5
+ 1643 09ef A9 D5                   		mov.L	24[r5], r5
+ 1644                             		.loc 4 516 26 discriminator 1
+ 1645 09f1 A8 D4                   		mov.L	8[r5], r4
+ 1646 09f3 0B                      		bra	.L120
+ 1647                             	.L119:
+ 1648                             		.loc 4 516 26 is_stmt 0 discriminator 2
+ 1649 09f4 66 04                   		mov.L	#0, r4
+ 1650                             	.L120:
+ 515:../kernel/tkernel/mutex.c **** 		pk_rmtx->htsk = ( mtxcb->mtxtsk != NULL )?
+ 1651                             		.loc 4 515 17 is_stmt 1
+ 1652 09f6 ED A5 04                		mov.L	16[r10], r5
+ 1653 09f9 A0 5C                   		mov.L	r4, 4[r5]
+ 517:../kernel/tkernel/mutex.c **** 		pk_rmtx->wtsk = knl_wait_tskid(&mtxcb->wait_queue);
+ 1654                             		.loc 4 517 19
+ 1655 09fb ED A5 01                		mov.L	4[r10], r5
+ 1656 09fe EF 51                   		mov.L	r5, r1
+ 1657 0a00 05 00 00 00             		bsr	_knl_wait_tskid
+ 1658 0a04 EF 14                   		mov.L	r1, r4
+ 1659                             		.loc 4 517 17
+ 1660 0a06 ED A5 04                		mov.L	16[r10], r5
+ 1661 0a09 A0 D4                   		mov.L	r4, 8[r5]
+ 1662                             	.L118:
+ 518:../kernel/tkernel/mutex.c **** 	}
+ 519:../kernel/tkernel/mutex.c **** 	END_CRITICAL_SECTION;
+ 1663                             		.loc 4 519 2
+ 1664 0a0b ED A5 02                		mov.L	8[r10], r5
+ 1665 0a0e 61 F5                   		cmp	#15, r5
+ 1666 0a10 20 2E                   		beq	.L121
+ 1667                             		.loc 4 519 2 is_stmt 0 discriminator 1
+ 1668 0a12 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1669 0a18 EC 54                   		mov.L	[r5], r4
+ 1670 0a1a FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 1671 0a20 EC 55                   		mov.L	[r5], r5
+ 1672 0a22 47 54                   		cmp	r5, r4
+ 1673 0a24 20 1A                   		beq	.L121
+ 1674                             		.loc 4 519 2 discriminator 3
+ 1675 0a26 39 77 F6                		bsr	_knl_isTaskIndependent
+ 1676 0a29 EF 15                   		mov.L	r1, r5
+ 1677 0a2b 61 05                   		cmp	#0, r5
+ 1678 0a2d 21 11                   		bne	.L121
+ 1679                             		.loc 4 519 2 discriminator 5
+ 1680 0a2f FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 1681 0a35 EC 55                   		mov.L	[r5], r5
+ 1682 0a37 61 05                   		cmp	#0, r5
+ 1683 0a39 1D                      		bne	.L121
+ 1684                             		.loc 4 519 2 discriminator 7
+ 1685 0a3a 05 00 00 00             		bsr	_knl_dispatch
+ 1686                             		.balign 8,3,1
+ 1687                             	.L121:
+ 1688                             		.loc 4 519 2 discriminator 9
+ 1689 0a3e ED A1 02                		mov.L	8[r10], r1
+ 1690 0a41 05 00 00 00             		bsr	_setint
+ 1691                             	.LBE6:
+ 520:../kernel/tkernel/mutex.c **** 
+ 521:../kernel/tkernel/mutex.c **** 	return ercd;
+ 1692                             		.loc 4 521 9 is_stmt 1 discriminator 9
+ 1693 0a45 EC A5                   		mov.L	[r10], r5
+ 1694                             	.L116:
+ 522:../kernel/tkernel/mutex.c **** }
+ 1695                             		.loc 4 522 1
+ 1696 0a47 EF 51                   		mov.L	r5, r1
+ 1697 0a49 3F AA 06                		rtsd	#24, r10-r10
+ 1698                             	.LFE44:
+ 2046                             	.Letext0:
+ 2047                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 2048                             		.file 6 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 2049                             		.file 7 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 2050                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 2051                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 2052                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 2053                             		.file 11 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysde
+ 2054                             		.file 12 "../kernel/tkernel/task.h"
+ 2055                             		.file 13 "../kernel/tkernel/ready_queue.h"

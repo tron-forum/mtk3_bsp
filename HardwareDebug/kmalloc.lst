@@ -1,0 +1,139 @@
+   1                             		.file	"kmalloc.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.global	_Kmalloc
+   6                             	_Kmalloc:
+   7                             	.LFB6:
+   8                             		.file 1 "../lib/libtk/kmalloc.c"
+   1:../lib/libtk/kmalloc.c **** ﻿/*
+   2:../lib/libtk/kmalloc.c ****  *----------------------------------------------------------------------
+   3:../lib/libtk/kmalloc.c ****  *    micro T-Kernel 3.00.02
+   4:../lib/libtk/kmalloc.c ****  *
+   5:../lib/libtk/kmalloc.c ****  *    Copyright (C) 2006-2020 by Ken Sakamura.
+   6:../lib/libtk/kmalloc.c ****  *    This software is distributed under the T-License 2.2.
+   7:../lib/libtk/kmalloc.c ****  *----------------------------------------------------------------------
+   8:../lib/libtk/kmalloc.c ****  *
+   9:../lib/libtk/kmalloc.c ****  *    Released by TRON Forum(http://www.tron.org) at 2020/10/21 .
+  10:../lib/libtk/kmalloc.c ****  *
+  11:../lib/libtk/kmalloc.c ****  *----------------------------------------------------------------------
+  12:../lib/libtk/kmalloc.c ****  */
+  13:../lib/libtk/kmalloc.c **** 
+  14:../lib/libtk/kmalloc.c **** /*
+  15:../lib/libtk/kmalloc.c ****  *	kmalloc.c
+  16:../lib/libtk/kmalloc.c ****  *
+  17:../lib/libtk/kmalloc.c ****  *	Memory allocation (Kmalloc)
+  18:../lib/libtk/kmalloc.c ****  */
+  19:../lib/libtk/kmalloc.c **** 
+  20:../lib/libtk/kmalloc.c **** #include <tk/tkernel.h>
+  21:../lib/libtk/kmalloc.c **** 
+  22:../lib/libtk/kmalloc.c **** #if TK_SUPPORT_MEMLIB
+  23:../lib/libtk/kmalloc.c **** 
+  24:../lib/libtk/kmalloc.c **** /* --------------------------------------------------------------------- */
+  25:../lib/libtk/kmalloc.c **** /*
+  26:../lib/libtk/kmalloc.c ****  * Systmem internal memory management call 
+  27:../lib/libtk/kmalloc.c ****  * 	These calls must not be called directly from the user program.
+  28:../lib/libtk/kmalloc.c ****  */
+  29:../lib/libtk/kmalloc.c **** IMPORT void* knl_Imalloc( SZ size );
+  30:../lib/libtk/kmalloc.c **** IMPORT void* knl_Icalloc( SZ nmemb, SZ size );
+  31:../lib/libtk/kmalloc.c **** IMPORT void* knl_Irealloc( void *ptr, SZ size );
+  32:../lib/libtk/kmalloc.c **** IMPORT void  knl_Ifree( void *ptr );
+  33:../lib/libtk/kmalloc.c **** 
+  34:../lib/libtk/kmalloc.c **** 
+  35:../lib/libtk/kmalloc.c **** /* --------------------------------------------------------------------- */
+  36:../lib/libtk/kmalloc.c **** /*
+  37:../lib/libtk/kmalloc.c ****  * Memory allocation API definition
+  38:../lib/libtk/kmalloc.c ****  */
+  39:../lib/libtk/kmalloc.c **** EXPORT void* Kmalloc( size_t size )
+  40:../lib/libtk/kmalloc.c **** {
+   9                             		.loc 1 40 1
+  10 0000 7E AA                   		push.l	r10
+  11                             	.LCFI0:
+  12 0002 71 0A FC                		add	#-4, r0, r10
+  13                             	.LCFI1:
+  14 0005 EF A0                   		mov.L	r10, r0
+  15 0007 E3 A1                   		mov.L	r1, [r10]
+  41:../lib/libtk/kmalloc.c **** 	return knl_Imalloc(size);
+  16                             		.loc 1 41 9
+  17 0009 EC A1                   		mov.L	[r10], r1
+  18 000b 05 00 00 00             		bsr	_knl_Imalloc
+  19 000f EF 15                   		mov.L	r1, r5
+  42:../lib/libtk/kmalloc.c **** }
+  20                             		.loc 1 42 1
+  21 0011 EF 51                   		mov.L	r5, r1
+  22 0013 3F AA 02                		rtsd	#8, r10-r10
+  23                             	.LFE6:
+  25                             		.global	_Kcalloc
+  27                             	_Kcalloc:
+  28                             	.LFB7:
+  43:../lib/libtk/kmalloc.c **** 
+  44:../lib/libtk/kmalloc.c **** EXPORT void* Kcalloc( size_t nmemb, size_t size )
+  45:../lib/libtk/kmalloc.c **** {
+  29                             		.loc 1 45 1
+  30 0016 7E AA                   		push.l	r10
+  31                             	.LCFI2:
+  32 0018 71 0A F8                		add	#-8, r0, r10
+  33                             	.LCFI3:
+  34 001b EF A0                   		mov.L	r10, r0
+  35 001d E3 A1                   		mov.L	r1, [r10]
+  36 001f E7 A2 01                		mov.L	r2, 4[r10]
+  46:../lib/libtk/kmalloc.c **** 	return knl_Icalloc(nmemb, size);
+  37                             		.loc 1 46 9
+  38 0022 ED A2 01                		mov.L	4[r10], r2
+  39 0025 EC A1                   		mov.L	[r10], r1
+  40 0027 05 00 00 00             		bsr	_knl_Icalloc
+  41 002b EF 15                   		mov.L	r1, r5
+  47:../lib/libtk/kmalloc.c **** }
+  42                             		.loc 1 47 1
+  43 002d EF 51                   		mov.L	r5, r1
+  44 002f 3F AA 03                		rtsd	#12, r10-r10
+  45                             	.LFE7:
+  47                             		.global	_Krealloc
+  49                             	_Krealloc:
+  50                             	.LFB8:
+  48:../lib/libtk/kmalloc.c **** 
+  49:../lib/libtk/kmalloc.c **** EXPORT void *Krealloc( void *ptr, size_t size)
+  50:../lib/libtk/kmalloc.c **** {
+  51                             		.loc 1 50 1
+  52 0032 7E AA                   		push.l	r10
+  53                             	.LCFI4:
+  54 0034 71 0A F8                		add	#-8, r0, r10
+  55                             	.LCFI5:
+  56 0037 EF A0                   		mov.L	r10, r0
+  57 0039 E3 A1                   		mov.L	r1, [r10]
+  58 003b E7 A2 01                		mov.L	r2, 4[r10]
+  51:../lib/libtk/kmalloc.c **** 	return knl_Irealloc(ptr, size);
+  59                             		.loc 1 51 9
+  60 003e ED A2 01                		mov.L	4[r10], r2
+  61 0041 EC A1                   		mov.L	[r10], r1
+  62 0043 05 00 00 00             		bsr	_knl_Irealloc
+  63 0047 EF 15                   		mov.L	r1, r5
+  52:../lib/libtk/kmalloc.c **** }
+  64                             		.loc 1 52 1
+  65 0049 EF 51                   		mov.L	r5, r1
+  66 004b 3F AA 03                		rtsd	#12, r10-r10
+  67                             	.LFE8:
+  69                             		.global	_Kfree
+  71                             	_Kfree:
+  72                             	.LFB9:
+  53:../lib/libtk/kmalloc.c **** 
+  54:../lib/libtk/kmalloc.c **** EXPORT void Kfree( void *ptr )
+  55:../lib/libtk/kmalloc.c **** {
+  73                             		.loc 1 55 1
+  74 004e 7E AA                   		push.l	r10
+  75                             	.LCFI6:
+  76 0050 71 0A FC                		add	#-4, r0, r10
+  77                             	.LCFI7:
+  78 0053 EF A0                   		mov.L	r10, r0
+  79 0055 E3 A1                   		mov.L	r1, [r10]
+  56:../lib/libtk/kmalloc.c **** 	knl_Ifree(ptr);
+  80                             		.loc 1 56 2
+  81 0057 EC A1                   		mov.L	[r10], r1
+  82 0059 05 00 00 00             		bsr	_knl_Ifree
+  57:../lib/libtk/kmalloc.c **** }
+  83                             		.loc 1 57 1
+  84 005d 03                      		nop
+  85 005e 3F AA 02                		rtsd	#8, r10-r10
+  86                             	.LFE9:
+ 182                             	.Letext0:
+ 183                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 184                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syslib.h"

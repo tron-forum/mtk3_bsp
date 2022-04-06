@@ -1,0 +1,1555 @@
+   1                             		.file	"semaphore.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   5                             	_QueInit:
+   6                             	.LFB6:
+   7                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+   1:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+   2:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   3:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    micro T-Kernel 3.00.00
+   4:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+   5:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    This software is distributed under the T-License 2.1.
+   7:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   8:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+   9:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+  11:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+  12:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  13:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  14:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  15:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	queue.h
+  16:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+  17:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Queuing operation
+  18:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  19:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  20:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifndef	__SYS_QUEUE_H__
+  21:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #define __SYS_QUEUE_H__
+  22:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  23:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #include <tk/tkernel.h>
+  24:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  25:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifdef __cplusplus
+  26:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** extern "C" {
+  27:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #endif
+  28:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  29:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  30:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Double-link queue (ring)
+  31:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  32:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** typedef struct queue {
+  33:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*next;
+  34:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*prev;
+  35:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** } QUEUE;
+  36:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  37:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  38:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Queue initialization 
+  39:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  40:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInit( QUEUE *que )
+  41:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+   8                             		.loc 1 41 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A FC                		add	#-4, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E3 A1                   		mov.L	r1, [r10]
+  42:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue *)que;
+  15                             		.loc 1 42 12
+  16 0009 EC A5                   		mov.L	[r10], r5
+  17 000b EC A4                   		mov.L	[r10], r4
+  18 000d E3 54                   		mov.L	r4, [r5]
+  43:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = (struct queue *)que;
+  19                             		.loc 1 43 12
+  20 000f EC A5                   		mov.L	[r10], r5
+  21 0011 EC A4                   		mov.L	[r10], r4
+  22 0013 A0 5C                   		mov.L	r4, 4[r5]
+  44:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  23                             		.loc 1 44 1
+  24 0015 03                      		nop
+  25 0016 3F AA 02                		rtsd	#8, r10-r10
+  26                             	.LFE6:
+  29                             	_QueInsert:
+  30                             	.LFB8:
+  45:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  46:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  47:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * TRUE if the queue is empty 
+  48:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  49:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline BOOL isQueEmpty( QUEUE *que )
+  50:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  51:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return ( que->next == que )? TRUE: FALSE;
+  52:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  53:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  54:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  55:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Insert in queue 
+  56:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Inserts entry directly prior to que 
+  57:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  58:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInsert( QUEUE *entry, QUEUE *que )
+  59:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  31                             		.loc 1 59 1
+  32 0019 7E AA                   		push.l	r10
+  33                             	.LCFI2:
+  34 001b 71 0A F8                		add	#-8, r0, r10
+  35                             	.LCFI3:
+  36 001e EF A0                   		mov.L	r10, r0
+  37 0020 E3 A1                   		mov.L	r1, [r10]
+  38 0022 E7 A2 01                		mov.L	r2, 4[r10]
+  60:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->prev = (struct queue*) que->prev;
+  39                             		.loc 1 60 16
+  40 0025 ED A5 01                		mov.L	4[r10], r5
+  41 0028 A8 5C                   		mov.L	4[r5], r4
+  42                             		.loc 1 60 14
+  43 002a EC A5                   		mov.L	[r10], r5
+  44 002c A0 5C                   		mov.L	r4, 4[r5]
+  61:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next = que;
+  45                             		.loc 1 61 14
+  46 002e EC A5                   		mov.L	[r10], r5
+  47 0030 ED A4 01                		mov.L	4[r10], r4
+  48 0033 E3 54                   		mov.L	r4, [r5]
+  62:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev->next = entry;
+  49                             		.loc 1 62 5
+  50 0035 ED A5 01                		mov.L	4[r10], r5
+  51 0038 A8 5D                   		mov.L	4[r5], r5
+  52                             		.loc 1 62 18
+  53 003a EC A4                   		mov.L	[r10], r4
+  54 003c E3 54                   		mov.L	r4, [r5]
+  63:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = entry;
+  55                             		.loc 1 63 12
+  56 003e ED A5 01                		mov.L	4[r10], r5
+  57 0041 EC A4                   		mov.L	[r10], r4
+  58 0043 A0 5C                   		mov.L	r4, 4[r5]
+  64:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  59                             		.loc 1 64 1
+  60 0045 03                      		nop
+  61 0046 3F AA 03                		rtsd	#12, r10-r10
+  62                             	.LFE8:
+  65                             	_QueRemoveNext:
+  66                             	.LFB10:
+  65:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  66:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  67:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Delete from queue 
+  68:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes entry from queue 
+  69:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	No action is performed if entry is empty. 
+  70:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  71:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueRemove( QUEUE *entry )
+  72:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  73:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( entry->next != entry ) {
+  74:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->prev->next = (struct queue*) entry->next;
+  75:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->next->prev = (struct queue*) entry->prev;
+  76:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
+  77:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  78:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  79:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  80:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Remove top entry 
+  81:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes the entry directly after que from the queue,
+  82:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	and returns the deleted entry.
+  83:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Returns NULL if que is empty.
+  84:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  85:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline QUEUE* QueRemoveNext( QUEUE *que )
+  86:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  67                             		.loc 1 86 1
+  68 0049 7E AA                   		push.l	r10
+  69                             	.LCFI4:
+  70 004b 71 0A F8                		add	#-8, r0, r10
+  71                             	.LCFI5:
+  72 004e EF A0                   		mov.L	r10, r0
+  73 0050 E7 A1 01                		mov.L	r1, 4[r10]
+  87:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	QUEUE	*entry;
+  88:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  89:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( que->next == que ) {
+  74                             		.loc 1 89 10
+  75 0053 ED A5 01                		mov.L	4[r10], r5
+  76 0056 EC 55                   		mov.L	[r5], r5
+  77                             		.loc 1 89 5
+  78 0058 ED A4 01                		mov.L	4[r10], r4
+  79 005b 47 54                   		cmp	r5, r4
+  80 005d 1D                      		bne	.L4
+  90:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		return NULL;
+  81                             		.loc 1 90 10
+  82 005e 66 05                   		mov.L	#0, r5
+  83 0060 2E 1D                   		bra	.L5
+  84                             	.L4:
+  91:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
+  92:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  93:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry = que->next;
+  85                             		.loc 1 93 8
+  86 0062 ED A5 01                		mov.L	4[r10], r5
+  87 0065 EC 55                   		mov.L	[r5], r5
+  88 0067 E3 A5                   		mov.L	r5, [r10]
+  94:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue*)entry->next;
+  89                             		.loc 1 94 14
+  90 0069 EC A5                   		mov.L	[r10], r5
+  91 006b EC 54                   		mov.L	[r5], r4
+  92                             		.loc 1 94 12
+  93 006d ED A5 01                		mov.L	4[r10], r5
+  94 0070 E3 54                   		mov.L	r4, [r5]
+  95:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next->prev = que;
+  95                             		.loc 1 95 7
+  96 0072 EC A5                   		mov.L	[r10], r5
+  97 0074 EC 55                   		mov.L	[r5], r5
+  98                             		.loc 1 95 20
+  99 0076 ED A4 01                		mov.L	4[r10], r4
+ 100 0079 A0 5C                   		mov.L	r4, 4[r5]
+  96:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  97:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return entry;
+ 101                             		.loc 1 97 9
+ 102 007b EC A5                   		mov.L	[r10], r5
+ 103                             	.L5:
+  98:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+ 104                             		.loc 1 98 1
+ 105 007d EF 51                   		mov.L	r5, r1
+ 106 007f 3F AA 03                		rtsd	#12, r10-r10
+ 107                             	.LFE10:
+ 110                             	_knl_isTaskIndependent:
+ 111                             	.LFB16:
+ 112                             		.file 2 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_st
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    micro T-Kernel 3.00.03
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	cpu_status.h (RXv2)
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	CPU-Dependent Status Definition
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #ifndef _SYSDEPEND_CPU_CORE_STATUS_
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define _SYSDEPEND_CPU_CORE_STATUS_
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <tk/syslib.h>
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <sys/sysdef.h>
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include "sysdepend.h"
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End critical section
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_CRITICAL_SECTION	{ UINT _sr_ = disint();
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_CRITICAL_SECTION	if ( !isDI(_sr_)			\
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && knl_ctxtsk != knl_schedtsk		\
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_isTaskIndependent()		\
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_dispatch_disabled ) {		\
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 					knl_dispatch();			\
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				}					\
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				setint(_sr_); }
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End interrupt disable section
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_DISABLE_INTERRUPT	{ UINT _sr_ = disint();
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_DISABLE_INTERRUPT	setint(_sr_); }
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Interrupt enable/disable
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT	{ setint(0); }
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define DISABLE_INTERRUPT	{ disint(); }
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Enable interrupt nesting
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	Enable the interrupt that has a higher priority than 'level.'
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT_UPTO(level)	{ setint(level); }
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *  Task-independent control
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** IMPORT	W	knl_taskindp;		/* Task independent status */
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * If it is the task-independent part, TRUE
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** Inline BOOL knl_isTaskIndependent( void )
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** {
+ 113                             		.loc 2 64 1
+ 114 0082 7E AA                   		push.l	r10
+ 115                             	.LCFI6:
+ 116 0084 EF 0A                   		mov.L	r0, r10
+ 117                             	.LCFI7:
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 	return ( knl_taskindp > 0 )? TRUE: FALSE;
+ 118                             		.loc 2 65 35
+ 119 0086 FB 52 00 00 00 00       		mov.L	#_knl_taskindp, r5
+ 120 008c EC 55                   		mov.L	[r5], r5
+ 121 008e 61 05                   		cmp	#0, r5
+ 122 0090 FC DB 5A                		scgt.L	r5
+ 123 0093 5B 55                   		movu.B	r5, r5
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** }
+ 124                             		.loc 2 66 1
+ 125 0095 EF 51                   		mov.L	r5, r1
+ 126 0097 3F AA 01                		rtsd	#4, r10-r10
+ 127                             	.LFE16:
+ 129                             		.global	_knl_semcb_table
+ 130                             		.section	.noinit,"aw"
+ 131                             		.balign 4
+ 134                             	_knl_semcb_table:
+ 135 0000 00 00 00 00 00 00 00 00 		.zero	448
+ 135      00 00 00 00 00 00 00 00 
+ 135      00 00 00 00 00 00 00 00 
+ 135      00 00 00 00 00 00 00 00 
+ 135      00 00 00 00 00 00 00 00 
+ 136                             		.global	_knl_free_semcb
+ 137                             		.balign 4
+ 140                             	_knl_free_semcb:
+ 141 01c0 00 00 00 00 00 00 00 00 		.zero	8
+ 142                             		.section P,"ax"
+ 143                             		.global	_knl_semaphore_initialize
+ 145                             	_knl_semaphore_initialize:
+ 146                             	.LFB34:
+ 147                             		.file 3 "../kernel/tkernel/semaphore.c"
+   1:../kernel/tkernel/semaphore.c **** /*
+   2:../kernel/tkernel/semaphore.c ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/semaphore.c ****  *    micro T-Kernel 3.00.00
+   4:../kernel/tkernel/semaphore.c ****  *
+   5:../kernel/tkernel/semaphore.c ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:../kernel/tkernel/semaphore.c ****  *    This software is distributed under the T-License 2.1.
+   7:../kernel/tkernel/semaphore.c ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/semaphore.c ****  *
+   9:../kernel/tkernel/semaphore.c ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:../kernel/tkernel/semaphore.c ****  *
+  11:../kernel/tkernel/semaphore.c ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/semaphore.c ****  */
+  13:../kernel/tkernel/semaphore.c **** 
+  14:../kernel/tkernel/semaphore.c **** /*
+  15:../kernel/tkernel/semaphore.c ****  *	semaphore.c
+  16:../kernel/tkernel/semaphore.c ****  *	Semaphore
+  17:../kernel/tkernel/semaphore.c ****  */
+  18:../kernel/tkernel/semaphore.c **** 
+  19:../kernel/tkernel/semaphore.c **** #include "kernel.h"
+  20:../kernel/tkernel/semaphore.c **** #include "wait.h"
+  21:../kernel/tkernel/semaphore.c **** #include "check.h"
+  22:../kernel/tkernel/semaphore.c **** #include "semaphore.h"
+  23:../kernel/tkernel/semaphore.c **** 
+  24:../kernel/tkernel/semaphore.c **** #if USE_SEMAPHORE == 1
+  25:../kernel/tkernel/semaphore.c **** 
+  26:../kernel/tkernel/semaphore.c **** Noinit(EXPORT SEMCB knl_semcb_table[NUM_SEMID]);	/* Semaphore control block */
+  27:../kernel/tkernel/semaphore.c **** Noinit(EXPORT QUEUE knl_free_semcb);	/* FreeQue */
+  28:../kernel/tkernel/semaphore.c **** 
+  29:../kernel/tkernel/semaphore.c **** 
+  30:../kernel/tkernel/semaphore.c **** /* 
+  31:../kernel/tkernel/semaphore.c ****  * Initialization of semaphore control block 
+  32:../kernel/tkernel/semaphore.c ****  */
+  33:../kernel/tkernel/semaphore.c **** EXPORT ER knl_semaphore_initialize( void )
+  34:../kernel/tkernel/semaphore.c **** {
+ 148                             		.loc 3 34 1
+ 149 009a 7E AA                   		push.l	r10
+ 150                             	.LCFI8:
+ 151 009c 71 0A F8                		add	#-8, r0, r10
+ 152                             	.LCFI9:
+ 153 009f EF A0                   		mov.L	r10, r0
+  35:../kernel/tkernel/semaphore.c **** 	SEMCB	*semcb, *end;
+  36:../kernel/tkernel/semaphore.c **** 
+  37:../kernel/tkernel/semaphore.c **** 	/* Get system information */
+  38:../kernel/tkernel/semaphore.c **** 	if ( NUM_SEMID < 1 ) {
+  39:../kernel/tkernel/semaphore.c **** 		return E_SYS;
+  40:../kernel/tkernel/semaphore.c **** 	}
+  41:../kernel/tkernel/semaphore.c **** 
+  42:../kernel/tkernel/semaphore.c **** 	/* Register all control blocks onto FreeQue */
+  43:../kernel/tkernel/semaphore.c **** 	QueInit(&knl_free_semcb);
+ 154                             		.loc 3 43 2
+ 155 00a1 FB 12 00 00 00 00       		mov.L	#_knl_free_semcb, r1
+ 156 00a7 39 59 FF                		bsr	_QueInit
+  44:../kernel/tkernel/semaphore.c **** 	end = knl_semcb_table + NUM_SEMID;
+ 157                             		.loc 3 44 6
+ 158 00aa F9 A2 01 00 00 00 00    		mov.L	#_knl_semcb_table+448, 4[r10]
+  45:../kernel/tkernel/semaphore.c **** 	for ( semcb = knl_semcb_table; semcb < end; semcb++ ) {
+ 159                             		.loc 3 45 14
+ 160 00b1 F8 A2 00 00 00 00       		mov.L	#_knl_semcb_table, [r10]
+ 161                             		.loc 3 45 2
+ 162 00b7 2E 1B                   		bra	.L9
+ 163                             	.L10:
+  46:../kernel/tkernel/semaphore.c **** 		semcb->semid = 0;
+ 164                             		.loc 3 46 16 discriminator 3
+ 165 00b9 EC A5                   		mov.L	[r10], r5
+ 166 00bb 3E 52 00                		mov.L	#0, 8[r5]
+  47:../kernel/tkernel/semaphore.c **** 		QueInsert(&semcb->wait_queue, &knl_free_semcb);
+ 167                             		.loc 3 47 3 discriminator 3
+ 168 00be EC A5                   		mov.L	[r10], r5
+ 169 00c0 FB 22 00 00 00 00       		mov.L	#_knl_free_semcb, r2
+ 170 00c6 EF 51                   		mov.L	r5, r1
+ 171 00c8 39 51 FF                		bsr	_QueInsert
+  45:../kernel/tkernel/semaphore.c **** 	for ( semcb = knl_semcb_table; semcb < end; semcb++ ) {
+ 172                             		.loc 3 45 51 discriminator 3
+ 173 00cb EC A5                   		mov.L	[r10], r5
+ 174 00cd 71 55 1C                		add	#28, r5
+ 175 00d0 E3 A5                   		mov.L	r5, [r10]
+ 176                             	.L9:
+  45:../kernel/tkernel/semaphore.c **** 	for ( semcb = knl_semcb_table; semcb < end; semcb++ ) {
+ 177                             		.loc 3 45 2 discriminator 1
+ 178 00d2 EC A4                   		mov.L	[r10], r4
+ 179 00d4 ED A5 01                		mov.L	4[r10], r5
+ 180 00d7 47 54                   		cmp	r5, r4
+ 181 00d9 23 E0                   		bltu	.L10
+  48:../kernel/tkernel/semaphore.c **** 	}
+  49:../kernel/tkernel/semaphore.c **** 
+  50:../kernel/tkernel/semaphore.c **** 	return E_OK;
+ 182                             		.loc 3 50 9
+ 183 00db 66 05                   		mov.L	#0, r5
+  51:../kernel/tkernel/semaphore.c **** }
+ 184                             		.loc 3 51 1
+ 185 00dd EF 51                   		mov.L	r5, r1
+ 186 00df 3F AA 03                		rtsd	#12, r10-r10
+ 187                             	.LFE34:
+ 189                             		.global	_tk_cre_sem
+ 191                             	_tk_cre_sem:
+ 192                             	.LFB35:
+  52:../kernel/tkernel/semaphore.c **** 
+  53:../kernel/tkernel/semaphore.c **** 
+  54:../kernel/tkernel/semaphore.c **** /*
+  55:../kernel/tkernel/semaphore.c ****  * Create semaphore
+  56:../kernel/tkernel/semaphore.c ****  */
+  57:../kernel/tkernel/semaphore.c **** SYSCALL ID tk_cre_sem( CONST T_CSEM *pk_csem )
+  58:../kernel/tkernel/semaphore.c **** {
+ 193                             		.loc 3 58 1
+ 194 00e2 6E 7A                   		pushm	r7-r10
+ 195                             	.LCFI10:
+ 196 00e4 71 0A E8                		add	#-24, r0, r10
+ 197                             	.LCFI11:
+ 198 00e7 EF A0                   		mov.L	r10, r0
+ 199 00e9 E7 A1 05                		mov.L	r1, 20[r10]
+  59:../kernel/tkernel/semaphore.c **** #if CHK_RSATR
+  60:../kernel/tkernel/semaphore.c **** 	const ATR VALID_SEMATR = {
+ 200                             		.loc 3 60 12
+ 201 00ec F9 A6 01 03             		mov.L	#3, 4[r10]
+  61:../kernel/tkernel/semaphore.c **** 		 TA_TPRI
+  62:../kernel/tkernel/semaphore.c **** 		|TA_CNT
+  63:../kernel/tkernel/semaphore.c **** #if USE_OBJECT_NAME
+  64:../kernel/tkernel/semaphore.c **** 		|TA_DSNAME
+  65:../kernel/tkernel/semaphore.c **** #endif
+  66:../kernel/tkernel/semaphore.c **** 	};
+  67:../kernel/tkernel/semaphore.c **** #endif
+  68:../kernel/tkernel/semaphore.c **** 	SEMCB	*semcb;
+  69:../kernel/tkernel/semaphore.c **** 	ID	semid;
+  70:../kernel/tkernel/semaphore.c **** 	ER	ercd;
+  71:../kernel/tkernel/semaphore.c **** 
+  72:../kernel/tkernel/semaphore.c **** 	CHECK_RSATR(pk_csem->sematr, VALID_SEMATR);
+ 202                             		.loc 3 72 2
+ 203 00f0 ED A5 05                		mov.L	20[r10], r5
+ 204 00f3 A8 5C                   		mov.L	4[r5], r4
+ 205 00f5 ED A5 01                		mov.L	4[r10], r5
+ 206 00f8 7E 05                   		not	r5
+ 207 00fa 53 45                   		and	r4, r5
+ 208 00fc 61 05                   		cmp	#0, r5
+ 209 00fe 17                      		beq	.L13
+ 210                             		.loc 3 72 2 is_stmt 0 discriminator 1
+ 211 00ff FB 56 F5                		mov.L	#-11, r5
+ 212 0102 38 E4 00                		bra	.L14
+ 213                             	.L13:
+  73:../kernel/tkernel/semaphore.c **** 	CHECK_PAR(pk_csem->isemcnt >= 0);
+ 214                             		.loc 3 73 2 is_stmt 1
+ 215 0105 ED A5 05                		mov.L	20[r10], r5
+ 216 0108 A8 D5                   		mov.L	8[r5], r5
+ 217 010a 61 05                   		cmp	#0, r5
+ 218 010c 28 08                   		bge	.L15
+ 219                             		.loc 3 73 2 is_stmt 0 discriminator 1
+ 220 010e FB 56 EF                		mov.L	#-17, r5
+ 221 0111 38 D5 00                		bra	.L14
+ 222                             	.L15:
+  74:../kernel/tkernel/semaphore.c **** 	CHECK_PAR(pk_csem->maxsem > 0);
+ 223                             		.loc 3 74 2 is_stmt 1
+ 224 0114 ED A5 05                		mov.L	20[r10], r5
+ 225 0117 A8 DD                   		mov.L	12[r5], r5
+ 226 0119 61 05                   		cmp	#0, r5
+ 227 011b 2A 08                   		bgt	.L16
+ 228                             		.loc 3 74 2 is_stmt 0 discriminator 1
+ 229 011d FB 56 EF                		mov.L	#-17, r5
+ 230 0120 38 C6 00                		bra	.L14
+ 231                             	.L16:
+  75:../kernel/tkernel/semaphore.c **** 	CHECK_PAR(pk_csem->maxsem >= pk_csem->isemcnt);
+ 232                             		.loc 3 75 2 is_stmt 1
+ 233 0123 ED A5 05                		mov.L	20[r10], r5
+ 234 0126 A8 DC                   		mov.L	12[r5], r4
+ 235 0128 ED A5 05                		mov.L	20[r10], r5
+ 236 012b A8 D5                   		mov.L	8[r5], r5
+ 237 012d 47 54                   		cmp	r5, r4
+ 238 012f 28 08                   		bge	.L17
+ 239                             		.loc 3 75 2 is_stmt 0 discriminator 1
+ 240 0131 FB 56 EF                		mov.L	#-17, r5
+ 241 0134 38 B2 00                		bra	.L14
+ 242                             	.L17:
+ 243                             	.LBB2:
+  76:../kernel/tkernel/semaphore.c **** 
+  77:../kernel/tkernel/semaphore.c **** 	BEGIN_CRITICAL_SECTION;
+ 244                             		.loc 3 77 2 is_stmt 1
+ 245 0137 05 00 00 00             		bsr	_disint
+ 246 013b E7 A1 02                		mov.L	r1, 8[r10]
+  78:../kernel/tkernel/semaphore.c **** 	/* Get control block from FreeQue */
+  79:../kernel/tkernel/semaphore.c **** 	semcb = (SEMCB*)QueRemoveNext(&knl_free_semcb);
+ 247                             		.loc 3 79 18
+ 248 013e FB 12 00 00 00 00       		mov.L	#_knl_free_semcb, r1
+ 249 0144 39 05 FF                		bsr	_QueRemoveNext
+ 250 0147 E7 A1 03                		mov.L	r1, 12[r10]
+  80:../kernel/tkernel/semaphore.c **** 	if ( semcb == NULL ) {
+ 251                             		.loc 3 80 5
+ 252 014a ED A5 03                		mov.L	12[r10], r5
+ 253 014d 61 05                   		cmp	#0, r5
+ 254 014f 1E                      		bne	.L18
+  81:../kernel/tkernel/semaphore.c **** 		ercd = E_LIMIT;
+ 255                             		.loc 3 81 8
+ 256 0150 F8 A6 DE                		mov.L	#-34, [r10]
+ 257 0153 2E 57                   		bra	.L19
+ 258                             	.L18:
+  82:../kernel/tkernel/semaphore.c **** 	} else {
+  83:../kernel/tkernel/semaphore.c **** 		semid = ID_SEM(semcb - knl_semcb_table);
+ 259                             		.loc 3 83 11
+ 260 0155 ED A5 03                		mov.L	12[r10], r5
+ 261 0158 FB 72 00 00 00 00       		mov.L	#_knl_semcb_table, r7
+ 262 015e 43 75                   		sub	r7, r5
+ 263 0160 6A 25                   		shar	#2, r5
+ 264 0162 74 15 B7 6D DB B6       		mul	#-1227133513, r5
+ 265                             		.loc 3 83 9
+ 266 0168 62 15                   		add	#1, r5
+ 267 016a E7 A5 04                		mov.L	r5, 16[r10]
+  84:../kernel/tkernel/semaphore.c **** 
+  85:../kernel/tkernel/semaphore.c **** 		/* Initialize control block */
+  86:../kernel/tkernel/semaphore.c **** 		QueInit(&semcb->wait_queue);
+ 268                             		.loc 3 86 3
+ 269 016d ED A5 03                		mov.L	12[r10], r5
+ 270 0170 EF 51                   		mov.L	r5, r1
+ 271 0172 39 8E FE                		bsr	_QueInit
+  87:../kernel/tkernel/semaphore.c **** 		semcb->semid = semid;
+ 272                             		.loc 3 87 16
+ 273 0175 ED A5 03                		mov.L	12[r10], r5
+ 274 0178 ED A4 04                		mov.L	16[r10], r4
+ 275 017b A0 D4                   		mov.L	r4, 8[r5]
+  88:../kernel/tkernel/semaphore.c **** 		semcb->exinf = pk_csem->exinf;
+ 276                             		.loc 3 88 25
+ 277 017d ED A5 05                		mov.L	20[r10], r5
+ 278 0180 EC 54                   		mov.L	[r5], r4
+ 279                             		.loc 3 88 16
+ 280 0182 ED A5 03                		mov.L	12[r10], r5
+ 281 0185 A0 DC                   		mov.L	r4, 12[r5]
+  89:../kernel/tkernel/semaphore.c **** 		semcb->sematr = pk_csem->sematr;
+ 282                             		.loc 3 89 26
+ 283 0187 ED A5 05                		mov.L	20[r10], r5
+ 284 018a A8 5C                   		mov.L	4[r5], r4
+ 285                             		.loc 3 89 17
+ 286 018c ED A5 03                		mov.L	12[r10], r5
+ 287 018f A1 54                   		mov.L	r4, 16[r5]
+  90:../kernel/tkernel/semaphore.c **** 		semcb->semcnt = pk_csem->isemcnt;
+ 288                             		.loc 3 90 26
+ 289 0191 ED A5 05                		mov.L	20[r10], r5
+ 290 0194 A8 D4                   		mov.L	8[r5], r4
+ 291                             		.loc 3 90 17
+ 292 0196 ED A5 03                		mov.L	12[r10], r5
+ 293 0199 A1 5C                   		mov.L	r4, 20[r5]
+  91:../kernel/tkernel/semaphore.c **** 		semcb->maxsem = pk_csem->maxsem;
+ 294                             		.loc 3 91 26
+ 295 019b ED A5 05                		mov.L	20[r10], r5
+ 296 019e A8 DC                   		mov.L	12[r5], r4
+ 297                             		.loc 3 91 17
+ 298 01a0 ED A5 03                		mov.L	12[r10], r5
+ 299 01a3 A1 D4                   		mov.L	r4, 24[r5]
+  92:../kernel/tkernel/semaphore.c **** #if USE_OBJECT_NAME
+  93:../kernel/tkernel/semaphore.c **** 		if ( (pk_csem->sematr & TA_DSNAME) != 0 ) {
+  94:../kernel/tkernel/semaphore.c **** 			knl_strncpy((char*)semcb->name, (char*)pk_csem->dsname,
+  95:../kernel/tkernel/semaphore.c **** 				OBJECT_NAME_LENGTH);
+  96:../kernel/tkernel/semaphore.c **** 		}
+  97:../kernel/tkernel/semaphore.c **** #endif
+  98:../kernel/tkernel/semaphore.c **** 		ercd = semid;
+ 300                             		.loc 3 98 8
+ 301 01a5 ED A5 04                		mov.L	16[r10], r5
+ 302 01a8 E3 A5                   		mov.L	r5, [r10]
+ 303                             	.L19:
+  99:../kernel/tkernel/semaphore.c **** 	}
+ 100:../kernel/tkernel/semaphore.c **** 	END_CRITICAL_SECTION;
+ 304                             		.loc 3 100 2
+ 305 01aa ED A5 02                		mov.L	8[r10], r5
+ 306 01ad 61 F5                   		cmp	#15, r5
+ 307 01af 20 2E                   		beq	.L20
+ 308                             		.loc 3 100 2 is_stmt 0 discriminator 1
+ 309 01b1 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 310 01b7 EC 54                   		mov.L	[r5], r4
+ 311 01b9 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 312 01bf EC 55                   		mov.L	[r5], r5
+ 313 01c1 47 54                   		cmp	r5, r4
+ 314 01c3 20 1A                   		beq	.L20
+ 315                             		.loc 3 100 2 discriminator 3
+ 316 01c5 39 BD FE                		bsr	_knl_isTaskIndependent
+ 317 01c8 EF 15                   		mov.L	r1, r5
+ 318 01ca 61 05                   		cmp	#0, r5
+ 319 01cc 21 11                   		bne	.L20
+ 320                             		.loc 3 100 2 discriminator 5
+ 321 01ce FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 322 01d4 EC 55                   		mov.L	[r5], r5
+ 323 01d6 61 05                   		cmp	#0, r5
+ 324 01d8 1D                      		bne	.L20
+ 325                             		.loc 3 100 2 discriminator 7
+ 326 01d9 05 00 00 00             		bsr	_knl_dispatch
+ 327                             		.balign 8,3,1
+ 328                             	.L20:
+ 329                             		.loc 3 100 2 discriminator 9
+ 330 01dd ED A1 02                		mov.L	8[r10], r1
+ 331 01e0 05 00 00 00             		bsr	_setint
+ 332                             	.LBE2:
+ 101:../kernel/tkernel/semaphore.c **** 
+ 102:../kernel/tkernel/semaphore.c **** 	return ercd;
+ 333                             		.loc 3 102 9 is_stmt 1 discriminator 9
+ 334 01e4 EC A5                   		mov.L	[r10], r5
+ 335                             		.balign 8,3,1
+ 336                             	.L14:
+ 103:../kernel/tkernel/semaphore.c **** }
+ 337                             		.loc 3 103 1
+ 338 01e6 EF 51                   		mov.L	r5, r1
+ 339 01e8 3F 7A 0A                		rtsd	#40, r7-r10
+ 340                             	.LFE35:
+ 342                             		.global	_tk_del_sem
+ 344                             	_tk_del_sem:
+ 345                             	.LFB36:
+ 104:../kernel/tkernel/semaphore.c **** 
+ 105:../kernel/tkernel/semaphore.c **** #ifdef USE_FUNC_TK_DEL_SEM
+ 106:../kernel/tkernel/semaphore.c **** /*
+ 107:../kernel/tkernel/semaphore.c ****  * Delete semaphore
+ 108:../kernel/tkernel/semaphore.c ****  */
+ 109:../kernel/tkernel/semaphore.c **** SYSCALL ER tk_del_sem( ID semid )
+ 110:../kernel/tkernel/semaphore.c **** {
+ 346                             		.loc 3 110 1
+ 347 01eb 7E AA                   		push.l	r10
+ 348                             	.LCFI12:
+ 349 01ed 71 0A F0                		add	#-16, r0, r10
+ 350                             	.LCFI13:
+ 351 01f0 EF A0                   		mov.L	r10, r0
+ 352 01f2 E7 A1 03                		mov.L	r1, 12[r10]
+ 111:../kernel/tkernel/semaphore.c **** 	SEMCB	*semcb;
+ 112:../kernel/tkernel/semaphore.c **** 	ER	ercd = E_OK;
+ 353                             		.loc 3 112 5
+ 354 01f5 F8 A6 00                		mov.L	#0, [r10]
+ 113:../kernel/tkernel/semaphore.c **** 
+ 114:../kernel/tkernel/semaphore.c **** 	CHECK_SEMID(semid);
+ 355                             		.loc 3 114 2
+ 356 01f8 ED A5 03                		mov.L	12[r10], r5
+ 357 01fb 61 05                   		cmp	#0, r5
+ 358 01fd 2B 0A                   		ble	.L22
+ 359                             		.loc 3 114 2 is_stmt 0 discriminator 2
+ 360 01ff ED A5 03                		mov.L	12[r10], r5
+ 361 0202 75 55 10                		cmp	#16, r5
+ 362 0205 2B 08                   		ble	.L23
+ 363                             	.L22:
+ 364                             		.loc 3 114 2 discriminator 3
+ 365 0207 FB 56 EE                		mov.L	#-18, r5
+ 366 020a 38 81 00                		bra	.L24
+ 367                             	.L23:
+ 115:../kernel/tkernel/semaphore.c **** 
+ 116:../kernel/tkernel/semaphore.c **** 	semcb = get_semcb(semid);
+ 368                             		.loc 3 116 10 is_stmt 1
+ 369 020d ED A5 03                		mov.L	12[r10], r5
+ 370 0210 60 15                   		sub	#1, r5
+ 371                             		.loc 3 116 8
+ 372 0212 75 15 1C                		mul	#28, r5
+ 373 0215 70 55 00 00 00 00       		add	#_knl_semcb_table, r5
+ 374 021b E7 A5 01                		mov.L	r5, 4[r10]
+ 375                             	.LBB3:
+ 117:../kernel/tkernel/semaphore.c **** 
+ 118:../kernel/tkernel/semaphore.c **** 	BEGIN_CRITICAL_SECTION;
+ 376                             		.loc 3 118 2
+ 377 021e 05 00 00 00             		bsr	_disint
+ 378 0222 E7 A1 02                		mov.L	r1, 8[r10]
+ 119:../kernel/tkernel/semaphore.c **** 	if ( semcb->semid == 0 ) {
+ 379                             		.loc 3 119 12
+ 380 0225 ED A5 01                		mov.L	4[r10], r5
+ 381 0228 A8 D5                   		mov.L	8[r5], r5
+ 382                             		.loc 3 119 5
+ 383 022a 61 05                   		cmp	#0, r5
+ 384 022c 1E                      		bne	.L25
+ 120:../kernel/tkernel/semaphore.c **** 		ercd = E_NOEXS;
+ 385                             		.loc 3 120 8
+ 386 022d F8 A6 D6                		mov.L	#-42, [r10]
+ 387 0230 2E 1F                   		bra	.L26
+ 388                             	.L25:
+ 121:../kernel/tkernel/semaphore.c **** 	} else {
+ 122:../kernel/tkernel/semaphore.c **** 		/* Release wait state of task (E_DLT) */
+ 123:../kernel/tkernel/semaphore.c **** 		knl_wait_delete(&semcb->wait_queue);
+ 389                             		.loc 3 123 3
+ 390 0232 ED A5 01                		mov.L	4[r10], r5
+ 391 0235 EF 51                   		mov.L	r5, r1
+ 392 0237 05 00 00 00             		bsr	_knl_wait_delete
+ 124:../kernel/tkernel/semaphore.c **** 
+ 125:../kernel/tkernel/semaphore.c **** 		/* Return to FreeQue */
+ 126:../kernel/tkernel/semaphore.c **** 		QueInsert(&semcb->wait_queue, &knl_free_semcb);
+ 393                             		.loc 3 126 3
+ 394 023b ED A5 01                		mov.L	4[r10], r5
+ 395 023e FB 22 00 00 00 00       		mov.L	#_knl_free_semcb, r2
+ 396 0244 EF 51                   		mov.L	r5, r1
+ 397 0246 39 D3 FD                		bsr	_QueInsert
+ 127:../kernel/tkernel/semaphore.c **** 		semcb->semid = 0;
+ 398                             		.loc 3 127 16
+ 399 0249 ED A5 01                		mov.L	4[r10], r5
+ 400 024c 3E 52 00                		mov.L	#0, 8[r5]
+ 401                             	.L26:
+ 128:../kernel/tkernel/semaphore.c **** 	}
+ 129:../kernel/tkernel/semaphore.c **** 	END_CRITICAL_SECTION;
+ 402                             		.loc 3 129 2
+ 403 024f ED A5 02                		mov.L	8[r10], r5
+ 404 0252 61 F5                   		cmp	#15, r5
+ 405 0254 20 2E                   		beq	.L27
+ 406                             		.loc 3 129 2 is_stmt 0 discriminator 1
+ 407 0256 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 408 025c EC 54                   		mov.L	[r5], r4
+ 409 025e FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 410 0264 EC 55                   		mov.L	[r5], r5
+ 411 0266 47 54                   		cmp	r5, r4
+ 412 0268 20 1A                   		beq	.L27
+ 413                             		.loc 3 129 2 discriminator 3
+ 414 026a 39 18 FE                		bsr	_knl_isTaskIndependent
+ 415 026d EF 15                   		mov.L	r1, r5
+ 416 026f 61 05                   		cmp	#0, r5
+ 417 0271 21 11                   		bne	.L27
+ 418                             		.loc 3 129 2 discriminator 5
+ 419 0273 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 420 0279 EC 55                   		mov.L	[r5], r5
+ 421 027b 61 05                   		cmp	#0, r5
+ 422 027d 1D                      		bne	.L27
+ 423                             		.loc 3 129 2 discriminator 7
+ 424 027e 05 00 00 00             		bsr	_knl_dispatch
+ 425                             		.balign 8,3,1
+ 426                             	.L27:
+ 427                             		.loc 3 129 2 discriminator 9
+ 428 0282 ED A1 02                		mov.L	8[r10], r1
+ 429 0285 05 00 00 00             		bsr	_setint
+ 430                             	.LBE3:
+ 130:../kernel/tkernel/semaphore.c **** 
+ 131:../kernel/tkernel/semaphore.c **** 	return ercd;
+ 431                             		.loc 3 131 9 is_stmt 1 discriminator 9
+ 432 0289 EC A5                   		mov.L	[r10], r5
+ 433                             	.L24:
+ 132:../kernel/tkernel/semaphore.c **** }
+ 434                             		.loc 3 132 1
+ 435 028b EF 51                   		mov.L	r5, r1
+ 436 028d 3F AA 05                		rtsd	#20, r10-r10
+ 437                             	.LFE36:
+ 439                             		.global	_tk_sig_sem
+ 441                             	_tk_sig_sem:
+ 442                             	.LFB37:
+ 133:../kernel/tkernel/semaphore.c **** #endif /* USE_FUNC_TK_DEL_SEM */
+ 134:../kernel/tkernel/semaphore.c **** 
+ 135:../kernel/tkernel/semaphore.c **** /*
+ 136:../kernel/tkernel/semaphore.c ****  * Signal semaphore
+ 137:../kernel/tkernel/semaphore.c ****  */
+ 138:../kernel/tkernel/semaphore.c **** SYSCALL ER tk_sig_sem( ID semid, INT cnt )
+ 139:../kernel/tkernel/semaphore.c **** {
+ 443                             		.loc 3 139 1
+ 444 0290 7E AA                   		push.l	r10
+ 445                             	.LCFI14:
+ 446 0292 71 0A E4                		add	#-28, r0, r10
+ 447                             	.LCFI15:
+ 448 0295 EF A0                   		mov.L	r10, r0
+ 449 0297 E7 A1 05                		mov.L	r1, 20[r10]
+ 450 029a E7 A2 06                		mov.L	r2, 24[r10]
+ 140:../kernel/tkernel/semaphore.c **** 	SEMCB	*semcb;
+ 141:../kernel/tkernel/semaphore.c **** 	TCB	*tcb;
+ 142:../kernel/tkernel/semaphore.c **** 	QUEUE	*queue;
+ 143:../kernel/tkernel/semaphore.c **** 	ER	ercd = E_OK;
+ 451                             		.loc 3 143 5
+ 452 029d F9 A6 01 00             		mov.L	#0, 4[r10]
+ 144:../kernel/tkernel/semaphore.c ****     
+ 145:../kernel/tkernel/semaphore.c **** 	CHECK_SEMID(semid);
+ 453                             		.loc 3 145 2
+ 454 02a1 ED A5 05                		mov.L	20[r10], r5
+ 455 02a4 61 05                   		cmp	#0, r5
+ 456 02a6 2B 0A                   		ble	.L29
+ 457                             		.loc 3 145 2 is_stmt 0 discriminator 2
+ 458 02a8 ED A5 05                		mov.L	20[r10], r5
+ 459 02ab 75 55 10                		cmp	#16, r5
+ 460 02ae 2B 08                   		ble	.L30
+ 461                             	.L29:
+ 462                             		.loc 3 145 2 discriminator 3
+ 463 02b0 FB 56 EE                		mov.L	#-18, r5
+ 464 02b3 38 FC 00                		bra	.L31
+ 465                             	.L30:
+ 146:../kernel/tkernel/semaphore.c **** 	CHECK_PAR(cnt > 0);
+ 466                             		.loc 3 146 2 is_stmt 1
+ 467 02b6 ED A5 06                		mov.L	24[r10], r5
+ 468 02b9 61 05                   		cmp	#0, r5
+ 469 02bb 2A 08                   		bgt	.L32
+ 470                             		.loc 3 146 2 is_stmt 0 discriminator 1
+ 471 02bd FB 56 EF                		mov.L	#-17, r5
+ 472 02c0 38 EF 00                		bra	.L31
+ 473                             	.L32:
+ 147:../kernel/tkernel/semaphore.c **** 
+ 148:../kernel/tkernel/semaphore.c **** 	semcb = get_semcb(semid);
+ 474                             		.loc 3 148 10 is_stmt 1
+ 475 02c3 ED A5 05                		mov.L	20[r10], r5
+ 476 02c6 60 15                   		sub	#1, r5
+ 477                             		.loc 3 148 8
+ 478 02c8 75 15 1C                		mul	#28, r5
+ 479 02cb 70 55 00 00 00 00       		add	#_knl_semcb_table, r5
+ 480 02d1 E7 A5 02                		mov.L	r5, 8[r10]
+ 481                             	.LBB4:
+ 149:../kernel/tkernel/semaphore.c **** 
+ 150:../kernel/tkernel/semaphore.c **** 	BEGIN_CRITICAL_SECTION;
+ 482                             		.loc 3 150 2
+ 483 02d4 05 00 00 00             		bsr	_disint
+ 484 02d8 E7 A1 03                		mov.L	r1, 12[r10]
+ 151:../kernel/tkernel/semaphore.c **** 	if ( semcb->semid == 0 ) {
+ 485                             		.loc 3 151 12
+ 486 02db ED A5 02                		mov.L	8[r10], r5
+ 487 02de A8 D5                   		mov.L	8[r5], r5
+ 488                             		.loc 3 151 5
+ 489 02e0 61 05                   		cmp	#0, r5
+ 490 02e2 18                      		bne	.L33
+ 152:../kernel/tkernel/semaphore.c **** 		ercd = E_NOEXS;
+ 491                             		.loc 3 152 8
+ 492 02e3 F9 A6 01 D6             		mov.L	#-42, 4[r10]
+ 153:../kernel/tkernel/semaphore.c **** 		goto error_exit;
+ 493                             		.loc 3 153 3
+ 494 02e7 38 8B 00                		bra	.L34
+ 495                             	.L33:
+ 154:../kernel/tkernel/semaphore.c **** 	}
+ 155:../kernel/tkernel/semaphore.c **** 	if ( cnt > (semcb->maxsem - semcb->semcnt) ) {
+ 496                             		.loc 3 155 19
+ 497 02ea ED A5 02                		mov.L	8[r10], r5
+ 498 02ed A9 D4                   		mov.L	24[r5], r4
+ 499                             		.loc 3 155 35
+ 500 02ef ED A5 02                		mov.L	8[r10], r5
+ 501 02f2 A9 5D                   		mov.L	20[r5], r5
+ 502                             		.loc 3 155 28
+ 503 02f4 FF 05 54                		sub	r5, r4, r5
+ 504                             		.loc 3 155 5
+ 505 02f7 ED A4 06                		mov.L	24[r10], r4
+ 506 02fa 47 54                   		cmp	r5, r4
+ 507 02fc 2B 08                   		ble	.L35
+ 156:../kernel/tkernel/semaphore.c **** 		ercd = E_QOVR;
+ 508                             		.loc 3 156 8
+ 509 02fe F9 A6 01 D5             		mov.L	#-43, 4[r10]
+ 157:../kernel/tkernel/semaphore.c **** 		goto error_exit;
+ 510                             		.loc 3 157 3
+ 511 0302 2E 70                   		bra	.L34
+ 512                             	.L35:
+ 158:../kernel/tkernel/semaphore.c **** 	}
+ 159:../kernel/tkernel/semaphore.c **** 
+ 160:../kernel/tkernel/semaphore.c **** 	/* Return semaphore counts */
+ 161:../kernel/tkernel/semaphore.c **** 	semcb->semcnt += cnt;
+ 513                             		.loc 3 161 16
+ 514 0304 ED A5 02                		mov.L	8[r10], r5
+ 515 0307 A9 5D                   		mov.L	20[r5], r5
+ 516 0309 EF 54                   		mov.L	r5, r4
+ 517 030b 06 89 A4 06             		add	24[r10].L, r4
+ 518 030f ED A5 02                		mov.L	8[r10], r5
+ 519 0312 A1 5C                   		mov.L	r4, 20[r5]
+ 162:../kernel/tkernel/semaphore.c **** 
+ 163:../kernel/tkernel/semaphore.c **** 	/* Search task that frees wait */
+ 164:../kernel/tkernel/semaphore.c **** 	queue = semcb->wait_queue.next;
+ 520                             		.loc 3 164 8
+ 521 0314 ED A5 02                		mov.L	8[r10], r5
+ 522 0317 EC 55                   		mov.L	[r5], r5
+ 523 0319 E3 A5                   		mov.L	r5, [r10]
+ 165:../kernel/tkernel/semaphore.c **** 	while ( queue != &semcb->wait_queue ) {
+ 524                             		.loc 3 165 8
+ 525 031b 2E 49                   		bra	.L36
+ 526                             	.L39:
+ 166:../kernel/tkernel/semaphore.c **** 		tcb = (TCB*)queue;
+ 527                             		.loc 3 166 7
+ 528 031d EC A5                   		mov.L	[r10], r5
+ 529 031f E7 A5 04                		mov.L	r5, 16[r10]
+ 167:../kernel/tkernel/semaphore.c **** 		queue = queue->next;
+ 530                             		.loc 3 167 9
+ 531 0322 EC A5                   		mov.L	[r10], r5
+ 532 0324 EC 55                   		mov.L	[r5], r5
+ 533 0326 E3 A5                   		mov.L	r5, [r10]
+ 168:../kernel/tkernel/semaphore.c **** 
+ 169:../kernel/tkernel/semaphore.c **** 		/* Meet condition for Releasing wait? */
+ 170:../kernel/tkernel/semaphore.c **** 		if ( semcb->semcnt < tcb->winfo.sem.cnt ) {
+ 534                             		.loc 3 170 13
+ 535 0328 ED A5 02                		mov.L	8[r10], r5
+ 536 032b A9 5C                   		mov.L	20[r5], r4
+ 537                             		.loc 3 170 38
+ 538 032d ED A5 04                		mov.L	16[r10], r5
+ 539 0330 AC 55                   		mov.L	64[r5], r5
+ 540                             		.loc 3 170 6
+ 541 0332 47 54                   		cmp	r5, r4
+ 542 0334 28 0F                   		bge	.L37
+ 171:../kernel/tkernel/semaphore.c **** 			if ( (semcb->sematr & TA_CNT) == 0 ) {
+ 543                             		.loc 3 171 15
+ 544 0336 ED A5 02                		mov.L	8[r10], r5
+ 545 0339 A9 55                   		mov.L	16[r5], r5
+ 546                             		.loc 3 171 24
+ 547 033b 64 25                   		and	#2, r5
+ 548                             		.loc 3 171 7
+ 549 033d 61 05                   		cmp	#0, r5
+ 550 033f 20 2F                   		beq	.L41
+ 172:../kernel/tkernel/semaphore.c **** 				break;
+ 173:../kernel/tkernel/semaphore.c **** 			}
+ 174:../kernel/tkernel/semaphore.c **** 			continue;
+ 551                             		.loc 3 174 4
+ 552 0341 2E 23                   		bra	.L36
+ 553                             	.L37:
+ 175:../kernel/tkernel/semaphore.c **** 		}
+ 176:../kernel/tkernel/semaphore.c **** 
+ 177:../kernel/tkernel/semaphore.c **** 		/* Release wait */
+ 178:../kernel/tkernel/semaphore.c **** 		knl_wait_release_ok(tcb);
+ 554                             		.loc 3 178 3
+ 555 0343 ED A1 04                		mov.L	16[r10], r1
+ 556 0346 05 00 00 00             		bsr	_knl_wait_release_ok
+ 179:../kernel/tkernel/semaphore.c **** 
+ 180:../kernel/tkernel/semaphore.c **** 		semcb->semcnt -= tcb->winfo.sem.cnt;
+ 557                             		.loc 3 180 17
+ 558 034a ED A5 02                		mov.L	8[r10], r5
+ 559 034d A9 5C                   		mov.L	20[r5], r4
+ 560                             		.loc 3 180 34
+ 561 034f ED A5 04                		mov.L	16[r10], r5
+ 562 0352 AC 55                   		mov.L	64[r5], r5
+ 563                             		.loc 3 180 17
+ 564 0354 43 54                   		sub	r5, r4
+ 565 0356 ED A5 02                		mov.L	8[r10], r5
+ 566 0359 A1 5C                   		mov.L	r4, 20[r5]
+ 181:../kernel/tkernel/semaphore.c **** 		if ( semcb->semcnt <= 0 ) {
+ 567                             		.loc 3 181 13
+ 568 035b ED A5 02                		mov.L	8[r10], r5
+ 569 035e A9 5D                   		mov.L	20[r5], r5
+ 570                             		.loc 3 181 6
+ 571 0360 61 05                   		cmp	#0, r5
+ 572 0362 2B 0F                   		ble	.L42
+ 573                             	.L36:
+ 165:../kernel/tkernel/semaphore.c **** 		tcb = (TCB*)queue;
+ 574                             		.loc 3 165 19
+ 575 0364 ED A5 02                		mov.L	8[r10], r5
+ 165:../kernel/tkernel/semaphore.c **** 		tcb = (TCB*)queue;
+ 576                             		.loc 3 165 8
+ 577 0367 EC A4                   		mov.L	[r10], r4
+ 578 0369 47 54                   		cmp	r5, r4
+ 579 036b 21 B2                   		bne	.L39
+ 182:../kernel/tkernel/semaphore.c **** 			break;
+ 183:../kernel/tkernel/semaphore.c **** 		}
+ 184:../kernel/tkernel/semaphore.c **** 	}
+ 185:../kernel/tkernel/semaphore.c **** 
+ 186:../kernel/tkernel/semaphore.c ****     error_exit:
+ 580                             		.loc 3 186 5
+ 581 036d 0D                      		bra	.L34
+ 582                             	.L41:
+ 172:../kernel/tkernel/semaphore.c **** 			}
+ 583                             		.loc 3 172 5
+ 584 036e 03                      		nop
+ 585 036f 2E 03                   		bra	.L34
+ 586                             	.L42:
+ 182:../kernel/tkernel/semaphore.c **** 			break;
+ 587                             		.loc 3 182 4
+ 588 0371 03                      		nop
+ 589                             		.balign 8,3,1
+ 590                             	.L34:
+ 187:../kernel/tkernel/semaphore.c **** 	END_CRITICAL_SECTION;
+ 591                             		.loc 3 187 2
+ 592 0372 ED A5 03                		mov.L	12[r10], r5
+ 593 0375 61 F5                   		cmp	#15, r5
+ 594 0377 20 2E                   		beq	.L40
+ 595                             		.loc 3 187 2 is_stmt 0 discriminator 1
+ 596 0379 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 597 037f EC 54                   		mov.L	[r5], r4
+ 598 0381 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 599 0387 EC 55                   		mov.L	[r5], r5
+ 600 0389 47 54                   		cmp	r5, r4
+ 601 038b 20 1A                   		beq	.L40
+ 602                             		.loc 3 187 2 discriminator 3
+ 603 038d 39 F5 FC                		bsr	_knl_isTaskIndependent
+ 604 0390 EF 15                   		mov.L	r1, r5
+ 605 0392 61 05                   		cmp	#0, r5
+ 606 0394 21 11                   		bne	.L40
+ 607                             		.loc 3 187 2 discriminator 5
+ 608 0396 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 609 039c EC 55                   		mov.L	[r5], r5
+ 610 039e 61 05                   		cmp	#0, r5
+ 611 03a0 1D                      		bne	.L40
+ 612                             		.loc 3 187 2 discriminator 7
+ 613 03a1 05 00 00 00             		bsr	_knl_dispatch
+ 614                             		.balign 8,3,1
+ 615                             	.L40:
+ 616                             		.loc 3 187 2 discriminator 9
+ 617 03a5 ED A1 03                		mov.L	12[r10], r1
+ 618 03a8 05 00 00 00             		bsr	_setint
+ 619                             	.LBE4:
+ 188:../kernel/tkernel/semaphore.c **** 
+ 189:../kernel/tkernel/semaphore.c **** 	return ercd;
+ 620                             		.loc 3 189 9 is_stmt 1 discriminator 9
+ 621 03ac ED A5 01                		mov.L	4[r10], r5
+ 622                             	.L31:
+ 190:../kernel/tkernel/semaphore.c **** }
+ 623                             		.loc 3 190 1
+ 624 03af EF 51                   		mov.L	r5, r1
+ 625 03b1 3F AA 08                		rtsd	#32, r10-r10
+ 626                             	.LFE37:
+ 629                             	_sem_chg_pri:
+ 630                             	.LFB38:
+ 191:../kernel/tkernel/semaphore.c **** 
+ 192:../kernel/tkernel/semaphore.c **** /*
+ 193:../kernel/tkernel/semaphore.c ****  * Processing if the priority of wait task changes
+ 194:../kernel/tkernel/semaphore.c ****  */
+ 195:../kernel/tkernel/semaphore.c **** LOCAL void sem_chg_pri( TCB *tcb, INT oldpri )
+ 196:../kernel/tkernel/semaphore.c **** {
+ 631                             		.loc 3 196 1
+ 632 03b4 7E AA                   		push.l	r10
+ 633                             	.LCFI16:
+ 634 03b6 71 0A EC                		add	#-20, r0, r10
+ 635                             	.LCFI17:
+ 636 03b9 EF A0                   		mov.L	r10, r0
+ 637 03bb E7 A1 03                		mov.L	r1, 12[r10]
+ 638 03be E7 A2 04                		mov.L	r2, 16[r10]
+ 197:../kernel/tkernel/semaphore.c **** 	SEMCB	*semcb;
+ 198:../kernel/tkernel/semaphore.c **** 	QUEUE	*queue;
+ 199:../kernel/tkernel/semaphore.c **** 	TCB	*top;
+ 200:../kernel/tkernel/semaphore.c **** 
+ 201:../kernel/tkernel/semaphore.c **** 	semcb = get_semcb(tcb->wid);
+ 639                             		.loc 3 201 10
+ 640 03c1 ED A5 03                		mov.L	12[r10], r5
+ 641 03c4 AB 55                   		mov.L	48[r5], r5
+ 642 03c6 60 15                   		sub	#1, r5
+ 643                             		.loc 3 201 8
+ 644 03c8 75 15 1C                		mul	#28, r5
+ 645 03cb 70 55 00 00 00 00       		add	#_knl_semcb_table, r5
+ 646 03d1 E7 A5 01                		mov.L	r5, 4[r10]
+ 202:../kernel/tkernel/semaphore.c **** 	if ( oldpri >= 0 ) {
+ 647                             		.loc 3 202 5
+ 648 03d4 ED A5 04                		mov.L	16[r10], r5
+ 649 03d7 61 05                   		cmp	#0, r5
+ 650 03d9 29 0C                   		blt	.L44
+ 203:../kernel/tkernel/semaphore.c **** 		/* Reorder wait line */
+ 204:../kernel/tkernel/semaphore.c **** 		knl_gcb_change_priority((GCB*)semcb, tcb);
+ 651                             		.loc 3 204 3
+ 652 03db ED A2 03                		mov.L	12[r10], r2
+ 653 03de ED A1 01                		mov.L	4[r10], r1
+ 654 03e1 05 00 00 00             		bsr	_knl_gcb_change_priority
+ 655                             	.L44:
+ 205:../kernel/tkernel/semaphore.c **** 	}
+ 206:../kernel/tkernel/semaphore.c **** 
+ 207:../kernel/tkernel/semaphore.c **** 	if ( (semcb->sematr & TA_CNT) != 0 ) {
+ 656                             		.loc 3 207 13
+ 657 03e5 ED A5 01                		mov.L	4[r10], r5
+ 658 03e8 A9 55                   		mov.L	16[r5], r5
+ 659                             		.loc 3 207 22
+ 660 03ea 64 25                   		and	#2, r5
+ 661                             		.loc 3 207 5
+ 662 03ec 61 05                   		cmp	#0, r5
+ 663 03ee 21 46                   		bne	.L50
+ 208:../kernel/tkernel/semaphore.c **** 		return;
+ 209:../kernel/tkernel/semaphore.c **** 	}
+ 210:../kernel/tkernel/semaphore.c **** 
+ 211:../kernel/tkernel/semaphore.c **** 	/* From the head task in a wait queue, allocate semaphore counts
+ 212:../kernel/tkernel/semaphore.c **** 	   and release wait state as much as possible */
+ 213:../kernel/tkernel/semaphore.c **** 	queue = semcb->wait_queue.next;
+ 664                             		.loc 3 213 8
+ 665 03f0 ED A5 01                		mov.L	4[r10], r5
+ 666 03f3 EC 55                   		mov.L	[r5], r5
+ 667 03f5 E3 A5                   		mov.L	r5, [r10]
+ 214:../kernel/tkernel/semaphore.c **** 	while ( queue != &semcb->wait_queue ) {
+ 668                             		.loc 3 214 8
+ 669 03f7 2E 33                   		bra	.L47
+ 670                             	.L49:
+ 215:../kernel/tkernel/semaphore.c **** 		top = (TCB*)queue;
+ 671                             		.loc 3 215 7
+ 672 03f9 EC A5                   		mov.L	[r10], r5
+ 673 03fb E7 A5 02                		mov.L	r5, 8[r10]
+ 216:../kernel/tkernel/semaphore.c **** 		queue = queue->next;
+ 674                             		.loc 3 216 9
+ 675 03fe EC A5                   		mov.L	[r10], r5
+ 676 0400 EC 55                   		mov.L	[r5], r5
+ 677 0402 E3 A5                   		mov.L	r5, [r10]
+ 217:../kernel/tkernel/semaphore.c **** 
+ 218:../kernel/tkernel/semaphore.c **** 		/* Meet condition for releasing wait? */
+ 219:../kernel/tkernel/semaphore.c **** 		if ( semcb->semcnt < top->winfo.sem.cnt ) {
+ 678                             		.loc 3 219 13
+ 679 0404 ED A5 01                		mov.L	4[r10], r5
+ 680 0407 A9 5C                   		mov.L	20[r5], r4
+ 681                             		.loc 3 219 38
+ 682 0409 ED A5 02                		mov.L	8[r10], r5
+ 683 040c AC 55                   		mov.L	64[r5], r5
+ 684                             		.loc 3 219 6
+ 685 040e 47 54                   		cmp	r5, r4
+ 686 0410 29 27                   		blt	.L51
+ 220:../kernel/tkernel/semaphore.c **** 			break;
+ 221:../kernel/tkernel/semaphore.c **** 		}
+ 222:../kernel/tkernel/semaphore.c **** 
+ 223:../kernel/tkernel/semaphore.c **** 		/* Release wait */
+ 224:../kernel/tkernel/semaphore.c **** 		knl_wait_release_ok(top);
+ 687                             		.loc 3 224 3
+ 688 0412 ED A1 02                		mov.L	8[r10], r1
+ 689 0415 05 00 00 00             		bsr	_knl_wait_release_ok
+ 225:../kernel/tkernel/semaphore.c **** 
+ 226:../kernel/tkernel/semaphore.c **** 		semcb->semcnt -= top->winfo.sem.cnt;
+ 690                             		.loc 3 226 17
+ 691 0419 ED A5 01                		mov.L	4[r10], r5
+ 692 041c A9 5C                   		mov.L	20[r5], r4
+ 693                             		.loc 3 226 34
+ 694 041e ED A5 02                		mov.L	8[r10], r5
+ 695 0421 AC 55                   		mov.L	64[r5], r5
+ 696                             		.loc 3 226 17
+ 697 0423 43 54                   		sub	r5, r4
+ 698 0425 ED A5 01                		mov.L	4[r10], r5
+ 699 0428 A1 5C                   		mov.L	r4, 20[r5]
+ 700                             	.L47:
+ 214:../kernel/tkernel/semaphore.c **** 		top = (TCB*)queue;
+ 701                             		.loc 3 214 19
+ 702 042a ED A5 01                		mov.L	4[r10], r5
+ 214:../kernel/tkernel/semaphore.c **** 		top = (TCB*)queue;
+ 703                             		.loc 3 214 8
+ 704 042d EC A4                   		mov.L	[r10], r4
+ 705 042f 47 54                   		cmp	r5, r4
+ 706 0431 21 C8                   		bne	.L49
+ 707 0433 0D                      		bra	.L43
+ 708                             	.L50:
+ 208:../kernel/tkernel/semaphore.c **** 	}
+ 709                             		.loc 3 208 3
+ 710 0434 03                      		nop
+ 711 0435 2E 03                   		bra	.L43
+ 712                             	.L51:
+ 220:../kernel/tkernel/semaphore.c **** 		}
+ 713                             		.loc 3 220 4
+ 714 0437 03                      		nop
+ 715                             	.L43:
+ 227:../kernel/tkernel/semaphore.c **** 	}
+ 228:../kernel/tkernel/semaphore.c **** }
+ 716                             		.loc 3 228 1
+ 717 0438 3F AA 06                		rtsd	#24, r10-r10
+ 718                             	.LFE38:
+ 721                             	_sem_rel_wai:
+ 722                             	.LFB39:
+ 229:../kernel/tkernel/semaphore.c **** 
+ 230:../kernel/tkernel/semaphore.c **** /*
+ 231:../kernel/tkernel/semaphore.c ****  * Processing if the wait task is freed
+ 232:../kernel/tkernel/semaphore.c ****  */
+ 233:../kernel/tkernel/semaphore.c **** LOCAL void sem_rel_wai( TCB *tcb )
+ 234:../kernel/tkernel/semaphore.c **** {
+ 723                             		.loc 3 234 1
+ 724 043b 7E AA                   		push.l	r10
+ 725                             	.LCFI18:
+ 726 043d 71 0A FC                		add	#-4, r0, r10
+ 727                             	.LCFI19:
+ 728 0440 EF A0                   		mov.L	r10, r0
+ 729 0442 E3 A1                   		mov.L	r1, [r10]
+ 235:../kernel/tkernel/semaphore.c **** 	sem_chg_pri(tcb, -1);
+ 730                             		.loc 3 235 2
+ 731 0444 FB 26 FF                		mov.L	#-1, r2
+ 732 0447 EC A1                   		mov.L	[r10], r1
+ 733 0449 39 6B FF                		bsr	_sem_chg_pri
+ 236:../kernel/tkernel/semaphore.c **** }
+ 734                             		.loc 3 236 1
+ 735 044c 03                      		nop
+ 736 044d 3F AA 02                		rtsd	#8, r10-r10
+ 737                             	.LFE39:
+ 739                             		.section C,"a",@progbits
+ 740                             		.p2align 2
+ 741                             		.balign 4
+ 744                             	_knl_wspec_sem_tfifo:
+ 745 0000 04 00 00 00             		.long	4
+ 746 0004 00 00 00 00             		.long	0
+ 747 0008 3B 04 00 00             		.long	_sem_rel_wai
+ 748                             		.balign 4
+ 751                             	_knl_wspec_sem_tpri:
+ 752 000c 04 00 00 00             		.long	4
+ 753 0010 B4 03 00 00             		.long	_sem_chg_pri
+ 754 0014 3B 04 00 00             		.long	_sem_rel_wai
+ 755                             		.section P,"ax"
+ 756                             		.global	_tk_wai_sem
+ 758                             	_tk_wai_sem:
+ 759                             	.LFB40:
+ 237:../kernel/tkernel/semaphore.c **** 
+ 238:../kernel/tkernel/semaphore.c **** /*
+ 239:../kernel/tkernel/semaphore.c ****  * Definition of semaphore wait specification
+ 240:../kernel/tkernel/semaphore.c ****  */
+ 241:../kernel/tkernel/semaphore.c **** LOCAL CONST WSPEC knl_wspec_sem_tfifo = { TTW_SEM, NULL,        sem_rel_wai };
+ 242:../kernel/tkernel/semaphore.c **** LOCAL CONST WSPEC knl_wspec_sem_tpri  = { TTW_SEM, sem_chg_pri, sem_rel_wai };
+ 243:../kernel/tkernel/semaphore.c **** 
+ 244:../kernel/tkernel/semaphore.c **** /*
+ 245:../kernel/tkernel/semaphore.c ****  * Wait on semaphore
+ 246:../kernel/tkernel/semaphore.c ****  */
+ 247:../kernel/tkernel/semaphore.c **** SYSCALL ER tk_wai_sem( ID semid, INT cnt, TMO tmout )
+ 248:../kernel/tkernel/semaphore.c **** {
+ 760                             		.loc 3 248 1
+ 761 0450 7E AA                   		push.l	r10
+ 762                             	.LCFI20:
+ 763 0452 71 0A E8                		add	#-24, r0, r10
+ 764                             	.LCFI21:
+ 765 0455 EF A0                   		mov.L	r10, r0
+ 766 0457 E7 A1 03                		mov.L	r1, 12[r10]
+ 767 045a E7 A2 04                		mov.L	r2, 16[r10]
+ 768 045d E7 A3 05                		mov.L	r3, 20[r10]
+ 249:../kernel/tkernel/semaphore.c **** 	SEMCB	*semcb;
+ 250:../kernel/tkernel/semaphore.c **** 	ER	ercd = E_OK;
+ 769                             		.loc 3 250 5
+ 770 0460 F9 A6 02 00             		mov.L	#0, 8[r10]
+ 251:../kernel/tkernel/semaphore.c **** 
+ 252:../kernel/tkernel/semaphore.c **** 	CHECK_SEMID(semid);
+ 771                             		.loc 3 252 2
+ 772 0464 ED A5 03                		mov.L	12[r10], r5
+ 773 0467 61 05                   		cmp	#0, r5
+ 774 0469 2B 0A                   		ble	.L54
+ 775                             		.loc 3 252 2 is_stmt 0 discriminator 2
+ 776 046b ED A5 03                		mov.L	12[r10], r5
+ 777 046e 75 55 10                		cmp	#16, r5
+ 778 0471 2B 08                   		ble	.L55
+ 779                             	.L54:
+ 780                             		.loc 3 252 2 discriminator 3
+ 781 0473 FB 56 EE                		mov.L	#-18, r5
+ 782 0476 38 4A 01                		bra	.L69
+ 783                             	.L55:
+ 253:../kernel/tkernel/semaphore.c **** 	CHECK_PAR(cnt > 0);
+ 784                             		.loc 3 253 2 is_stmt 1
+ 785 0479 ED A5 04                		mov.L	16[r10], r5
+ 786 047c 61 05                   		cmp	#0, r5
+ 787 047e 2A 08                   		bgt	.L57
+ 788                             		.loc 3 253 2 is_stmt 0 discriminator 1
+ 789 0480 FB 56 EF                		mov.L	#-17, r5
+ 790 0483 38 3D 01                		bra	.L69
+ 791                             	.L57:
+ 254:../kernel/tkernel/semaphore.c **** 	CHECK_TMOUT(tmout);
+ 792                             		.loc 3 254 2 is_stmt 1
+ 793 0486 ED A5 05                		mov.L	20[r10], r5
+ 794 0489 75 05 FF                		cmp	#-1, r5
+ 795 048c 28 08                   		bge	.L58
+ 796                             		.loc 3 254 2 is_stmt 0 discriminator 1
+ 797 048e FB 56 EF                		mov.L	#-17, r5
+ 798 0491 38 2F 01                		bra	.L69
+ 799                             	.L58:
+ 255:../kernel/tkernel/semaphore.c **** 	CHECK_DISPATCH();
+ 800                             		.loc 3 255 2 is_stmt 1
+ 801 0494 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 802 049a EC 55                   		mov.L	[r5], r5
+ 803 049c 61 05                   		cmp	#0, r5
+ 804 049e 21 22                   		bne	.L59
+ 805                             		.loc 3 255 2 is_stmt 0 discriminator 2
+ 806 04a0 39 E2 FB                		bsr	_knl_isTaskIndependent
+ 807 04a3 EF 15                   		mov.L	r1, r5
+ 808 04a5 61 05                   		cmp	#0, r5
+ 809 04a7 21 19                   		bne	.L59
+ 810                             		.loc 3 255 2 discriminator 4
+ 811 04a9 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 812 04af EC 55                   		mov.L	[r5], r5
+ 813 04b1 61 05                   		cmp	#0, r5
+ 814 04b3 20 0D                   		beq	.L59
+ 815                             		.loc 3 255 2 discriminator 6
+ 816 04b5 05 00 00 00             		bsr	_GetCpuIntLevel
+ 817 04b9 EF 15                   		mov.L	r1, r5
+ 818 04bb 75 55 10                		cmp	#16, r5
+ 819 04be 18                      		bne	.L60
+ 820 04bf 03                      		.balign 8,3,2
+ 821                             	.L59:
+ 822                             		.loc 3 255 2 discriminator 7
+ 823 04c0 FB 56 E7                		mov.L	#-25, r5
+ 824 04c3 38 FD 00                		bra	.L69
+ 825                             	.L60:
+ 256:../kernel/tkernel/semaphore.c **** 
+ 257:../kernel/tkernel/semaphore.c **** 	semcb = get_semcb(semid);
+ 826                             		.loc 3 257 10 is_stmt 1
+ 827 04c6 ED A5 03                		mov.L	12[r10], r5
+ 828 04c9 60 15                   		sub	#1, r5
+ 829                             		.loc 3 257 8
+ 830 04cb 75 15 1C                		mul	#28, r5
+ 831 04ce 70 55 00 00 00 00       		add	#_knl_semcb_table, r5
+ 832 04d4 E3 A5                   		mov.L	r5, [r10]
+ 833                             	.LBB5:
+ 258:../kernel/tkernel/semaphore.c **** 
+ 259:../kernel/tkernel/semaphore.c **** 	BEGIN_CRITICAL_SECTION;
+ 834                             		.loc 3 259 2
+ 835 04d6 05 00 00 00             		bsr	_disint
+ 836 04da E7 A1 01                		mov.L	r1, 4[r10]
+ 260:../kernel/tkernel/semaphore.c **** 	if ( semcb->semid == 0 ) {
+ 837                             		.loc 3 260 12
+ 838 04dd EC A5                   		mov.L	[r10], r5
+ 839 04df A8 D5                   		mov.L	8[r5], r5
+ 840                             		.loc 3 260 5
+ 841 04e1 61 05                   		cmp	#0, r5
+ 842 04e3 18                      		bne	.L61
+ 261:../kernel/tkernel/semaphore.c **** 		ercd = E_NOEXS;
+ 843                             		.loc 3 261 8
+ 844 04e4 F9 A6 02 D6             		mov.L	#-42, 8[r10]
+ 262:../kernel/tkernel/semaphore.c **** 		goto error_exit;
+ 845                             		.loc 3 262 3
+ 846 04e8 38 9A 00                		bra	.L62
+ 847                             	.L61:
+ 263:../kernel/tkernel/semaphore.c **** 	}
+ 264:../kernel/tkernel/semaphore.c **** #if CHK_PAR
+ 265:../kernel/tkernel/semaphore.c **** 	if ( cnt > semcb->maxsem ) {
+ 848                             		.loc 3 265 18
+ 849 04eb EC A5                   		mov.L	[r10], r5
+ 850 04ed A9 D5                   		mov.L	24[r5], r5
+ 851                             		.loc 3 265 5
+ 852 04ef ED A4 04                		mov.L	16[r10], r4
+ 853 04f2 47 54                   		cmp	r5, r4
+ 854 04f4 2B 09                   		ble	.L63
+ 266:../kernel/tkernel/semaphore.c **** 		ercd = E_PAR;
+ 855                             		.loc 3 266 8
+ 856 04f6 F9 A6 02 EF             		mov.L	#-17, 8[r10]
+ 267:../kernel/tkernel/semaphore.c **** 		goto error_exit;
+ 857                             		.loc 3 267 3
+ 858 04fa 38 88 00                		bra	.L62
+ 859                             	.L63:
+ 268:../kernel/tkernel/semaphore.c **** 	}
+ 269:../kernel/tkernel/semaphore.c **** #endif
+ 270:../kernel/tkernel/semaphore.c **** 
+ 271:../kernel/tkernel/semaphore.c **** 	if ( ((semcb->sematr & TA_CNT) != 0
+ 860                             		.loc 3 271 14
+ 861 04fd EC A5                   		mov.L	[r10], r5
+ 862 04ff A9 55                   		mov.L	16[r5], r5
+ 863                             		.loc 3 271 23
+ 864 0501 64 25                   		and	#2, r5
+ 865                             		.loc 3 271 5
+ 866 0503 61 05                   		cmp	#0, r5
+ 867 0505 21 20                   		bne	.L64
+ 272:../kernel/tkernel/semaphore.c **** 	      || knl_gcb_top_of_wait_queue((GCB*)semcb, knl_ctxtsk) == knl_ctxtsk)
+ 868                             		.loc 3 272 11
+ 869 0507 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 870 050d EC 55                   		mov.L	[r5], r5
+ 871 050f EF 52                   		mov.L	r5, r2
+ 872 0511 EC A1                   		mov.L	[r10], r1
+ 873 0513 05 00 00 00             		bsr	_knl_gcb_top_of_wait_queue
+ 874 0517 EF 14                   		mov.L	r1, r4
+ 875                             		.loc 3 272 62
+ 876 0519 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 877 051f EC 55                   		mov.L	[r5], r5
+ 878                             		.loc 3 272 8
+ 879 0521 47 54                   		cmp	r5, r4
+ 880 0523 21 1C                   		bne	.L65
+ 881                             	.L64:
+ 273:../kernel/tkernel/semaphore.c **** 	  && semcb->semcnt >= cnt ) {
+ 882                             		.loc 3 273 12
+ 883 0525 EC A5                   		mov.L	[r10], r5
+ 884 0527 A9 5D                   		mov.L	20[r5], r5
+ 885                             		.loc 3 273 4
+ 886 0529 ED A4 04                		mov.L	16[r10], r4
+ 887 052c 47 54                   		cmp	r5, r4
+ 888 052e 2A 11                   		bgt	.L65
+ 274:../kernel/tkernel/semaphore.c **** 		/* Get semaphore count */
+ 275:../kernel/tkernel/semaphore.c **** 		semcb->semcnt -= cnt;
+ 889                             		.loc 3 275 17
+ 890 0530 EC A5                   		mov.L	[r10], r5
+ 891 0532 A9 5C                   		mov.L	20[r5], r4
+ 892 0534 ED A5 04                		mov.L	16[r10], r5
+ 893 0537 43 54                   		sub	r5, r4
+ 894 0539 EC A5                   		mov.L	[r10], r5
+ 895 053b A1 5C                   		mov.L	r4, 20[r5]
+ 896 053d 2E 45                   		bra	.L62
+ 897                             	.L65:
+ 276:../kernel/tkernel/semaphore.c **** 
+ 277:../kernel/tkernel/semaphore.c **** 	} else {
+ 278:../kernel/tkernel/semaphore.c **** 		/* Ready for wait */
+ 279:../kernel/tkernel/semaphore.c **** 		knl_ctxtsk->wspec = ( (semcb->sematr & TA_TPRI) != 0 )?
+ 898                             		.loc 3 279 31
+ 899 053f EC A5                   		mov.L	[r10], r5
+ 900 0541 A9 55                   		mov.L	16[r5], r5
+ 901                             		.loc 3 279 40
+ 902 0543 64 15                   		and	#1, r5
+ 280:../kernel/tkernel/semaphore.c **** 					&knl_wspec_sem_tpri: &knl_wspec_sem_tfifo;
+ 903                             		.loc 3 280 25
+ 904 0545 61 05                   		cmp	#0, r5
+ 905 0547 10                      		beq	.L66
+ 906                             		.loc 3 280 25 is_stmt 0 discriminator 1
+ 907 0548 FB 42 0C 00 00 00       		mov.L	#_knl_wspec_sem_tpri, r4
+ 908 054e 0F                      		bra	.L67
+ 909                             	.L66:
+ 910                             		.loc 3 280 25 discriminator 2
+ 911 054f FB 42 00 00 00 00       		mov.L	#_knl_wspec_sem_tfifo, r4
+ 912                             	.L67:
+ 279:../kernel/tkernel/semaphore.c **** 					&knl_wspec_sem_tpri: &knl_wspec_sem_tfifo;
+ 913                             		.loc 3 279 13 is_stmt 1
+ 914 0555 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 915 055b EC 55                   		mov.L	[r5], r5
+ 279:../kernel/tkernel/semaphore.c **** 					&knl_wspec_sem_tpri: &knl_wspec_sem_tfifo;
+ 916                             		.loc 3 279 21
+ 917 055d A2 DC                   		mov.L	r4, 44[r5]
+ 281:../kernel/tkernel/semaphore.c **** 		knl_ctxtsk->wercd = &ercd;
+ 918                             		.loc 3 281 13
+ 919 055f FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 920 0565 EC 55                   		mov.L	[r5], r5
+ 921                             		.loc 3 281 21
+ 922 0567 71 A4 08                		add	#8, r10, r4
+ 923 056a A3 DC                   		mov.L	r4, 60[r5]
+ 282:../kernel/tkernel/semaphore.c **** 		knl_ctxtsk->winfo.sem.cnt = cnt;
+ 924                             		.loc 3 282 13
+ 925 056c FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 926 0572 EC 55                   		mov.L	[r5], r5
+ 927                             		.loc 3 282 29
+ 928 0574 ED A4 04                		mov.L	16[r10], r4
+ 929 0577 A4 54                   		mov.L	r4, 64[r5]
+ 283:../kernel/tkernel/semaphore.c **** 		knl_gcb_make_wait((GCB*)semcb, tmout);
+ 930                             		.loc 3 283 3
+ 931 0579 ED A2 05                		mov.L	20[r10], r2
+ 932 057c EC A1                   		mov.L	[r10], r1
+ 933 057e 05 00 00 00             		bsr	_knl_gcb_make_wait
+ 934                             		.balign 8,3,1
+ 935                             	.L62:
+ 284:../kernel/tkernel/semaphore.c **** 	}
+ 285:../kernel/tkernel/semaphore.c **** 
+ 286:../kernel/tkernel/semaphore.c ****     error_exit:
+ 287:../kernel/tkernel/semaphore.c **** 	END_CRITICAL_SECTION;
+ 936                             		.loc 3 287 2
+ 937 0582 ED A5 01                		mov.L	4[r10], r5
+ 938 0585 61 F5                   		cmp	#15, r5
+ 939 0587 20 2E                   		beq	.L68
+ 940                             		.loc 3 287 2 is_stmt 0 discriminator 1
+ 941 0589 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 942 058f EC 54                   		mov.L	[r5], r4
+ 943 0591 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 944 0597 EC 55                   		mov.L	[r5], r5
+ 945 0599 47 54                   		cmp	r5, r4
+ 946 059b 20 1A                   		beq	.L68
+ 947                             		.loc 3 287 2 discriminator 3
+ 948 059d 39 E5 FA                		bsr	_knl_isTaskIndependent
+ 949 05a0 EF 15                   		mov.L	r1, r5
+ 950 05a2 61 05                   		cmp	#0, r5
+ 951 05a4 21 11                   		bne	.L68
+ 952                             		.loc 3 287 2 discriminator 5
+ 953 05a6 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 954 05ac EC 55                   		mov.L	[r5], r5
+ 955 05ae 61 05                   		cmp	#0, r5
+ 956 05b0 1D                      		bne	.L68
+ 957                             		.loc 3 287 2 discriminator 7
+ 958 05b1 05 00 00 00             		bsr	_knl_dispatch
+ 959                             		.balign 8,3,1
+ 960                             	.L68:
+ 961                             		.loc 3 287 2 discriminator 9
+ 962 05b5 ED A1 01                		mov.L	4[r10], r1
+ 963 05b8 05 00 00 00             		bsr	_setint
+ 964                             	.LBE5:
+ 288:../kernel/tkernel/semaphore.c **** 
+ 289:../kernel/tkernel/semaphore.c **** 	return ercd;
+ 965                             		.loc 3 289 9 is_stmt 1 discriminator 9
+ 966 05bc ED A5 02                		mov.L	8[r10], r5
+ 967 05bf 03                      		.balign 8,3,1
+ 968                             	.L69:
+ 290:../kernel/tkernel/semaphore.c **** }
+ 969                             		.loc 3 290 1 discriminator 1
+ 970 05c0 EF 51                   		mov.L	r5, r1
+ 971 05c2 3F AA 07                		rtsd	#28, r10-r10
+ 972                             	.LFE40:
+ 974                             		.global	_tk_ref_sem
+ 976                             	_tk_ref_sem:
+ 977                             	.LFB41:
+ 291:../kernel/tkernel/semaphore.c **** 
+ 292:../kernel/tkernel/semaphore.c **** #ifdef USE_FUNC_TK_REF_SEM
+ 293:../kernel/tkernel/semaphore.c **** /*
+ 294:../kernel/tkernel/semaphore.c ****  * Refer semaphore state
+ 295:../kernel/tkernel/semaphore.c ****  */
+ 296:../kernel/tkernel/semaphore.c **** SYSCALL ER tk_ref_sem( ID semid, T_RSEM *pk_rsem )
+ 297:../kernel/tkernel/semaphore.c **** {
+ 978                             		.loc 3 297 1
+ 979 05c5 7E AA                   		push.l	r10
+ 980                             	.LCFI22:
+ 981 05c7 71 0A EC                		add	#-20, r0, r10
+ 982                             	.LCFI23:
+ 983 05ca EF A0                   		mov.L	r10, r0
+ 984 05cc E7 A1 03                		mov.L	r1, 12[r10]
+ 985 05cf E7 A2 04                		mov.L	r2, 16[r10]
+ 298:../kernel/tkernel/semaphore.c **** 	SEMCB	*semcb;
+ 299:../kernel/tkernel/semaphore.c **** 	ER	ercd = E_OK;
+ 986                             		.loc 3 299 5
+ 987 05d2 F8 A6 00                		mov.L	#0, [r10]
+ 300:../kernel/tkernel/semaphore.c **** 
+ 301:../kernel/tkernel/semaphore.c **** 	CHECK_SEMID(semid);
+ 988                             		.loc 3 301 2
+ 989 05d5 ED A5 03                		mov.L	12[r10], r5
+ 990 05d8 61 05                   		cmp	#0, r5
+ 991 05da 2B 0A                   		ble	.L71
+ 992                             		.loc 3 301 2 is_stmt 0 discriminator 2
+ 993 05dc ED A5 03                		mov.L	12[r10], r5
+ 994 05df 75 55 10                		cmp	#16, r5
+ 995 05e2 2B 08                   		ble	.L72
+ 996                             	.L71:
+ 997                             		.loc 3 301 2 discriminator 3
+ 998 05e4 FB 56 EE                		mov.L	#-18, r5
+ 999 05e7 38 88 00                		bra	.L73
+ 1000                             	.L72:
+ 302:../kernel/tkernel/semaphore.c **** 
+ 303:../kernel/tkernel/semaphore.c **** 	semcb = get_semcb(semid);
+ 1001                             		.loc 3 303 10 is_stmt 1
+ 1002 05ea ED A5 03                		mov.L	12[r10], r5
+ 1003 05ed 60 15                   		sub	#1, r5
+ 1004                             		.loc 3 303 8
+ 1005 05ef 75 15 1C                		mul	#28, r5
+ 1006 05f2 70 55 00 00 00 00       		add	#_knl_semcb_table, r5
+ 1007 05f8 E7 A5 01                		mov.L	r5, 4[r10]
+ 1008                             	.LBB6:
+ 304:../kernel/tkernel/semaphore.c **** 
+ 305:../kernel/tkernel/semaphore.c **** 	BEGIN_CRITICAL_SECTION;
+ 1009                             		.loc 3 305 2
+ 1010 05fb 05 00 00 00             		bsr	_disint
+ 1011 05ff E7 A1 02                		mov.L	r1, 8[r10]
+ 306:../kernel/tkernel/semaphore.c **** 	if ( semcb->semid == 0 ) {
+ 1012                             		.loc 3 306 12
+ 1013 0602 ED A5 01                		mov.L	4[r10], r5
+ 1014 0605 A8 D5                   		mov.L	8[r5], r5
+ 1015                             		.loc 3 306 5
+ 1016 0607 61 05                   		cmp	#0, r5
+ 1017 0609 1E                      		bne	.L74
+ 307:../kernel/tkernel/semaphore.c **** 		ercd = E_NOEXS;
+ 1018                             		.loc 3 307 8
+ 1019 060a F8 A6 D6                		mov.L	#-42, [r10]
+ 1020 060d 2E 26                   		bra	.L75
+ 1021                             	.L74:
+ 308:../kernel/tkernel/semaphore.c **** 	} else {
+ 309:../kernel/tkernel/semaphore.c **** 		pk_rsem->exinf  = semcb->exinf;
+ 1022                             		.loc 3 309 26
+ 1023 060f ED A5 01                		mov.L	4[r10], r5
+ 1024 0612 A8 DC                   		mov.L	12[r5], r4
+ 1025                             		.loc 3 309 19
+ 1026 0614 ED A5 04                		mov.L	16[r10], r5
+ 1027 0617 E3 54                   		mov.L	r4, [r5]
+ 310:../kernel/tkernel/semaphore.c **** 		pk_rsem->wtsk   = knl_wait_tskid(&semcb->wait_queue);
+ 1028                             		.loc 3 310 21
+ 1029 0619 ED A5 01                		mov.L	4[r10], r5
+ 1030 061c EF 51                   		mov.L	r5, r1
+ 1031 061e 05 00 00 00             		bsr	_knl_wait_tskid
+ 1032 0622 EF 14                   		mov.L	r1, r4
+ 1033                             		.loc 3 310 19
+ 1034 0624 ED A5 04                		mov.L	16[r10], r5
+ 1035 0627 A0 5C                   		mov.L	r4, 4[r5]
+ 311:../kernel/tkernel/semaphore.c **** 		pk_rsem->semcnt = semcb->semcnt;
+ 1036                             		.loc 3 311 26
+ 1037 0629 ED A5 01                		mov.L	4[r10], r5
+ 1038 062c A9 5C                   		mov.L	20[r5], r4
+ 1039                             		.loc 3 311 19
+ 1040 062e ED A5 04                		mov.L	16[r10], r5
+ 1041 0631 A0 D4                   		mov.L	r4, 8[r5]
+ 1042                             	.L75:
+ 312:../kernel/tkernel/semaphore.c **** 	}
+ 313:../kernel/tkernel/semaphore.c **** 	END_CRITICAL_SECTION;
+ 1043                             		.loc 3 313 2
+ 1044 0633 ED A5 02                		mov.L	8[r10], r5
+ 1045 0636 61 F5                   		cmp	#15, r5
+ 1046 0638 20 2E                   		beq	.L76
+ 1047                             		.loc 3 313 2 is_stmt 0 discriminator 1
+ 1048 063a FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1049 0640 EC 54                   		mov.L	[r5], r4
+ 1050 0642 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 1051 0648 EC 55                   		mov.L	[r5], r5
+ 1052 064a 47 54                   		cmp	r5, r4
+ 1053 064c 20 1A                   		beq	.L76
+ 1054                             		.loc 3 313 2 discriminator 3
+ 1055 064e 39 34 FA                		bsr	_knl_isTaskIndependent
+ 1056 0651 EF 15                   		mov.L	r1, r5
+ 1057 0653 61 05                   		cmp	#0, r5
+ 1058 0655 21 11                   		bne	.L76
+ 1059                             		.loc 3 313 2 discriminator 5
+ 1060 0657 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 1061 065d EC 55                   		mov.L	[r5], r5
+ 1062 065f 61 05                   		cmp	#0, r5
+ 1063 0661 1D                      		bne	.L76
+ 1064                             		.loc 3 313 2 discriminator 7
+ 1065 0662 05 00 00 00             		bsr	_knl_dispatch
+ 1066                             		.balign 8,3,1
+ 1067                             	.L76:
+ 1068                             		.loc 3 313 2 discriminator 9
+ 1069 0666 ED A1 02                		mov.L	8[r10], r1
+ 1070 0669 05 00 00 00             		bsr	_setint
+ 1071                             	.LBE6:
+ 314:../kernel/tkernel/semaphore.c **** 
+ 315:../kernel/tkernel/semaphore.c **** 	return ercd;
+ 1072                             		.loc 3 315 9 is_stmt 1 discriminator 9
+ 1073 066d EC A5                   		mov.L	[r10], r5
+ 1074                             	.L73:
+ 316:../kernel/tkernel/semaphore.c **** }
+ 1075                             		.loc 3 316 1
+ 1076 066f EF 51                   		mov.L	r5, r1
+ 1077 0671 3F AA 06                		rtsd	#24, r10-r10
+ 1078                             	.LFE41:
+ 1331                             	.Letext0:
+ 1332                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 1333                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 1334                             		.file 6 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 1335                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 1336                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 1337                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 1338                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysde
+ 1339                             		.file 11 "../kernel/tkernel/task.h"
+ 1340                             		.file 12 "../kernel/tkernel/ready_queue.h"
+ 1341                             		.file 13 "../kernel/tkernel/wait.h"
+ 1342                             		.file 14 "../kernel/tkernel/semaphore.h"

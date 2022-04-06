@@ -1,0 +1,1669 @@
+   1                             		.file	"eventflag.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   5                             	_QueInit:
+   6                             	.LFB6:
+   7                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+   1:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+   2:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   3:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    micro T-Kernel 3.00.00
+   4:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+   5:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    This software is distributed under the T-License 2.1.
+   7:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   8:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+   9:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+  11:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+  12:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  13:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  14:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  15:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	queue.h
+  16:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+  17:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Queuing operation
+  18:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  19:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  20:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifndef	__SYS_QUEUE_H__
+  21:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #define __SYS_QUEUE_H__
+  22:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  23:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #include <tk/tkernel.h>
+  24:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  25:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifdef __cplusplus
+  26:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** extern "C" {
+  27:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #endif
+  28:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  29:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  30:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Double-link queue (ring)
+  31:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  32:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** typedef struct queue {
+  33:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*next;
+  34:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*prev;
+  35:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** } QUEUE;
+  36:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  37:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  38:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Queue initialization 
+  39:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  40:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInit( QUEUE *que )
+  41:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+   8                             		.loc 1 41 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A FC                		add	#-4, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E3 A1                   		mov.L	r1, [r10]
+  42:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue *)que;
+  15                             		.loc 1 42 12
+  16 0009 EC A5                   		mov.L	[r10], r5
+  17 000b EC A4                   		mov.L	[r10], r4
+  18 000d E3 54                   		mov.L	r4, [r5]
+  43:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = (struct queue *)que;
+  19                             		.loc 1 43 12
+  20 000f EC A5                   		mov.L	[r10], r5
+  21 0011 EC A4                   		mov.L	[r10], r4
+  22 0013 A0 5C                   		mov.L	r4, 4[r5]
+  44:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  23                             		.loc 1 44 1
+  24 0015 03                      		nop
+  25 0016 3F AA 02                		rtsd	#8, r10-r10
+  26                             	.LFE6:
+  29                             	_isQueEmpty:
+  30                             	.LFB7:
+  45:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  46:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  47:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * TRUE if the queue is empty 
+  48:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  49:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline BOOL isQueEmpty( QUEUE *que )
+  50:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  31                             		.loc 1 50 1
+  32 0019 7E AA                   		push.l	r10
+  33                             	.LCFI2:
+  34 001b 71 0A FC                		add	#-4, r0, r10
+  35                             	.LCFI3:
+  36 001e EF A0                   		mov.L	r10, r0
+  37 0020 E3 A1                   		mov.L	r1, [r10]
+  51:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return ( que->next == que )? TRUE: FALSE;
+  38                             		.loc 1 51 14
+  39 0022 EC A5                   		mov.L	[r10], r5
+  40 0024 EC 55                   		mov.L	[r5], r5
+  41                             		.loc 1 51 35
+  42 0026 EC A4                   		mov.L	[r10], r4
+  43 0028 47 54                   		cmp	r5, r4
+  44 002a FC DB 50                		sceq.L	r5
+  45 002d 5B 55                   		movu.B	r5, r5
+  52:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  46                             		.loc 1 52 1
+  47 002f EF 51                   		mov.L	r5, r1
+  48 0031 3F AA 02                		rtsd	#8, r10-r10
+  49                             	.LFE7:
+  52                             	_QueInsert:
+  53                             	.LFB8:
+  53:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  54:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  55:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Insert in queue 
+  56:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Inserts entry directly prior to que 
+  57:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  58:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInsert( QUEUE *entry, QUEUE *que )
+  59:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  54                             		.loc 1 59 1
+  55 0034 7E AA                   		push.l	r10
+  56                             	.LCFI4:
+  57 0036 71 0A F8                		add	#-8, r0, r10
+  58                             	.LCFI5:
+  59 0039 EF A0                   		mov.L	r10, r0
+  60 003b E3 A1                   		mov.L	r1, [r10]
+  61 003d E7 A2 01                		mov.L	r2, 4[r10]
+  60:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->prev = (struct queue*) que->prev;
+  62                             		.loc 1 60 16
+  63 0040 ED A5 01                		mov.L	4[r10], r5
+  64 0043 A8 5C                   		mov.L	4[r5], r4
+  65                             		.loc 1 60 14
+  66 0045 EC A5                   		mov.L	[r10], r5
+  67 0047 A0 5C                   		mov.L	r4, 4[r5]
+  61:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next = que;
+  68                             		.loc 1 61 14
+  69 0049 EC A5                   		mov.L	[r10], r5
+  70 004b ED A4 01                		mov.L	4[r10], r4
+  71 004e E3 54                   		mov.L	r4, [r5]
+  62:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev->next = entry;
+  72                             		.loc 1 62 5
+  73 0050 ED A5 01                		mov.L	4[r10], r5
+  74 0053 A8 5D                   		mov.L	4[r5], r5
+  75                             		.loc 1 62 18
+  76 0055 EC A4                   		mov.L	[r10], r4
+  77 0057 E3 54                   		mov.L	r4, [r5]
+  63:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = entry;
+  78                             		.loc 1 63 12
+  79 0059 ED A5 01                		mov.L	4[r10], r5
+  80 005c EC A4                   		mov.L	[r10], r4
+  81 005e A0 5C                   		mov.L	r4, 4[r5]
+  64:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  82                             		.loc 1 64 1
+  83 0060 03                      		nop
+  84 0061 3F AA 03                		rtsd	#12, r10-r10
+  85                             	.LFE8:
+  88                             	_QueRemoveNext:
+  89                             	.LFB10:
+  65:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  66:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  67:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Delete from queue 
+  68:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes entry from queue 
+  69:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	No action is performed if entry is empty. 
+  70:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  71:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueRemove( QUEUE *entry )
+  72:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  73:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( entry->next != entry ) {
+  74:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->prev->next = (struct queue*) entry->next;
+  75:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->next->prev = (struct queue*) entry->prev;
+  76:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
+  77:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  78:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  79:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  80:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Remove top entry 
+  81:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes the entry directly after que from the queue,
+  82:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	and returns the deleted entry.
+  83:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Returns NULL if que is empty.
+  84:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  85:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline QUEUE* QueRemoveNext( QUEUE *que )
+  86:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  90                             		.loc 1 86 1
+  91 0064 7E AA                   		push.l	r10
+  92                             	.LCFI6:
+  93 0066 71 0A F8                		add	#-8, r0, r10
+  94                             	.LCFI7:
+  95 0069 EF A0                   		mov.L	r10, r0
+  96 006b E7 A1 01                		mov.L	r1, 4[r10]
+  87:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	QUEUE	*entry;
+  88:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  89:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( que->next == que ) {
+  97                             		.loc 1 89 10
+  98 006e ED A5 01                		mov.L	4[r10], r5
+  99 0071 EC 55                   		mov.L	[r5], r5
+ 100                             		.loc 1 89 5
+ 101 0073 ED A4 01                		mov.L	4[r10], r4
+ 102 0076 47 54                   		cmp	r5, r4
+ 103 0078 1D                      		bne	.L6
+  90:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		return NULL;
+ 104                             		.loc 1 90 10
+ 105 0079 66 05                   		mov.L	#0, r5
+ 106 007b 2E 1D                   		bra	.L7
+ 107                             	.L6:
+  91:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
+  92:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  93:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry = que->next;
+ 108                             		.loc 1 93 8
+ 109 007d ED A5 01                		mov.L	4[r10], r5
+ 110 0080 EC 55                   		mov.L	[r5], r5
+ 111 0082 E3 A5                   		mov.L	r5, [r10]
+  94:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue*)entry->next;
+ 112                             		.loc 1 94 14
+ 113 0084 EC A5                   		mov.L	[r10], r5
+ 114 0086 EC 54                   		mov.L	[r5], r4
+ 115                             		.loc 1 94 12
+ 116 0088 ED A5 01                		mov.L	4[r10], r5
+ 117 008b E3 54                   		mov.L	r4, [r5]
+  95:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next->prev = que;
+ 118                             		.loc 1 95 7
+ 119 008d EC A5                   		mov.L	[r10], r5
+ 120 008f EC 55                   		mov.L	[r5], r5
+ 121                             		.loc 1 95 20
+ 122 0091 ED A4 01                		mov.L	4[r10], r4
+ 123 0094 A0 5C                   		mov.L	r4, 4[r5]
+  96:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  97:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return entry;
+ 124                             		.loc 1 97 9
+ 125 0096 EC A5                   		mov.L	[r10], r5
+ 126                             	.L7:
+  98:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+ 127                             		.loc 1 98 1
+ 128 0098 EF 51                   		mov.L	r5, r1
+ 129 009a 3F AA 03                		rtsd	#12, r10-r10
+ 130                             	.LFE10:
+ 133                             	_knl_isTaskIndependent:
+ 134                             	.LFB16:
+ 135                             		.file 2 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_st
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    micro T-Kernel 3.00.03
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	cpu_status.h (RXv2)
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	CPU-Dependent Status Definition
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #ifndef _SYSDEPEND_CPU_CORE_STATUS_
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define _SYSDEPEND_CPU_CORE_STATUS_
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <tk/syslib.h>
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <sys/sysdef.h>
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include "sysdepend.h"
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End critical section
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_CRITICAL_SECTION	{ UINT _sr_ = disint();
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_CRITICAL_SECTION	if ( !isDI(_sr_)			\
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && knl_ctxtsk != knl_schedtsk		\
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_isTaskIndependent()		\
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_dispatch_disabled ) {		\
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 					knl_dispatch();			\
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				}					\
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				setint(_sr_); }
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End interrupt disable section
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_DISABLE_INTERRUPT	{ UINT _sr_ = disint();
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_DISABLE_INTERRUPT	setint(_sr_); }
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Interrupt enable/disable
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT	{ setint(0); }
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define DISABLE_INTERRUPT	{ disint(); }
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Enable interrupt nesting
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	Enable the interrupt that has a higher priority than 'level.'
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT_UPTO(level)	{ setint(level); }
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *  Task-independent control
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** IMPORT	W	knl_taskindp;		/* Task independent status */
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * If it is the task-independent part, TRUE
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** Inline BOOL knl_isTaskIndependent( void )
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** {
+ 136                             		.loc 2 64 1
+ 137 009d 7E AA                   		push.l	r10
+ 138                             	.LCFI8:
+ 139 009f EF 0A                   		mov.L	r0, r10
+ 140                             	.LCFI9:
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 	return ( knl_taskindp > 0 )? TRUE: FALSE;
+ 141                             		.loc 2 65 35
+ 142 00a1 FB 52 00 00 00 00       		mov.L	#_knl_taskindp, r5
+ 143 00a7 EC 55                   		mov.L	[r5], r5
+ 144 00a9 61 05                   		cmp	#0, r5
+ 145 00ab FC DB 5A                		scgt.L	r5
+ 146 00ae 5B 55                   		movu.B	r5, r5
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** }
+ 147                             		.loc 2 66 1
+ 148 00b0 EF 51                   		mov.L	r5, r1
+ 149 00b2 3F AA 01                		rtsd	#4, r10-r10
+ 150                             	.LFE16:
+ 153                             	_knl_eventflag_cond:
+ 154                             	.LFB34:
+ 155                             		.file 3 "../kernel/tkernel/eventflag.h"
+   1:../kernel/tkernel/eventflag.h **** /*
+   2:../kernel/tkernel/eventflag.h ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/eventflag.h ****  *    micro T-Kernel 3.00.00
+   4:../kernel/tkernel/eventflag.h ****  *
+   5:../kernel/tkernel/eventflag.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:../kernel/tkernel/eventflag.h ****  *    This software is distributed under the T-License 2.1.
+   7:../kernel/tkernel/eventflag.h ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/eventflag.h ****  *
+   9:../kernel/tkernel/eventflag.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:../kernel/tkernel/eventflag.h ****  *
+  11:../kernel/tkernel/eventflag.h ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/eventflag.h ****  */
+  13:../kernel/tkernel/eventflag.h **** 
+  14:../kernel/tkernel/eventflag.h **** /*
+  15:../kernel/tkernel/eventflag.h ****  *	eventflag.h
+  16:../kernel/tkernel/eventflag.h ****  *	Event Flag
+  17:../kernel/tkernel/eventflag.h ****  */
+  18:../kernel/tkernel/eventflag.h **** 
+  19:../kernel/tkernel/eventflag.h **** #ifndef _EVENTFLAG_H_
+  20:../kernel/tkernel/eventflag.h **** #define _EVENTFLAG_H_
+  21:../kernel/tkernel/eventflag.h **** 
+  22:../kernel/tkernel/eventflag.h **** /*
+  23:../kernel/tkernel/eventflag.h ****  * Event flag control block
+  24:../kernel/tkernel/eventflag.h ****  */
+  25:../kernel/tkernel/eventflag.h **** typedef struct eventflag_control_block {
+  26:../kernel/tkernel/eventflag.h **** 	QUEUE	wait_queue;	/* Event flag wait queue */
+  27:../kernel/tkernel/eventflag.h **** 	ID	flgid;		/* Event flag ID */
+  28:../kernel/tkernel/eventflag.h **** 	void	*exinf;		/* Extended information */
+  29:../kernel/tkernel/eventflag.h **** 	ATR	flgatr;		/* Event flag attribute */
+  30:../kernel/tkernel/eventflag.h **** 	UINT	flgptn;		/* Event flag current pattern */
+  31:../kernel/tkernel/eventflag.h **** #if USE_OBJECT_NAME
+  32:../kernel/tkernel/eventflag.h **** 	UB	name[OBJECT_NAME_LENGTH];	/* name */
+  33:../kernel/tkernel/eventflag.h **** #endif
+  34:../kernel/tkernel/eventflag.h **** } FLGCB;
+  35:../kernel/tkernel/eventflag.h **** 
+  36:../kernel/tkernel/eventflag.h **** IMPORT FLGCB knl_flgcb_table[];	/* Event flag control block */
+  37:../kernel/tkernel/eventflag.h **** IMPORT QUEUE knl_free_flgcb;	/* FreeQue */
+  38:../kernel/tkernel/eventflag.h **** 
+  39:../kernel/tkernel/eventflag.h **** #define get_flgcb(id)	( &knl_flgcb_table[INDEX_FLG(id)] )
+  40:../kernel/tkernel/eventflag.h **** 
+  41:../kernel/tkernel/eventflag.h **** 
+  42:../kernel/tkernel/eventflag.h **** /*
+  43:../kernel/tkernel/eventflag.h ****  * Check for event flag wait release condition
+  44:../kernel/tkernel/eventflag.h ****  */
+  45:../kernel/tkernel/eventflag.h **** Inline BOOL knl_eventflag_cond( FLGCB *flgcb, UINT waiptn, UINT wfmode )
+  46:../kernel/tkernel/eventflag.h **** {
+ 156                             		.loc 3 46 1
+ 157 00b5 7E AA                   		push.l	r10
+ 158                             	.LCFI10:
+ 159 00b7 71 0A F4                		add	#-12, r0, r10
+ 160                             	.LCFI11:
+ 161 00ba EF A0                   		mov.L	r10, r0
+ 162 00bc E3 A1                   		mov.L	r1, [r10]
+ 163 00be E7 A2 01                		mov.L	r2, 4[r10]
+ 164 00c1 E7 A3 02                		mov.L	r3, 8[r10]
+  47:../kernel/tkernel/eventflag.h **** 	if ( (wfmode & TWF_ORW) != 0 ) {
+ 165                             		.loc 3 47 15
+ 166 00c4 ED A5 02                		mov.L	8[r10], r5
+ 167 00c7 64 15                   		and	#1, r5
+ 168                             		.loc 3 47 5
+ 169 00c9 61 05                   		cmp	#0, r5
+ 170 00cb 20 14                   		beq	.L11
+  48:../kernel/tkernel/eventflag.h **** 		return ( (flgcb->flgptn & waiptn) != 0 );
+ 171                             		.loc 3 48 18
+ 172 00cd EC A5                   		mov.L	[r10], r5
+ 173 00cf A9 5C                   		mov.L	20[r5], r4
+ 174                             		.loc 3 48 27
+ 175 00d1 ED A5 01                		mov.L	4[r10], r5
+ 176 00d4 53 45                   		and	r4, r5
+ 177                             		.loc 3 48 37
+ 178 00d6 61 05                   		cmp	#0, r5
+ 179 00d8 FC DB 51                		scne.L	r5
+ 180 00db 5B 55                   		movu.B	r5, r5
+ 181 00dd 2E 15                   		bra	.L12
+ 182                             	.L11:
+  49:../kernel/tkernel/eventflag.h **** 	} else {
+  50:../kernel/tkernel/eventflag.h **** 		return ( (flgcb->flgptn & waiptn) == waiptn );
+ 183                             		.loc 3 50 18
+ 184 00df EC A5                   		mov.L	[r10], r5
+ 185 00e1 A9 5C                   		mov.L	20[r5], r4
+ 186                             		.loc 3 50 27
+ 187 00e3 ED A5 01                		mov.L	4[r10], r5
+ 188 00e6 53 45                   		and	r4, r5
+ 189                             		.loc 3 50 37
+ 190 00e8 ED A4 01                		mov.L	4[r10], r4
+ 191 00eb 47 54                   		cmp	r5, r4
+ 192 00ed FC DB 50                		sceq.L	r5
+ 193 00f0 5B 55                   		movu.B	r5, r5
+ 194                             	.L12:
+  51:../kernel/tkernel/eventflag.h **** 	}
+  52:../kernel/tkernel/eventflag.h **** }
+ 195                             		.loc 3 52 1
+ 196 00f2 EF 51                   		mov.L	r5, r1
+ 197 00f4 3F AA 04                		rtsd	#16, r10-r10
+ 198                             	.LFE34:
+ 200                             		.global	_knl_flgcb_table
+ 201                             		.section	.noinit,"aw"
+ 202                             		.balign 4
+ 205                             	_knl_flgcb_table:
+ 206 0000 00 00 00 00 00 00 00 00 		.zero	384
+ 206      00 00 00 00 00 00 00 00 
+ 206      00 00 00 00 00 00 00 00 
+ 206      00 00 00 00 00 00 00 00 
+ 206      00 00 00 00 00 00 00 00 
+ 207                             		.global	_knl_free_flgcb
+ 208                             		.balign 4
+ 211                             	_knl_free_flgcb:
+ 212 0180 00 00 00 00 00 00 00 00 		.zero	8
+ 213                             		.section P,"ax"
+ 214                             		.global	_knl_eventflag_initialize
+ 216                             	_knl_eventflag_initialize:
+ 217                             	.LFB35:
+ 218                             		.file 4 "../kernel/tkernel/eventflag.c"
+   1:../kernel/tkernel/eventflag.c **** /*
+   2:../kernel/tkernel/eventflag.c ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/eventflag.c ****  *    micro T-Kernel 3.00.00
+   4:../kernel/tkernel/eventflag.c ****  *
+   5:../kernel/tkernel/eventflag.c ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:../kernel/tkernel/eventflag.c ****  *    This software is distributed under the T-License 2.1.
+   7:../kernel/tkernel/eventflag.c ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/eventflag.c ****  *
+   9:../kernel/tkernel/eventflag.c ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:../kernel/tkernel/eventflag.c ****  *
+  11:../kernel/tkernel/eventflag.c ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/eventflag.c ****  */
+  13:../kernel/tkernel/eventflag.c **** 
+  14:../kernel/tkernel/eventflag.c **** /*
+  15:../kernel/tkernel/eventflag.c ****  *	eventflag.c
+  16:../kernel/tkernel/eventflag.c ****  *	Event Flag
+  17:../kernel/tkernel/eventflag.c ****  */
+  18:../kernel/tkernel/eventflag.c **** 
+  19:../kernel/tkernel/eventflag.c **** #include "kernel.h"
+  20:../kernel/tkernel/eventflag.c **** #include "wait.h"
+  21:../kernel/tkernel/eventflag.c **** #include "check.h"
+  22:../kernel/tkernel/eventflag.c **** #include "eventflag.h"
+  23:../kernel/tkernel/eventflag.c **** 
+  24:../kernel/tkernel/eventflag.c **** #if USE_EVENTFLAG == 1
+  25:../kernel/tkernel/eventflag.c **** 
+  26:../kernel/tkernel/eventflag.c **** Noinit(EXPORT FLGCB	knl_flgcb_table[NUM_FLGID]);	/* Event flag control block */
+  27:../kernel/tkernel/eventflag.c **** Noinit(EXPORT QUEUE	knl_free_flgcb);	/* FreeQue */
+  28:../kernel/tkernel/eventflag.c **** 
+  29:../kernel/tkernel/eventflag.c **** 
+  30:../kernel/tkernel/eventflag.c **** /*
+  31:../kernel/tkernel/eventflag.c ****  * Initialization of event flag control block 
+  32:../kernel/tkernel/eventflag.c ****  */
+  33:../kernel/tkernel/eventflag.c **** EXPORT ER knl_eventflag_initialize( void )
+  34:../kernel/tkernel/eventflag.c **** {
+ 219                             		.loc 4 34 1
+ 220 00f7 7E AA                   		push.l	r10
+ 221                             	.LCFI12:
+ 222 00f9 71 0A F8                		add	#-8, r0, r10
+ 223                             	.LCFI13:
+ 224 00fc EF A0                   		mov.L	r10, r0
+  35:../kernel/tkernel/eventflag.c **** 	FLGCB	*flgcb, *end;
+  36:../kernel/tkernel/eventflag.c **** 
+  37:../kernel/tkernel/eventflag.c **** 	/* Get system information */
+  38:../kernel/tkernel/eventflag.c **** 	if ( NUM_FLGID < 1 ) {
+  39:../kernel/tkernel/eventflag.c **** 		return E_SYS;
+  40:../kernel/tkernel/eventflag.c **** 	}
+  41:../kernel/tkernel/eventflag.c **** 
+  42:../kernel/tkernel/eventflag.c **** 	/* Register all control blocks onto FreeQue */
+  43:../kernel/tkernel/eventflag.c **** 	QueInit(&knl_free_flgcb);
+ 225                             		.loc 4 43 2
+ 226 00fe FB 12 00 00 00 00       		mov.L	#_knl_free_flgcb, r1
+ 227 0104 39 FC FE                		bsr	_QueInit
+  44:../kernel/tkernel/eventflag.c **** 	end = knl_flgcb_table + NUM_FLGID;
+ 228                             		.loc 4 44 6
+ 229 0107 F9 A2 01 00 00 00 00    		mov.L	#_knl_flgcb_table+384, 4[r10]
+  45:../kernel/tkernel/eventflag.c **** 	for ( flgcb = knl_flgcb_table; flgcb < end; flgcb++ ) {
+ 230                             		.loc 4 45 14
+ 231 010e F8 A2 00 00 00 00       		mov.L	#_knl_flgcb_table, [r10]
+ 232                             		.loc 4 45 2
+ 233 0114 2E 1B                   		bra	.L14
+ 234                             	.L15:
+  46:../kernel/tkernel/eventflag.c **** 		flgcb->flgid = 0;
+ 235                             		.loc 4 46 16 discriminator 3
+ 236 0116 EC A5                   		mov.L	[r10], r5
+ 237 0118 3E 52 00                		mov.L	#0, 8[r5]
+  47:../kernel/tkernel/eventflag.c **** 		QueInsert(&flgcb->wait_queue, &knl_free_flgcb);
+ 238                             		.loc 4 47 3 discriminator 3
+ 239 011b EC A5                   		mov.L	[r10], r5
+ 240 011d FB 22 00 00 00 00       		mov.L	#_knl_free_flgcb, r2
+ 241 0123 EF 51                   		mov.L	r5, r1
+ 242 0125 39 0F FF                		bsr	_QueInsert
+  45:../kernel/tkernel/eventflag.c **** 	for ( flgcb = knl_flgcb_table; flgcb < end; flgcb++ ) {
+ 243                             		.loc 4 45 51 discriminator 3
+ 244 0128 EC A5                   		mov.L	[r10], r5
+ 245 012a 71 55 18                		add	#24, r5
+ 246 012d E3 A5                   		mov.L	r5, [r10]
+ 247                             	.L14:
+  45:../kernel/tkernel/eventflag.c **** 	for ( flgcb = knl_flgcb_table; flgcb < end; flgcb++ ) {
+ 248                             		.loc 4 45 2 discriminator 1
+ 249 012f EC A4                   		mov.L	[r10], r4
+ 250 0131 ED A5 01                		mov.L	4[r10], r5
+ 251 0134 47 54                   		cmp	r5, r4
+ 252 0136 23 E0                   		bltu	.L15
+  48:../kernel/tkernel/eventflag.c **** 	}
+  49:../kernel/tkernel/eventflag.c **** 
+  50:../kernel/tkernel/eventflag.c **** 	return E_OK;
+ 253                             		.loc 4 50 9
+ 254 0138 66 05                   		mov.L	#0, r5
+  51:../kernel/tkernel/eventflag.c **** }
+ 255                             		.loc 4 51 1
+ 256 013a EF 51                   		mov.L	r5, r1
+ 257 013c 3F AA 03                		rtsd	#12, r10-r10
+ 258                             	.LFE35:
+ 260                             		.global	_tk_cre_flg
+ 262                             	_tk_cre_flg:
+ 263                             	.LFB36:
+  52:../kernel/tkernel/eventflag.c **** 
+  53:../kernel/tkernel/eventflag.c **** /*
+  54:../kernel/tkernel/eventflag.c ****  * Create event flag
+  55:../kernel/tkernel/eventflag.c ****  */
+  56:../kernel/tkernel/eventflag.c **** SYSCALL ID tk_cre_flg( CONST T_CFLG *pk_cflg )
+  57:../kernel/tkernel/eventflag.c **** {
+ 264                             		.loc 4 57 1
+ 265 013f 6E 7A                   		pushm	r7-r10
+ 266                             	.LCFI14:
+ 267 0141 71 0A E8                		add	#-24, r0, r10
+ 268                             	.LCFI15:
+ 269 0144 EF A0                   		mov.L	r10, r0
+ 270 0146 E7 A1 05                		mov.L	r1, 20[r10]
+  58:../kernel/tkernel/eventflag.c **** #if CHK_RSATR
+  59:../kernel/tkernel/eventflag.c **** 	const ATR VALID_FLGATR = {
+ 271                             		.loc 4 59 12
+ 272 0149 F9 A6 01 09             		mov.L	#9, 4[r10]
+  60:../kernel/tkernel/eventflag.c **** 		 TA_TPRI
+  61:../kernel/tkernel/eventflag.c **** 		|TA_WMUL
+  62:../kernel/tkernel/eventflag.c **** #if USE_OBJECT_NAME
+  63:../kernel/tkernel/eventflag.c **** 		|TA_DSNAME
+  64:../kernel/tkernel/eventflag.c **** #endif
+  65:../kernel/tkernel/eventflag.c **** 	};
+  66:../kernel/tkernel/eventflag.c **** #endif
+  67:../kernel/tkernel/eventflag.c **** 	FLGCB	*flgcb;
+  68:../kernel/tkernel/eventflag.c **** 	ID	flgid;
+  69:../kernel/tkernel/eventflag.c **** 	ER	ercd;
+  70:../kernel/tkernel/eventflag.c **** 
+  71:../kernel/tkernel/eventflag.c **** 	CHECK_RSATR(pk_cflg->flgatr, VALID_FLGATR);
+ 273                             		.loc 4 71 2
+ 274 014d ED A5 05                		mov.L	20[r10], r5
+ 275 0150 A8 5C                   		mov.L	4[r5], r4
+ 276 0152 ED A5 01                		mov.L	4[r10], r5
+ 277 0155 7E 05                   		not	r5
+ 278 0157 53 45                   		and	r4, r5
+ 279 0159 61 05                   		cmp	#0, r5
+ 280 015b 17                      		beq	.L18
+ 281                             		.loc 4 71 2 is_stmt 0 discriminator 1
+ 282 015c FB 56 F5                		mov.L	#-11, r5
+ 283 015f 38 A8 00                		bra	.L19
+ 284                             	.L18:
+ 285                             	.LBB2:
+  72:../kernel/tkernel/eventflag.c **** 
+  73:../kernel/tkernel/eventflag.c **** 	BEGIN_CRITICAL_SECTION;
+ 286                             		.loc 4 73 2 is_stmt 1
+ 287 0162 05 00 00 00             		bsr	_disint
+ 288 0166 E7 A1 02                		mov.L	r1, 8[r10]
+  74:../kernel/tkernel/eventflag.c **** 	/* Get control block from FreeQue */
+  75:../kernel/tkernel/eventflag.c **** 	flgcb = (FLGCB*)QueRemoveNext(&knl_free_flgcb);
+ 289                             		.loc 4 75 18
+ 290 0169 FB 12 00 00 00 00       		mov.L	#_knl_free_flgcb, r1
+ 291 016f 39 F5 FE                		bsr	_QueRemoveNext
+ 292 0172 E7 A1 03                		mov.L	r1, 12[r10]
+  76:../kernel/tkernel/eventflag.c **** 	if ( flgcb == NULL ) {
+ 293                             		.loc 4 76 5
+ 294 0175 ED A5 03                		mov.L	12[r10], r5
+ 295 0178 61 05                   		cmp	#0, r5
+ 296 017a 1E                      		bne	.L20
+  77:../kernel/tkernel/eventflag.c **** 		ercd = E_LIMIT;
+ 297                             		.loc 4 77 8
+ 298 017b F8 A6 DE                		mov.L	#-34, [r10]
+ 299 017e 2E 4D                   		bra	.L21
+ 300                             	.L20:
+  78:../kernel/tkernel/eventflag.c **** 	} else {
+  79:../kernel/tkernel/eventflag.c **** 		flgid = ID_FLG(flgcb - knl_flgcb_table);
+ 301                             		.loc 4 79 11
+ 302 0180 ED A5 03                		mov.L	12[r10], r5
+ 303 0183 FB 72 00 00 00 00       		mov.L	#_knl_flgcb_table, r7
+ 304 0189 43 75                   		sub	r7, r5
+ 305 018b 6A 35                   		shar	#3, r5
+ 306 018d 74 15 AB AA AA AA       		mul	#-1431655765, r5
+ 307                             		.loc 4 79 9
+ 308 0193 62 15                   		add	#1, r5
+ 309 0195 E7 A5 04                		mov.L	r5, 16[r10]
+  80:../kernel/tkernel/eventflag.c **** 
+  81:../kernel/tkernel/eventflag.c **** 		/* Initialize control block */
+  82:../kernel/tkernel/eventflag.c **** 		QueInit(&flgcb->wait_queue);
+ 310                             		.loc 4 82 3
+ 311 0198 ED A5 03                		mov.L	12[r10], r5
+ 312 019b EF 51                   		mov.L	r5, r1
+ 313 019d 39 63 FE                		bsr	_QueInit
+  83:../kernel/tkernel/eventflag.c **** 		flgcb->flgid = flgid;
+ 314                             		.loc 4 83 16
+ 315 01a0 ED A5 03                		mov.L	12[r10], r5
+ 316 01a3 ED A4 04                		mov.L	16[r10], r4
+ 317 01a6 A0 D4                   		mov.L	r4, 8[r5]
+  84:../kernel/tkernel/eventflag.c **** 		flgcb->exinf = pk_cflg->exinf;
+ 318                             		.loc 4 84 25
+ 319 01a8 ED A5 05                		mov.L	20[r10], r5
+ 320 01ab EC 54                   		mov.L	[r5], r4
+ 321                             		.loc 4 84 16
+ 322 01ad ED A5 03                		mov.L	12[r10], r5
+ 323 01b0 A0 DC                   		mov.L	r4, 12[r5]
+  85:../kernel/tkernel/eventflag.c **** 		flgcb->flgatr = pk_cflg->flgatr;
+ 324                             		.loc 4 85 26
+ 325 01b2 ED A5 05                		mov.L	20[r10], r5
+ 326 01b5 A8 5C                   		mov.L	4[r5], r4
+ 327                             		.loc 4 85 17
+ 328 01b7 ED A5 03                		mov.L	12[r10], r5
+ 329 01ba A1 54                   		mov.L	r4, 16[r5]
+  86:../kernel/tkernel/eventflag.c **** 		flgcb->flgptn = pk_cflg->iflgptn;
+ 330                             		.loc 4 86 26
+ 331 01bc ED A5 05                		mov.L	20[r10], r5
+ 332 01bf A8 D4                   		mov.L	8[r5], r4
+ 333                             		.loc 4 86 17
+ 334 01c1 ED A5 03                		mov.L	12[r10], r5
+ 335 01c4 A1 5C                   		mov.L	r4, 20[r5]
+  87:../kernel/tkernel/eventflag.c **** #if USE_OBJECT_NAME
+  88:../kernel/tkernel/eventflag.c **** 		if ( (pk_cflg->flgatr & TA_DSNAME) != 0 ) {
+  89:../kernel/tkernel/eventflag.c **** 			knl_strncpy((char*)flgcb->name, (char*)pk_cflg->dsname,
+  90:../kernel/tkernel/eventflag.c **** 				OBJECT_NAME_LENGTH);
+  91:../kernel/tkernel/eventflag.c **** 		}
+  92:../kernel/tkernel/eventflag.c **** #endif
+  93:../kernel/tkernel/eventflag.c **** 		ercd = flgid;
+ 336                             		.loc 4 93 8
+ 337 01c6 ED A5 04                		mov.L	16[r10], r5
+ 338 01c9 E3 A5                   		mov.L	r5, [r10]
+ 339                             	.L21:
+  94:../kernel/tkernel/eventflag.c **** 	}
+  95:../kernel/tkernel/eventflag.c **** 	END_CRITICAL_SECTION;
+ 340                             		.loc 4 95 2
+ 341 01cb ED A5 02                		mov.L	8[r10], r5
+ 342 01ce 61 F5                   		cmp	#15, r5
+ 343 01d0 20 2E                   		beq	.L22
+ 344                             		.loc 4 95 2 is_stmt 0 discriminator 1
+ 345 01d2 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 346 01d8 EC 54                   		mov.L	[r5], r4
+ 347 01da FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 348 01e0 EC 55                   		mov.L	[r5], r5
+ 349 01e2 47 54                   		cmp	r5, r4
+ 350 01e4 20 1A                   		beq	.L22
+ 351                             		.loc 4 95 2 discriminator 3
+ 352 01e6 39 B7 FE                		bsr	_knl_isTaskIndependent
+ 353 01e9 EF 15                   		mov.L	r1, r5
+ 354 01eb 61 05                   		cmp	#0, r5
+ 355 01ed 21 11                   		bne	.L22
+ 356                             		.loc 4 95 2 discriminator 5
+ 357 01ef FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 358 01f5 EC 55                   		mov.L	[r5], r5
+ 359 01f7 61 05                   		cmp	#0, r5
+ 360 01f9 1D                      		bne	.L22
+ 361                             		.loc 4 95 2 discriminator 7
+ 362 01fa 05 00 00 00             		bsr	_knl_dispatch
+ 363                             		.balign 8,3,1
+ 364                             	.L22:
+ 365                             		.loc 4 95 2 discriminator 9
+ 366 01fe ED A1 02                		mov.L	8[r10], r1
+ 367 0201 05 00 00 00             		bsr	_setint
+ 368                             	.LBE2:
+  96:../kernel/tkernel/eventflag.c **** 
+  97:../kernel/tkernel/eventflag.c **** 	return ercd;
+ 369                             		.loc 4 97 9 is_stmt 1 discriminator 9
+ 370 0205 EC A5                   		mov.L	[r10], r5
+ 371                             	.L19:
+  98:../kernel/tkernel/eventflag.c **** }
+ 372                             		.loc 4 98 1
+ 373 0207 EF 51                   		mov.L	r5, r1
+ 374 0209 3F 7A 0A                		rtsd	#40, r7-r10
+ 375                             	.LFE36:
+ 377                             		.global	_tk_del_flg
+ 379                             	_tk_del_flg:
+ 380                             	.LFB37:
+  99:../kernel/tkernel/eventflag.c **** 
+ 100:../kernel/tkernel/eventflag.c **** #ifdef USE_FUNC_TK_DEL_FLG
+ 101:../kernel/tkernel/eventflag.c **** /*
+ 102:../kernel/tkernel/eventflag.c ****  * Delete event flag
+ 103:../kernel/tkernel/eventflag.c ****  */
+ 104:../kernel/tkernel/eventflag.c **** SYSCALL ER tk_del_flg( ID flgid )
+ 105:../kernel/tkernel/eventflag.c **** {
+ 381                             		.loc 4 105 1
+ 382 020c 7E AA                   		push.l	r10
+ 383                             	.LCFI16:
+ 384 020e 71 0A F0                		add	#-16, r0, r10
+ 385                             	.LCFI17:
+ 386 0211 EF A0                   		mov.L	r10, r0
+ 387 0213 E7 A1 03                		mov.L	r1, 12[r10]
+ 106:../kernel/tkernel/eventflag.c **** 	FLGCB	*flgcb;
+ 107:../kernel/tkernel/eventflag.c **** 	ER	ercd = E_OK;
+ 388                             		.loc 4 107 5
+ 389 0216 F8 A6 00                		mov.L	#0, [r10]
+ 108:../kernel/tkernel/eventflag.c **** 
+ 109:../kernel/tkernel/eventflag.c **** 	CHECK_FLGID(flgid);
+ 390                             		.loc 4 109 2
+ 391 0219 ED A5 03                		mov.L	12[r10], r5
+ 392 021c 61 05                   		cmp	#0, r5
+ 393 021e 2B 0A                   		ble	.L24
+ 394                             		.loc 4 109 2 is_stmt 0 discriminator 2
+ 395 0220 ED A5 03                		mov.L	12[r10], r5
+ 396 0223 75 55 10                		cmp	#16, r5
+ 397 0226 2B 08                   		ble	.L25
+ 398                             	.L24:
+ 399                             		.loc 4 109 2 discriminator 3
+ 400 0228 FB 56 EE                		mov.L	#-18, r5
+ 401 022b 38 81 00                		bra	.L26
+ 402                             	.L25:
+ 110:../kernel/tkernel/eventflag.c **** 
+ 111:../kernel/tkernel/eventflag.c **** 	flgcb = get_flgcb(flgid);
+ 403                             		.loc 4 111 10 is_stmt 1
+ 404 022e ED A5 03                		mov.L	12[r10], r5
+ 405 0231 60 15                   		sub	#1, r5
+ 406                             		.loc 4 111 8
+ 407 0233 75 15 18                		mul	#24, r5
+ 408 0236 70 55 00 00 00 00       		add	#_knl_flgcb_table, r5
+ 409 023c E7 A5 01                		mov.L	r5, 4[r10]
+ 410                             	.LBB3:
+ 112:../kernel/tkernel/eventflag.c **** 
+ 113:../kernel/tkernel/eventflag.c **** 	BEGIN_CRITICAL_SECTION;
+ 411                             		.loc 4 113 2
+ 412 023f 05 00 00 00             		bsr	_disint
+ 413 0243 E7 A1 02                		mov.L	r1, 8[r10]
+ 114:../kernel/tkernel/eventflag.c **** 	if ( flgcb->flgid == 0 ) {
+ 414                             		.loc 4 114 12
+ 415 0246 ED A5 01                		mov.L	4[r10], r5
+ 416 0249 A8 D5                   		mov.L	8[r5], r5
+ 417                             		.loc 4 114 5
+ 418 024b 61 05                   		cmp	#0, r5
+ 419 024d 1E                      		bne	.L27
+ 115:../kernel/tkernel/eventflag.c **** 		ercd = E_NOEXS;
+ 420                             		.loc 4 115 8
+ 421 024e F8 A6 D6                		mov.L	#-42, [r10]
+ 422 0251 2E 1F                   		bra	.L28
+ 423                             	.L27:
+ 116:../kernel/tkernel/eventflag.c **** 	} else {
+ 117:../kernel/tkernel/eventflag.c **** 		/* Release wait state of task (E_DLT) */
+ 118:../kernel/tkernel/eventflag.c **** 		knl_wait_delete(&flgcb->wait_queue);
+ 424                             		.loc 4 118 3
+ 425 0253 ED A5 01                		mov.L	4[r10], r5
+ 426 0256 EF 51                   		mov.L	r5, r1
+ 427 0258 05 00 00 00             		bsr	_knl_wait_delete
+ 119:../kernel/tkernel/eventflag.c **** 
+ 120:../kernel/tkernel/eventflag.c **** 		/* Return to FreeQue */
+ 121:../kernel/tkernel/eventflag.c **** 		QueInsert(&flgcb->wait_queue, &knl_free_flgcb);
+ 428                             		.loc 4 121 3
+ 429 025c ED A5 01                		mov.L	4[r10], r5
+ 430 025f FB 22 00 00 00 00       		mov.L	#_knl_free_flgcb, r2
+ 431 0265 EF 51                   		mov.L	r5, r1
+ 432 0267 39 CD FD                		bsr	_QueInsert
+ 122:../kernel/tkernel/eventflag.c **** 		flgcb->flgid = 0;
+ 433                             		.loc 4 122 16
+ 434 026a ED A5 01                		mov.L	4[r10], r5
+ 435 026d 3E 52 00                		mov.L	#0, 8[r5]
+ 436                             	.L28:
+ 123:../kernel/tkernel/eventflag.c **** 	}
+ 124:../kernel/tkernel/eventflag.c **** 	END_CRITICAL_SECTION;
+ 437                             		.loc 4 124 2
+ 438 0270 ED A5 02                		mov.L	8[r10], r5
+ 439 0273 61 F5                   		cmp	#15, r5
+ 440 0275 20 2E                   		beq	.L29
+ 441                             		.loc 4 124 2 is_stmt 0 discriminator 1
+ 442 0277 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 443 027d EC 54                   		mov.L	[r5], r4
+ 444 027f FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 445 0285 EC 55                   		mov.L	[r5], r5
+ 446 0287 47 54                   		cmp	r5, r4
+ 447 0289 20 1A                   		beq	.L29
+ 448                             		.loc 4 124 2 discriminator 3
+ 449 028b 39 12 FE                		bsr	_knl_isTaskIndependent
+ 450 028e EF 15                   		mov.L	r1, r5
+ 451 0290 61 05                   		cmp	#0, r5
+ 452 0292 21 11                   		bne	.L29
+ 453                             		.loc 4 124 2 discriminator 5
+ 454 0294 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 455 029a EC 55                   		mov.L	[r5], r5
+ 456 029c 61 05                   		cmp	#0, r5
+ 457 029e 1D                      		bne	.L29
+ 458                             		.loc 4 124 2 discriminator 7
+ 459 029f 05 00 00 00             		bsr	_knl_dispatch
+ 460                             		.balign 8,3,1
+ 461                             	.L29:
+ 462                             		.loc 4 124 2 discriminator 9
+ 463 02a3 ED A1 02                		mov.L	8[r10], r1
+ 464 02a6 05 00 00 00             		bsr	_setint
+ 465                             	.LBE3:
+ 125:../kernel/tkernel/eventflag.c **** 
+ 126:../kernel/tkernel/eventflag.c **** 	return ercd;
+ 466                             		.loc 4 126 9 is_stmt 1 discriminator 9
+ 467 02aa EC A5                   		mov.L	[r10], r5
+ 468                             	.L26:
+ 127:../kernel/tkernel/eventflag.c **** }
+ 469                             		.loc 4 127 1
+ 470 02ac EF 51                   		mov.L	r5, r1
+ 471 02ae 3F AA 05                		rtsd	#20, r10-r10
+ 472                             	.LFE37:
+ 474                             		.global	_tk_set_flg
+ 476                             	_tk_set_flg:
+ 477                             	.LFB38:
+ 128:../kernel/tkernel/eventflag.c **** #endif /* USE_FUNC_TK_DEL_FLG */
+ 129:../kernel/tkernel/eventflag.c **** 
+ 130:../kernel/tkernel/eventflag.c **** /*
+ 131:../kernel/tkernel/eventflag.c ****  * Event flag set
+ 132:../kernel/tkernel/eventflag.c ****  */
+ 133:../kernel/tkernel/eventflag.c **** SYSCALL ER tk_set_flg( ID flgid, UINT setptn )
+ 134:../kernel/tkernel/eventflag.c **** {
+ 478                             		.loc 4 134 1
+ 479 02b1 7E AA                   		push.l	r10
+ 480                             	.LCFI18:
+ 481 02b3 71 0A DC                		add	#-36, r0, r10
+ 482                             	.LCFI19:
+ 483 02b6 EF A0                   		mov.L	r10, r0
+ 484 02b8 E7 A1 07                		mov.L	r1, 28[r10]
+ 485 02bb E7 A2 08                		mov.L	r2, 32[r10]
+ 135:../kernel/tkernel/eventflag.c **** 	FLGCB	*flgcb;
+ 136:../kernel/tkernel/eventflag.c **** 	TCB	*tcb;
+ 137:../kernel/tkernel/eventflag.c **** 	QUEUE	*queue;
+ 138:../kernel/tkernel/eventflag.c **** 	UINT	wfmode, waiptn;
+ 139:../kernel/tkernel/eventflag.c **** 	ER	ercd = E_OK;
+ 486                             		.loc 4 139 5
+ 487 02be F9 A6 01 00             		mov.L	#0, 4[r10]
+ 140:../kernel/tkernel/eventflag.c **** 
+ 141:../kernel/tkernel/eventflag.c **** 	CHECK_FLGID(flgid);
+ 488                             		.loc 4 141 2
+ 489 02c2 ED A5 07                		mov.L	28[r10], r5
+ 490 02c5 61 05                   		cmp	#0, r5
+ 491 02c7 2B 0A                   		ble	.L31
+ 492                             		.loc 4 141 2 is_stmt 0 discriminator 2
+ 493 02c9 ED A5 07                		mov.L	28[r10], r5
+ 494 02cc 75 55 10                		cmp	#16, r5
+ 495 02cf 2B 08                   		ble	.L32
+ 496                             	.L31:
+ 497                             		.loc 4 141 2 discriminator 3
+ 498 02d1 FB 56 EE                		mov.L	#-18, r5
+ 499 02d4 38 01 01                		bra	.L33
+ 500                             	.L32:
+ 142:../kernel/tkernel/eventflag.c **** 
+ 143:../kernel/tkernel/eventflag.c **** 	flgcb = get_flgcb(flgid);
+ 501                             		.loc 4 143 10 is_stmt 1
+ 502 02d7 ED A5 07                		mov.L	28[r10], r5
+ 503 02da 60 15                   		sub	#1, r5
+ 504                             		.loc 4 143 8
+ 505 02dc 75 15 18                		mul	#24, r5
+ 506 02df 70 55 00 00 00 00       		add	#_knl_flgcb_table, r5
+ 507 02e5 E7 A5 02                		mov.L	r5, 8[r10]
+ 508                             	.LBB4:
+ 144:../kernel/tkernel/eventflag.c **** 
+ 145:../kernel/tkernel/eventflag.c **** 	BEGIN_CRITICAL_SECTION;
+ 509                             		.loc 4 145 2
+ 510 02e8 05 00 00 00             		bsr	_disint
+ 511 02ec E7 A1 03                		mov.L	r1, 12[r10]
+ 146:../kernel/tkernel/eventflag.c **** 	if ( flgcb->flgid == 0 ) {
+ 512                             		.loc 4 146 12
+ 513 02ef ED A5 02                		mov.L	8[r10], r5
+ 514 02f2 A8 D5                   		mov.L	8[r5], r5
+ 515                             		.loc 4 146 5
+ 516 02f4 61 05                   		cmp	#0, r5
+ 517 02f6 18                      		bne	.L34
+ 147:../kernel/tkernel/eventflag.c **** 		ercd = E_NOEXS;
+ 518                             		.loc 4 147 8
+ 519 02f7 F9 A6 01 D6             		mov.L	#-42, 4[r10]
+ 148:../kernel/tkernel/eventflag.c **** 		goto error_exit;
+ 520                             		.loc 4 148 3
+ 521 02fb 38 9D 00                		bra	.L35
+ 522                             	.L34:
+ 149:../kernel/tkernel/eventflag.c **** 	}
+ 150:../kernel/tkernel/eventflag.c **** 
+ 151:../kernel/tkernel/eventflag.c **** 	/* Set event flag */
+ 152:../kernel/tkernel/eventflag.c **** 	flgcb->flgptn |= setptn;
+ 523                             		.loc 4 152 16
+ 524 02fe ED A5 02                		mov.L	8[r10], r5
+ 525 0301 A9 5C                   		mov.L	20[r5], r4
+ 526 0303 ED A5 08                		mov.L	32[r10], r5
+ 527 0306 57 54                   		or	r5, r4
+ 528 0308 ED A5 02                		mov.L	8[r10], r5
+ 529 030b A1 5C                   		mov.L	r4, 20[r5]
+ 153:../kernel/tkernel/eventflag.c **** 
+ 154:../kernel/tkernel/eventflag.c **** 	/* Search task which should be released */
+ 155:../kernel/tkernel/eventflag.c **** 	queue = flgcb->wait_queue.next;
+ 530                             		.loc 4 155 8
+ 531 030d ED A5 02                		mov.L	8[r10], r5
+ 532 0310 EC 55                   		mov.L	[r5], r5
+ 533 0312 E3 A5                   		mov.L	r5, [r10]
+ 156:../kernel/tkernel/eventflag.c **** 	while ( queue != &flgcb->wait_queue ) {
+ 534                             		.loc 4 156 8
+ 535 0314 2E 77                   		bra	.L36
+ 536                             	.L38:
+ 157:../kernel/tkernel/eventflag.c **** 		tcb = (TCB*)queue;
+ 537                             		.loc 4 157 7
+ 538 0316 EC A5                   		mov.L	[r10], r5
+ 539 0318 E7 A5 04                		mov.L	r5, 16[r10]
+ 158:../kernel/tkernel/eventflag.c **** 		queue = queue->next;
+ 540                             		.loc 4 158 9
+ 541 031b EC A5                   		mov.L	[r10], r5
+ 542 031d EC 55                   		mov.L	[r5], r5
+ 543 031f E3 A5                   		mov.L	r5, [r10]
+ 159:../kernel/tkernel/eventflag.c **** 
+ 160:../kernel/tkernel/eventflag.c **** 		/* Meet condition for release wait? */
+ 161:../kernel/tkernel/eventflag.c **** 		waiptn = tcb->winfo.flg.waiptn;
+ 544                             		.loc 4 161 10
+ 545 0321 ED A5 04                		mov.L	16[r10], r5
+ 546 0324 AC 55                   		mov.L	64[r5], r5
+ 547 0326 E7 A5 05                		mov.L	r5, 20[r10]
+ 162:../kernel/tkernel/eventflag.c **** 		wfmode = tcb->winfo.flg.wfmode;
+ 548                             		.loc 4 162 10
+ 549 0329 ED A5 04                		mov.L	16[r10], r5
+ 550 032c AC 5D                   		mov.L	68[r5], r5
+ 551 032e E7 A5 06                		mov.L	r5, 24[r10]
+ 163:../kernel/tkernel/eventflag.c **** 		if ( knl_eventflag_cond(flgcb, waiptn, wfmode) ) {
+ 552                             		.loc 4 163 8
+ 553 0331 ED A3 06                		mov.L	24[r10], r3
+ 554 0334 ED A2 05                		mov.L	20[r10], r2
+ 555 0337 ED A1 02                		mov.L	8[r10], r1
+ 556 033a 39 7B FD                		bsr	_knl_eventflag_cond
+ 557 033d EF 15                   		mov.L	r1, r5
+ 558                             		.loc 4 163 6
+ 559 033f 61 05                   		cmp	#0, r5
+ 560 0341 20 4A                   		beq	.L36
+ 164:../kernel/tkernel/eventflag.c **** 
+ 165:../kernel/tkernel/eventflag.c **** 			/* Release wait */
+ 166:../kernel/tkernel/eventflag.c **** 			*tcb->winfo.flg.p_flgptn = flgcb->flgptn;
+ 561                             		.loc 4 166 19
+ 562 0343 ED A5 04                		mov.L	16[r10], r5
+ 563 0346 AC D5                   		mov.L	72[r5], r5
+ 564                             		.loc 4 166 36
+ 565 0348 ED A4 02                		mov.L	8[r10], r4
+ 566 034b A9 4C                   		mov.L	20[r4], r4
+ 567                             		.loc 4 166 29
+ 568 034d E3 54                   		mov.L	r4, [r5]
+ 167:../kernel/tkernel/eventflag.c **** 			knl_wait_release_ok(tcb);
+ 569                             		.loc 4 167 4
+ 570 034f ED A1 04                		mov.L	16[r10], r1
+ 571 0352 05 00 00 00             		bsr	_knl_wait_release_ok
+ 168:../kernel/tkernel/eventflag.c **** 
+ 169:../kernel/tkernel/eventflag.c **** 			/* Clear event flag */
+ 170:../kernel/tkernel/eventflag.c **** 			if ( (wfmode & TWF_BITCLR) != 0 ) {
+ 572                             		.loc 4 170 17
+ 573 0356 ED A5 06                		mov.L	24[r10], r5
+ 574 0359 75 25 20                		and	#32, r5
+ 575                             		.loc 4 170 7
+ 576 035c 61 05                   		cmp	#0, r5
+ 577 035e 20 1C                   		beq	.L37
+ 171:../kernel/tkernel/eventflag.c **** 				if ( (flgcb->flgptn &= ~waiptn) == 0 ) {
+ 578                             		.loc 4 171 25
+ 579 0360 ED A5 02                		mov.L	8[r10], r5
+ 580 0363 A9 5C                   		mov.L	20[r5], r4
+ 581                             		.loc 4 171 28
+ 582 0365 ED A5 05                		mov.L	20[r10], r5
+ 583 0368 7E 05                   		not	r5
+ 584                             		.loc 4 171 25
+ 585 036a 53 54                   		and	r5, r4
+ 586 036c ED A5 02                		mov.L	8[r10], r5
+ 587 036f A1 5C                   		mov.L	r4, 20[r5]
+ 588 0371 ED A5 02                		mov.L	8[r10], r5
+ 589 0374 A9 5D                   		mov.L	20[r5], r5
+ 590                             		.loc 4 171 8
+ 591 0376 61 05                   		cmp	#0, r5
+ 592 0378 20 1E                   		beq	.L40
+ 593                             	.L37:
+ 172:../kernel/tkernel/eventflag.c **** 					break;
+ 173:../kernel/tkernel/eventflag.c **** 				}
+ 174:../kernel/tkernel/eventflag.c **** 			}
+ 175:../kernel/tkernel/eventflag.c **** 			if ( (wfmode & TWF_CLR) != 0 ) {
+ 594                             		.loc 4 175 17
+ 595 037a ED A5 06                		mov.L	24[r10], r5
+ 596 037d 75 25 10                		and	#16, r5
+ 597                             		.loc 4 175 7
+ 598 0380 61 05                   		cmp	#0, r5
+ 599 0382 11                      		beq	.L36
+ 176:../kernel/tkernel/eventflag.c **** 				flgcb->flgptn = 0;
+ 600                             		.loc 4 176 19
+ 601 0383 ED A5 02                		mov.L	8[r10], r5
+ 602 0386 3E 55 00                		mov.L	#0, 20[r5]
+ 177:../kernel/tkernel/eventflag.c **** 				break;
+ 603                             		.loc 4 177 5
+ 604 0389 2E 0F                   		bra	.L35
+ 605                             	.L36:
+ 156:../kernel/tkernel/eventflag.c **** 		tcb = (TCB*)queue;
+ 606                             		.loc 4 156 19
+ 607 038b ED A5 02                		mov.L	8[r10], r5
+ 156:../kernel/tkernel/eventflag.c **** 		tcb = (TCB*)queue;
+ 608                             		.loc 4 156 8
+ 609 038e EC A4                   		mov.L	[r10], r4
+ 610 0390 47 54                   		cmp	r5, r4
+ 611 0392 21 84                   		bne	.L38
+ 178:../kernel/tkernel/eventflag.c **** 			}
+ 179:../kernel/tkernel/eventflag.c **** 		}
+ 180:../kernel/tkernel/eventflag.c **** 	}
+ 181:../kernel/tkernel/eventflag.c **** 
+ 182:../kernel/tkernel/eventflag.c ****     error_exit:
+ 612                             		.loc 4 182 5
+ 613 0394 2E 04                   		bra	.L35
+ 614                             	.L40:
+ 172:../kernel/tkernel/eventflag.c **** 				}
+ 615                             		.loc 4 172 6
+ 616 0396 03                      		nop
+ 617 0397 03                      		.balign 8,3,1
+ 618                             	.L35:
+ 183:../kernel/tkernel/eventflag.c **** 	END_CRITICAL_SECTION;
+ 619                             		.loc 4 183 2
+ 620 0398 ED A5 03                		mov.L	12[r10], r5
+ 621 039b 61 F5                   		cmp	#15, r5
+ 622 039d 20 2E                   		beq	.L39
+ 623                             		.loc 4 183 2 is_stmt 0 discriminator 1
+ 624 039f FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 625 03a5 EC 54                   		mov.L	[r5], r4
+ 626 03a7 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 627 03ad EC 55                   		mov.L	[r5], r5
+ 628 03af 47 54                   		cmp	r5, r4
+ 629 03b1 20 1A                   		beq	.L39
+ 630                             		.loc 4 183 2 discriminator 3
+ 631 03b3 39 EA FC                		bsr	_knl_isTaskIndependent
+ 632 03b6 EF 15                   		mov.L	r1, r5
+ 633 03b8 61 05                   		cmp	#0, r5
+ 634 03ba 21 11                   		bne	.L39
+ 635                             		.loc 4 183 2 discriminator 5
+ 636 03bc FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 637 03c2 EC 55                   		mov.L	[r5], r5
+ 638 03c4 61 05                   		cmp	#0, r5
+ 639 03c6 1D                      		bne	.L39
+ 640                             		.loc 4 183 2 discriminator 7
+ 641 03c7 05 00 00 00             		bsr	_knl_dispatch
+ 642                             		.balign 8,3,1
+ 643                             	.L39:
+ 644                             		.loc 4 183 2 discriminator 9
+ 645 03cb ED A1 03                		mov.L	12[r10], r1
+ 646 03ce 05 00 00 00             		bsr	_setint
+ 647                             	.LBE4:
+ 184:../kernel/tkernel/eventflag.c **** 
+ 185:../kernel/tkernel/eventflag.c **** 	return ercd;
+ 648                             		.loc 4 185 9 is_stmt 1 discriminator 9
+ 649 03d2 ED A5 01                		mov.L	4[r10], r5
+ 650                             	.L33:
+ 186:../kernel/tkernel/eventflag.c **** }
+ 651                             		.loc 4 186 1
+ 652 03d5 EF 51                   		mov.L	r5, r1
+ 653 03d7 3F AA 0A                		rtsd	#40, r10-r10
+ 654                             	.LFE38:
+ 656                             		.global	_tk_clr_flg
+ 658                             	_tk_clr_flg:
+ 659                             	.LFB39:
+ 187:../kernel/tkernel/eventflag.c **** 
+ 188:../kernel/tkernel/eventflag.c **** /*
+ 189:../kernel/tkernel/eventflag.c ****  * Clear event flag 
+ 190:../kernel/tkernel/eventflag.c ****  */
+ 191:../kernel/tkernel/eventflag.c **** SYSCALL ER tk_clr_flg( ID flgid, UINT clrptn )
+ 192:../kernel/tkernel/eventflag.c **** {
+ 660                             		.loc 4 192 1
+ 661 03da 7E AA                   		push.l	r10
+ 662                             	.LCFI20:
+ 663 03dc 71 0A EC                		add	#-20, r0, r10
+ 664                             	.LCFI21:
+ 665 03df EF A0                   		mov.L	r10, r0
+ 666 03e1 E7 A1 03                		mov.L	r1, 12[r10]
+ 667 03e4 E7 A2 04                		mov.L	r2, 16[r10]
+ 193:../kernel/tkernel/eventflag.c **** 	FLGCB	*flgcb;
+ 194:../kernel/tkernel/eventflag.c **** 	ER	ercd = E_OK;
+ 668                             		.loc 4 194 5
+ 669 03e7 F8 A6 00                		mov.L	#0, [r10]
+ 195:../kernel/tkernel/eventflag.c **** 
+ 196:../kernel/tkernel/eventflag.c **** 	CHECK_FLGID(flgid);
+ 670                             		.loc 4 196 2
+ 671 03ea ED A5 03                		mov.L	12[r10], r5
+ 672 03ed 61 05                   		cmp	#0, r5
+ 673 03ef 2B 0A                   		ble	.L42
+ 674                             		.loc 4 196 2 is_stmt 0 discriminator 2
+ 675 03f1 ED A5 03                		mov.L	12[r10], r5
+ 676 03f4 75 55 10                		cmp	#16, r5
+ 677 03f7 2B 07                   		ble	.L43
+ 678                             	.L42:
+ 679                             		.loc 4 196 2 discriminator 3
+ 680 03f9 FB 56 EE                		mov.L	#-18, r5
+ 681 03fc 2E 72                   		bra	.L44
+ 682                             	.L43:
+ 197:../kernel/tkernel/eventflag.c **** 
+ 198:../kernel/tkernel/eventflag.c **** 	flgcb = get_flgcb(flgid);
+ 683                             		.loc 4 198 10 is_stmt 1
+ 684 03fe ED A5 03                		mov.L	12[r10], r5
+ 685 0401 60 15                   		sub	#1, r5
+ 686                             		.loc 4 198 8
+ 687 0403 75 15 18                		mul	#24, r5
+ 688 0406 70 55 00 00 00 00       		add	#_knl_flgcb_table, r5
+ 689 040c E7 A5 01                		mov.L	r5, 4[r10]
+ 690                             	.LBB5:
+ 199:../kernel/tkernel/eventflag.c **** 
+ 200:../kernel/tkernel/eventflag.c **** 	BEGIN_CRITICAL_SECTION;
+ 691                             		.loc 4 200 2
+ 692 040f 05 00 00 00             		bsr	_disint
+ 693 0413 E7 A1 02                		mov.L	r1, 8[r10]
+ 201:../kernel/tkernel/eventflag.c **** 	if ( flgcb->flgid == 0 ) {
+ 694                             		.loc 4 201 12
+ 695 0416 ED A5 01                		mov.L	4[r10], r5
+ 696 0419 A8 D5                   		mov.L	8[r5], r5
+ 697                             		.loc 4 201 5
+ 698 041b 61 05                   		cmp	#0, r5
+ 699 041d 1E                      		bne	.L45
+ 202:../kernel/tkernel/eventflag.c **** 		ercd = E_NOEXS;
+ 700                             		.loc 4 202 8
+ 701 041e F8 A6 D6                		mov.L	#-42, [r10]
+ 702 0421 2E 11                   		bra	.L46
+ 703                             	.L45:
+ 203:../kernel/tkernel/eventflag.c **** 	} else {
+ 204:../kernel/tkernel/eventflag.c **** 		flgcb->flgptn &= clrptn;
+ 704                             		.loc 4 204 17
+ 705 0423 ED A5 01                		mov.L	4[r10], r5
+ 706 0426 A9 5C                   		mov.L	20[r5], r4
+ 707 0428 ED A5 04                		mov.L	16[r10], r5
+ 708 042b 53 54                   		and	r5, r4
+ 709 042d ED A5 01                		mov.L	4[r10], r5
+ 710 0430 A1 5C                   		mov.L	r4, 20[r5]
+ 711                             	.L46:
+ 205:../kernel/tkernel/eventflag.c **** 	}
+ 206:../kernel/tkernel/eventflag.c **** 	END_CRITICAL_SECTION;
+ 712                             		.loc 4 206 2
+ 713 0432 ED A5 02                		mov.L	8[r10], r5
+ 714 0435 61 F5                   		cmp	#15, r5
+ 715 0437 20 2E                   		beq	.L47
+ 716                             		.loc 4 206 2 is_stmt 0 discriminator 1
+ 717 0439 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 718 043f EC 54                   		mov.L	[r5], r4
+ 719 0441 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 720 0447 EC 55                   		mov.L	[r5], r5
+ 721 0449 47 54                   		cmp	r5, r4
+ 722 044b 20 1A                   		beq	.L47
+ 723                             		.loc 4 206 2 discriminator 3
+ 724 044d 39 50 FC                		bsr	_knl_isTaskIndependent
+ 725 0450 EF 15                   		mov.L	r1, r5
+ 726 0452 61 05                   		cmp	#0, r5
+ 727 0454 21 11                   		bne	.L47
+ 728                             		.loc 4 206 2 discriminator 5
+ 729 0456 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 730 045c EC 55                   		mov.L	[r5], r5
+ 731 045e 61 05                   		cmp	#0, r5
+ 732 0460 1D                      		bne	.L47
+ 733                             		.loc 4 206 2 discriminator 7
+ 734 0461 05 00 00 00             		bsr	_knl_dispatch
+ 735                             		.balign 8,3,1
+ 736                             	.L47:
+ 737                             		.loc 4 206 2 discriminator 9
+ 738 0465 ED A1 02                		mov.L	8[r10], r1
+ 739 0468 05 00 00 00             		bsr	_setint
+ 740                             	.LBE5:
+ 207:../kernel/tkernel/eventflag.c **** 
+ 208:../kernel/tkernel/eventflag.c **** 	return ercd;
+ 741                             		.loc 4 208 9 is_stmt 1 discriminator 9
+ 742 046c EC A5                   		mov.L	[r10], r5
+ 743                             	.L44:
+ 209:../kernel/tkernel/eventflag.c **** }
+ 744                             		.loc 4 209 1
+ 745 046e EF 51                   		mov.L	r5, r1
+ 746 0470 3F AA 06                		rtsd	#24, r10-r10
+ 747                             	.LFE39:
+ 750                             	_flg_chg_pri:
+ 751                             	.LFB40:
+ 210:../kernel/tkernel/eventflag.c **** 
+ 211:../kernel/tkernel/eventflag.c **** /*
+ 212:../kernel/tkernel/eventflag.c ****  * Processing if the priority of wait task changes
+ 213:../kernel/tkernel/eventflag.c ****  */
+ 214:../kernel/tkernel/eventflag.c **** LOCAL void flg_chg_pri( TCB *tcb, INT oldpri )
+ 215:../kernel/tkernel/eventflag.c **** {
+ 752                             		.loc 4 215 1
+ 753 0473 7E AA                   		push.l	r10
+ 754                             	.LCFI22:
+ 755 0475 71 0A F4                		add	#-12, r0, r10
+ 756                             	.LCFI23:
+ 757 0478 EF A0                   		mov.L	r10, r0
+ 758 047a E7 A1 01                		mov.L	r1, 4[r10]
+ 759 047d E7 A2 02                		mov.L	r2, 8[r10]
+ 216:../kernel/tkernel/eventflag.c **** 	FLGCB	*flgcb;
+ 217:../kernel/tkernel/eventflag.c **** 
+ 218:../kernel/tkernel/eventflag.c **** 	flgcb = get_flgcb(tcb->wid);
+ 760                             		.loc 4 218 10
+ 761 0480 ED A5 01                		mov.L	4[r10], r5
+ 762 0483 AB 55                   		mov.L	48[r5], r5
+ 763 0485 60 15                   		sub	#1, r5
+ 764                             		.loc 4 218 8
+ 765 0487 75 15 18                		mul	#24, r5
+ 766 048a 70 55 00 00 00 00       		add	#_knl_flgcb_table, r5
+ 767 0490 E3 A5                   		mov.L	r5, [r10]
+ 219:../kernel/tkernel/eventflag.c **** 	knl_gcb_change_priority((GCB*)flgcb, tcb);
+ 768                             		.loc 4 219 2
+ 769 0492 ED A2 01                		mov.L	4[r10], r2
+ 770 0495 EC A1                   		mov.L	[r10], r1
+ 771 0497 05 00 00 00             		bsr	_knl_gcb_change_priority
+ 220:../kernel/tkernel/eventflag.c **** }
+ 772                             		.loc 4 220 1
+ 773 049b 03                      		nop
+ 774 049c 3F AA 04                		rtsd	#16, r10-r10
+ 775                             	.LFE40:
+ 777                             		.section C,"a",@progbits
+ 778                             		.p2align 2
+ 779                             		.balign 4
+ 782                             	_knl_wspec_flg_tfifo:
+ 783 0000 08 00 00 00             		.long	8
+ 784 0004 00 00 00 00             		.long	0
+ 785 0008 00 00 00 00             		.long	0
+ 786                             		.balign 4
+ 789                             	_knl_wspec_flg_tpri:
+ 790 000c 08 00 00 00             		.long	8
+ 791 0010 73 04 00 00             		.long	_flg_chg_pri
+ 792 0014 00 00 00 00             		.long	0
+ 793                             		.section P,"ax"
+ 794                             		.global	_tk_wai_flg
+ 796                             	_tk_wai_flg:
+ 797                             	.LFB41:
+ 221:../kernel/tkernel/eventflag.c **** 
+ 222:../kernel/tkernel/eventflag.c **** /*
+ 223:../kernel/tkernel/eventflag.c ****  * Definition of event flag wait specification
+ 224:../kernel/tkernel/eventflag.c ****  */
+ 225:../kernel/tkernel/eventflag.c **** LOCAL CONST WSPEC knl_wspec_flg_tfifo = { TTW_FLG, NULL, NULL };
+ 226:../kernel/tkernel/eventflag.c **** LOCAL CONST WSPEC knl_wspec_flg_tpri  = { TTW_FLG, flg_chg_pri, NULL };
+ 227:../kernel/tkernel/eventflag.c **** 
+ 228:../kernel/tkernel/eventflag.c **** /*
+ 229:../kernel/tkernel/eventflag.c ****  * Event flag wait
+ 230:../kernel/tkernel/eventflag.c ****  */
+ 231:../kernel/tkernel/eventflag.c **** SYSCALL ER tk_wai_flg( ID flgid, UINT waiptn, UINT wfmode, UINT *p_flgptn, TMO tmout )
+ 232:../kernel/tkernel/eventflag.c **** {
+ 798                             		.loc 4 232 1
+ 799 049f 7E AA                   		push.l	r10
+ 800                             	.LCFI24:
+ 801 04a1 7E A6                   		push.l	r6
+ 802                             	.LCFI25:
+ 803 04a3 71 0A E0                		add	#-32, r0, r10
+ 804                             	.LCFI26:
+ 805 04a6 EF A0                   		mov.L	r10, r0
+ 806 04a8 75 46 2C                		mov.L	#44, r6
+ 807 04ab 4B A6                   		add	r10, r6
+ 808 04ad E7 A1 03                		mov.L	r1, 12[r10]
+ 809 04b0 E7 A2 04                		mov.L	r2, 16[r10]
+ 810 04b3 E7 A3 05                		mov.L	r3, 20[r10]
+ 811 04b6 E7 A4 06                		mov.L	r4, 24[r10]
+ 233:../kernel/tkernel/eventflag.c **** 	FLGCB	*flgcb;
+ 234:../kernel/tkernel/eventflag.c **** 	ER	ercd = E_OK;
+ 812                             		.loc 4 234 5
+ 813 04b9 F9 A6 02 00             		mov.L	#0, 8[r10]
+ 235:../kernel/tkernel/eventflag.c **** 
+ 236:../kernel/tkernel/eventflag.c **** 	CHECK_FLGID(flgid);
+ 814                             		.loc 4 236 2
+ 815 04bd ED A5 03                		mov.L	12[r10], r5
+ 816 04c0 61 05                   		cmp	#0, r5
+ 817 04c2 2B 0A                   		ble	.L50
+ 818                             		.loc 4 236 2 is_stmt 0 discriminator 2
+ 819 04c4 ED A5 03                		mov.L	12[r10], r5
+ 820 04c7 75 55 10                		cmp	#16, r5
+ 821 04ca 2B 08                   		ble	.L51
+ 822                             	.L50:
+ 823                             		.loc 4 236 2 discriminator 3
+ 824 04cc FB 56 EE                		mov.L	#-18, r5
+ 825 04cf 38 7B 01                		bra	.L67
+ 826                             	.L51:
+ 237:../kernel/tkernel/eventflag.c **** 	CHECK_PAR(waiptn != 0);
+ 827                             		.loc 4 237 2 is_stmt 1
+ 828 04d2 ED A5 04                		mov.L	16[r10], r5
+ 829 04d5 61 05                   		cmp	#0, r5
+ 830 04d7 1F                      		bne	.L53
+ 831                             		.loc 4 237 2 is_stmt 0 discriminator 1
+ 832 04d8 FB 56 EF                		mov.L	#-17, r5
+ 833 04db 38 6F 01                		bra	.L67
+ 834                             	.L53:
+ 238:../kernel/tkernel/eventflag.c **** 	CHECK_PAR((wfmode & ~(TWF_ORW|TWF_CLR|TWF_BITCLR)) == 0);
+ 835                             		.loc 4 238 2 is_stmt 1
+ 836 04de ED A5 05                		mov.L	20[r10], r5
+ 837 04e1 75 25 CE                		and	#-50, r5
+ 838 04e4 61 05                   		cmp	#0, r5
+ 839 04e6 17                      		beq	.L54
+ 840                             		.loc 4 238 2 is_stmt 0 discriminator 1
+ 841 04e7 FB 56 EF                		mov.L	#-17, r5
+ 842 04ea 38 60 01                		bra	.L67
+ 843                             	.L54:
+ 239:../kernel/tkernel/eventflag.c **** 	CHECK_TMOUT(tmout);
+ 844                             		.loc 4 239 2 is_stmt 1
+ 845 04ed EC 65                   		mov.L	[r6], r5
+ 846 04ef 75 05 FF                		cmp	#-1, r5
+ 847 04f2 28 08                   		bge	.L55
+ 848                             		.loc 4 239 2 is_stmt 0 discriminator 1
+ 849 04f4 FB 56 EF                		mov.L	#-17, r5
+ 850 04f7 38 53 01                		bra	.L67
+ 851                             	.L55:
+ 240:../kernel/tkernel/eventflag.c **** 	CHECK_DISPATCH();
+ 852                             		.loc 4 240 2 is_stmt 1
+ 853 04fa FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 854 0500 EC 55                   		mov.L	[r5], r5
+ 855 0502 61 05                   		cmp	#0, r5
+ 856 0504 21 21                   		bne	.L56
+ 857                             		.loc 4 240 2 is_stmt 0 discriminator 2
+ 858 0506 39 97 FB                		bsr	_knl_isTaskIndependent
+ 859 0509 EF 15                   		mov.L	r1, r5
+ 860 050b 61 05                   		cmp	#0, r5
+ 861 050d 21 18                   		bne	.L56
+ 862                             		.loc 4 240 2 discriminator 4
+ 863 050f FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 864 0515 EC 55                   		mov.L	[r5], r5
+ 865 0517 61 05                   		cmp	#0, r5
+ 866 0519 20 0C                   		beq	.L56
+ 867                             		.loc 4 240 2 discriminator 6
+ 868 051b 05 00 00 00             		bsr	_GetCpuIntLevel
+ 869 051f EF 15                   		mov.L	r1, r5
+ 870 0521 75 55 10                		cmp	#16, r5
+ 871 0524 1F                      		bne	.L57
+ 872                             		.balign 8,3,2
+ 873                             	.L56:
+ 874                             		.loc 4 240 2 discriminator 7
+ 875 0525 FB 56 E7                		mov.L	#-25, r5
+ 876 0528 38 22 01                		bra	.L67
+ 877                             	.L57:
+ 241:../kernel/tkernel/eventflag.c **** 
+ 242:../kernel/tkernel/eventflag.c **** 	flgcb = get_flgcb(flgid);
+ 878                             		.loc 4 242 10 is_stmt 1
+ 879 052b ED A5 03                		mov.L	12[r10], r5
+ 880 052e 60 15                   		sub	#1, r5
+ 881                             		.loc 4 242 8
+ 882 0530 75 15 18                		mul	#24, r5
+ 883 0533 70 55 00 00 00 00       		add	#_knl_flgcb_table, r5
+ 884 0539 E3 A5                   		mov.L	r5, [r10]
+ 885                             	.LBB6:
+ 243:../kernel/tkernel/eventflag.c **** 
+ 244:../kernel/tkernel/eventflag.c **** 	BEGIN_CRITICAL_SECTION;
+ 886                             		.loc 4 244 2
+ 887 053b 05 00 00 00             		bsr	_disint
+ 888 053f E7 A1 01                		mov.L	r1, 4[r10]
+ 245:../kernel/tkernel/eventflag.c **** 	if ( flgcb->flgid == 0 ) {
+ 889                             		.loc 4 245 12
+ 890 0542 EC A5                   		mov.L	[r10], r5
+ 891 0544 A8 D5                   		mov.L	8[r5], r5
+ 892                             		.loc 4 245 5
+ 893 0546 61 05                   		cmp	#0, r5
+ 894 0548 18                      		bne	.L58
+ 246:../kernel/tkernel/eventflag.c **** 		ercd = E_NOEXS;
+ 895                             		.loc 4 246 8
+ 896 0549 F9 A6 02 D6             		mov.L	#-42, 8[r10]
+ 247:../kernel/tkernel/eventflag.c **** 		goto error_exit;
+ 897                             		.loc 4 247 3
+ 898 054d 38 C0 00                		bra	.L59
+ 899                             	.L58:
+ 248:../kernel/tkernel/eventflag.c **** 	}
+ 249:../kernel/tkernel/eventflag.c **** 	if ( (flgcb->flgatr & TA_WMUL) == 0 && !isQueEmpty(&flgcb->wait_queue) ) {
+ 900                             		.loc 4 249 13
+ 901 0550 EC A5                   		mov.L	[r10], r5
+ 902 0552 A9 55                   		mov.L	16[r5], r5
+ 903                             		.loc 4 249 22
+ 904 0554 64 85                   		and	#8, r5
+ 905                             		.loc 4 249 5
+ 906 0556 61 05                   		cmp	#0, r5
+ 907 0558 21 15                   		bne	.L60
+ 908                             		.loc 4 249 42 discriminator 1
+ 909 055a EC A5                   		mov.L	[r10], r5
+ 910 055c EF 51                   		mov.L	r5, r1
+ 911 055e 39 BB FA                		bsr	_isQueEmpty
+ 912 0561 EF 15                   		mov.L	r1, r5
+ 913                             		.loc 4 249 38 discriminator 1
+ 914 0563 61 05                   		cmp	#0, r5
+ 915 0565 18                      		bne	.L60
+ 250:../kernel/tkernel/eventflag.c **** 		/* Disable multiple tasks wait */
+ 251:../kernel/tkernel/eventflag.c **** 		ercd = E_OBJ;
+ 916                             		.loc 4 251 8
+ 917 0566 F9 A6 02 D7             		mov.L	#-41, 8[r10]
+ 252:../kernel/tkernel/eventflag.c **** 		goto error_exit;
+ 918                             		.loc 4 252 3
+ 919 056a 38 A3 00                		bra	.L59
+ 920                             	.L60:
+ 253:../kernel/tkernel/eventflag.c **** 	}
+ 254:../kernel/tkernel/eventflag.c **** 
+ 255:../kernel/tkernel/eventflag.c **** 	/* Meet condition for release wait? */
+ 256:../kernel/tkernel/eventflag.c **** 	if ( knl_eventflag_cond(flgcb, waiptn, wfmode) ) {
+ 921                             		.loc 4 256 7
+ 922 056d ED A3 05                		mov.L	20[r10], r3
+ 923 0570 ED A2 04                		mov.L	16[r10], r2
+ 924 0573 EC A1                   		mov.L	[r10], r1
+ 925 0575 39 40 FB                		bsr	_knl_eventflag_cond
+ 926 0578 EF 15                   		mov.L	r1, r5
+ 927                             		.loc 4 256 5
+ 928 057a 61 05                   		cmp	#0, r5
+ 929 057c 20 35                   		beq	.L61
+ 257:../kernel/tkernel/eventflag.c **** 		*p_flgptn = flgcb->flgptn;
+ 930                             		.loc 4 257 20
+ 931 057e EC A5                   		mov.L	[r10], r5
+ 932 0580 A9 5C                   		mov.L	20[r5], r4
+ 933                             		.loc 4 257 13
+ 934 0582 ED A5 06                		mov.L	24[r10], r5
+ 935 0585 E3 54                   		mov.L	r4, [r5]
+ 258:../kernel/tkernel/eventflag.c **** 
+ 259:../kernel/tkernel/eventflag.c **** 		/* Clear event flag */
+ 260:../kernel/tkernel/eventflag.c **** 		if ( (wfmode & TWF_BITCLR) != 0 ) {
+ 936                             		.loc 4 260 16
+ 937 0587 ED A5 05                		mov.L	20[r10], r5
+ 938 058a 75 25 20                		and	#32, r5
+ 939                             		.loc 4 260 6
+ 940 058d 61 05                   		cmp	#0, r5
+ 941 058f 20 11                   		beq	.L62
+ 261:../kernel/tkernel/eventflag.c **** 			flgcb->flgptn &= ~waiptn;
+ 942                             		.loc 4 261 18
+ 943 0591 EC A5                   		mov.L	[r10], r5
+ 944 0593 A9 5C                   		mov.L	20[r5], r4
+ 945                             		.loc 4 261 21
+ 946 0595 ED A5 04                		mov.L	16[r10], r5
+ 947 0598 7E 05                   		not	r5
+ 948                             		.loc 4 261 18
+ 949 059a 53 54                   		and	r5, r4
+ 950 059c EC A5                   		mov.L	[r10], r5
+ 951 059e A1 5C                   		mov.L	r4, 20[r5]
+ 952                             	.L62:
+ 262:../kernel/tkernel/eventflag.c **** 		}
+ 263:../kernel/tkernel/eventflag.c **** 		if ( (wfmode & TWF_CLR) != 0 ) {
+ 953                             		.loc 4 263 16
+ 954 05a0 ED A5 05                		mov.L	20[r10], r5
+ 955 05a3 75 25 10                		and	#16, r5
+ 956                             		.loc 4 263 6
+ 957 05a6 61 05                   		cmp	#0, r5
+ 958 05a8 20 65                   		beq	.L59
+ 264:../kernel/tkernel/eventflag.c **** 			flgcb->flgptn = 0;
+ 959                             		.loc 4 264 18
+ 960 05aa EC A5                   		mov.L	[r10], r5
+ 961 05ac 3E 55 00                		mov.L	#0, 20[r5]
+ 962 05af 2E 5E                   		bra	.L59
+ 963                             	.L61:
+ 265:../kernel/tkernel/eventflag.c **** 		}
+ 266:../kernel/tkernel/eventflag.c **** 	} else {
+ 267:../kernel/tkernel/eventflag.c **** 		/* Ready for wait */
+ 268:../kernel/tkernel/eventflag.c **** 		knl_ctxtsk->wspec = ( (flgcb->flgatr & TA_TPRI) != 0 )?
+ 964                             		.loc 4 268 31
+ 965 05b1 EC A5                   		mov.L	[r10], r5
+ 966 05b3 A9 55                   		mov.L	16[r5], r5
+ 967                             		.loc 4 268 40
+ 968 05b5 64 15                   		and	#1, r5
+ 269:../kernel/tkernel/eventflag.c **** 					&knl_wspec_flg_tpri: &knl_wspec_flg_tfifo;
+ 969                             		.loc 4 269 25
+ 970 05b7 61 05                   		cmp	#0, r5
+ 971 05b9 10                      		beq	.L64
+ 972                             		.loc 4 269 25 is_stmt 0 discriminator 1
+ 973 05ba FB 42 0C 00 00 00       		mov.L	#_knl_wspec_flg_tpri, r4
+ 974 05c0 0F                      		bra	.L65
+ 975                             	.L64:
+ 976                             		.loc 4 269 25 discriminator 2
+ 977 05c1 FB 42 00 00 00 00       		mov.L	#_knl_wspec_flg_tfifo, r4
+ 978                             	.L65:
+ 268:../kernel/tkernel/eventflag.c **** 					&knl_wspec_flg_tpri: &knl_wspec_flg_tfifo;
+ 979                             		.loc 4 268 13 is_stmt 1
+ 980 05c7 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 981 05cd EC 55                   		mov.L	[r5], r5
+ 268:../kernel/tkernel/eventflag.c **** 					&knl_wspec_flg_tpri: &knl_wspec_flg_tfifo;
+ 982                             		.loc 4 268 21
+ 983 05cf A2 DC                   		mov.L	r4, 44[r5]
+ 270:../kernel/tkernel/eventflag.c **** 		knl_ctxtsk->wercd = &ercd;
+ 984                             		.loc 4 270 13
+ 985 05d1 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 986 05d7 EC 55                   		mov.L	[r5], r5
+ 987                             		.loc 4 270 21
+ 988 05d9 71 A4 08                		add	#8, r10, r4
+ 989 05dc A3 DC                   		mov.L	r4, 60[r5]
+ 271:../kernel/tkernel/eventflag.c **** 		knl_ctxtsk->winfo.flg.waiptn = waiptn;
+ 990                             		.loc 4 271 13
+ 991 05de FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 992 05e4 EC 55                   		mov.L	[r5], r5
+ 993                             		.loc 4 271 32
+ 994 05e6 ED A4 04                		mov.L	16[r10], r4
+ 995 05e9 A4 54                   		mov.L	r4, 64[r5]
+ 272:../kernel/tkernel/eventflag.c **** 		knl_ctxtsk->winfo.flg.wfmode = wfmode;
+ 996                             		.loc 4 272 13
+ 997 05eb FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 998 05f1 EC 55                   		mov.L	[r5], r5
+ 999                             		.loc 4 272 32
+ 1000 05f3 ED A4 05                		mov.L	20[r10], r4
+ 1001 05f6 A4 5C                   		mov.L	r4, 68[r5]
+ 273:../kernel/tkernel/eventflag.c **** 		knl_ctxtsk->winfo.flg.p_flgptn = p_flgptn;
+ 1002                             		.loc 4 273 13
+ 1003 05f8 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1004 05fe EC 55                   		mov.L	[r5], r5
+ 1005                             		.loc 4 273 34
+ 1006 0600 ED A4 06                		mov.L	24[r10], r4
+ 1007 0603 A4 D4                   		mov.L	r4, 72[r5]
+ 274:../kernel/tkernel/eventflag.c **** 		knl_gcb_make_wait((GCB*)flgcb, tmout);
+ 1008                             		.loc 4 274 3
+ 1009 0605 EC 62                   		mov.L	[r6], r2
+ 1010 0607 EC A1                   		mov.L	[r10], r1
+ 1011 0609 05 00 00 00             		bsr	_knl_gcb_make_wait
+ 1012                             		.balign 8,3,1
+ 1013                             	.L59:
+ 275:../kernel/tkernel/eventflag.c **** 	}
+ 276:../kernel/tkernel/eventflag.c **** 
+ 277:../kernel/tkernel/eventflag.c ****     error_exit:
+ 278:../kernel/tkernel/eventflag.c **** 	END_CRITICAL_SECTION;
+ 1014                             		.loc 4 278 2
+ 1015 060d ED A5 01                		mov.L	4[r10], r5
+ 1016 0610 61 F5                   		cmp	#15, r5
+ 1017 0612 20 2E                   		beq	.L66
+ 1018                             		.loc 4 278 2 is_stmt 0 discriminator 1
+ 1019 0614 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1020 061a EC 54                   		mov.L	[r5], r4
+ 1021 061c FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 1022 0622 EC 55                   		mov.L	[r5], r5
+ 1023 0624 47 54                   		cmp	r5, r4
+ 1024 0626 20 1A                   		beq	.L66
+ 1025                             		.loc 4 278 2 discriminator 3
+ 1026 0628 39 75 FA                		bsr	_knl_isTaskIndependent
+ 1027 062b EF 15                   		mov.L	r1, r5
+ 1028 062d 61 05                   		cmp	#0, r5
+ 1029 062f 21 11                   		bne	.L66
+ 1030                             		.loc 4 278 2 discriminator 5
+ 1031 0631 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 1032 0637 EC 55                   		mov.L	[r5], r5
+ 1033 0639 61 05                   		cmp	#0, r5
+ 1034 063b 1D                      		bne	.L66
+ 1035                             		.loc 4 278 2 discriminator 7
+ 1036 063c 05 00 00 00             		bsr	_knl_dispatch
+ 1037                             		.balign 8,3,1
+ 1038                             	.L66:
+ 1039                             		.loc 4 278 2 discriminator 9
+ 1040 0640 ED A1 01                		mov.L	4[r10], r1
+ 1041 0643 05 00 00 00             		bsr	_setint
+ 1042                             	.LBE6:
+ 279:../kernel/tkernel/eventflag.c **** 
+ 280:../kernel/tkernel/eventflag.c **** 	return ercd;
+ 1043                             		.loc 4 280 9 is_stmt 1 discriminator 9
+ 1044 0647 ED A5 02                		mov.L	8[r10], r5
+ 1045                             		.balign 8,3,1
+ 1046                             	.L67:
+ 281:../kernel/tkernel/eventflag.c **** }
+ 1047                             		.loc 4 281 1 discriminator 1
+ 1048 064a EF 51                   		mov.L	r5, r1
+ 1049 064c 71 00 20                		add	#32, r0
+ 1050 064f 7E B6                   		pop	r6
+ 1051 0651 7E BA                   		pop	r10
+ 1052 0653 02                      		rts
+ 1053                             	.LFE41:
+ 1055                             		.global	_tk_ref_flg
+ 1057                             	_tk_ref_flg:
+ 1058                             	.LFB42:
+ 282:../kernel/tkernel/eventflag.c **** 
+ 283:../kernel/tkernel/eventflag.c **** #ifdef USE_FUNC_TK_REF_FLG
+ 284:../kernel/tkernel/eventflag.c **** /*
+ 285:../kernel/tkernel/eventflag.c ****  * Check event flag state
+ 286:../kernel/tkernel/eventflag.c ****  */
+ 287:../kernel/tkernel/eventflag.c **** SYSCALL ER tk_ref_flg( ID flgid, T_RFLG *pk_rflg )
+ 288:../kernel/tkernel/eventflag.c **** {
+ 1059                             		.loc 4 288 1
+ 1060 0654 7E AA                   		push.l	r10
+ 1061                             	.LCFI27:
+ 1062 0656 71 0A EC                		add	#-20, r0, r10
+ 1063                             	.LCFI28:
+ 1064 0659 EF A0                   		mov.L	r10, r0
+ 1065 065b E7 A1 03                		mov.L	r1, 12[r10]
+ 1066 065e E7 A2 04                		mov.L	r2, 16[r10]
+ 289:../kernel/tkernel/eventflag.c **** 	FLGCB	*flgcb;
+ 290:../kernel/tkernel/eventflag.c **** 	ER	ercd = E_OK;
+ 1067                             		.loc 4 290 5
+ 1068 0661 F8 A6 00                		mov.L	#0, [r10]
+ 291:../kernel/tkernel/eventflag.c **** 
+ 292:../kernel/tkernel/eventflag.c **** 	CHECK_FLGID(flgid);
+ 1069                             		.loc 4 292 2
+ 1070 0664 ED A5 03                		mov.L	12[r10], r5
+ 1071 0667 61 05                   		cmp	#0, r5
+ 1072 0669 2B 0A                   		ble	.L69
+ 1073                             		.loc 4 292 2 is_stmt 0 discriminator 2
+ 1074 066b ED A5 03                		mov.L	12[r10], r5
+ 1075 066e 75 55 10                		cmp	#16, r5
+ 1076 0671 2B 08                   		ble	.L70
+ 1077                             	.L69:
+ 1078                             		.loc 4 292 2 discriminator 3
+ 1079 0673 FB 56 EE                		mov.L	#-18, r5
+ 1080 0676 38 88 00                		bra	.L71
+ 1081                             	.L70:
+ 293:../kernel/tkernel/eventflag.c **** 
+ 294:../kernel/tkernel/eventflag.c **** 	flgcb = get_flgcb(flgid);
+ 1082                             		.loc 4 294 10 is_stmt 1
+ 1083 0679 ED A5 03                		mov.L	12[r10], r5
+ 1084 067c 60 15                   		sub	#1, r5
+ 1085                             		.loc 4 294 8
+ 1086 067e 75 15 18                		mul	#24, r5
+ 1087 0681 70 55 00 00 00 00       		add	#_knl_flgcb_table, r5
+ 1088 0687 E7 A5 01                		mov.L	r5, 4[r10]
+ 1089                             	.LBB7:
+ 295:../kernel/tkernel/eventflag.c **** 
+ 296:../kernel/tkernel/eventflag.c **** 	BEGIN_CRITICAL_SECTION;
+ 1090                             		.loc 4 296 2
+ 1091 068a 05 00 00 00             		bsr	_disint
+ 1092 068e E7 A1 02                		mov.L	r1, 8[r10]
+ 297:../kernel/tkernel/eventflag.c **** 	if ( flgcb->flgid == 0 ) {
+ 1093                             		.loc 4 297 12
+ 1094 0691 ED A5 01                		mov.L	4[r10], r5
+ 1095 0694 A8 D5                   		mov.L	8[r5], r5
+ 1096                             		.loc 4 297 5
+ 1097 0696 61 05                   		cmp	#0, r5
+ 1098 0698 1E                      		bne	.L72
+ 298:../kernel/tkernel/eventflag.c **** 		ercd = E_NOEXS;
+ 1099                             		.loc 4 298 8
+ 1100 0699 F8 A6 D6                		mov.L	#-42, [r10]
+ 1101 069c 2E 26                   		bra	.L73
+ 1102                             	.L72:
+ 299:../kernel/tkernel/eventflag.c **** 	} else {
+ 300:../kernel/tkernel/eventflag.c **** 		pk_rflg->exinf = flgcb->exinf;
+ 1103                             		.loc 4 300 25
+ 1104 069e ED A5 01                		mov.L	4[r10], r5
+ 1105 06a1 A8 DC                   		mov.L	12[r5], r4
+ 1106                             		.loc 4 300 18
+ 1107 06a3 ED A5 04                		mov.L	16[r10], r5
+ 1108 06a6 E3 54                   		mov.L	r4, [r5]
+ 301:../kernel/tkernel/eventflag.c **** 		pk_rflg->wtsk = knl_wait_tskid(&flgcb->wait_queue);
+ 1109                             		.loc 4 301 19
+ 1110 06a8 ED A5 01                		mov.L	4[r10], r5
+ 1111 06ab EF 51                   		mov.L	r5, r1
+ 1112 06ad 05 00 00 00             		bsr	_knl_wait_tskid
+ 1113 06b1 EF 14                   		mov.L	r1, r4
+ 1114                             		.loc 4 301 17
+ 1115 06b3 ED A5 04                		mov.L	16[r10], r5
+ 1116 06b6 A0 5C                   		mov.L	r4, 4[r5]
+ 302:../kernel/tkernel/eventflag.c **** 		pk_rflg->flgptn = flgcb->flgptn;
+ 1117                             		.loc 4 302 26
+ 1118 06b8 ED A5 01                		mov.L	4[r10], r5
+ 1119 06bb A9 5C                   		mov.L	20[r5], r4
+ 1120                             		.loc 4 302 19
+ 1121 06bd ED A5 04                		mov.L	16[r10], r5
+ 1122 06c0 A0 D4                   		mov.L	r4, 8[r5]
+ 1123                             	.L73:
+ 303:../kernel/tkernel/eventflag.c **** 	}
+ 304:../kernel/tkernel/eventflag.c **** 	END_CRITICAL_SECTION;
+ 1124                             		.loc 4 304 2
+ 1125 06c2 ED A5 02                		mov.L	8[r10], r5
+ 1126 06c5 61 F5                   		cmp	#15, r5
+ 1127 06c7 20 2E                   		beq	.L74
+ 1128                             		.loc 4 304 2 is_stmt 0 discriminator 1
+ 1129 06c9 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 1130 06cf EC 54                   		mov.L	[r5], r4
+ 1131 06d1 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 1132 06d7 EC 55                   		mov.L	[r5], r5
+ 1133 06d9 47 54                   		cmp	r5, r4
+ 1134 06db 20 1A                   		beq	.L74
+ 1135                             		.loc 4 304 2 discriminator 3
+ 1136 06dd 39 C0 F9                		bsr	_knl_isTaskIndependent
+ 1137 06e0 EF 15                   		mov.L	r1, r5
+ 1138 06e2 61 05                   		cmp	#0, r5
+ 1139 06e4 21 11                   		bne	.L74
+ 1140                             		.loc 4 304 2 discriminator 5
+ 1141 06e6 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 1142 06ec EC 55                   		mov.L	[r5], r5
+ 1143 06ee 61 05                   		cmp	#0, r5
+ 1144 06f0 1D                      		bne	.L74
+ 1145                             		.loc 4 304 2 discriminator 7
+ 1146 06f1 05 00 00 00             		bsr	_knl_dispatch
+ 1147                             		.balign 8,3,1
+ 1148                             	.L74:
+ 1149                             		.loc 4 304 2 discriminator 9
+ 1150 06f5 ED A1 02                		mov.L	8[r10], r1
+ 1151 06f8 05 00 00 00             		bsr	_setint
+ 1152                             	.LBE7:
+ 305:../kernel/tkernel/eventflag.c **** 
+ 306:../kernel/tkernel/eventflag.c **** 	return ercd;
+ 1153                             		.loc 4 306 9 is_stmt 1 discriminator 9
+ 1154 06fc EC A5                   		mov.L	[r10], r5
+ 1155                             	.L71:
+ 307:../kernel/tkernel/eventflag.c **** }
+ 1156                             		.loc 4 307 1
+ 1157 06fe EF 51                   		mov.L	r5, r1
+ 1158 0700 3F AA 06                		rtsd	#24, r10-r10
+ 1159                             	.LFE42:
+ 1456                             	.Letext0:
+ 1457                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 1458                             		.file 6 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 1459                             		.file 7 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 1460                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 1461                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 1462                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 1463                             		.file 11 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysde
+ 1464                             		.file 12 "../kernel/tkernel/task.h"
+ 1465                             		.file 13 "../kernel/tkernel/ready_queue.h"
+ 1466                             		.file 14 "../kernel/tkernel/wait.h"

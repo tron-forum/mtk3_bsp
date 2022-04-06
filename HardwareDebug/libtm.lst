@@ -1,0 +1,342 @@
+   1                             		.file	"libtm.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.global	_libtm_init
+   6                             	_libtm_init:
+   7                             	.LFB6:
+   8                             		.file 1 "../lib/libtm/libtm.c"
+   1:../lib/libtm/libtm.c **** /*
+   2:../lib/libtm/libtm.c ****  *----------------------------------------------------------------------
+   3:../lib/libtm/libtm.c ****  *    micro T-Kernel 3.00.03
+   4:../lib/libtm/libtm.c ****  *
+   5:../lib/libtm/libtm.c ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:../lib/libtm/libtm.c ****  *    This software is distributed under the T-License 2.2.
+   7:../lib/libtm/libtm.c ****  *----------------------------------------------------------------------
+   8:../lib/libtm/libtm.c ****  *
+   9:../lib/libtm/libtm.c ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:../lib/libtm/libtm.c ****  *
+  11:../lib/libtm/libtm.c ****  *----------------------------------------------------------------------
+  12:../lib/libtm/libtm.c ****  */
+  13:../lib/libtm/libtm.c **** 
+  14:../lib/libtm/libtm.c **** /*
+  15:../lib/libtm/libtm.c ****  *    libtm.c
+  16:../lib/libtm/libtm.c ****  *    T-Monitor compatible calls library
+  17:../lib/libtm/libtm.c ****  */
+  18:../lib/libtm/libtm.c **** #include <tk/tkernel.h>
+  19:../lib/libtm/libtm.c **** #include <tm/tmonitor.h>
+  20:../lib/libtm/libtm.c **** 
+  21:../lib/libtm/libtm.c **** #if USE_TMONITOR
+  22:../lib/libtm/libtm.c **** #include "libtm.h"
+  23:../lib/libtm/libtm.c **** 
+  24:../lib/libtm/libtm.c **** /*
+  25:../lib/libtm/libtm.c ****  * libtm_init() - libtm Initialize
+  26:../lib/libtm/libtm.c ****  * supported only on wait != 0 (polling not supported)
+  27:../lib/libtm/libtm.c ****  */
+  28:../lib/libtm/libtm.c **** EXPORT void libtm_init(void)
+  29:../lib/libtm/libtm.c **** {
+   9                             		.loc 1 29 1
+  10 0000 7E AA                   		push.l	r10
+  11                             	.LCFI0:
+  12 0002 EF 0A                   		mov.L	r0, r10
+  13                             	.LCFI1:
+  30:../lib/libtm/libtm.c **** 	tm_com_init();
+  14                             		.loc 1 30 2
+  15 0004 05 00 00 00             		bsr	_tm_com_init
+  31:../lib/libtm/libtm.c **** }
+  16                             		.loc 1 31 1
+  17 0008 03                      		nop
+  18 0009 3F AA 01                		rtsd	#4, r10-r10
+  19                             	.LFE6:
+  21                             		.global	_tm_getchar
+  23                             	_tm_getchar:
+  24                             	.LFB7:
+  32:../lib/libtm/libtm.c **** 
+  33:../lib/libtm/libtm.c **** /*
+  34:../lib/libtm/libtm.c ****  * tm_getchar() - Get Character
+  35:../lib/libtm/libtm.c ****  * supported only on wait != 0 (polling not supported)
+  36:../lib/libtm/libtm.c ****  */
+  37:../lib/libtm/libtm.c **** EXPORT INT tm_getchar( INT wait )
+  38:../lib/libtm/libtm.c **** {
+  25                             		.loc 1 38 1
+  26 000c 7E AA                   		push.l	r10
+  27                             	.LCFI2:
+  28 000e 71 0A F4                		add	#-12, r0, r10
+  29                             	.LCFI3:
+  30 0011 EF A0                   		mov.L	r10, r0
+  31 0013 E7 A1 02                		mov.L	r1, 8[r10]
+  39:../lib/libtm/libtm.c **** 	UB	p;
+  40:../lib/libtm/libtm.c **** 	UINT	imask;
+  41:../lib/libtm/libtm.c **** 
+  42:../lib/libtm/libtm.c **** 	DI(imask);
+  32                             		.loc 1 42 2
+  33 0016 05 00 00 00             		bsr	_disint
+  34 001a E3 A1                   		mov.L	r1, [r10]
+  43:../lib/libtm/libtm.c **** 	tm_rcv_dat(&p, 1);
+  35                             		.loc 1 43 2
+  36 001c 71 A5 04                		add	#4, r10, r5
+  37 001f 66 12                   		mov.L	#1, r2
+  38 0021 EF 51                   		mov.L	r5, r1
+  39 0023 05 00 00 00             		bsr	_tm_rcv_dat
+  44:../lib/libtm/libtm.c **** 	EI(imask);
+  40                             		.loc 1 44 2
+  41 0027 EC A1                   		mov.L	[r10], r1
+  42 0029 05 00 00 00             		bsr	_setint
+  45:../lib/libtm/libtm.c **** 
+  46:../lib/libtm/libtm.c **** 	return (INT)p;
+  43                             		.loc 1 46 9
+  44 002d CD A5 04                		mov.B	4[r10], r5
+  45 0030 5B 55                   		movu.B	r5, r5
+  47:../lib/libtm/libtm.c **** }
+  46                             		.loc 1 47 1
+  47 0032 EF 51                   		mov.L	r5, r1
+  48 0034 3F AA 04                		rtsd	#16, r10-r10
+  49                             	.LFE7:
+  51                             		.global	_tm_getline
+  53                             	_tm_getline:
+  54                             	.LFB8:
+  48:../lib/libtm/libtm.c **** 
+  49:../lib/libtm/libtm.c **** /*
+  50:../lib/libtm/libtm.c ****  * tm_getline() - Get Line
+  51:../lib/libtm/libtm.c ****  * special key is not supported
+  52:../lib/libtm/libtm.c ****  */
+  53:../lib/libtm/libtm.c **** EXPORT INT tm_getline( UB *buff )
+  54:../lib/libtm/libtm.c **** {
+  55                             		.loc 1 54 1
+  56 0037 7E AA                   		push.l	r10
+  57                             	.LCFI4:
+  58 0039 71 0A F0                		add	#-16, r0, r10
+  59                             	.LCFI5:
+  60 003c EF A0                   		mov.L	r10, r0
+  61 003e E7 A1 03                		mov.L	r1, 12[r10]
+  55:../lib/libtm/libtm.c **** 	UB* p = buff;
+  62                             		.loc 1 55 6
+  63 0041 ED A5 03                		mov.L	12[r10], r5
+  64 0044 E3 A5                   		mov.L	r5, [r10]
+  56:../lib/libtm/libtm.c **** 	int len = 0;
+  65                             		.loc 1 56 6
+  66 0046 F9 A6 01 00             		mov.L	#0, 4[r10]
+  57:../lib/libtm/libtm.c **** 	static const char LF = CHR_LF;
+  58:../lib/libtm/libtm.c **** 	INT imask;
+  59:../lib/libtm/libtm.c **** 
+  60:../lib/libtm/libtm.c **** 	DI(imask);
+  67                             		.loc 1 60 2
+  68 004a 05 00 00 00             		bsr	_disint
+  69 004e EF 15                   		mov.L	r1, r5
+  70 0050 E7 A5 02                		mov.L	r5, 8[r10]
+  71                             	.L8:
+  61:../lib/libtm/libtm.c **** 	while (1) {
+  62:../lib/libtm/libtm.c **** 		tm_rcv_dat(p, 1);
+  72                             		.loc 1 62 3
+  73 0053 66 12                   		mov.L	#1, r2
+  74 0055 EC A1                   		mov.L	[r10], r1
+  75 0057 05 00 00 00             		bsr	_tm_rcv_dat
+  63:../lib/libtm/libtm.c **** 		tm_snd_dat(p, 1); /* echo back */
+  76                             		.loc 1 63 3
+  77 005b 66 12                   		mov.L	#1, r2
+  78 005d EC A1                   		mov.L	[r10], r1
+  79 005f 05 00 00 00             		bsr	_tm_snd_dat
+  64:../lib/libtm/libtm.c **** 		if (*p == CHR_CR) {
+  80                             		.loc 1 64 7
+  81 0063 EC A5                   		mov.L	[r10], r5
+  82 0065 CC 55                   		mov.B	[r5], r5
+  83                             		.loc 1 64 6
+  84 0067 5B 55                   		movu.B	r5, r5
+  85 0069 61 D5                   		cmp	#13, r5
+  86 006b 21 10                   		bne	.L5
+  65:../lib/libtm/libtm.c **** 			tm_snd_dat((const UB*)&LF, 1);
+  87                             		.loc 1 65 4
+  88 006d 66 12                   		mov.L	#1, r2
+  89 006f FB 12 00 00 00 00       		mov.L	#_LF.2211, r1
+  90 0075 05 00 00 00             		bsr	_tm_snd_dat
+  66:../lib/libtm/libtm.c **** 			break;
+  91                             		.loc 1 66 4
+  92 0079 2E 21                   		bra	.L6
+  93                             	.L5:
+  67:../lib/libtm/libtm.c **** 		} else if (*p == CHR_ETX) {
+  94                             		.loc 1 67 14
+  95 007b EC A5                   		mov.L	[r10], r5
+  96 007d CC 55                   		mov.B	[r5], r5
+  97                             		.loc 1 67 13
+  98 007f 5B 55                   		movu.B	r5, r5
+  99 0081 61 35                   		cmp	#3, r5
+ 100 0083 1F                      		bne	.L7
+  68:../lib/libtm/libtm.c **** 			len = -1;
+ 101                             		.loc 1 68 8
+ 102 0084 F9 A6 01 FF             		mov.L	#-1, 4[r10]
+  69:../lib/libtm/libtm.c **** 			break;
+ 103                             		.loc 1 69 4
+ 104 0088 2E 12                   		bra	.L6
+ 105                             	.L7:
+  70:../lib/libtm/libtm.c **** 		}
+  71:../lib/libtm/libtm.c **** 		p++; len++;
+ 106                             		.loc 1 71 4
+ 107 008a EC A5                   		mov.L	[r10], r5
+ 108 008c 62 15                   		add	#1, r5
+ 109 008e E3 A5                   		mov.L	r5, [r10]
+ 110                             		.loc 1 71 11
+ 111 0090 ED A5 01                		mov.L	4[r10], r5
+ 112 0093 62 15                   		add	#1, r5
+ 113 0095 E7 A5 01                		mov.L	r5, 4[r10]
+  62:../lib/libtm/libtm.c **** 		tm_snd_dat(p, 1); /* echo back */
+ 114                             		.loc 1 62 3
+ 115 0098 2E BB                   		bra	.L8
+ 116                             	.L6:
+  72:../lib/libtm/libtm.c **** 	}
+  73:../lib/libtm/libtm.c **** 	*p = 0x00;
+ 117                             		.loc 1 73 5
+ 118 009a EC A5                   		mov.L	[r10], r5
+ 119 009c F8 54 00                		mov.B	#0, [r5]
+  74:../lib/libtm/libtm.c **** 	EI(imask);
+ 120                             		.loc 1 74 2
+ 121 009f ED A5 02                		mov.L	8[r10], r5
+ 122 00a2 EF 51                   		mov.L	r5, r1
+ 123 00a4 05 00 00 00             		bsr	_setint
+  75:../lib/libtm/libtm.c **** 
+  76:../lib/libtm/libtm.c **** 	return len;
+ 124                             		.loc 1 76 9
+ 125 00a8 ED A5 01                		mov.L	4[r10], r5
+  77:../lib/libtm/libtm.c **** }
+ 126                             		.loc 1 77 1
+ 127 00ab EF 51                   		mov.L	r5, r1
+ 128 00ad 3F AA 05                		rtsd	#20, r10-r10
+ 129                             	.LFE8:
+ 131                             		.global	_tm_putchar
+ 133                             	_tm_putchar:
+ 134                             	.LFB9:
+  78:../lib/libtm/libtm.c **** 
+  79:../lib/libtm/libtm.c **** /*
+  80:../lib/libtm/libtm.c ****  * tm_putchar()
+  81:../lib/libtm/libtm.c ****  * Ctrl-C is not supported
+  82:../lib/libtm/libtm.c ****  */
+  83:../lib/libtm/libtm.c **** EXPORT INT tm_putchar( INT c )
+  84:../lib/libtm/libtm.c **** {
+ 135                             		.loc 1 84 1
+ 136 00b0 7E AA                   		push.l	r10
+ 137                             	.LCFI6:
+ 138 00b2 71 0A F4                		add	#-12, r0, r10
+ 139                             	.LCFI7:
+ 140 00b5 EF A0                   		mov.L	r10, r0
+ 141 00b7 E7 A1 02                		mov.L	r1, 8[r10]
+  85:../lib/libtm/libtm.c **** 	static const char CR = CHR_CR;
+  86:../lib/libtm/libtm.c **** 	UB buf = (UB)c;
+ 142                             		.loc 1 86 11
+ 143 00ba ED A5 02                		mov.L	8[r10], r5
+ 144                             		.loc 1 86 5
+ 145 00bd C7 A5 04                		mov.B	r5, 4[r10]
+  87:../lib/libtm/libtm.c **** 	INT imask;
+  88:../lib/libtm/libtm.c **** 
+  89:../lib/libtm/libtm.c **** 	DI(imask);
+ 146                             		.loc 1 89 2
+ 147 00c0 05 00 00 00             		bsr	_disint
+ 148 00c4 EF 15                   		mov.L	r1, r5
+ 149 00c6 E3 A5                   		mov.L	r5, [r10]
+  90:../lib/libtm/libtm.c **** 	if (buf == CHR_LF) {
+ 150                             		.loc 1 90 10
+ 151 00c8 CD A5 04                		mov.B	4[r10], r5
+ 152                             		.loc 1 90 5
+ 153 00cb 5B 55                   		movu.B	r5, r5
+ 154 00cd 61 A5                   		cmp	#10, r5
+ 155 00cf 21 0E                   		bne	.L11
+  91:../lib/libtm/libtm.c **** 		tm_snd_dat((const UB*)&CR, 1);
+ 156                             		.loc 1 91 3
+ 157 00d1 66 12                   		mov.L	#1, r2
+ 158 00d3 FB 12 01 00 00 00       		mov.L	#_CR.2218, r1
+ 159 00d9 05 00 00 00             		bsr	_tm_snd_dat
+ 160                             	.L11:
+  92:../lib/libtm/libtm.c **** 	}
+  93:../lib/libtm/libtm.c **** 	tm_snd_dat(&buf, 1);
+ 161                             		.loc 1 93 2
+ 162 00dd 71 A5 04                		add	#4, r10, r5
+ 163 00e0 66 12                   		mov.L	#1, r2
+ 164 00e2 EF 51                   		mov.L	r5, r1
+ 165 00e4 05 00 00 00             		bsr	_tm_snd_dat
+  94:../lib/libtm/libtm.c **** 	EI(imask);
+ 166                             		.loc 1 94 2
+ 167 00e8 EC A5                   		mov.L	[r10], r5
+ 168 00ea EF 51                   		mov.L	r5, r1
+ 169 00ec 05 00 00 00             		bsr	_setint
+  95:../lib/libtm/libtm.c **** 
+  96:../lib/libtm/libtm.c **** 	return 0;
+ 170                             		.loc 1 96 9
+ 171 00f0 66 05                   		mov.L	#0, r5
+  97:../lib/libtm/libtm.c **** }
+ 172                             		.loc 1 97 1
+ 173 00f2 EF 51                   		mov.L	r5, r1
+ 174 00f4 3F AA 04                		rtsd	#16, r10-r10
+ 175                             	.LFE9:
+ 177                             		.global	_tm_putstring
+ 179                             	_tm_putstring:
+ 180                             	.LFB10:
+  98:../lib/libtm/libtm.c **** 
+  99:../lib/libtm/libtm.c **** /*
+ 100:../lib/libtm/libtm.c ****  * tm_putstring() - Put String
+ 101:../lib/libtm/libtm.c ****  * Ctrl-C is not supported
+ 102:../lib/libtm/libtm.c ****  */
+ 103:../lib/libtm/libtm.c **** EXPORT INT tm_putstring( const UB *buff )
+ 104:../lib/libtm/libtm.c **** {
+ 181                             		.loc 1 104 1
+ 182 00f7 7E AA                   		push.l	r10
+ 183                             	.LCFI8:
+ 184 00f9 71 0A F4                		add	#-12, r0, r10
+ 185                             	.LCFI9:
+ 186 00fc EF A0                   		mov.L	r10, r0
+ 187 00fe E7 A1 02                		mov.L	r1, 8[r10]
+ 105:../lib/libtm/libtm.c **** 	const UB* p = buff;
+ 188                             		.loc 1 105 12
+ 189 0101 ED A5 02                		mov.L	8[r10], r5
+ 190 0104 E3 A5                   		mov.L	r5, [r10]
+ 106:../lib/libtm/libtm.c **** 	INT imask;
+ 107:../lib/libtm/libtm.c **** 
+ 108:../lib/libtm/libtm.c **** 	DI(imask);
+ 191                             		.loc 1 108 2
+ 192 0106 05 00 00 00             		bsr	_disint
+ 193 010a EF 15                   		mov.L	r1, r5
+ 194 010c E7 A5 01                		mov.L	r5, 4[r10]
+ 109:../lib/libtm/libtm.c **** 	while ( *p != (UB)'\0' ) {
+ 195                             		.loc 1 109 8
+ 196 010f 2E 13                   		bra	.L14
+ 197                             	.L15:
+ 110:../lib/libtm/libtm.c **** 		tm_putchar(*p++);
+ 198                             		.loc 1 110 16
+ 199 0111 EC A5                   		mov.L	[r10], r5
+ 200 0113 71 54 01                		add	#1, r5, r4
+ 201 0116 E3 A4                   		mov.L	r4, [r10]
+ 202                             		.loc 1 110 14
+ 203 0118 CC 55                   		mov.B	[r5], r5
+ 204                             		.loc 1 110 3
+ 205 011a 5B 55                   		movu.B	r5, r5
+ 206 011c EF 51                   		mov.L	r5, r1
+ 207 011e 05 00 00 00             		bsr	_tm_putchar
+ 208                             	.L14:
+ 109:../lib/libtm/libtm.c **** 	while ( *p != (UB)'\0' ) {
+ 209                             		.loc 1 109 10
+ 210 0122 EC A5                   		mov.L	[r10], r5
+ 211 0124 CC 55                   		mov.B	[r5], r5
+ 109:../lib/libtm/libtm.c **** 	while ( *p != (UB)'\0' ) {
+ 212                             		.loc 1 109 8
+ 213 0126 5B 55                   		movu.B	r5, r5
+ 214 0128 61 05                   		cmp	#0, r5
+ 215 012a 21 E7                   		bne	.L15
+ 111:../lib/libtm/libtm.c **** 	}
+ 112:../lib/libtm/libtm.c **** 	EI(imask);
+ 216                             		.loc 1 112 2
+ 217 012c ED A5 01                		mov.L	4[r10], r5
+ 218 012f EF 51                   		mov.L	r5, r1
+ 219 0131 05 00 00 00             		bsr	_setint
+ 113:../lib/libtm/libtm.c **** 
+ 114:../lib/libtm/libtm.c **** 	return 0;
+ 220                             		.loc 1 114 9
+ 221 0135 66 05                   		mov.L	#0, r5
+ 115:../lib/libtm/libtm.c **** }
+ 222                             		.loc 1 115 1
+ 223 0137 EF 51                   		mov.L	r5, r1
+ 224 0139 3F AA 04                		rtsd	#16, r10-r10
+ 225                             	.LFE10:
+ 227                             		.section C,"a",@progbits
+ 228                             		.p2align 2
+ 231                             	_LF.2211:
+ 232 0000 0A                      		.byte	10
+ 235                             	_CR.2218:
+ 236 0001 0D                      		.byte	13
+ 349                             	.Letext0:
+ 350                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"

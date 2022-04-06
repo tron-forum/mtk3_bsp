@@ -1,0 +1,1112 @@
+   1                             		.file	"klock.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   5                             	_QueInit:
+   6                             	.LFB6:
+   7                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+   1:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+   2:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   3:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    micro T-Kernel 3.00.00
+   4:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+   5:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    This software is distributed under the T-License 2.1.
+   7:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   8:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+   9:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+  11:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+  12:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  13:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  14:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  15:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	queue.h
+  16:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
+  17:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Queuing operation
+  18:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  19:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  20:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifndef	__SYS_QUEUE_H__
+  21:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #define __SYS_QUEUE_H__
+  22:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  23:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #include <tk/tkernel.h>
+  24:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  25:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifdef __cplusplus
+  26:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** extern "C" {
+  27:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #endif
+  28:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  29:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  30:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Double-link queue (ring)
+  31:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  32:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** typedef struct queue {
+  33:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*next;
+  34:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*prev;
+  35:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** } QUEUE;
+  36:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  37:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  38:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Queue initialization 
+  39:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  40:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInit( QUEUE *que )
+  41:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+   8                             		.loc 1 41 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A FC                		add	#-4, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E3 A1                   		mov.L	r1, [r10]
+  42:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue *)que;
+  15                             		.loc 1 42 12
+  16 0009 EC A5                   		mov.L	[r10], r5
+  17 000b EC A4                   		mov.L	[r10], r4
+  18 000d E3 54                   		mov.L	r4, [r5]
+  43:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = (struct queue *)que;
+  19                             		.loc 1 43 12
+  20 000f EC A5                   		mov.L	[r10], r5
+  21 0011 EC A4                   		mov.L	[r10], r4
+  22 0013 A0 5C                   		mov.L	r4, 4[r5]
+  44:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  23                             		.loc 1 44 1
+  24 0015 03                      		nop
+  25 0016 3F AA 02                		rtsd	#8, r10-r10
+  26                             	.LFE6:
+  29                             	_isQueEmpty:
+  30                             	.LFB7:
+  45:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  46:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  47:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * TRUE if the queue is empty 
+  48:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  49:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline BOOL isQueEmpty( QUEUE *que )
+  50:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  31                             		.loc 1 50 1
+  32 0019 7E AA                   		push.l	r10
+  33                             	.LCFI2:
+  34 001b 71 0A FC                		add	#-4, r0, r10
+  35                             	.LCFI3:
+  36 001e EF A0                   		mov.L	r10, r0
+  37 0020 E3 A1                   		mov.L	r1, [r10]
+  51:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return ( que->next == que )? TRUE: FALSE;
+  38                             		.loc 1 51 14
+  39 0022 EC A5                   		mov.L	[r10], r5
+  40 0024 EC 55                   		mov.L	[r5], r5
+  41                             		.loc 1 51 35
+  42 0026 EC A4                   		mov.L	[r10], r4
+  43 0028 47 54                   		cmp	r5, r4
+  44 002a FC DB 50                		sceq.L	r5
+  45 002d 5B 55                   		movu.B	r5, r5
+  52:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  46                             		.loc 1 52 1
+  47 002f EF 51                   		mov.L	r5, r1
+  48 0031 3F AA 02                		rtsd	#8, r10-r10
+  49                             	.LFE7:
+  52                             	_QueInsert:
+  53                             	.LFB8:
+  53:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  54:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  55:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Insert in queue 
+  56:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Inserts entry directly prior to que 
+  57:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  58:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInsert( QUEUE *entry, QUEUE *que )
+  59:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  54                             		.loc 1 59 1
+  55 0034 7E AA                   		push.l	r10
+  56                             	.LCFI4:
+  57 0036 71 0A F8                		add	#-8, r0, r10
+  58                             	.LCFI5:
+  59 0039 EF A0                   		mov.L	r10, r0
+  60 003b E3 A1                   		mov.L	r1, [r10]
+  61 003d E7 A2 01                		mov.L	r2, 4[r10]
+  60:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->prev = (struct queue*) que->prev;
+  62                             		.loc 1 60 16
+  63 0040 ED A5 01                		mov.L	4[r10], r5
+  64 0043 A8 5C                   		mov.L	4[r5], r4
+  65                             		.loc 1 60 14
+  66 0045 EC A5                   		mov.L	[r10], r5
+  67 0047 A0 5C                   		mov.L	r4, 4[r5]
+  61:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next = que;
+  68                             		.loc 1 61 14
+  69 0049 EC A5                   		mov.L	[r10], r5
+  70 004b ED A4 01                		mov.L	4[r10], r4
+  71 004e E3 54                   		mov.L	r4, [r5]
+  62:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev->next = entry;
+  72                             		.loc 1 62 5
+  73 0050 ED A5 01                		mov.L	4[r10], r5
+  74 0053 A8 5D                   		mov.L	4[r5], r5
+  75                             		.loc 1 62 18
+  76 0055 EC A4                   		mov.L	[r10], r4
+  77 0057 E3 54                   		mov.L	r4, [r5]
+  63:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = entry;
+  78                             		.loc 1 63 12
+  79 0059 ED A5 01                		mov.L	4[r10], r5
+  80 005c EC A4                   		mov.L	[r10], r4
+  81 005e A0 5C                   		mov.L	r4, 4[r5]
+  64:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  82                             		.loc 1 64 1
+  83 0060 03                      		nop
+  84 0061 3F AA 03                		rtsd	#12, r10-r10
+  85                             	.LFE8:
+  88                             	_QueRemove:
+  89                             	.LFB9:
+  65:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  66:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  67:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Delete from queue 
+  68:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes entry from queue 
+  69:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	No action is performed if entry is empty. 
+  70:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  71:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueRemove( QUEUE *entry )
+  72:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  90                             		.loc 1 72 1
+  91 0064 7E AA                   		push.l	r10
+  92                             	.LCFI6:
+  93 0066 71 0A FC                		add	#-4, r0, r10
+  94                             	.LCFI7:
+  95 0069 EF A0                   		mov.L	r10, r0
+  96 006b E3 A1                   		mov.L	r1, [r10]
+  73:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( entry->next != entry ) {
+  97                             		.loc 1 73 12
+  98 006d EC A5                   		mov.L	[r10], r5
+  99 006f EC 55                   		mov.L	[r5], r5
+ 100                             		.loc 1 73 5
+ 101 0071 EC A4                   		mov.L	[r10], r4
+ 102 0073 47 54                   		cmp	r5, r4
+ 103 0075 20 16                   		beq	.L7
+  74:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->prev->next = (struct queue*) entry->next;
+ 104                             		.loc 1 74 8
+ 105 0077 EC A5                   		mov.L	[r10], r5
+ 106 0079 A8 5D                   		mov.L	4[r5], r5
+ 107                             		.loc 1 74 23
+ 108 007b EC A4                   		mov.L	[r10], r4
+ 109 007d EC 44                   		mov.L	[r4], r4
+ 110                             		.loc 1 74 21
+ 111 007f E3 54                   		mov.L	r4, [r5]
+  75:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->next->prev = (struct queue*) entry->prev;
+ 112                             		.loc 1 75 8
+ 113 0081 EC A5                   		mov.L	[r10], r5
+ 114 0083 EC 55                   		mov.L	[r5], r5
+ 115                             		.loc 1 75 23
+ 116 0085 EC A4                   		mov.L	[r10], r4
+ 117 0087 A8 4C                   		mov.L	4[r4], r4
+ 118                             		.loc 1 75 21
+ 119 0089 A0 5C                   		mov.L	r4, 4[r5]
+ 120                             	.L7:
+  76:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
+  77:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+ 121                             		.loc 1 77 1
+ 122 008b 03                      		nop
+ 123 008c 3F AA 02                		rtsd	#8, r10-r10
+ 124                             	.LFE9:
+ 127                             	_QueRemoveNext:
+ 128                             	.LFB10:
+  78:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  79:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
+  80:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Remove top entry 
+  81:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes the entry directly after que from the queue,
+  82:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	and returns the deleted entry.
+  83:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Returns NULL if que is empty.
+  84:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
+  85:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline QUEUE* QueRemoveNext( QUEUE *que )
+  86:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+ 129                             		.loc 1 86 1
+ 130 008f 7E AA                   		push.l	r10
+ 131                             	.LCFI8:
+ 132 0091 71 0A F8                		add	#-8, r0, r10
+ 133                             	.LCFI9:
+ 134 0094 EF A0                   		mov.L	r10, r0
+ 135 0096 E7 A1 01                		mov.L	r1, 4[r10]
+  87:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	QUEUE	*entry;
+  88:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  89:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( que->next == que ) {
+ 136                             		.loc 1 89 10
+ 137 0099 ED A5 01                		mov.L	4[r10], r5
+ 138 009c EC 55                   		mov.L	[r5], r5
+ 139                             		.loc 1 89 5
+ 140 009e ED A4 01                		mov.L	4[r10], r4
+ 141 00a1 47 54                   		cmp	r5, r4
+ 142 00a3 1D                      		bne	.L9
+  90:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		return NULL;
+ 143                             		.loc 1 90 10
+ 144 00a4 66 05                   		mov.L	#0, r5
+ 145 00a6 2E 1D                   		bra	.L10
+ 146                             	.L9:
+  91:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
+  92:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  93:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry = que->next;
+ 147                             		.loc 1 93 8
+ 148 00a8 ED A5 01                		mov.L	4[r10], r5
+ 149 00ab EC 55                   		mov.L	[r5], r5
+ 150 00ad E3 A5                   		mov.L	r5, [r10]
+  94:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue*)entry->next;
+ 151                             		.loc 1 94 14
+ 152 00af EC A5                   		mov.L	[r10], r5
+ 153 00b1 EC 54                   		mov.L	[r5], r4
+ 154                             		.loc 1 94 12
+ 155 00b3 ED A5 01                		mov.L	4[r10], r5
+ 156 00b6 E3 54                   		mov.L	r4, [r5]
+  95:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next->prev = que;
+ 157                             		.loc 1 95 7
+ 158 00b8 EC A5                   		mov.L	[r10], r5
+ 159 00ba EC 55                   		mov.L	[r5], r5
+ 160                             		.loc 1 95 20
+ 161 00bc ED A4 01                		mov.L	4[r10], r4
+ 162 00bf A0 5C                   		mov.L	r4, 4[r5]
+  96:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
+  97:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return entry;
+ 163                             		.loc 1 97 9
+ 164 00c1 EC A5                   		mov.L	[r10], r5
+ 165                             	.L10:
+  98:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+ 166                             		.loc 1 98 1
+ 167 00c3 EF 51                   		mov.L	r5, r1
+ 168 00c5 3F AA 03                		rtsd	#12, r10-r10
+ 169                             	.LFE10:
+ 172                             	_knl_isTaskIndependent:
+ 173                             	.LFB16:
+ 174                             		.file 2 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_st
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    micro T-Kernel 3.00.03
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	cpu_status.h (RXv2)
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	CPU-Dependent Status Definition
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #ifndef _SYSDEPEND_CPU_CORE_STATUS_
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define _SYSDEPEND_CPU_CORE_STATUS_
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <tk/syslib.h>
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <sys/sysdef.h>
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include "sysdepend.h"
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End critical section
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_CRITICAL_SECTION	{ UINT _sr_ = disint();
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_CRITICAL_SECTION	if ( !isDI(_sr_)			\
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && knl_ctxtsk != knl_schedtsk		\
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_isTaskIndependent()		\
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_dispatch_disabled ) {		\
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 					knl_dispatch();			\
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				}					\
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				setint(_sr_); }
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End interrupt disable section
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_DISABLE_INTERRUPT	{ UINT _sr_ = disint();
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_DISABLE_INTERRUPT	setint(_sr_); }
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Interrupt enable/disable
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT	{ setint(0); }
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define DISABLE_INTERRUPT	{ disint(); }
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Enable interrupt nesting
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	Enable the interrupt that has a higher priority than 'level.'
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT_UPTO(level)	{ setint(level); }
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *  Task-independent control
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** IMPORT	W	knl_taskindp;		/* Task independent status */
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * If it is the task-independent part, TRUE
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** Inline BOOL knl_isTaskIndependent( void )
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** {
+ 175                             		.loc 2 64 1
+ 176 00c8 7E AA                   		push.l	r10
+ 177                             	.LCFI10:
+ 178 00ca EF 0A                   		mov.L	r0, r10
+ 179                             	.LCFI11:
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 	return ( knl_taskindp > 0 )? TRUE: FALSE;
+ 180                             		.loc 2 65 35
+ 181 00cc FB 52 00 00 00 00       		mov.L	#_knl_taskindp, r5
+ 182 00d2 EC 55                   		mov.L	[r5], r5
+ 183 00d4 61 05                   		cmp	#0, r5
+ 184 00d6 FC DB 5A                		scgt.L	r5
+ 185 00d9 5B 55                   		movu.B	r5, r5
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** }
+ 186                             		.loc 2 66 1
+ 187 00db EF 51                   		mov.L	r5, r1
+ 188 00dd 3F AA 01                		rtsd	#4, r10-r10
+ 189                             	.LFE16:
+ 192                             	_knl_ready_queue_calc_top_priority:
+ 193                             	.LFB21:
+ 194                             		.file 3 "../kernel/tkernel/ready_queue.h"
+   1:../kernel/tkernel/ready_queue.h **** /*
+   2:../kernel/tkernel/ready_queue.h ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/ready_queue.h ****  *    micro T-Kernel 3.00.00
+   4:../kernel/tkernel/ready_queue.h ****  *
+   5:../kernel/tkernel/ready_queue.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:../kernel/tkernel/ready_queue.h ****  *    This software is distributed under the T-License 2.1.
+   7:../kernel/tkernel/ready_queue.h ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/ready_queue.h ****  *
+   9:../kernel/tkernel/ready_queue.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:../kernel/tkernel/ready_queue.h ****  *
+  11:../kernel/tkernel/ready_queue.h ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/ready_queue.h ****  */
+  13:../kernel/tkernel/ready_queue.h **** 
+  14:../kernel/tkernel/ready_queue.h **** /*
+  15:../kernel/tkernel/ready_queue.h ****  *	ready_queue.h
+  16:../kernel/tkernel/ready_queue.h ****  *	Ready Queue Operation Routine
+  17:../kernel/tkernel/ready_queue.h ****  */
+  18:../kernel/tkernel/ready_queue.h **** 
+  19:../kernel/tkernel/ready_queue.h **** #ifndef _READY_QUEUE_
+  20:../kernel/tkernel/ready_queue.h **** #define _READY_QUEUE_
+  21:../kernel/tkernel/ready_queue.h **** 
+  22:../kernel/tkernel/ready_queue.h **** #include "tstdlib.h"
+  23:../kernel/tkernel/ready_queue.h **** 
+  24:../kernel/tkernel/ready_queue.h **** /*
+  25:../kernel/tkernel/ready_queue.h ****  * Definition of ready queue structure 
+  26:../kernel/tkernel/ready_queue.h ****  *	In the ready queue, the task queue 'tskque' is provided per priority.
+  27:../kernel/tkernel/ready_queue.h ****  *	The task TCB is registered onto queue with the applicable priority.
+  28:../kernel/tkernel/ready_queue.h ****  *	For effective ready queue search, the bitmap area 'bitmap' is provided
+  29:../kernel/tkernel/ready_queue.h ****  *	to indicate whether there are tasks in task queue per priority.
+  30:../kernel/tkernel/ready_queue.h ****  *	
+  31:../kernel/tkernel/ready_queue.h ****  *	Also, to search a task at the highest priority in the ready queue  
+  32:../kernel/tkernel/ready_queue.h ****  *    	effectively, put the highest task priority in the 'top_priority' field.
+  33:../kernel/tkernel/ready_queue.h ****  *	If the ready queue is empty, set the value in this field to NUM_TSKPRI. 
+  34:../kernel/tkernel/ready_queue.h ****  *	In this case, to return '0' with refering 'tskque[top_priority]',
+  35:../kernel/tkernel/ready_queue.h ****  *      there is 'null' field which is always '0'.
+  36:../kernel/tkernel/ready_queue.h ****  *
+  37:../kernel/tkernel/ready_queue.h ****  *	Multiple READY tasks with kernel lock do not exist at the same time.
+  38:../kernel/tkernel/ready_queue.h ****  */
+  39:../kernel/tkernel/ready_queue.h **** 
+  40:../kernel/tkernel/ready_queue.h **** #define BITMAPSZ	( sizeof(UINT) * 8 )
+  41:../kernel/tkernel/ready_queue.h **** #define NUM_BITMAP	( (NUM_TSKPRI + BITMAPSZ - 1) / BITMAPSZ )
+  42:../kernel/tkernel/ready_queue.h **** 
+  43:../kernel/tkernel/ready_queue.h **** typedef	struct ready_queue {
+  44:../kernel/tkernel/ready_queue.h **** 	INT	top_priority;		/* Highest priority in ready queue */
+  45:../kernel/tkernel/ready_queue.h **** 	QUEUE	tskque[NUM_TSKPRI];	/* Task queue per priority */
+  46:../kernel/tkernel/ready_queue.h **** 	TCB	*null;			/* When the ready queue is empty, */
+  47:../kernel/tkernel/ready_queue.h **** 	UINT	bitmap[NUM_BITMAP];	/* Bitmap area per priority */
+  48:../kernel/tkernel/ready_queue.h **** 	TCB	*klocktsk;	/* READY task with kernel lock */
+  49:../kernel/tkernel/ready_queue.h **** } RDYQUE;
+  50:../kernel/tkernel/ready_queue.h **** 
+  51:../kernel/tkernel/ready_queue.h **** IMPORT RDYQUE	knl_ready_queue;
+  52:../kernel/tkernel/ready_queue.h **** 
+  53:../kernel/tkernel/ready_queue.h **** #if NUM_TSKPRI <= INT_BITWIDTH
+  54:../kernel/tkernel/ready_queue.h **** Inline INT knl_ready_queue_calc_top_priority( UINT bitmap, INT pos )
+  55:../kernel/tkernel/ready_queue.h **** {
+ 195                             		.loc 3 55 1
+ 196 00e0 6E 7A                   		pushm	r7-r10
+ 197                             	.LCFI12:
+ 198 00e2 71 0A F8                		add	#-8, r0, r10
+ 199                             	.LCFI13:
+ 200 00e5 EF A0                   		mov.L	r10, r0
+ 201 00e7 E3 A1                   		mov.L	r1, [r10]
+ 202 00e9 E7 A2 01                		mov.L	r2, 4[r10]
+  56:../kernel/tkernel/ready_queue.h **** 	for ( ; pos < NUM_TSKPRI; pos++ ) {
+ 203                             		.loc 3 56 2
+ 204 00ec 2E 22                   		bra	.L14
+ 205                             	.L17:
+  57:../kernel/tkernel/ready_queue.h **** 		if ( bitmap & (1U << pos) ) {
+ 206                             		.loc 3 57 21
+ 207 00ee 66 14                   		mov.L	#1, r4
+ 208 00f0 ED A5 01                		mov.L	4[r10], r5
+ 209 00f3 EF 47                   		mov.L	r4, r7
+ 210 00f5 FD 62 57                		shll	r5, r7
+ 211 00f8 EF 75                   		mov.L	r7, r5
+ 212                             		.loc 3 57 15
+ 213 00fa EC A4                   		mov.L	[r10], r4
+ 214 00fc 53 45                   		and	r4, r5
+ 215                             		.loc 3 57 6
+ 216 00fe 61 05                   		cmp	#0, r5
+ 217 0100 16                      		beq	.L15
+  58:../kernel/tkernel/ready_queue.h **** 			return pos;
+ 218                             		.loc 3 58 11
+ 219 0101 ED A5 01                		mov.L	4[r10], r5
+ 220 0104 2E 15                   		bra	.L16
+ 221                             	.L15:
+  56:../kernel/tkernel/ready_queue.h **** 	for ( ; pos < NUM_TSKPRI; pos++ ) {
+ 222                             		.loc 3 56 31
+ 223 0106 ED A5 01                		mov.L	4[r10], r5
+ 224 0109 62 15                   		add	#1, r5
+ 225 010b E7 A5 01                		mov.L	r5, 4[r10]
+ 226                             	.L14:
+  56:../kernel/tkernel/ready_queue.h **** 	for ( ; pos < NUM_TSKPRI; pos++ ) {
+ 227                             		.loc 3 56 2 discriminator 1
+ 228 010e ED A5 01                		mov.L	4[r10], r5
+ 229 0111 75 55 1F                		cmp	#31, r5
+ 230 0114 2B DA                   		ble	.L17
+  59:../kernel/tkernel/ready_queue.h **** 		}
+  60:../kernel/tkernel/ready_queue.h **** 	}
+  61:../kernel/tkernel/ready_queue.h **** 	return NUM_TSKPRI;
+ 231                             		.loc 3 61 9
+ 232 0116 75 45 20                		mov.L	#32, r5
+ 233                             	.L16:
+  62:../kernel/tkernel/ready_queue.h **** }
+ 234                             		.loc 3 62 1
+ 235 0119 EF 51                   		mov.L	r5, r1
+ 236 011b 3F 7A 06                		rtsd	#24, r7-r10
+ 237                             	.LFE21:
+ 240                             	_knl_ready_queue_top:
+ 241                             	.LFB23:
+  63:../kernel/tkernel/ready_queue.h **** #endif
+  64:../kernel/tkernel/ready_queue.h **** 
+  65:../kernel/tkernel/ready_queue.h **** /*
+  66:../kernel/tkernel/ready_queue.h ****  * Ready queue initialization
+  67:../kernel/tkernel/ready_queue.h ****  */
+  68:../kernel/tkernel/ready_queue.h **** Inline void knl_ready_queue_initialize( RDYQUE *rq )
+  69:../kernel/tkernel/ready_queue.h **** {
+  70:../kernel/tkernel/ready_queue.h **** 	INT	i;
+  71:../kernel/tkernel/ready_queue.h **** 
+  72:../kernel/tkernel/ready_queue.h **** 	rq->top_priority = NUM_TSKPRI;
+  73:../kernel/tkernel/ready_queue.h **** 	for ( i = 0; i < NUM_TSKPRI; i++ ) {
+  74:../kernel/tkernel/ready_queue.h **** 		QueInit(&rq->tskque[i]);
+  75:../kernel/tkernel/ready_queue.h **** 	}
+  76:../kernel/tkernel/ready_queue.h **** 	rq->null = NULL;
+  77:../kernel/tkernel/ready_queue.h **** 	rq->klocktsk = NULL;
+  78:../kernel/tkernel/ready_queue.h **** 	knl_memset(rq->bitmap, 0, sizeof(rq->bitmap));
+  79:../kernel/tkernel/ready_queue.h **** }
+  80:../kernel/tkernel/ready_queue.h **** 
+  81:../kernel/tkernel/ready_queue.h **** /*
+  82:../kernel/tkernel/ready_queue.h ****  * Return the highest priority task in ready queue
+  83:../kernel/tkernel/ready_queue.h ****  */
+  84:../kernel/tkernel/ready_queue.h **** Inline TCB* knl_ready_queue_top( RDYQUE *rq )
+  85:../kernel/tkernel/ready_queue.h **** {
+ 242                             		.loc 3 85 1
+ 243 011e 7E AA                   		push.l	r10
+ 244                             	.LCFI14:
+ 245 0120 71 0A FC                		add	#-4, r0, r10
+ 246                             	.LCFI15:
+ 247 0123 EF A0                   		mov.L	r10, r0
+ 248 0125 E3 A1                   		mov.L	r1, [r10]
+  86:../kernel/tkernel/ready_queue.h **** 	/* If there is a task at kernel lock, that is the highest priority task */
+  87:../kernel/tkernel/ready_queue.h **** 	if ( rq->klocktsk != NULL ) {
+ 249                             		.loc 3 87 9
+ 250 0127 EC A5                   		mov.L	[r10], r5
+ 251 0129 ED 55 43                		mov.L	268[r5], r5
+ 252                             		.loc 3 87 5
+ 253 012c 61 05                   		cmp	#0, r5
+ 254 012e 10                      		beq	.L19
+  88:../kernel/tkernel/ready_queue.h **** 		return rq->klocktsk;
+ 255                             		.loc 3 88 12
+ 256 012f EC A5                   		mov.L	[r10], r5
+ 257 0131 ED 55 43                		mov.L	268[r5], r5
+ 258 0134 2E 10                   		bra	.L20
+ 259                             	.L19:
+  89:../kernel/tkernel/ready_queue.h **** 	}
+  90:../kernel/tkernel/ready_queue.h **** 
+  91:../kernel/tkernel/ready_queue.h **** 	return (TCB*)rq->tskque[rq->top_priority].next;
+ 260                             		.loc 3 91 28
+ 261 0136 EC A5                   		mov.L	[r10], r5
+ 262 0138 EC 55                   		mov.L	[r5], r5
+ 263                             		.loc 3 91 9
+ 264 013a EC A4                   		mov.L	[r10], r4
+ 265 013c 6C 35                   		shll	#3, r5
+ 266 013e 4B 45                   		add	r4, r5
+ 267 0140 62 45                   		add	#4, r5
+ 268 0142 EC 55                   		mov.L	[r5], r5
+ 269                             	.L20:
+  92:../kernel/tkernel/ready_queue.h **** }
+ 270                             		.loc 3 92 1
+ 271 0144 EF 51                   		mov.L	r5, r1
+ 272 0146 3F AA 02                		rtsd	#8, r10-r10
+ 273                             	.LFE23:
+ 276                             	_knl_ready_queue_insert_top:
+ 277                             	.LFB26:
+  93:../kernel/tkernel/ready_queue.h **** 
+  94:../kernel/tkernel/ready_queue.h **** /*
+  95:../kernel/tkernel/ready_queue.h ****  * Return the priority of the highest priority task in the ready queue
+  96:../kernel/tkernel/ready_queue.h ****  */
+  97:../kernel/tkernel/ready_queue.h **** Inline INT knl_ready_queue_top_priority( const RDYQUE *rq )
+  98:../kernel/tkernel/ready_queue.h **** {
+  99:../kernel/tkernel/ready_queue.h **** 	return rq->top_priority;
+ 100:../kernel/tkernel/ready_queue.h **** }
+ 101:../kernel/tkernel/ready_queue.h **** 
+ 102:../kernel/tkernel/ready_queue.h **** /*
+ 103:../kernel/tkernel/ready_queue.h ****  * Insert task in ready queue
+ 104:../kernel/tkernel/ready_queue.h ****  *	Insert it at the end of the same priority tasks with task priority 
+ 105:../kernel/tkernel/ready_queue.h ****  *	indicated with 'tcb'. Set the applicable bit in the bitmap area and 
+ 106:../kernel/tkernel/ready_queue.h ****  *	update 'top_priority' if necessary. When updating 'top_priority,' 
+ 107:../kernel/tkernel/ready_queue.h ****  *	return TRUE, otherwise FALSE.
+ 108:../kernel/tkernel/ready_queue.h ****  */
+ 109:../kernel/tkernel/ready_queue.h **** Inline BOOL knl_ready_queue_insert( RDYQUE *rq, TCB *tcb )
+ 110:../kernel/tkernel/ready_queue.h **** {
+ 111:../kernel/tkernel/ready_queue.h **** 	INT	priority = tcb->priority;
+ 112:../kernel/tkernel/ready_queue.h **** 
+ 113:../kernel/tkernel/ready_queue.h **** 	QueInsert(&tcb->tskque, &rq->tskque[priority]);
+ 114:../kernel/tkernel/ready_queue.h **** #if NUM_TSKPRI <= INT_BITWIDTH
+ 115:../kernel/tkernel/ready_queue.h **** 	rq->bitmap[0] |= (1U << priority);
+ 116:../kernel/tkernel/ready_queue.h **** #else
+ 117:../kernel/tkernel/ready_queue.h **** 	knl_bitset(rq->bitmap, priority);
+ 118:../kernel/tkernel/ready_queue.h **** #endif
+ 119:../kernel/tkernel/ready_queue.h **** 
+ 120:../kernel/tkernel/ready_queue.h **** 	if ( tcb->klocked ) {
+ 121:../kernel/tkernel/ready_queue.h **** 		rq->klocktsk = tcb;
+ 122:../kernel/tkernel/ready_queue.h **** 	}
+ 123:../kernel/tkernel/ready_queue.h **** 
+ 124:../kernel/tkernel/ready_queue.h **** 	if ( priority < rq->top_priority ) {
+ 125:../kernel/tkernel/ready_queue.h **** 		rq->top_priority = priority;
+ 126:../kernel/tkernel/ready_queue.h **** 		return TRUE;
+ 127:../kernel/tkernel/ready_queue.h **** 	}
+ 128:../kernel/tkernel/ready_queue.h **** 	return FALSE;
+ 129:../kernel/tkernel/ready_queue.h **** }
+ 130:../kernel/tkernel/ready_queue.h **** 
+ 131:../kernel/tkernel/ready_queue.h **** /*
+ 132:../kernel/tkernel/ready_queue.h ****  * Insert task at head in ready queue 
+ 133:../kernel/tkernel/ready_queue.h ****  */
+ 134:../kernel/tkernel/ready_queue.h **** Inline void knl_ready_queue_insert_top( RDYQUE *rq, TCB *tcb )
+ 135:../kernel/tkernel/ready_queue.h **** {
+ 278                             		.loc 3 135 1
+ 279 0149 6E 7A                   		pushm	r7-r10
+ 280                             	.LCFI16:
+ 281 014b 71 0A F4                		add	#-12, r0, r10
+ 282                             	.LCFI17:
+ 283 014e EF A0                   		mov.L	r10, r0
+ 284 0150 E7 A1 01                		mov.L	r1, 4[r10]
+ 285 0153 E7 A2 02                		mov.L	r2, 8[r10]
+ 136:../kernel/tkernel/ready_queue.h **** 	INT	priority = tcb->priority;
+ 286                             		.loc 3 136 20
+ 287 0156 ED A5 02                		mov.L	8[r10], r5
+ 288 0159 CD 55 26                		mov.B	38[r5], r5
+ 289                             		.loc 3 136 6
+ 290 015c 5B 55                   		movu.B	r5, r5
+ 291 015e E3 A5                   		mov.L	r5, [r10]
+ 137:../kernel/tkernel/ready_queue.h **** 
+ 138:../kernel/tkernel/ready_queue.h **** 	QueInsert(&tcb->tskque, rq->tskque[priority].next);
+ 292                             		.loc 3 138 2
+ 293 0160 ED A3 02                		mov.L	8[r10], r3
+ 294                             		.loc 3 138 46
+ 295 0163 ED A4 01                		mov.L	4[r10], r4
+ 296 0166 EC A5                   		mov.L	[r10], r5
+ 297 0168 6C 35                   		shll	#3, r5
+ 298 016a 4B 45                   		add	r4, r5
+ 299 016c 62 45                   		add	#4, r5
+ 300 016e EC 55                   		mov.L	[r5], r5
+ 301                             		.loc 3 138 2
+ 302 0170 EF 52                   		mov.L	r5, r2
+ 303 0172 EF 31                   		mov.L	r3, r1
+ 304 0174 39 C0 FE                		bsr	_QueInsert
+ 139:../kernel/tkernel/ready_queue.h **** #if NUM_TSKPRI <= INT_BITWIDTH
+ 140:../kernel/tkernel/ready_queue.h **** 	rq->bitmap[0] |= (1U << priority);
+ 305                             		.loc 3 140 16
+ 306 0177 ED A5 01                		mov.L	4[r10], r5
+ 307 017a ED 54 42                		mov.L	264[r5], r4
+ 308                             		.loc 3 140 23
+ 309 017d 66 13                   		mov.L	#1, r3
+ 310 017f EC A5                   		mov.L	[r10], r5
+ 311 0181 EF 37                   		mov.L	r3, r7
+ 312 0183 FD 62 57                		shll	r5, r7
+ 313 0186 EF 75                   		mov.L	r7, r5
+ 314                             		.loc 3 140 16
+ 315 0188 57 54                   		or	r5, r4
+ 316 018a ED A5 01                		mov.L	4[r10], r5
+ 317 018d E7 54 42                		mov.L	r4, 264[r5]
+ 141:../kernel/tkernel/ready_queue.h **** #else
+ 142:../kernel/tkernel/ready_queue.h **** 	knl_bitset(rq->bitmap, priority);
+ 143:../kernel/tkernel/ready_queue.h **** #endif
+ 144:../kernel/tkernel/ready_queue.h **** 
+ 145:../kernel/tkernel/ready_queue.h **** 	if ( tcb->klocked ) {
+ 318                             		.loc 3 145 7
+ 319 0190 ED A5 02                		mov.L	8[r10], r5
+ 320 0193 CD 55 28                		mov.B	40[r5], r5
+ 321 0196 64 25                   		and	#2, r5
+ 322                             		.loc 3 145 5
+ 323 0198 5B 55                   		movu.B	r5, r5
+ 324 019a 61 05                   		cmp	#0, r5
+ 325 019c 12                      		beq	.L22
+ 146:../kernel/tkernel/ready_queue.h **** 		rq->klocktsk = tcb;
+ 326                             		.loc 3 146 16
+ 327 019d ED A5 01                		mov.L	4[r10], r5
+ 328 01a0 ED A4 02                		mov.L	8[r10], r4
+ 329 01a3 E7 54 43                		mov.L	r4, 268[r5]
+ 330                             	.L22:
+ 147:../kernel/tkernel/ready_queue.h **** 	}
+ 148:../kernel/tkernel/ready_queue.h **** 
+ 149:../kernel/tkernel/ready_queue.h **** 	if ( priority < rq->top_priority ) {
+ 331                             		.loc 3 149 20
+ 332 01a6 ED A5 01                		mov.L	4[r10], r5
+ 333 01a9 EC 55                   		mov.L	[r5], r5
+ 334                             		.loc 3 149 5
+ 335 01ab EC A4                   		mov.L	[r10], r4
+ 336 01ad 47 54                   		cmp	r5, r4
+ 337 01af 28 09                   		bge	.L24
+ 150:../kernel/tkernel/ready_queue.h **** 		rq->top_priority = priority;
+ 338                             		.loc 3 150 20
+ 339 01b1 ED A5 01                		mov.L	4[r10], r5
+ 340 01b4 EC A4                   		mov.L	[r10], r4
+ 341 01b6 E3 54                   		mov.L	r4, [r5]
+ 342                             	.L24:
+ 151:../kernel/tkernel/ready_queue.h **** 	}
+ 152:../kernel/tkernel/ready_queue.h **** }
+ 343                             		.loc 3 152 1
+ 344 01b8 03                      		nop
+ 345 01b9 3F 7A 07                		rtsd	#28, r7-r10
+ 346                             	.LFE26:
+ 349                             	_knl_ready_queue_delete:
+ 350                             	.LFB27:
+ 153:../kernel/tkernel/ready_queue.h **** 
+ 154:../kernel/tkernel/ready_queue.h **** /*
+ 155:../kernel/tkernel/ready_queue.h ****  * Delete task from ready queue
+ 156:../kernel/tkernel/ready_queue.h ****  *	Take out TCB from the applicable priority task queue, and if the task 
+ 157:../kernel/tkernel/ready_queue.h ****  *	queue becomes empty, clear the applicable bit from the bitmap area.
+ 158:../kernel/tkernel/ready_queue.h ****  *	In addition, update 'top_priority' if the deleted task had the highest 
+ 159:../kernel/tkernel/ready_queue.h ****  *	priority. In such case, use the bitmap area to search the second
+ 160:../kernel/tkernel/ready_queue.h ****  *	highest priority task.
+ 161:../kernel/tkernel/ready_queue.h ****  */
+ 162:../kernel/tkernel/ready_queue.h **** Inline void knl_ready_queue_delete( RDYQUE *rq, TCB *tcb )
+ 163:../kernel/tkernel/ready_queue.h **** {
+ 351                             		.loc 3 163 1
+ 352 01bc 6E 7A                   		pushm	r7-r10
+ 353                             	.LCFI18:
+ 354 01be 71 0A F4                		add	#-12, r0, r10
+ 355                             	.LCFI19:
+ 356 01c1 EF A0                   		mov.L	r10, r0
+ 357 01c3 E7 A1 01                		mov.L	r1, 4[r10]
+ 358 01c6 E7 A2 02                		mov.L	r2, 8[r10]
+ 164:../kernel/tkernel/ready_queue.h **** 	INT	priority = tcb->priority;
+ 359                             		.loc 3 164 20
+ 360 01c9 ED A5 02                		mov.L	8[r10], r5
+ 361 01cc CD 55 26                		mov.B	38[r5], r5
+ 362                             		.loc 3 164 6
+ 363 01cf 5B 55                   		movu.B	r5, r5
+ 364 01d1 E3 A5                   		mov.L	r5, [r10]
+ 165:../kernel/tkernel/ready_queue.h **** #if NUM_TSKPRI > INT_BITWIDTH
+ 166:../kernel/tkernel/ready_queue.h **** 	INT	i;
+ 167:../kernel/tkernel/ready_queue.h **** #endif
+ 168:../kernel/tkernel/ready_queue.h **** 
+ 169:../kernel/tkernel/ready_queue.h **** 	if ( rq->klocktsk == tcb ) {
+ 365                             		.loc 3 169 9
+ 366 01d3 ED A5 01                		mov.L	4[r10], r5
+ 367 01d6 ED 55 43                		mov.L	268[r5], r5
+ 368                             		.loc 3 169 5
+ 369 01d9 ED A4 02                		mov.L	8[r10], r4
+ 370 01dc 47 54                   		cmp	r5, r4
+ 371 01de 18                      		bne	.L26
+ 170:../kernel/tkernel/ready_queue.h **** 		rq->klocktsk = NULL;
+ 372                             		.loc 3 170 16
+ 373 01df ED A5 01                		mov.L	4[r10], r5
+ 374 01e2 F9 56 43 00             		mov.L	#0, 268[r5]
+ 375                             	.L26:
+ 171:../kernel/tkernel/ready_queue.h **** 	}
+ 172:../kernel/tkernel/ready_queue.h **** 
+ 173:../kernel/tkernel/ready_queue.h **** 	QueRemove(&tcb->tskque);
+ 376                             		.loc 3 173 2
+ 377 01e6 ED A5 02                		mov.L	8[r10], r5
+ 378 01e9 EF 51                   		mov.L	r5, r1
+ 379 01eb 39 79 FE                		bsr	_QueRemove
+ 174:../kernel/tkernel/ready_queue.h **** 	if ( tcb->klockwait ) {
+ 380                             		.loc 3 174 7
+ 381 01ee ED A5 02                		mov.L	8[r10], r5
+ 382 01f1 CD 55 28                		mov.B	40[r5], r5
+ 383 01f4 64 15                   		and	#1, r5
+ 384                             		.loc 3 174 5
+ 385 01f6 5B 55                   		movu.B	r5, r5
+ 386 01f8 61 05                   		cmp	#0, r5
+ 387 01fa 20 0F                   		beq	.L27
+ 175:../kernel/tkernel/ready_queue.h **** 		/* Delete from kernel lock wait queue */
+ 176:../kernel/tkernel/ready_queue.h **** 		tcb->klockwait = FALSE;
+ 388                             		.loc 3 176 18
+ 389 01fc ED A4 02                		mov.L	8[r10], r4
+ 390 01ff CD 45 28                		mov.B	40[r4], r5
+ 391 0202 7A 05                   		bclr	#0, r5
+ 392 0204 C7 45 28                		mov.B	r5, 40[r4]
+ 177:../kernel/tkernel/ready_queue.h **** 		return;
+ 393                             		.loc 3 177 3
+ 394 0207 2E 59                   		bra	.L25
+ 395                             	.L27:
+ 178:../kernel/tkernel/ready_queue.h **** 	}
+ 179:../kernel/tkernel/ready_queue.h **** 	if ( !isQueEmpty(&rq->tskque[priority]) ) {
+ 396                             		.loc 3 179 8
+ 397 0209 EC A5                   		mov.L	[r10], r5
+ 398 020b 6C 35                   		shll	#3, r5
+ 399 020d 62 45                   		add	#4, r5
+ 400 020f ED A4 01                		mov.L	4[r10], r4
+ 401 0212 4B 45                   		add	r4, r5
+ 402 0214 EF 51                   		mov.L	r5, r1
+ 403 0216 39 03 FE                		bsr	_isQueEmpty
+ 404 0219 EF 15                   		mov.L	r1, r5
+ 405                             		.loc 3 179 5
+ 406 021b 61 05                   		cmp	#0, r5
+ 407 021d 20 3E                   		beq	.L31
+ 180:../kernel/tkernel/ready_queue.h **** 		return;
+ 181:../kernel/tkernel/ready_queue.h **** 	}
+ 182:../kernel/tkernel/ready_queue.h **** 
+ 183:../kernel/tkernel/ready_queue.h **** #if NUM_TSKPRI <= INT_BITWIDTH
+ 184:../kernel/tkernel/ready_queue.h **** 	rq->bitmap[0] &= ~(1U << priority);
+ 408                             		.loc 3 184 16
+ 409 021f ED A5 01                		mov.L	4[r10], r5
+ 410 0222 ED 53 42                		mov.L	264[r5], r3
+ 411                             		.loc 3 184 24
+ 412 0225 66 14                   		mov.L	#1, r4
+ 413 0227 EC A5                   		mov.L	[r10], r5
+ 414 0229 EF 47                   		mov.L	r4, r7
+ 415 022b FD 62 57                		shll	r5, r7
+ 416 022e EF 75                   		mov.L	r7, r5
+ 417                             		.loc 3 184 19
+ 418 0230 7E 05                   		not	r5
+ 419                             		.loc 3 184 16
+ 420 0232 FF 44 53                		and	r5, r3, r4
+ 421 0235 ED A5 01                		mov.L	4[r10], r5
+ 422 0238 E7 54 42                		mov.L	r4, 264[r5]
+ 185:../kernel/tkernel/ready_queue.h **** #else
+ 186:../kernel/tkernel/ready_queue.h **** 	knl_bitclr(rq->bitmap, priority);
+ 187:../kernel/tkernel/ready_queue.h **** #endif
+ 188:../kernel/tkernel/ready_queue.h **** 	if ( priority != rq->top_priority ) {
+ 423                             		.loc 3 188 21
+ 424 023b ED A5 01                		mov.L	4[r10], r5
+ 425 023e EC 55                   		mov.L	[r5], r5
+ 426                             		.loc 3 188 5
+ 427 0240 EC A4                   		mov.L	[r10], r4
+ 428 0242 47 54                   		cmp	r5, r4
+ 429 0244 21 19                   		bne	.L32
+ 189:../kernel/tkernel/ready_queue.h **** 		return;
+ 190:../kernel/tkernel/ready_queue.h **** 	}
+ 191:../kernel/tkernel/ready_queue.h **** 
+ 192:../kernel/tkernel/ready_queue.h **** #if NUM_TSKPRI <= INT_BITWIDTH
+ 193:../kernel/tkernel/ready_queue.h **** 	rq->top_priority = knl_ready_queue_calc_top_priority(rq->bitmap[0], priority);
+ 430                             		.loc 3 193 21
+ 431 0246 ED A5 01                		mov.L	4[r10], r5
+ 432 0249 ED 55 42                		mov.L	264[r5], r5
+ 433 024c EC A2                   		mov.L	[r10], r2
+ 434 024e EF 51                   		mov.L	r5, r1
+ 435 0250 39 90 FE                		bsr	_knl_ready_queue_calc_top_priority
+ 436 0253 EF 14                   		mov.L	r1, r4
+ 437                             		.loc 3 193 19
+ 438 0255 ED A5 01                		mov.L	4[r10], r5
+ 439 0258 E3 54                   		mov.L	r4, [r5]
+ 440 025a 0E                      		bra	.L25
+ 441                             	.L31:
+ 180:../kernel/tkernel/ready_queue.h **** 	}
+ 442                             		.loc 3 180 3
+ 443 025b 03                      		nop
+ 444 025c 0C                      		bra	.L25
+ 445                             	.L32:
+ 189:../kernel/tkernel/ready_queue.h **** 		return;
+ 446                             		.loc 3 189 3
+ 447 025d 03                      		nop
+ 448 025e EF 00                   		.balign 8,3,2
+ 449                             	.L25:
+ 194:../kernel/tkernel/ready_queue.h **** #else
+ 195:../kernel/tkernel/ready_queue.h **** 	i = knl_bitsearch1(rq->bitmap, priority, NUM_TSKPRI - priority);
+ 196:../kernel/tkernel/ready_queue.h **** 	if ( i >= 0 ) {
+ 197:../kernel/tkernel/ready_queue.h **** 		rq->top_priority = priority + i;
+ 198:../kernel/tkernel/ready_queue.h **** 	} else {
+ 199:../kernel/tkernel/ready_queue.h **** 		rq->top_priority = NUM_TSKPRI;
+ 200:../kernel/tkernel/ready_queue.h **** 	}
+ 201:../kernel/tkernel/ready_queue.h **** #endif
+ 202:../kernel/tkernel/ready_queue.h **** }
+ 450                             		.loc 3 202 1
+ 451 0260 3F 7A 07                		rtsd	#28, r7-r10
+ 452                             	.LFE27:
+ 454                             		.global	_knl_LockOBJ
+ 456                             	_knl_LockOBJ:
+ 457                             	.LFB30:
+ 458                             		.file 4 "../kernel/tkernel/klock.c"
+   1:../kernel/tkernel/klock.c **** /*
+   2:../kernel/tkernel/klock.c ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/klock.c ****  *    micro T-Kernel 3.00.00
+   4:../kernel/tkernel/klock.c ****  *
+   5:../kernel/tkernel/klock.c ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:../kernel/tkernel/klock.c ****  *    This software is distributed under the T-License 2.1.
+   7:../kernel/tkernel/klock.c ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/klock.c ****  *
+   9:../kernel/tkernel/klock.c ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:../kernel/tkernel/klock.c ****  *
+  11:../kernel/tkernel/klock.c ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/klock.c ****  */
+  13:../kernel/tkernel/klock.c **** /*
+  14:../kernel/tkernel/klock.c ****  *	klock.c		Kernel Lock
+  15:../kernel/tkernel/klock.c ****  *	Locked task is the highest run priority.
+  16:../kernel/tkernel/klock.c ****  *	Unable to nest lock.
+  17:../kernel/tkernel/klock.c ****  */
+  18:../kernel/tkernel/klock.c **** 
+  19:../kernel/tkernel/klock.c **** #include "kernel.h"
+  20:../kernel/tkernel/klock.c **** #include "klock.h"
+  21:../kernel/tkernel/klock.c **** #include "ready_queue.h"
+  22:../kernel/tkernel/klock.c **** 
+  23:../kernel/tkernel/klock.c **** /*
+  24:../kernel/tkernel/klock.c ****  * Object lock
+  25:../kernel/tkernel/klock.c ****  *	Do not call from critical section
+  26:../kernel/tkernel/klock.c ****  */
+  27:../kernel/tkernel/klock.c **** EXPORT void knl_LockOBJ( OBJLOCK *loc )
+  28:../kernel/tkernel/klock.c **** {
+ 459                             		.loc 4 28 1
+ 460 0263 7E AA                   		push.l	r10
+ 461                             	.LCFI20:
+ 462 0265 71 0A F4                		add	#-12, r0, r10
+ 463                             	.LCFI21:
+ 464 0268 EF A0                   		mov.L	r10, r0
+ 465 026a E7 A1 02                		mov.L	r1, 8[r10]
+ 466                             	.L34:
+ 467                             	.LBB2:
+  29:../kernel/tkernel/klock.c **** 	BOOL	klocked;
+  30:../kernel/tkernel/klock.c **** 
+  31:../kernel/tkernel/klock.c ****   retry:
+  32:../kernel/tkernel/klock.c **** 	BEGIN_CRITICAL_SECTION;
+ 468                             		.loc 4 32 2
+ 469 026d 05 00 00 00             		bsr	_disint
+ 470 0271 E7 A1 01                		mov.L	r1, 4[r10]
+  33:../kernel/tkernel/klock.c **** 	klocked = knl_ctxtsk->klocked;
+ 471                             		.loc 4 33 22
+ 472 0274 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 473 027a EC 55                   		mov.L	[r5], r5
+ 474 027c AA D5                   		mov.L	40[r5], r5
+ 475 027e 68 15                   		shlr	#1, r5
+ 476 0280 64 15                   		and	#1, r5
+ 477                             		.loc 4 33 10
+ 478 0282 5B 55                   		movu.B	r5, r5
+ 479 0284 E3 A5                   		mov.L	r5, [r10]
+  34:../kernel/tkernel/klock.c **** 	if ( !klocked ) {
+ 480                             		.loc 4 34 5
+ 481 0286 EC A5                   		mov.L	[r10], r5
+ 482 0288 61 05                   		cmp	#0, r5
+ 483 028a 3B 82 00                		bne	.L35
+  35:../kernel/tkernel/klock.c **** 		if ( loc->wtskq.next == NULL ) {
+ 484                             		.loc 4 35 18
+ 485 028d ED A5 02                		mov.L	8[r10], r5
+ 486 0290 EC 55                   		mov.L	[r5], r5
+ 487                             		.loc 4 35 6
+ 488 0292 61 05                   		cmp	#0, r5
+ 489 0294 21 30                   		bne	.L36
+  36:../kernel/tkernel/klock.c **** 			/* Lock */
+  37:../kernel/tkernel/klock.c **** 			QueInit(&loc->wtskq);
+ 490                             		.loc 4 37 4
+ 491 0296 ED A5 02                		mov.L	8[r10], r5
+ 492 0299 EF 51                   		mov.L	r5, r1
+ 493 029b 39 65 FD                		bsr	_QueInit
+  38:../kernel/tkernel/klock.c **** 
+  39:../kernel/tkernel/klock.c **** 			knl_ctxtsk->klocked = klocked = TRUE;
+ 494                             		.loc 4 39 34
+ 495 029e F8 A6 01                		mov.L	#1, [r10]
+ 496                             		.loc 4 39 14
+ 497 02a1 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 498 02a7 EC 54                   		mov.L	[r5], r4
+ 499                             		.loc 4 39 24
+ 500 02a9 CD 45 28                		mov.B	40[r4], r5
+ 501 02ac 78 15                   		bset	#1, r5
+ 502 02ae C7 45 28                		mov.B	r5, 40[r4]
+  40:../kernel/tkernel/klock.c **** 			knl_ready_queue.klocktsk = knl_ctxtsk;
+ 503                             		.loc 4 40 29
+ 504 02b1 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 505 02b7 EC 54                   		mov.L	[r5], r4
+ 506 02b9 FB 52 00 00 00 00       		mov.L	#_knl_ready_queue, r5
+ 507 02bf E7 54 43                		mov.L	r4, 268[r5]
+ 508 02c2 2E 4A                   		bra	.L35
+ 509                             	.L36:
+  41:../kernel/tkernel/klock.c **** 		} else {
+  42:../kernel/tkernel/klock.c **** 			/* Ready for lock */
+  43:../kernel/tkernel/klock.c **** 			knl_ready_queue_delete(&knl_ready_queue, knl_ctxtsk);
+ 510                             		.loc 4 43 4
+ 511 02c4 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 512 02ca EC 55                   		mov.L	[r5], r5
+ 513 02cc EF 52                   		mov.L	r5, r2
+ 514 02ce FB 12 00 00 00 00       		mov.L	#_knl_ready_queue, r1
+ 515 02d4 39 E8 FE                		bsr	_knl_ready_queue_delete
+  44:../kernel/tkernel/klock.c **** 			knl_ctxtsk->klockwait = TRUE;
+ 516                             		.loc 4 44 14
+ 517 02d7 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 518 02dd EC 54                   		mov.L	[r5], r4
+ 519                             		.loc 4 44 26
+ 520 02df CD 45 28                		mov.B	40[r4], r5
+ 521 02e2 78 05                   		bset	#0, r5
+ 522 02e4 C7 45 28                		mov.B	r5, 40[r4]
+  45:../kernel/tkernel/klock.c **** 			QueInsert(&knl_ctxtsk->tskque, &loc->wtskq);
+ 523                             		.loc 4 45 25
+ 524 02e7 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 525 02ed EC 55                   		mov.L	[r5], r5
+ 526                             		.loc 4 45 4
+ 527 02ef ED A4 02                		mov.L	8[r10], r4
+ 528 02f2 EF 42                   		mov.L	r4, r2
+ 529 02f4 EF 51                   		mov.L	r5, r1
+ 530 02f6 39 3E FD                		bsr	_QueInsert
+  46:../kernel/tkernel/klock.c **** 
+  47:../kernel/tkernel/klock.c **** 			knl_schedtsk = knl_ready_queue_top(&knl_ready_queue);
+ 531                             		.loc 4 47 19
+ 532 02f9 FB 12 00 00 00 00       		mov.L	#_knl_ready_queue, r1
+ 533 02ff 39 1F FE                		bsr	_knl_ready_queue_top
+ 534 0302 EF 14                   		mov.L	r1, r4
+ 535                             		.loc 4 47 17
+ 536 0304 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 537 030a E3 54                   		mov.L	r4, [r5]
+ 538                             	.L35:
+  48:../kernel/tkernel/klock.c **** 		}
+  49:../kernel/tkernel/klock.c **** 	}
+  50:../kernel/tkernel/klock.c **** 	END_CRITICAL_SECTION;
+ 539                             		.loc 4 50 2
+ 540 030c ED A5 01                		mov.L	4[r10], r5
+ 541 030f 61 F5                   		cmp	#15, r5
+ 542 0311 20 2F                   		beq	.L37
+ 543                             		.loc 4 50 2 is_stmt 0 discriminator 1
+ 544 0313 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 545 0319 EC 54                   		mov.L	[r5], r4
+ 546 031b FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 547 0321 EC 55                   		mov.L	[r5], r5
+ 548 0323 47 54                   		cmp	r5, r4
+ 549 0325 20 1B                   		beq	.L37
+ 550                             		.loc 4 50 2 discriminator 3
+ 551 0327 39 A1 FD                		bsr	_knl_isTaskIndependent
+ 552 032a EF 15                   		mov.L	r1, r5
+ 553 032c 61 05                   		cmp	#0, r5
+ 554 032e 21 12                   		bne	.L37
+ 555                             		.loc 4 50 2 discriminator 5
+ 556 0330 FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 557 0336 EC 55                   		mov.L	[r5], r5
+ 558 0338 61 05                   		cmp	#0, r5
+ 559 033a 1E                      		bne	.L37
+ 560                             		.loc 4 50 2 discriminator 7
+ 561 033b 05 00 00 00             		bsr	_knl_dispatch
+ 562 033f 03                      		.balign 8,3,1
+ 563                             	.L37:
+ 564                             		.loc 4 50 2 discriminator 9
+ 565 0340 ED A1 01                		mov.L	4[r10], r1
+ 566 0343 05 00 00 00             		bsr	_setint
+ 567                             	.LBE2:
+  51:../kernel/tkernel/klock.c **** 	/* Since wait could be freed without getting lock, 
+  52:../kernel/tkernel/klock.c **** 	   need to re-try if lock is not got */
+  53:../kernel/tkernel/klock.c **** 	if ( !klocked ) {
+ 568                             		.loc 4 53 5 is_stmt 1 discriminator 9
+ 569 0347 EC A5                   		mov.L	[r10], r5
+ 570 0349 61 05                   		cmp	#0, r5
+ 571 034b 1C                      		bne	.L39
+  54:../kernel/tkernel/klock.c **** 		goto retry;
+ 572                             		.loc 4 54 3
+ 573 034c 38 21 FF                		bra	.L34
+ 574                             	.L39:
+  55:../kernel/tkernel/klock.c **** 	}
+  56:../kernel/tkernel/klock.c **** }
+ 575                             		.loc 4 56 1
+ 576 034f 03                      		nop
+ 577 0350 3F AA 04                		rtsd	#16, r10-r10
+ 578                             	.LFE30:
+ 580                             		.global	_knl_UnlockOBJ
+ 582                             	_knl_UnlockOBJ:
+ 583                             	.LFB31:
+  57:../kernel/tkernel/klock.c **** 
+  58:../kernel/tkernel/klock.c **** /*
+  59:../kernel/tkernel/klock.c ****  * Object unlock
+  60:../kernel/tkernel/klock.c ****  *	It may be called from a critical section.
+  61:../kernel/tkernel/klock.c ****  */
+  62:../kernel/tkernel/klock.c **** EXPORT void knl_UnlockOBJ( OBJLOCK *loc )
+  63:../kernel/tkernel/klock.c **** {
+ 584                             		.loc 4 63 1
+ 585 0353 7E AA                   		push.l	r10
+ 586                             	.LCFI22:
+ 587 0355 71 0A F4                		add	#-12, r0, r10
+ 588                             	.LCFI23:
+ 589 0358 EF A0                   		mov.L	r10, r0
+ 590 035a E7 A1 02                		mov.L	r1, 8[r10]
+ 591                             	.LBB3:
+  64:../kernel/tkernel/klock.c **** 	TCB	*tcb;
+  65:../kernel/tkernel/klock.c **** 
+  66:../kernel/tkernel/klock.c **** 	BEGIN_CRITICAL_SECTION;
+ 592                             		.loc 4 66 2
+ 593 035d 05 00 00 00             		bsr	_disint
+ 594 0361 E3 A1                   		mov.L	r1, [r10]
+  67:../kernel/tkernel/klock.c **** 	knl_ctxtsk->klocked = FALSE;
+ 595                             		.loc 4 67 12
+ 596 0363 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 597 0369 EC 54                   		mov.L	[r5], r4
+ 598                             		.loc 4 67 22
+ 599 036b CD 45 28                		mov.B	40[r4], r5
+ 600 036e 7A 15                   		bclr	#1, r5
+ 601 0370 C7 45 28                		mov.B	r5, 40[r4]
+  68:../kernel/tkernel/klock.c **** 	knl_ready_queue.klocktsk = NULL;
+ 602                             		.loc 4 68 27
+ 603 0373 FB 52 00 00 00 00       		mov.L	#_knl_ready_queue, r5
+ 604 0379 F9 56 43 00             		mov.L	#0, 268[r5]
+  69:../kernel/tkernel/klock.c **** 
+  70:../kernel/tkernel/klock.c **** 	tcb = (TCB*)QueRemoveNext(&loc->wtskq);
+ 605                             		.loc 4 70 14
+ 606 037d ED A5 02                		mov.L	8[r10], r5
+ 607 0380 EF 51                   		mov.L	r5, r1
+ 608 0382 39 0D FD                		bsr	_QueRemoveNext
+ 609 0385 E7 A1 01                		mov.L	r1, 4[r10]
+  71:../kernel/tkernel/klock.c **** 	if ( tcb == NULL ) {
+ 610                             		.loc 4 71 5
+ 611 0388 ED A5 01                		mov.L	4[r10], r5
+ 612 038b 61 05                   		cmp	#0, r5
+ 613 038d 19                      		bne	.L41
+  72:../kernel/tkernel/klock.c **** 		/* Free lock */
+  73:../kernel/tkernel/klock.c **** 		loc->wtskq.next = NULL;
+ 614                             		.loc 4 73 19
+ 615 038e ED A5 02                		mov.L	8[r10], r5
+ 616 0391 F8 56 00                		mov.L	#0, [r5]
+ 617 0394 2E 24                   		bra	.L42
+ 618                             	.L41:
+  74:../kernel/tkernel/klock.c **** 	} else {
+  75:../kernel/tkernel/klock.c **** 		/* Wake lock wait task */
+  76:../kernel/tkernel/klock.c **** 		tcb->klockwait = FALSE;
+ 619                             		.loc 4 76 18
+ 620 0396 ED A4 01                		mov.L	4[r10], r4
+ 621 0399 CD 45 28                		mov.B	40[r4], r5
+ 622 039c 7A 05                   		bclr	#0, r5
+ 623 039e C7 45 28                		mov.B	r5, 40[r4]
+  77:../kernel/tkernel/klock.c **** 		tcb->klocked = TRUE;
+ 624                             		.loc 4 77 16
+ 625 03a1 ED A4 01                		mov.L	4[r10], r4
+ 626 03a4 CD 45 28                		mov.B	40[r4], r5
+ 627 03a7 78 15                   		bset	#1, r5
+ 628 03a9 C7 45 28                		mov.B	r5, 40[r4]
+  78:../kernel/tkernel/klock.c **** 		knl_ready_queue_insert_top(&knl_ready_queue, tcb);
+ 629                             		.loc 4 78 3
+ 630 03ac ED A2 01                		mov.L	4[r10], r2
+ 631 03af FB 12 00 00 00 00       		mov.L	#_knl_ready_queue, r1
+ 632 03b5 39 94 FD                		bsr	_knl_ready_queue_insert_top
+ 633                             	.L42:
+  79:../kernel/tkernel/klock.c **** 	}
+  80:../kernel/tkernel/klock.c **** 
+  81:../kernel/tkernel/klock.c **** 	knl_schedtsk = knl_ready_queue_top(&knl_ready_queue);
+ 634                             		.loc 4 81 17
+ 635 03b8 FB 12 00 00 00 00       		mov.L	#_knl_ready_queue, r1
+ 636 03be 39 60 FD                		bsr	_knl_ready_queue_top
+ 637 03c1 EF 14                   		mov.L	r1, r4
+ 638                             		.loc 4 81 15
+ 639 03c3 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 640 03c9 E3 54                   		mov.L	r4, [r5]
+  82:../kernel/tkernel/klock.c **** 	END_CRITICAL_SECTION;
+ 641                             		.loc 4 82 2
+ 642 03cb EC A5                   		mov.L	[r10], r5
+ 643 03cd 61 F5                   		cmp	#15, r5
+ 644 03cf 20 2E                   		beq	.L43
+ 645                             		.loc 4 82 2 is_stmt 0 discriminator 1
+ 646 03d1 FB 52 00 00 00 00       		mov.L	#_knl_ctxtsk, r5
+ 647 03d7 EC 54                   		mov.L	[r5], r4
+ 648 03d9 FB 52 00 00 00 00       		mov.L	#_knl_schedtsk, r5
+ 649 03df EC 55                   		mov.L	[r5], r5
+ 650 03e1 47 54                   		cmp	r5, r4
+ 651 03e3 20 1A                   		beq	.L43
+ 652                             		.loc 4 82 2 discriminator 3
+ 653 03e5 39 E3 FC                		bsr	_knl_isTaskIndependent
+ 654 03e8 EF 15                   		mov.L	r1, r5
+ 655 03ea 61 05                   		cmp	#0, r5
+ 656 03ec 21 11                   		bne	.L43
+ 657                             		.loc 4 82 2 discriminator 5
+ 658 03ee FB 52 00 00 00 00       		mov.L	#_knl_dispatch_disabled, r5
+ 659 03f4 EC 55                   		mov.L	[r5], r5
+ 660 03f6 61 05                   		cmp	#0, r5
+ 661 03f8 1D                      		bne	.L43
+ 662                             		.loc 4 82 2 discriminator 7
+ 663 03f9 05 00 00 00             		bsr	_knl_dispatch
+ 664                             		.balign 8,3,1
+ 665                             	.L43:
+ 666                             		.loc 4 82 2 discriminator 9
+ 667 03fd EC A1                   		mov.L	[r10], r1
+ 668 03ff 05 00 00 00             		bsr	_setint
+ 669                             	.LBE3:
+  83:../kernel/tkernel/klock.c **** }
+ 670                             		.loc 4 83 1 is_stmt 1 discriminator 9
+ 671 0403 03                      		nop
+ 672 0404 3F AA 04                		rtsd	#16, r10-r10
+ 673                             	.LFE31:
+ 938                             	.Letext0:
+ 939                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 940                             		.file 6 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 941                             		.file 7 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 942                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 943                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 944                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 945                             		.file 11 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysde
+ 946                             		.file 12 "../kernel/tkernel/klock.h"

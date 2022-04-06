@@ -1,0 +1,536 @@
+   1                             		.file	"hw_setting.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   5                             	_out_w:
+   6                             	.LFB0:
+   7                             		.file 1 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include\\tk\\sysdepend\\cpu\\rx65n\\syslib
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    micro T-Kernel 3.00.06.B0
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Copyright (C) 2022 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	syslib.h
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	micro T-Kernel System Library  (RX65N depended)
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #ifndef __TK_SYSLIB_CPU_DEPEND_H__
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define __TK_SYSLIB_CPU_DEPEND_H__
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #include "../core/rxv2/syslib.h"
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*----------------------------------------------------------------------*/
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Interrupt controller Control
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LEVEL	0x0004		/* Level trigger */
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_EDGE		0x0000		/* Edge trigger */
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_HI		0x0000		/* H level/Interrupt at rising edge */
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LOW		0x0001		/* L level/Interrupt at falling edge */
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_BOTH		0x0003		/* L level/Interrupt at both edge */
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* ------------------------------------------------------------------------ */
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * I/O port access
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	for memory mapped I/O
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_w( UW port, UW data )
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+   8                             		.loc 1 42 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A F8                		add	#-8, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E3 A1                   		mov.L	r1, [r10]
+  15 0009 E7 A2 01                		mov.L	r2, 4[r10]
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UW*)port = data;
+  16                             		.loc 1 43 3
+  17 000c EC A5                   		mov.L	[r10], r5
+  18                             		.loc 1 43 14
+  19 000e ED A4 01                		mov.L	4[r10], r4
+  20 0011 E3 54                   		mov.L	r4, [r5]
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  21                             		.loc 1 44 1
+  22 0013 03                      		nop
+  23 0014 3F AA 03                		rtsd	#12, r10-r10
+  24                             	.LFE0:
+  27                             	_out_h:
+  28                             	.LFB1:
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_h( UW port, UH data )
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  29                             		.loc 1 46 1
+  30 0017 7E AA                   		push.l	r10
+  31                             	.LCFI2:
+  32 0019 71 0A F8                		add	#-8, r0, r10
+  33                             	.LCFI3:
+  34 001c EF A0                   		mov.L	r10, r0
+  35 001e E3 A1                   		mov.L	r1, [r10]
+  36 0020 D7 A2 02                		mov.W	r2, 4[r10]
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UH*)port = data;
+  37                             		.loc 1 47 3
+  38 0023 EC A5                   		mov.L	[r10], r5
+  39                             		.loc 1 47 14
+  40 0025 DD A4 02                		mov.W	4[r10], r4
+  41 0028 D3 54                   		mov.W	r4, [r5]
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  42                             		.loc 1 48 1
+  43 002a 03                      		nop
+  44 002b 3F AA 03                		rtsd	#12, r10-r10
+  45                             	.LFE1:
+  48                             	_out_b:
+  49                             	.LFB2:
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_b( UW port, UB data )
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  50                             		.loc 1 50 1
+  51 002e 7E AA                   		push.l	r10
+  52                             	.LCFI4:
+  53 0030 71 0A F8                		add	#-8, r0, r10
+  54                             	.LCFI5:
+  55 0033 EF A0                   		mov.L	r10, r0
+  56 0035 E3 A1                   		mov.L	r1, [r10]
+  57 0037 C7 A2 04                		mov.B	r2, 4[r10]
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UB*)port = data;
+  58                             		.loc 1 51 3
+  59 003a EC A5                   		mov.L	[r10], r5
+  60                             		.loc 1 51 14
+  61 003c CD A4 04                		mov.B	4[r10], r4
+  62 003f C3 54                   		mov.B	r4, [r5]
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  63                             		.loc 1 52 1
+  64 0041 03                      		nop
+  65 0042 3F AA 03                		rtsd	#12, r10-r10
+  66                             	.LFE2:
+  68                             		.section C,"a",@progbits
+  69                             		.p2align 2
+  70                             		.balign 4
+  73                             	_mstop_tbl:
+  74 0000 10 00 08 00             		.long	0x80010
+  75 0004 CF 7F F5 46             		.long	0x46f57fcf
+  76 0008 14 00 08 00             		.long	0x80014
+  77 000c FF FF DF FF             		.long	-2097153
+  78 0010 18 00 08 00             		.long	0x80018
+  79 0014 00 00 FF F7             		.long	-134283264
+  80 0018 1C 00 08 00             		.long	0x8001c
+  81 001c 00 FF FF FF             		.long	-256
+  82 0020 00 00 00 00             		.long	0
+  83 0024 00 00 00 00             		.long	0
+  84                             		.balign 4
+  87                             	_pinfnc_tbl:
+  88 0028 D1 C1 08 00             		.long	0x8c1d1
+  89 002c 0A 00 00 00             		.long	10
+  90 0030 D2 C1 08 00             		.long	0x8c1d2
+  91 0034 0A 00 00 00             		.long	10
+  92 0038 4A C1 08 00             		.long	0x8c14a
+  93 003c 0F 00 00 00             		.long	15
+  94 0040 4B C1 08 00             		.long	0x8c14b
+  95 0044 0F 00 00 00             		.long	15
+  96 0048 60 C1 08 00             		.long	0x8c160
+  97 004c 80 00 00 00             		.long	0x80
+  98 0050 00 00 00 00             		.long	0
+  99 0054 00 00 00 00             		.long	0
+ 100                             		.balign 4
+ 103                             	_portmode_tbl:
+ 104 0058 72 C0 08 00             		.long	0x8c072
+ 105 005c 06 00 00 00             		.long	6
+ 106 0060 32 C0 08 00             		.long	0x8c032
+ 107 0064 04 00 00 00             		.long	4
+ 108 0068 12 C0 08 00             		.long	0x8c012
+ 109 006c 04 00 00 00             		.long	4
+ 110 0070 61 C0 08 00             		.long	0x8c061
+ 111 0074 0C 00 00 00             		.long	12
+ 112 0078 64 C0 08 00             		.long	0x8c064
+ 113 007c 00 00 00 00             		.long	0
+ 114 0080 04 C0 08 00             		.long	0x8c004
+ 115 0084 00 00 00 00             		.long	0
+ 116 0088 00 00 00 00             		.long	0
+ 117 008c 00 00 00 00             		.long	0
+ 118                             		.section P,"ax"
+ 119                             		.global	_knl_startup_hw
+ 121                             	_knl_startup_hw:
+ 122                             	.LFB19:
+ 123                             		.file 2 "../kernel/sysdepend/rtb_rx65n/hw_setting.c"
+   1:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /*
+   2:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *----------------------------------------------------------------------
+   3:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *    micro T-Kernel 3.00.06.B0
+   4:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *
+   5:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *    Copyright (C) 2022 by Ken Sakamura.
+   6:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *    This software is distributed under the T-License 2.2.
+   7:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *----------------------------------------------------------------------
+   8:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *
+   9:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *
+  11:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *----------------------------------------------------------------------
+  12:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+  13:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  14:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #include <sys/machine.h>
+  15:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #ifdef RTB_RX65N
+  16:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  17:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /*
+  18:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *	hw_setting.c (Renesas Starter Kit+ for RX65N)
+  19:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *	startup / shoutdown processing for hardware
+  20:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *	
+  21:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *	Pin function Setting (for IoT-Engine Starter board)
+  22:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *		PJ1  : SCI8 RXD8
+  23:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *		PJ2  : SCI8 TXD8
+  24:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *
+  25:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *		(USE_SDEV_DRV)
+  26:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *		P12  : RIIC0 SCL0
+  27:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *		P13  : RIIC0 SDA0
+  28:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *		P40  : AN000
+  29:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+  30:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  31:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #include "kernel.h"
+  32:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #include <tm/tmonitor.h>
+  33:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  34:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #include "sysdepend.h"
+  35:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  36:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /* ------------------------------------------------------------------------ */
+  37:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /* 
+  38:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  * Setup register data 
+  39:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+  40:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** typedef struct {
+  41:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	UW	addr;
+  42:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	UW	data;
+  43:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** } T_SETUP_REG;
+  44:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  45:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /* 
+  46:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  * Setup module stop Tadle
+  47:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+  48:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** LOCAL const T_SETUP_REG mstop_tbl[] = {
+  49:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #if !USE_SDEV_DRV	// Do not use sample device driver
+  50:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{ MSTPCRA, 0x46FF7FCF },	/* Enable EXDMAC, DMAC/DTC, CMT0-1, TMR0-3 */
+  51:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{ MSTPCRB, 0xFFFFFFFF },
+  52:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{ MSTPCRC, 0xF7FF0000 },	/* Enable SCI8, Disable Deep-Sleep mode, Enable RAM */
+  53:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{ MSTPCRD, 0xFFFFFF00 },
+  54:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  55:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #else			// Use the sample device driver
+  56:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{ MSTPCRA, 0x46F57FCF },	/* Enable EXDMAC, DMAC/DTC, S12SD0, CMT0-1, TMR0-3 */
+  57:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{ MSTPCRB, 0xFFDFFFFF },	/* Enable RIIC0 */
+  58:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{ MSTPCRC, 0xF7FF0000 },	/* Enable SCI8, Disable Deep-Sleep mode, Enable RAM */
+  59:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{ MSTPCRD, 0xFFFFFF00 },
+  60:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  61:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #endif /* !USE_SDEV_DRV */
+  62:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{0, 0}
+  63:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** };
+  64:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  65:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /* 
+  66:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  * Setup pin functions Tadle
+  67:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+  68:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** LOCAL const T_SETUP_REG pinfnc_tbl[] = {
+  69:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{MPC_PJnPFS(1), 0x0A},		/* PJ1 = SCI8 RXD8 */
+  70:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{MPC_PJnPFS(2), 0x0A},		/* PJ2 = SCI8 TXD8 */
+  71:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  72:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #if USE_SDEV_DRV	// Use the sample device driver
+  73:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{MPC_P1nPFS(2), 0x0F},		/* P12 = RIIC0 SCL0 */
+  74:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{MPC_P1nPFS(3), 0x0F},		/* P13 = RIIC0 SDA0 */
+  75:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{MPC_P4nPFS(0), 0x80},		/* P40 = AN000 */
+  76:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  77:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #endif /* USE_SDEV_DRV */
+  78:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{0, 0}
+  79:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** };
+  80:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  81:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /* 
+  82:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  * Setup port mode Tadle
+  83:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+  84:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** LOCAL const T_SETUP_REG portmode_tbl[] = {
+  85:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{PORTJ_PMR, 0x06},		/* PJ1&PJ2 peripheral function. */
+  86:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{PORTJ_PODR, 0x04},		/* PJ2 = 'H' */
+  87:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{PORTJ_PDR, 0x04},		/* PJ2 output port */
+  88:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  89:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #if USE_SDEV_DRV	// Use the sample device driver
+  90:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{PORT1_PMR, 0x0C},		/* P12&P13  peripheral function. */
+  91:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{PORT4_PMR, 0x00},		/* P40  A/DC */
+  92:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{PORT4_PDR, 0x00},
+  93:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #endif /* USE_SDEV_DRV */
+  94:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  95:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	{0, 0}
+  96:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** };
+  97:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+  98:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /*
+  99:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  * Startup hardware
+ 100:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+ 101:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** EXPORT void knl_startup_hw(void)
+ 102:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** {
+ 124                             		.loc 2 102 1
+ 125 0045 7E AA                   		push.l	r10
+ 126                             	.LCFI6:
+ 127 0047 71 0A FC                		add	#-4, r0, r10
+ 128                             	.LCFI7:
+ 129 004a EF A0                   		mov.L	r10, r0
+ 103:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	const T_SETUP_REG	*p;
+ 104:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+ 105:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	/* Setup module stop */
+ 106:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	out_h(SYSTEM_PRCR, 0xA502);		/* Disable Register Protect */
+ 130                             		.loc 2 106 2
+ 131 004c FB 2A 02 A5             		mov	#-23294, r2
+ 132 0050 FB 1E FE 03 08          		mov.L	#0x803fe, r1
+ 133 0055 39 C2 FF                		bsr	_out_h
+ 107:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = mstop_tbl; p->addr != 0; p++) {
+ 134                             		.loc 2 107 8
+ 135 0058 F8 A2 00 00 00 00       		mov.L	#_mstop_tbl, [r10]
+ 136                             		.loc 2 107 2
+ 137 005e 2E 17                   		bra	.L5
+ 138                             	.L6:
+ 108:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		out_w(p->addr, p->data);
+ 139                             		.loc 2 108 3 discriminator 3
+ 140 0060 EC A5                   		mov.L	[r10], r5
+ 141 0062 EC 54                   		mov.L	[r5], r4
+ 142 0064 EC A5                   		mov.L	[r10], r5
+ 143 0066 A8 5D                   		mov.L	4[r5], r5
+ 144 0068 EF 52                   		mov.L	r5, r2
+ 145 006a EF 41                   		mov.L	r4, r1
+ 146 006c 39 94 FF                		bsr	_out_w
+ 107:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = mstop_tbl; p->addr != 0; p++) {
+ 147                             		.loc 2 107 36 discriminator 3
+ 148 006f EC A5                   		mov.L	[r10], r5
+ 149 0071 62 85                   		add	#8, r5
+ 150 0073 E3 A5                   		mov.L	r5, [r10]
+ 151                             	.L5:
+ 107:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = mstop_tbl; p->addr != 0; p++) {
+ 152                             		.loc 2 107 22 discriminator 1
+ 153 0075 EC A5                   		mov.L	[r10], r5
+ 154 0077 EC 55                   		mov.L	[r5], r5
+ 107:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = mstop_tbl; p->addr != 0; p++) {
+ 155                             		.loc 2 107 2 discriminator 1
+ 156 0079 61 05                   		cmp	#0, r5
+ 157 007b 21 E5                   		bne	.L6
+ 109:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	}
+ 110:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	out_h(SYSTEM_PRCR, 0xA500);		/* Enable Register protect */
+ 158                             		.loc 2 110 2
+ 159 007d FB 2A 00 A5             		mov	#-23296, r2
+ 160 0081 FB 1E FE 03 08          		mov.L	#0x803fe, r1
+ 161 0086 39 91 FF                		bsr	_out_h
+ 111:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+ 112:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	/* Setup Pin Function */
+ 113:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	out_b(MPC_PWPR, 0);
+ 162                             		.loc 2 113 2
+ 163 0089 66 02                   		mov	#0, r2
+ 164 008b FB 1E 1F C1 08          		mov.L	#0x8c11f, r1
+ 165 0090 39 9E FF                		bsr	_out_b
+ 114:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	out_b(MPC_PWPR, MPC_PWMR_PFSWE);	/* Disable Register Protect */
+ 166                             		.loc 2 114 2
+ 167 0093 75 42 40                		mov	#0x40, r2
+ 168 0096 FB 1E 1F C1 08          		mov.L	#0x8c11f, r1
+ 169 009b 39 93 FF                		bsr	_out_b
+ 115:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = pinfnc_tbl; p->addr != 0; p++) {
+ 170                             		.loc 2 115 8
+ 171 009e F8 A2 28 00 00 00       		mov.L	#_pinfnc_tbl, [r10]
+ 172                             		.loc 2 115 2
+ 173 00a4 2E 17                   		bra	.L7
+ 174                             	.L8:
+ 116:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		out_b(p->addr, (UB)p->data);
+ 175                             		.loc 2 116 3 discriminator 3
+ 176 00a6 EC A5                   		mov.L	[r10], r5
+ 177 00a8 EC 54                   		mov.L	[r5], r4
+ 178                             		.loc 2 116 23 discriminator 3
+ 179 00aa EC A5                   		mov.L	[r10], r5
+ 180 00ac A8 5D                   		mov.L	4[r5], r5
+ 181                             		.loc 2 116 3 discriminator 3
+ 182 00ae CF 52                   		mov.B	r5, r2
+ 183 00b0 EF 41                   		mov.L	r4, r1
+ 184 00b2 39 7C FF                		bsr	_out_b
+ 115:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = pinfnc_tbl; p->addr != 0; p++) {
+ 185                             		.loc 2 115 37 discriminator 3
+ 186 00b5 EC A5                   		mov.L	[r10], r5
+ 187 00b7 62 85                   		add	#8, r5
+ 188 00b9 E3 A5                   		mov.L	r5, [r10]
+ 189                             	.L7:
+ 115:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = pinfnc_tbl; p->addr != 0; p++) {
+ 190                             		.loc 2 115 23 discriminator 1
+ 191 00bb EC A5                   		mov.L	[r10], r5
+ 192 00bd EC 55                   		mov.L	[r5], r5
+ 115:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = pinfnc_tbl; p->addr != 0; p++) {
+ 193                             		.loc 2 115 2 discriminator 1
+ 194 00bf 61 05                   		cmp	#0, r5
+ 195 00c1 21 E5                   		bne	.L8
+ 117:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	}
+ 118:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	out_b(MPC_PWPR, MPC_PWMR_B0WI);		/* Enable Register protect */
+ 196                             		.loc 2 118 2
+ 197 00c3 FB 26 80                		mov	#-128, r2
+ 198 00c6 FB 1E 1F C1 08          		mov.L	#0x8c11f, r1
+ 199 00cb 39 63 FF                		bsr	_out_b
+ 119:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+ 120:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	/* Setup port mode */
+ 121:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	for(p = portmode_tbl; p->addr != 0; p++) {
+ 200                             		.loc 2 121 8
+ 201 00ce F8 A2 58 00 00 00       		mov.L	#_portmode_tbl, [r10]
+ 202                             		.loc 2 121 2
+ 203 00d4 2E 17                   		bra	.L9
+ 204                             	.L10:
+ 122:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		out_b(p->addr, (UB)p->data);
+ 205                             		.loc 2 122 3 discriminator 3
+ 206 00d6 EC A5                   		mov.L	[r10], r5
+ 207 00d8 EC 54                   		mov.L	[r5], r4
+ 208                             		.loc 2 122 23 discriminator 3
+ 209 00da EC A5                   		mov.L	[r10], r5
+ 210 00dc A8 5D                   		mov.L	4[r5], r5
+ 211                             		.loc 2 122 3 discriminator 3
+ 212 00de CF 52                   		mov.B	r5, r2
+ 213 00e0 EF 41                   		mov.L	r4, r1
+ 214 00e2 39 4C FF                		bsr	_out_b
+ 121:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		out_b(p->addr, (UB)p->data);
+ 215                             		.loc 2 121 39 discriminator 3
+ 216 00e5 EC A5                   		mov.L	[r10], r5
+ 217 00e7 62 85                   		add	#8, r5
+ 218 00e9 E3 A5                   		mov.L	r5, [r10]
+ 219                             	.L9:
+ 121:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		out_b(p->addr, (UB)p->data);
+ 220                             		.loc 2 121 25 discriminator 1
+ 221 00eb EC A5                   		mov.L	[r10], r5
+ 222 00ed EC 55                   		mov.L	[r5], r5
+ 121:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		out_b(p->addr, (UB)p->data);
+ 223                             		.loc 2 121 2 discriminator 1
+ 224 00ef 61 05                   		cmp	#0, r5
+ 225 00f1 21 E5                   		bne	.L10
+ 123:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	}	
+ 124:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+ 125:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	startup_clock();			/* Startup CPU Clock */
+ 226                             		.loc 2 125 2
+ 227 00f3 05 00 00 00             		bsr	_startup_clock
+ 126:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** }
+ 228                             		.loc 2 126 1
+ 229 00f7 03                      		nop
+ 230 00f8 3F AA 02                		rtsd	#8, r10-r10
+ 231                             	.LFE19:
+ 233                             		.global	_knl_shutdown_hw
+ 235                             	_knl_shutdown_hw:
+ 236                             	.LFB20:
+ 127:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+ 128:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #if USE_SHUTDOWN
+ 129:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /*
+ 130:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  * Shutdown hardware
+ 131:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+ 132:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** EXPORT void knl_shutdown_hw( void )
+ 133:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** {
+ 237                             		.loc 2 133 1
+ 238 00fb 7E AA                   		push.l	r10
+ 239                             	.LCFI8:
+ 240 00fd EF 0A                   		mov.L	r0, r10
+ 241                             	.LCFI9:
+ 134:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	disint();
+ 242                             		.loc 2 134 2
+ 243 00ff 05 00 00 00             		bsr	_disint
+ 135:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	shutdown_clock();
+ 244                             		.loc 2 135 2
+ 245 0103 05 00 00 00             		bsr	_shutdown_clock
+ 246                             	.L12:
+ 136:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+ 137:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	while(1);
+ 247                             		.loc 2 137 7 discriminator 1
+ 248 0107 2E 00                   		bra	.L12
+ 249                             	.LFE20:
+ 251                             		.section C,"a",@progbits
+ 252                             		.p2align 2
+ 253                             	.LC0:
+ 254 0090 0A 3C 3C 20 53 59 53 54 		.string	"\n<< SYSTEM RESET & RESTART >>\n"
+ 254      45 4D 20 52 45 53 45 54 
+ 254      20 26 20 52 45 53 54 41 
+ 254      52 54 20 3E 3E 0A 00 
+ 255                             	.LC1:
+ 256 00af 0A 3C 3C 20 53 59 53 54 		.string	"\n<< SYSTEM FAST RESTART >>\n"
+ 256      45 4D 20 46 41 53 54 20 
+ 256      52 45 53 54 41 52 54 20 
+ 256      3E 3E 0A 00 
+ 257                             	.LC2:
+ 258 00cb 0A 3C 3C 20 53 59 53 54 		.string	"\n<< SYSTEM RESTART >>\n"
+ 258      45 4D 20 52 45 53 54 41 
+ 258      52 54 20 3E 3E 0A 00 
+ 259 00e2 00 00                   		.section P,"ax"
+ 260                             		.global	_knl_restart_hw
+ 262                             	_knl_restart_hw:
+ 263                             	.LFB21:
+ 138:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** }
+ 139:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** #endif /* USE_SHUTDOWN */
+ 140:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 
+ 141:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** /*
+ 142:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  * Re-start hardware
+ 143:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *	mode = -1		reset and re-start	(Reset -> Boot -> Start)
+ 144:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *	mode = -2		fast re-start		(Start)
+ 145:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  *	mode = -3		Normal re-start		(Boot -> Start)
+ 146:../kernel/sysdepend/rtb_rx65n/hw_setting.c ****  */
+ 147:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** EXPORT ER knl_restart_hw( W mode )
+ 148:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** {
+ 264                             		.loc 2 148 1
+ 265 0109 7E AA                   		push.l	r10
+ 266                             	.LCFI10:
+ 267 010b 71 0A FC                		add	#-4, r0, r10
+ 268                             	.LCFI11:
+ 269 010e EF A0                   		mov.L	r10, r0
+ 270 0110 E3 A1                   		mov.L	r1, [r10]
+ 149:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	switch(mode) {
+ 271                             		.loc 2 149 2
+ 272 0112 EC A5                   		mov.L	[r10], r5
+ 273 0114 75 05 FE                		cmp	#-2, r5
+ 274 0117 20 20                   		beq	.L14
+ 275 0119 EC A5                   		mov.L	[r10], r5
+ 276 011b 75 05 FF                		cmp	#-1, r5
+ 277 011e 12                      		beq	.L15
+ 278 011f EC A5                   		mov.L	[r10], r5
+ 279 0121 75 05 FD                		cmp	#-3, r5
+ 280 0124 20 22                   		beq	.L16
+ 281 0126 2E 2E                   		bra	.L19
+ 282                             	.L15:
+ 150:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	case -1: /* Reset and re-start */
+ 151:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		SYSTEM_MESSAGE("\n<< SYSTEM RESET & RESTART >>\n");
+ 283                             		.loc 2 151 3
+ 284 0128 FB 12 90 00 00 00       		mov.L	#.LC0, r1
+ 285 012e 05 00 00 00             		bsr	_tm_putstring
+ 152:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		return E_NOSPT;
+ 286                             		.loc 2 152 10
+ 287 0132 FB 56 F7                		mov.L	#-9, r5
+ 288 0135 2E 23                   		bra	.L18
+ 289                             	.L14:
+ 153:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	case -2: /* fast re-start */
+ 154:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		SYSTEM_MESSAGE("\n<< SYSTEM FAST RESTART >>\n");
+ 290                             		.loc 2 154 3
+ 291 0137 FB 12 AF 00 00 00       		mov.L	#.LC1, r1
+ 292 013d 05 00 00 00             		bsr	_tm_putstring
+ 155:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		return E_NOSPT;
+ 293                             		.loc 2 155 10
+ 294 0141 FB 56 F7                		mov.L	#-9, r5
+ 295 0144 2E 14                   		bra	.L18
+ 296                             	.L16:
+ 156:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	case -3: /* Normal re-start */
+ 157:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		SYSTEM_MESSAGE("\n<< SYSTEM RESTART >>\n");
+ 297                             		.loc 2 157 3
+ 298 0146 FB 12 CB 00 00 00       		mov.L	#.LC2, r1
+ 299 014c 05 00 00 00             		bsr	_tm_putstring
+ 158:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		return E_NOSPT;
+ 300                             		.loc 2 158 10
+ 301 0150 FB 56 F7                		mov.L	#-9, r5
+ 302 0153 0D                      		bra	.L18
+ 303                             	.L19:
+ 159:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	default:
+ 160:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 		return E_PAR;
+ 304                             		.loc 2 160 10
+ 305 0154 FB 56 EF                		mov.L	#-17, r5
+ 306 0157 03                      		.balign 8,3,1
+ 307                             	.L18:
+ 161:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** 	}
+ 162:../kernel/sysdepend/rtb_rx65n/hw_setting.c **** }
+ 308                             		.loc 2 162 1
+ 309 0158 EF 51                   		mov.L	r5, r1
+ 310 015a 3F AA 02                		rtsd	#8, r10-r10
+ 311                             	.LFE21:
+ 444                             	.Letext0:
+ 445                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 446                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 447                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+ 448                             		.file 6 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 449                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 450                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 451                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 452                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysde
+ 453                             		.file 11 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
+ 454                             		.file 12 "../kernel/sysdepend/rtb_rx65n/../cpu/rx65n/sysdepend.h"

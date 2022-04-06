@@ -1,0 +1,166 @@
+   1                             		.file	"devinit.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.global	_knl_init_device
+   6                             	_knl_init_device:
+   7                             	.LFB19:
+   8                             		.file 1 "../kernel/sysdepend/rtb_rx65n/devinit.c"
+   1:../kernel/sysdepend/rtb_rx65n/devinit.c **** /*
+   2:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *----------------------------------------------------------------------
+   3:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *    micro T-Kernel 3.00.06.B0
+   4:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *
+   5:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *    Copyright (C) 2022 by Ken Sakamura.
+   6:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *    This software is distributed under the T-License 2.2.
+   7:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *----------------------------------------------------------------------
+   8:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *
+   9:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *
+  11:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *----------------------------------------------------------------------
+  12:../kernel/sysdepend/rtb_rx65n/devinit.c ****  */
+  13:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  14:../kernel/sysdepend/rtb_rx65n/devinit.c **** #include <sys/machine.h>
+  15:../kernel/sysdepend/rtb_rx65n/devinit.c **** #ifdef RTB_RX65N
+  16:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  17:../kernel/sysdepend/rtb_rx65n/devinit.c **** /*
+  18:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *	devinit.c (Renesas Target Board for RX65N)
+  19:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *	Device-Dependent Initialization
+  20:../kernel/sysdepend/rtb_rx65n/devinit.c ****  */
+  21:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  22:../kernel/sysdepend/rtb_rx65n/devinit.c **** #include <sys/sysdef.h>
+  23:../kernel/sysdepend/rtb_rx65n/devinit.c **** #include <tm/tmonitor.h>
+  24:../kernel/sysdepend/rtb_rx65n/devinit.c **** #include <tk/device.h>
+  25:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  26:../kernel/sysdepend/rtb_rx65n/devinit.c **** #include "kernel.h"
+  27:../kernel/sysdepend/rtb_rx65n/devinit.c **** #include "sysdepend.h"
+  28:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  29:../kernel/sysdepend/rtb_rx65n/devinit.c **** /* ------------------------------------------------------------------------ */
+  30:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  31:../kernel/sysdepend/rtb_rx65n/devinit.c **** /*
+  32:../kernel/sysdepend/rtb_rx65n/devinit.c ****  * Initialization before micro T-Kernel starts
+  33:../kernel/sysdepend/rtb_rx65n/devinit.c ****  */
+  34:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  35:../kernel/sysdepend/rtb_rx65n/devinit.c **** EXPORT ER knl_init_device( void )
+  36:../kernel/sysdepend/rtb_rx65n/devinit.c **** {
+   9                             		.loc 1 36 1
+  10 0000 7E AA                   		push.l	r10
+  11                             	.LCFI0:
+  12 0002 EF 0A                   		mov.L	r0, r10
+  13                             	.LCFI1:
+  37:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	return E_OK;
+  14                             		.loc 1 37 9
+  15 0004 66 05                   		mov.L	#0, r5
+  38:../kernel/sysdepend/rtb_rx65n/devinit.c **** }
+  16                             		.loc 1 38 1
+  17 0006 EF 51                   		mov.L	r5, r1
+  18 0008 3F AA 01                		rtsd	#4, r10-r10
+  19                             	.LFE19:
+  21                             		.global	_knl_start_device
+  23                             	_knl_start_device:
+  24                             	.LFB20:
+  39:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  40:../kernel/sysdepend/rtb_rx65n/devinit.c **** /* ------------------------------------------------------------------------ */
+  41:../kernel/sysdepend/rtb_rx65n/devinit.c **** /*
+  42:../kernel/sysdepend/rtb_rx65n/devinit.c ****  * Start processing after T-Kernel starts
+  43:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *	Called from the initial task contexts.
+  44:../kernel/sysdepend/rtb_rx65n/devinit.c ****  */
+  45:../kernel/sysdepend/rtb_rx65n/devinit.c **** EXPORT ER knl_start_device( void )
+  46:../kernel/sysdepend/rtb_rx65n/devinit.c **** {
+  25                             		.loc 1 46 1
+  26 000b 7E AA                   		push.l	r10
+  27                             	.LCFI2:
+  28 000d 71 0A FC                		add	#-4, r0, r10
+  29                             	.LCFI3:
+  30 0010 EF A0                   		mov.L	r10, r0
+  47:../kernel/sysdepend/rtb_rx65n/devinit.c **** #if USE_SDEV_DRV	// Use sample driver
+  48:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	ER	err;
+  49:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  50:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	/* A/D Converter "adca" */
+  51:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	#if DEVCNF_USE_ADC
+  52:../kernel/sysdepend/rtb_rx65n/devinit.c **** 		err = dev_init_adc(0);
+  31                             		.loc 1 52 9
+  32 0012 66 01                   		mov.L	#0, r1
+  33 0014 05 00 00 00             		bsr	_dev_init_adc
+  34 0018 E3 A1                   		mov.L	r1, [r10]
+  53:../kernel/sysdepend/rtb_rx65n/devinit.c **** 		if(err < E_OK) return err;
+  35                             		.loc 1 53 5
+  36 001a EC A5                   		mov.L	[r10], r5
+  37 001c 61 05                   		cmp	#0, r5
+  38 001e 28 06                   		bge	.L4
+  39                             		.loc 1 53 25 discriminator 1
+  40 0020 EC A5                   		mov.L	[r10], r5
+  41 0022 2E 15                   		bra	.L5
+  42                             	.L4:
+  54:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	#endif
+  55:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  56:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	/* SCI6 "serd" */
+  57:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	#if DEVCNF_USE_SER
+  58:../kernel/sysdepend/rtb_rx65n/devinit.c **** 		err = dev_init_ser(3);
+  59:../kernel/sysdepend/rtb_rx65n/devinit.c **** 		if(err < E_OK) return err;
+  60:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	#endif
+  61:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  62:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	/* RIIC0 "iica" */
+  63:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	#if DEVCNF_USE_IIC
+  64:../kernel/sysdepend/rtb_rx65n/devinit.c **** 		err = dev_init_i2c(0);
+  43                             		.loc 1 64 9
+  44 0024 66 01                   		mov.L	#0, r1
+  45 0026 05 00 00 00             		bsr	_dev_init_i2c
+  46 002a E3 A1                   		mov.L	r1, [r10]
+  65:../kernel/sysdepend/rtb_rx65n/devinit.c **** 		if(err < E_OK) return err;
+  47                             		.loc 1 65 5
+  48 002c EC A5                   		mov.L	[r10], r5
+  49 002e 61 05                   		cmp	#0, r5
+  50 0030 28 05                   		bge	.L6
+  51                             		.loc 1 65 25 discriminator 1
+  52 0032 EC A5                   		mov.L	[r10], r5
+  53 0034 0B                      		bra	.L5
+  54                             	.L6:
+  66:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	#endif
+  67:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  68:../kernel/sysdepend/rtb_rx65n/devinit.c **** #endif
+  69:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  70:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	return E_OK;
+  55                             		.loc 1 70 9
+  56 0035 66 05                   		mov.L	#0, r5
+  57                             	.L5:
+  71:../kernel/sysdepend/rtb_rx65n/devinit.c **** }
+  58                             		.loc 1 71 1
+  59 0037 EF 51                   		mov.L	r5, r1
+  60 0039 3F AA 02                		rtsd	#8, r10-r10
+  61                             	.LFE20:
+  63                             		.global	_knl_finish_device
+  65                             	_knl_finish_device:
+  66                             	.LFB21:
+  72:../kernel/sysdepend/rtb_rx65n/devinit.c **** 
+  73:../kernel/sysdepend/rtb_rx65n/devinit.c **** #if USE_SHUTDOWN
+  74:../kernel/sysdepend/rtb_rx65n/devinit.c **** /* ------------------------------------------------------------------------ */
+  75:../kernel/sysdepend/rtb_rx65n/devinit.c **** /*
+  76:../kernel/sysdepend/rtb_rx65n/devinit.c ****  * System finalization
+  77:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *	Called just before system shutdown.
+  78:../kernel/sysdepend/rtb_rx65n/devinit.c ****  *	Execute finalization that must be done before system shutdown.
+  79:../kernel/sysdepend/rtb_rx65n/devinit.c ****  */
+  80:../kernel/sysdepend/rtb_rx65n/devinit.c **** EXPORT ER knl_finish_device( void )
+  81:../kernel/sysdepend/rtb_rx65n/devinit.c **** {
+  67                             		.loc 1 81 1
+  68 003c 7E AA                   		push.l	r10
+  69                             	.LCFI4:
+  70 003e EF 0A                   		mov.L	r0, r10
+  71                             	.LCFI5:
+  82:../kernel/sysdepend/rtb_rx65n/devinit.c **** 	return E_OK;
+  72                             		.loc 1 82 9
+  73 0040 66 05                   		mov.L	#0, r5
+  83:../kernel/sysdepend/rtb_rx65n/devinit.c **** }
+  74                             		.loc 1 83 1
+  75 0042 EF 51                   		mov.L	r5, r1
+  76 0044 3F AA 01                		rtsd	#4, r10-r10
+  77                             	.LFE21:
+ 152                             	.Letext0:
+ 153                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 154                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 155                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+ 156                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 157                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 158                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 159                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 160                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
+ 161                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
+ 162                             		.file 11 "../kernel/sysdepend/rtb_rx65n/../cpu/rx65n/sysdepend.h"

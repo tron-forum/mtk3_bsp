@@ -1,0 +1,41 @@
+   1                             		.file	"app_main.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.section C,"a",@progbits
+   5                             		.p2align 2
+   6                             	.LC0:
+   7 0000 55 73 65 72 20 70 72 6F 		.string	"User program started\n"
+   7      67 72 61 6D 20 73 74 61 
+   7      72 74 65 64 0A 00 
+   8 0016 00 00                   		.section P,"ax"
+   9                             		.global	_usermain
+  11                             	_usermain:
+  12                             	.LFB6:
+  13                             		.file 1 "../app_program/app_main.c"
+   1:../app_program/app_main.c **** #include <tk/tkernel.h>
+   2:../app_program/app_main.c **** #include <tm/tmonitor.h>
+   3:../app_program/app_main.c **** 
+   4:../app_program/app_main.c **** /* usermain関数 */
+   5:../app_program/app_main.c **** EXPORT INT usermain(void)
+   6:../app_program/app_main.c **** {
+  14                             		.loc 1 6 1
+  15 0000 7E AA                   		push.l	r10
+  16                             	.LCFI0:
+  17 0002 EF 0A                   		mov.L	r0, r10
+  18                             	.LCFI1:
+  19 0004 60 40                   		sub	#4, r0
+   7:../app_program/app_main.c **** 	tm_printf((UB*)"User program started\n");
+  20                             		.loc 1 7 2
+  21 0006 F8 02 00 00 00 00       		mov.L	#.LC0, [r0]
+  22 000c 05 00 00 00             		bsr	_tm_printf
+   8:../app_program/app_main.c **** 
+   9:../app_program/app_main.c **** 	return 0;
+  23                             		.loc 1 9 9
+  24 0010 66 05                   		mov.L	#0, r5
+  10:../app_program/app_main.c **** }...
+  25                             		.loc 1 10 1
+  26 0012 EF 51                   		mov.L	r5, r1
+  27 0014 3F AA 02                		rtsd	#8, r10-r10
+  28                             	.LFE6:
+  66                             	.Letext0:
+  67                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"

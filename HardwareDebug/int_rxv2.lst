@@ -1,0 +1,660 @@
+   1                             		.file	"int_rxv2.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.global	_disint
+   6                             	_disint:
+   7                             	.LFB6:
+   8                             		.file 1 "../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c"
+   1:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** ﻿/*
+   2:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *----------------------------------------------------------------------
+   3:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *    micro T-Kernel 3.00.01
+   4:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *
+   5:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *    Copyright (C) 2006-2020 by Ken Sakamura.
+   6:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *    This software is distributed under the T-License 2.2.
+   7:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *----------------------------------------------------------------------
+   8:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *
+   9:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *    Released by TRON Forum(http://www.tron.org) at 2020/05/29.
+  10:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *
+  11:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *----------------------------------------------------------------------
+  12:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+  13:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  14:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** #include <sys/machine.h>
+  15:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** #ifdef CPU_CORE_RXV2
+  16:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  17:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+  18:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	int_rxv2.c
+  19:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *
+  20:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	Interrupt control (RXv2 Core)
+  21:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+  22:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  23:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** #include <tk/tkernel.h>
+  24:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  25:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*----------------------------------------------------------------------*/
+  26:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+  27:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * CPU Interrupt Control for RXv2 core.
+  28:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *
+  29:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+  30:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** #define PSW_IPL_MASK		0x0F000000
+  31:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  32:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /* 
+  33:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Disable interrupt (Set PSW.IPL value to 15. And return the original PSW.IPL value.)
+  34:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+  35:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT UW disint(void)
+  36:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+   9                             		.loc 1 36 1
+  10 0000 7E AA                   		push.l	r10
+  11                             	.LCFI0:
+  12 0002 71 0A F8                		add	#-8, r0, r10
+  13                             	.LCFI1:
+  14 0005 EF A0                   		mov.L	r10, r0
+  37:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	UW	psw, ans;
+  38:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  39:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	Asm("mvfc psw, %0": "=r"(psw));
+  15                             		.loc 1 39 2
+  16                             	 ; 39 "../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c" 1
+  17 0007 FD 6A 05                		mvfc psw, r5
+  18                             	 ; 0 "" 2
+  19 000a E3 A5                   		mov.L	r5, [r10]
+  40:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  41:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	ans = (psw & PSW_IPL_MASK) >> 24;
+  20                             		.loc 1 41 29
+  21 000c EC A5                   		mov.L	[r10], r5
+  22 000e 69 85                   		shlr	#24, r5
+  23                             		.loc 1 41 6
+  24 0010 64 F5                   		and	#15, r5
+  25 0012 E7 A5 01                		mov.L	r5, 4[r10]
+  42:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	psw = (psw & ~PSW_IPL_MASK) |(INTPRI_MAX_INT_PRI << 24);
+  26                             		.loc 1 42 6
+  27 0015 EC A5                   		mov.L	[r10], r5
+  28 0017 74 35 00 00 00 0F       		or	#0xf000000, r5
+  29 001d E3 A5                   		mov.L	r5, [r10]
+  43:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  44:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	Asm("mvtc %0, psw":: "r"(psw));
+  30                             		.loc 1 44 2
+  31 001f EC A5                   		mov.L	[r10], r5
+  32                             	 ; 44 "../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c" 1
+  33 0021 FD 68 50                		mvtc r5, psw
+  34                             	 ; 0 "" 2
+  45:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  46:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	return ans;
+  35                             		.loc 1 46 9
+  36 0024 ED A5 01                		mov.L	4[r10], r5
+  47:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+  37                             		.loc 1 47 1
+  38 0027 EF 51                   		mov.L	r5, r1
+  39 0029 3F AA 03                		rtsd	#12, r10-r10
+  40                             	.LFE6:
+  42                             		.global	_setint
+  44                             	_setint:
+  45                             	.LFB7:
+  48:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  49:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /* 
+  50:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Set interrupt level (Set PSW.IPL value to ipl.)
+  51:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+  52:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT void setint(UW ipl)
+  53:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+  46                             		.loc 1 53 1
+  47 002c 7E AA                   		push.l	r10
+  48                             	.LCFI2:
+  49 002e 71 0A F8                		add	#-8, r0, r10
+  50                             	.LCFI3:
+  51 0031 EF A0                   		mov.L	r10, r0
+  52 0033 E7 A1 01                		mov.L	r1, 4[r10]
+  54:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	UW	psw;
+  55:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  56:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	Asm("mvfc psw, %0": "=r"(psw));
+  53                             		.loc 1 56 2
+  54                             	 ; 56 "../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c" 1
+  55 0036 FD 6A 05                		mvfc psw, r5
+  56                             	 ; 0 "" 2
+  57 0039 E3 A5                   		mov.L	r5, [r10]
+  57:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  58:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	psw = (psw & ~PSW_IPL_MASK) |(ipl << 24);
+  58                             		.loc 1 58 13
+  59 003b EC A5                   		mov.L	[r10], r5
+  60 003d FB 42 FF FF FF F0       		mov.L	#-251658241, r4
+  61 0043 53 54                   		and	r5, r4
+  62                             		.loc 1 58 36
+  63 0045 ED A5 01                		mov.L	4[r10], r5
+  64 0048 6D 85                   		shll	#24, r5
+  65                             		.loc 1 58 6
+  66 004a 57 45                   		or	r4, r5
+  67 004c E3 A5                   		mov.L	r5, [r10]
+  59:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  60:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	Asm("mvtc %0, psw":: "r"(psw));
+  68                             		.loc 1 60 2
+  69 004e EC A5                   		mov.L	[r10], r5
+  70                             	 ; 60 "../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c" 1
+  71 0050 FD 68 50                		mvtc r5, psw
+  72                             	 ; 0 "" 2
+  61:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+  73                             		.loc 1 61 1
+  74 0053 03                      		nop
+  75 0054 3F AA 03                		rtsd	#12, r10-r10
+  76                             	.LFE7:
+  78                             		.global	_SetCpuIntLevel
+  80                             	_SetCpuIntLevel:
+  81                             	.LFB8:
+  62:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  63:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+  64:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Set Interrupt Mask Level in CPU
+  65:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+  66:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT void SetCpuIntLevel( INT level )
+  67:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+  82                             		.loc 1 67 1
+  83 0057 7E AA                   		push.l	r10
+  84                             	.LCFI4:
+  85 0059 71 0A FC                		add	#-4, r0, r10
+  86                             	.LCFI5:
+  87 005c EF A0                   		mov.L	r10, r0
+  88 005e E3 A1                   		mov.L	r1, [r10]
+  68:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	level--;
+  89                             		.loc 1 68 7
+  90 0060 EC A5                   		mov.L	[r10], r5
+  91 0062 60 15                   		sub	#1, r5
+  92 0064 E3 A5                   		mov.L	r5, [r10]
+  69:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	if(level >= INTLEVEL_EI && level <= INTLEVEL_DI) {
+  93                             		.loc 1 69 4
+  94 0066 EC A5                   		mov.L	[r10], r5
+  95 0068 61 05                   		cmp	#0, r5
+  96 006a 29 10                   		blt	.L6
+  97                             		.loc 1 69 26 discriminator 1
+  98 006c EC A5                   		mov.L	[r10], r5
+  99 006e 61 F5                   		cmp	#15, r5
+ 100 0070 2A 0A                   		bgt	.L6
+  70:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		setint(level);
+ 101                             		.loc 1 70 3
+ 102 0072 EC A5                   		mov.L	[r10], r5
+ 103 0074 EF 51                   		mov.L	r5, r1
+ 104 0076 05 00 00 00             		bsr	_setint
+ 105                             	.L6:
+  71:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+  72:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+ 106                             		.loc 1 72 1
+ 107 007a 03                      		nop
+ 108 007b 3F AA 02                		rtsd	#8, r10-r10
+ 109                             	.LFE8:
+ 111                             		.global	_GetCpuIntLevel
+ 113                             	_GetCpuIntLevel:
+ 114                             	.LFB9:
+  73:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  74:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+  75:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Get Interrupt Mask Level in CPU
+  76:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+  77:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT INT GetCpuIntLevel( void )
+  78:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+ 115                             		.loc 1 78 1
+ 116 007e 7E AA                   		push.l	r10
+ 117                             	.LCFI6:
+ 118 0080 71 0A FC                		add	#-4, r0, r10
+ 119                             	.LCFI7:
+ 120 0083 EF A0                   		mov.L	r10, r0
+  79:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	UW	psw;
+  80:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  81:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	Asm("mvfc psw, %0": "=r"(psw));
+ 121                             		.loc 1 81 2
+ 122                             	 ; 81 "../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c" 1
+ 123 0085 FD 6A 05                		mvfc psw, r5
+ 124                             	 ; 0 "" 2
+ 125 0088 E3 A5                   		mov.L	r5, [r10]
+  82:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  83:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	return ((psw & PSW_IPL_MASK) >> 24) + 1;
+ 126                             		.loc 1 83 31
+ 127 008a EC A5                   		mov.L	[r10], r5
+ 128 008c 69 85                   		shlr	#24, r5
+ 129 008e 64 F5                   		and	#15, r5
+ 130                             		.loc 1 83 38
+ 131 0090 62 15                   		add	#1, r5
+  84:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+ 132                             		.loc 1 84 1
+ 133 0092 EF 51                   		mov.L	r5, r1
+ 134 0094 3F AA 02                		rtsd	#8, r10-r10
+ 135                             	.LFE9:
+ 137                             		.global	_EnableInt
+ 139                             	_EnableInt:
+ 140                             	.LFB10:
+  85:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  86:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  87:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*----------------------------------------------------------------------*/
+  88:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+  89:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Interrupt controller (ICUb) Control
+  90:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *
+  91:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+  92:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  93:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** IMPORT const H	IPR_index[];
+  94:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+  95:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+  96:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Enable interrupt 
+  97:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	Enables the interrupt specified in intno.
+  98:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	External Interrupt can be specified. 
+  99:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+ 100:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT void EnableInt( UINT intno, INT level )
+ 101:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+ 141                             		.loc 1 101 1
+ 142 0097 6E 7A                   		pushm	r7-r10
+ 143                             	.LCFI8:
+ 144 0099 71 0A F4                		add	#-12, r0, r10
+ 145                             	.LCFI9:
+ 146 009c EF A0                   		mov.L	r10, r0
+ 147 009e E7 A1 01                		mov.L	r1, 4[r10]
+ 148 00a1 E7 A2 02                		mov.L	r2, 8[r10]
+ 102:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	UINT	imask;
+ 103:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 104:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	if((intno < 16) && (intno > 255)) {
+ 149                             		.loc 1 104 4
+ 150 00a4 ED A5 01                		mov.L	4[r10], r5
+ 151 00a7 61 F5                   		cmp	#15, r5
+ 152 00a9 24 0D                   		bgtu	.L10
+ 153                             		.loc 1 104 18 discriminator 1
+ 154 00ab ED A5 01                		mov.L	4[r10], r5
+ 155 00ae 75 55 FF                		cmp	#0xff, r5
+ 156 00b1 25 05 38 9B 00          		bgtu	.L13
+ 157                             	.L10:
+ 105:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		return;
+ 106:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+ 107:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 108:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	DI(imask);
+ 158                             		.loc 1 108 2
+ 159 00b6 05 00 00 00             		bsr	_disint
+ 160 00ba E3 A1                   		mov.L	r1, [r10]
+ 109:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 110:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	if( IPR_index[intno-16] >= 0 ){
+ 161                             		.loc 1 110 21
+ 162 00bc ED A5 01                		mov.L	4[r10], r5
+ 163 00bf 71 55 F0                		add	#-16, r5
+ 164                             		.loc 1 110 15
+ 165 00c2 FB 42 00 00 00 00       		mov.L	#_IPR_index, r4
+ 166 00c8 FE 55 45                		mov.W	[r5,r4], r5
+ 167                             		.loc 1 110 4
+ 168 00cb DF 55                   		mov.W	r5, r5
+ 169 00cd 61 05                   		cmp	#0, r5
+ 170 00cf 29 77                   		blt	.L12
+ 111:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	/* Disable the interrupt before set priority level. */
+ 112:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		*(_UB*)(ICU_IER(intno)) &= ~ICU_IER_IEN(intno);
+ 171                             		.loc 1 112 27
+ 172 00d1 ED A5 01                		mov.L	4[r10], r5
+ 173 00d4 68 35                   		shlr	#3, r5
+ 174 00d6 73 55 00 72 08          		add	#0x87200, r5
+ 175 00db CC 55                   		mov.B	[r5], r5
+ 176 00dd CF 53                   		mov.B	r5, r3
+ 177                             		.loc 1 112 31
+ 178 00df ED A5 01                		mov.L	4[r10], r5
+ 179 00e2 64 75                   		and	#7, r5
+ 180 00e4 66 14                   		mov.L	#1, r4
+ 181 00e6 EF 47                   		mov.L	r4, r7
+ 182 00e8 FD 62 57                		shll	r5, r7
+ 183 00eb EF 75                   		mov.L	r7, r5
+ 184                             		.loc 1 112 27
+ 185 00ed 7E 05                   		not	r5
+ 186 00ef 53 35                   		and	r3, r5
+ 187 00f1 CF 54                   		mov.B	r5, r4
+ 188 00f3 ED A5 01                		mov.L	4[r10], r5
+ 189 00f6 68 35                   		shlr	#3, r5
+ 190 00f8 73 55 00 72 08          		add	#0x87200, r5
+ 191 00fd C3 54                   		mov.B	r4, [r5]
+ 113:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	/* Set interrupt priority level. */
+ 114:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		*(_UB*)(ICU_IPR(IPR_index[intno-16])) = (UB)level;
+ 192                             		.loc 1 114 11
+ 193 00ff ED A5 01                		mov.L	4[r10], r5
+ 194 0102 71 55 F0                		add	#-16, r5
+ 195 0105 FB 42 00 00 00 00       		mov.L	#_IPR_index, r4
+ 196 010b FE 55 45                		mov.W	[r5,r4], r5
+ 197 010e DF 55                   		mov.W	r5, r5
+ 198 0110 73 55 00 73 08          		add	#0x87300, r5
+ 199                             		.loc 1 114 43
+ 200 0115 ED A4 02                		mov.L	8[r10], r4
+ 201                             		.loc 1 114 41
+ 202 0118 C3 54                   		mov.B	r4, [r5]
+ 115:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	/* Enables the specified interrupt. */
+ 116:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		*(_UB*)(ICU_IER(intno)) |= ICU_IER_IEN(intno);
+ 203                             		.loc 1 116 27
+ 204 011a ED A5 01                		mov.L	4[r10], r5
+ 205 011d 68 35                   		shlr	#3, r5
+ 206 011f 73 55 00 72 08          		add	#0x87200, r5
+ 207 0124 CC 55                   		mov.B	[r5], r5
+ 208 0126 CF 54                   		mov.B	r5, r4
+ 209                             		.loc 1 116 30
+ 210 0128 ED A5 01                		mov.L	4[r10], r5
+ 211 012b 64 75                   		and	#7, r5
+ 212 012d 66 13                   		mov.L	#1, r3
+ 213 012f EF 37                   		mov.L	r3, r7
+ 214 0131 FD 62 57                		shll	r5, r7
+ 215 0134 EF 75                   		mov.L	r7, r5
+ 216                             		.loc 1 116 27
+ 217 0136 57 45                   		or	r4, r5
+ 218 0138 CF 54                   		mov.B	r5, r4
+ 219 013a ED A5 01                		mov.L	4[r10], r5
+ 220 013d 68 35                   		shlr	#3, r5
+ 221 013f 73 55 00 72 08          		add	#0x87200, r5
+ 222 0144 C3 54                   		mov.B	r4, [r5]
+ 223                             	.L12:
+ 117:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+ 118:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 119:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	EI(imask);
+ 224                             		.loc 1 119 2
+ 225 0146 EC A1                   		mov.L	[r10], r1
+ 226 0148 05 00 00 00             		bsr	_setint
+ 227 014c 2E 03                   		bra	.L9
+ 228                             	.L13:
+ 105:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+ 229                             		.loc 1 105 3
+ 230 014e 03                      		nop
+ 231                             	.L9:
+ 120:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+ 232                             		.loc 1 120 1
+ 233 014f 3F 7A 07                		rtsd	#28, r7-r10
+ 234                             	.LFE10:
+ 236                             		.global	_DisableInt
+ 238                             	_DisableInt:
+ 239                             	.LFB11:
+ 121:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 122:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+ 123:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Disable interrupt 
+ 124:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	Disables the interrupt specified in intno.
+ 125:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	External Interrupt can be specified. 
+ 126:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+ 127:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT void DisableInt( UINT intno )
+ 128:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+ 240                             		.loc 1 128 1
+ 241 0152 6E 7A                   		pushm	r7-r10
+ 242                             	.LCFI10:
+ 243 0154 71 0A FC                		add	#-4, r0, r10
+ 244                             	.LCFI11:
+ 245 0157 EF A0                   		mov.L	r10, r0
+ 246 0159 E3 A1                   		mov.L	r1, [r10]
+ 129:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	if((intno < 16) && (intno > 255)) {
+ 247                             		.loc 1 129 4
+ 248 015b EC A5                   		mov.L	[r10], r5
+ 249 015d 61 F5                   		cmp	#15, r5
+ 250 015f 24 09                   		bgtu	.L15
+ 251                             		.loc 1 129 18 discriminator 1
+ 252 0161 EC A5                   		mov.L	[r10], r5
+ 253 0163 75 55 FF                		cmp	#0xff, r5
+ 254 0166 24 43                   		bgtu	.L17
+ 255                             	.L15:
+ 130:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		return;
+ 131:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+ 132:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 133:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	if( IPR_index[intno-16] >= 0){
+ 256                             		.loc 1 133 21
+ 257 0168 EC A5                   		mov.L	[r10], r5
+ 258 016a 71 55 F0                		add	#-16, r5
+ 259                             		.loc 1 133 15
+ 260 016d FB 42 00 00 00 00       		mov.L	#_IPR_index, r4
+ 261 0173 FE 55 45                		mov.W	[r5,r4], r5
+ 262                             		.loc 1 133 4
+ 263 0176 DF 55                   		mov.W	r5, r5
+ 264 0178 61 05                   		cmp	#0, r5
+ 265 017a 29 30                   		blt	.L14
+ 134:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	/* Disable the interrupt before set priority level. */
+ 135:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		*(_UB*)(ICU_IER(intno)) &= ~ICU_IER_IEN(intno);
+ 266                             		.loc 1 135 27
+ 267 017c EC A5                   		mov.L	[r10], r5
+ 268 017e 68 35                   		shlr	#3, r5
+ 269 0180 73 55 00 72 08          		add	#0x87200, r5
+ 270 0185 CC 55                   		mov.B	[r5], r5
+ 271 0187 CF 53                   		mov.B	r5, r3
+ 272                             		.loc 1 135 31
+ 273 0189 EC A5                   		mov.L	[r10], r5
+ 274 018b 64 75                   		and	#7, r5
+ 275 018d 66 14                   		mov.L	#1, r4
+ 276 018f EF 47                   		mov.L	r4, r7
+ 277 0191 FD 62 57                		shll	r5, r7
+ 278 0194 EF 75                   		mov.L	r7, r5
+ 279                             		.loc 1 135 27
+ 280 0196 7E 05                   		not	r5
+ 281 0198 53 35                   		and	r3, r5
+ 282 019a CF 54                   		mov.B	r5, r4
+ 283 019c EC A5                   		mov.L	[r10], r5
+ 284 019e 68 35                   		shlr	#3, r5
+ 285 01a0 73 55 00 72 08          		add	#0x87200, r5
+ 286 01a5 C3 54                   		mov.B	r4, [r5]
+ 287 01a7 2E 03                   		bra	.L14
+ 288                             	.L17:
+ 130:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		return;
+ 289                             		.loc 1 130 3
+ 290 01a9 03                      		nop
+ 291                             	.L14:
+ 136:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+ 137:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+ 292                             		.loc 1 137 1
+ 293 01aa 3F 7A 05                		rtsd	#20, r7-r10
+ 294                             	.LFE11:
+ 296                             		.global	_ClearInt
+ 298                             	_ClearInt:
+ 299                             	.LFB12:
+ 138:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 139:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+ 140:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Clear interrupt
+ 141:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	Clear the interrupt specified in intno.
+ 142:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	External Interrupt can be specified. 
+ 143:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+ 144:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT void ClearInt( UINT intno )
+ 145:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+ 300                             		.loc 1 145 1
+ 301 01ad 7E AA                   		push.l	r10
+ 302                             	.LCFI12:
+ 303 01af 71 0A FC                		add	#-4, r0, r10
+ 304                             	.LCFI13:
+ 305 01b2 EF A0                   		mov.L	r10, r0
+ 306 01b4 E3 A1                   		mov.L	r1, [r10]
+ 146:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	*(_UB*)(ICU_IR(intno)) = 0;
+ 307                             		.loc 1 146 10
+ 308 01b6 EC A5                   		mov.L	[r10], r5
+ 309 01b8 73 55 00 70 08          		add	#0x87000, r5
+ 310                             		.loc 1 146 25
+ 311 01bd F8 54 00                		mov.B	#0, [r5]
+ 147:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+ 312                             		.loc 1 147 1
+ 313 01c0 03                      		nop
+ 314 01c1 3F AA 02                		rtsd	#8, r10-r10
+ 315                             	.LFE12:
+ 317                             		.global	_EndOfInt
+ 319                             	_EndOfInt:
+ 320                             	.LFB13:
+ 148:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 149:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+ 150:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Issue EOI to interrupt controller
+ 151:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+ 152:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT void EndOfInt(UINT intno)
+ 153:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+ 321                             		.loc 1 153 1
+ 322 01c4 7E AA                   		push.l	r10
+ 323                             	.LCFI14:
+ 324 01c6 71 0A FC                		add	#-4, r0, r10
+ 325                             	.LCFI15:
+ 326 01c9 EF A0                   		mov.L	r10, r0
+ 327 01cb E3 A1                   		mov.L	r1, [r10]
+ 154:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	/* No opetarion. */
+ 155:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+ 328                             		.loc 1 155 1
+ 329 01cd 03                      		nop
+ 330 01ce 3F AA 02                		rtsd	#8, r10-r10
+ 331                             	.LFE13:
+ 333                             		.global	_CheckInt
+ 335                             	_CheckInt:
+ 336                             	.LFB14:
+ 156:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 157:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+ 158:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Check active state
+ 159:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	Current active state for the associated interrupt
+ 160:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  *	External Interrupt can be specified. 
+ 161:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+ 162:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT BOOL CheckInt( UINT intno )
+ 163:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+ 337                             		.loc 1 163 1
+ 338 01d1 7E AA                   		push.l	r10
+ 339                             	.LCFI16:
+ 340 01d3 71 0A FC                		add	#-4, r0, r10
+ 341                             	.LCFI17:
+ 342 01d6 EF A0                   		mov.L	r10, r0
+ 343 01d8 E3 A1                   		mov.L	r1, [r10]
+ 164:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	return (*(_UB*)(ICU_IR(intno)));
+ 344                             		.loc 1 164 18
+ 345 01da EC A5                   		mov.L	[r10], r5
+ 346 01dc 73 55 00 70 08          		add	#0x87000, r5
+ 347                             		.loc 1 164 10
+ 348 01e1 CC 55                   		mov.B	[r5], r5
+ 349 01e3 5B 55                   		movu.B	r5, r5
+ 165:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+ 350                             		.loc 1 165 1
+ 351 01e5 EF 51                   		mov.L	r5, r1
+ 352 01e7 3F AA 02                		rtsd	#8, r10-r10
+ 353                             	.LFE14:
+ 355                             		.global	_SetIntMode
+ 357                             	_SetIntMode:
+ 358                             	.LFB15:
+ 166:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 167:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** /*
+ 168:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  * Set interrupt mode
+ 169:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c ****  */
+ 170:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** EXPORT void SetIntMode(UINT intno, UINT mode)
+ 171:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** {
+ 359                             		.loc 1 171 1
+ 360 01ea 6E 7A                   		pushm	r7-r10
+ 361                             	.LCFI18:
+ 362 01ec 71 0A F0                		add	#-16, r0, r10
+ 363                             	.LCFI19:
+ 364 01ef EF A0                   		mov.L	r10, r0
+ 365 01f1 E7 A1 02                		mov.L	r1, 8[r10]
+ 366 01f4 E7 A2 03                		mov.L	r2, 12[r10]
+ 172:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	UINT	imask;
+ 173:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	UB	irqmd;
+ 174:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 175:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	switch (mode) {
+ 367                             		.loc 1 175 2
+ 368 01f7 ED A5 03                		mov.L	12[r10], r5
+ 369 01fa 61 15                   		cmp	#1, r5
+ 370 01fc 20 1D                   		beq	.L23
+ 371 01fe ED A5 03                		mov.L	12[r10], r5
+ 372 0201 61 05                   		cmp	#0, r5
+ 373 0203 20 1B                   		beq	.L24
+ 374 0205 ED A5 03                		mov.L	12[r10], r5
+ 375 0208 61 35                   		cmp	#3, r5
+ 376 020a 20 18                   		beq	.L25
+ 377 020c ED A5 03                		mov.L	12[r10], r5
+ 378 020f 61 55                   		cmp	#5, r5
+ 379 0211 3B 9F 00                		bne	.L30
+ 176:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	case (IM_LEVEL | IM_LOW):
+ 177:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		irqmd = 0x00;
+ 380                             		.loc 1 177 9
+ 381 0214 F8 A4 00                		mov.B	#0, [r10]
+ 178:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		break;
+ 382                             		.loc 1 178 3
+ 383 0217 2E 11                   		bra	.L27
+ 384                             	.L23:
+ 179:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	case (IM_EDGE | IM_LOW):
+ 180:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		irqmd = 0x04;
+ 385                             		.loc 1 180 9
+ 386 0219 F8 A4 04                		mov.B	#4, [r10]
+ 181:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		break;
+ 387                             		.loc 1 181 3
+ 388 021c 2E 0C                   		bra	.L27
+ 389                             	.L24:
+ 182:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	case (IM_EDGE | IM_HI):
+ 183:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		irqmd = 0x80;
+ 390                             		.loc 1 183 9
+ 391 021e F8 A4 80                		mov.B	#-128, [r10]
+ 184:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		break;
+ 392                             		.loc 1 184 3
+ 393 0221 0F                      		bra	.L27
+ 394                             	.L25:
+ 185:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	case (IM_EDGE | IM_BOTH):
+ 186:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		irqmd = 0xC0;
+ 395                             		.loc 1 186 9
+ 396 0222 F8 A4 C0                		mov.B	#-64, [r10]
+ 187:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		break;
+ 397                             		.loc 1 187 3
+ 398 0225 03                      		nop
+ 399 0226 EF 00                   		.balign 8,3,3
+ 400                             	.L27:
+ 188:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	default:
+ 189:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		return;
+ 190:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+ 191:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 192:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	DI(imask);
+ 401                             		.loc 1 192 2
+ 402 0228 05 00 00 00             		bsr	_disint
+ 403 022c E7 A1 01                		mov.L	r1, 4[r10]
+ 193:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 194:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	if(IPR_index[intno] >= 0){
+ 404                             		.loc 1 194 14
+ 405 022f FB 52 00 00 00 00       		mov.L	#_IPR_index, r5
+ 406 0235 ED A4 02                		mov.L	8[r10], r4
+ 407 0238 FE 54 55                		mov.W	[r4,r5], r5
+ 408                             		.loc 1 194 4
+ 409 023b DF 55                   		mov.W	r5, r5
+ 410 023d 61 05                   		cmp	#0, r5
+ 411 023f 29 68                   		blt	.L29
+ 195:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	/* Disable the interrupt before set priority level. */
+ 196:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		*(_UB*)(ICU_IER(intno)) &= ~ICU_IER_IEN(intno);
+ 412                             		.loc 1 196 27
+ 413 0241 ED A5 02                		mov.L	8[r10], r5
+ 414 0244 68 35                   		shlr	#3, r5
+ 415 0246 73 55 00 72 08          		add	#0x87200, r5
+ 416 024b CC 55                   		mov.B	[r5], r5
+ 417 024d CF 53                   		mov.B	r5, r3
+ 418                             		.loc 1 196 31
+ 419 024f ED A5 02                		mov.L	8[r10], r5
+ 420 0252 64 75                   		and	#7, r5
+ 421 0254 66 14                   		mov.L	#1, r4
+ 422 0256 EF 47                   		mov.L	r4, r7
+ 423 0258 FD 62 57                		shll	r5, r7
+ 424 025b EF 75                   		mov.L	r7, r5
+ 425                             		.loc 1 196 27
+ 426 025d 7E 05                   		not	r5
+ 427 025f 53 35                   		and	r3, r5
+ 428 0261 CF 54                   		mov.B	r5, r4
+ 429 0263 ED A5 02                		mov.L	8[r10], r5
+ 430 0266 68 35                   		shlr	#3, r5
+ 431 0268 73 55 00 72 08          		add	#0x87200, r5
+ 432 026d C3 54                   		mov.B	r4, [r5]
+ 197:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	/* Set interrupt priority level. */
+ 198:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		*(_UB*)(ICU_IRQCR(intno)) = irqmd;
+ 433                             		.loc 1 198 11
+ 434 026f ED A5 02                		mov.L	8[r10], r5
+ 435 0272 73 55 00 75 08          		add	#0x87500, r5
+ 436                             		.loc 1 198 29
+ 437 0277 CC A4                   		mov.B	[r10], r4
+ 438 0279 C3 54                   		mov.B	r4, [r5]
+ 199:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	/* Enables the specified interrupt. */
+ 200:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 		*(_UB*)(ICU_IER(intno)) |= ICU_IER_IEN(intno);
+ 439                             		.loc 1 200 27
+ 440 027b ED A5 02                		mov.L	8[r10], r5
+ 441 027e 68 35                   		shlr	#3, r5
+ 442 0280 73 55 00 72 08          		add	#0x87200, r5
+ 443 0285 CC 55                   		mov.B	[r5], r5
+ 444 0287 CF 54                   		mov.B	r5, r4
+ 445                             		.loc 1 200 30
+ 446 0289 ED A5 02                		mov.L	8[r10], r5
+ 447 028c 64 75                   		and	#7, r5
+ 448 028e 66 13                   		mov.L	#1, r3
+ 449 0290 EF 37                   		mov.L	r3, r7
+ 450 0292 FD 62 57                		shll	r5, r7
+ 451 0295 EF 75                   		mov.L	r7, r5
+ 452                             		.loc 1 200 27
+ 453 0297 57 45                   		or	r4, r5
+ 454 0299 CF 54                   		mov.B	r5, r4
+ 455 029b ED A5 02                		mov.L	8[r10], r5
+ 456 029e 68 35                   		shlr	#3, r5
+ 457 02a0 73 55 00 72 08          		add	#0x87200, r5
+ 458 02a5 C3 54                   		mov.B	r4, [r5]
+ 459                             	.L29:
+ 201:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+ 202:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 
+ 203:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	EI(imask);
+ 460                             		.loc 1 203 2
+ 461 02a7 ED A1 01                		mov.L	4[r10], r1
+ 462 02aa 05 00 00 00             		bsr	_setint
+ 463 02ae 2E 03                   		bra	.L22
+ 464                             	.L30:
+ 189:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** 	}
+ 465                             		.loc 1 189 3
+ 466 02b0 03                      		nop
+ 467                             	.L22:
+ 204:../lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.c **** }
+ 468                             		.loc 1 204 1
+ 469 02b1 3F 7A 08                		rtsd	#32, r7-r10
+ 470                             	.LFE15:
+ 698                             	.Letext0:
+ 699                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"

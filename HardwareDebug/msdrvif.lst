@@ -1,0 +1,645 @@
+   1                             		.file	"msdrvif.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   5                             	_msdi_openfn:
+   6                             	.LFB6:
+   7                             		.file 1 "../device/common/drvif/msdrvif.c"
+   1:../device/common/drvif/msdrvif.c **** /*
+   2:../device/common/drvif/msdrvif.c ****  *----------------------------------------------------------------------
+   3:../device/common/drvif/msdrvif.c ****  *    Device Driver for μT-Kernel 3.0
+   4:../device/common/drvif/msdrvif.c ****  *
+   5:../device/common/drvif/msdrvif.c ****  *    Copyright (C) 2020 by Ken Sakamura.
+   6:../device/common/drvif/msdrvif.c ****  *    This software is distributed under the T-License 2.2.
+   7:../device/common/drvif/msdrvif.c ****  *----------------------------------------------------------------------
+   8:../device/common/drvif/msdrvif.c ****  *
+   9:../device/common/drvif/msdrvif.c ****  *    Released by TRON Forum(http://www.tron.org) at 2020/10/21.
+  10:../device/common/drvif/msdrvif.c ****  *
+  11:../device/common/drvif/msdrvif.c ****  *----------------------------------------------------------------------
+  12:../device/common/drvif/msdrvif.c ****  */
+  13:../device/common/drvif/msdrvif.c **** 
+  14:../device/common/drvif/msdrvif.c **** 
+  15:../device/common/drvif/msdrvif.c **** /*
+  16:../device/common/drvif/msdrvif.c ****  *	msdrvif.c
+  17:../device/common/drvif/msdrvif.c ****  *
+  18:../device/common/drvif/msdrvif.c ****  *	mSDI: Simple Device driver I/F layer for micro T-Kernel
+  19:../device/common/drvif/msdrvif.c ****  */
+  20:../device/common/drvif/msdrvif.c **** 
+  21:../device/common/drvif/msdrvif.c **** #include <tk/tkernel.h>
+  22:../device/common/drvif/msdrvif.c **** #include "msdrvif.h"
+  23:../device/common/drvif/msdrvif.c **** 
+  24:../device/common/drvif/msdrvif.c **** /* ------------------------------------------------------------------------ */
+  25:../device/common/drvif/msdrvif.c **** /*
+  26:../device/common/drvif/msdrvif.c ****  * FastLock fot driver I/F access
+  27:../device/common/drvif/msdrvif.c ****  */
+  28:../device/common/drvif/msdrvif.c **** 
+  29:../device/common/drvif/msdrvif.c **** #define	LockMSDI(msdi)		Lock(&msdi->lock)
+  30:../device/common/drvif/msdrvif.c **** #define	UnlockMSDI(msdi)	Unlock(&msdi->lock)
+  31:../device/common/drvif/msdrvif.c **** 
+  32:../device/common/drvif/msdrvif.c **** /* ------------------------------------------------------------------------ */
+  33:../device/common/drvif/msdrvif.c **** /*
+  34:../device/common/drvif/msdrvif.c ****  *	Processing function
+  35:../device/common/drvif/msdrvif.c ****  */
+  36:../device/common/drvif/msdrvif.c **** 
+  37:../device/common/drvif/msdrvif.c **** /*
+  38:../device/common/drvif/msdrvif.c ****  * Open function
+  39:../device/common/drvif/msdrvif.c ****  */
+  40:../device/common/drvif/msdrvif.c **** LOCAL ER msdi_openfn( ID devid, UINT omode, T_MSDI *msdi )
+  41:../device/common/drvif/msdrvif.c **** {
+   8                             		.loc 1 41 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A F0                		add	#-16, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E7 A1 01                		mov.L	r1, 4[r10]
+  15 000a E7 A2 02                		mov.L	r2, 8[r10]
+  16 000d E7 A3 03                		mov.L	r3, 12[r10]
+  42:../device/common/drvif/msdrvif.c **** 	ER	err;
+  43:../device/common/drvif/msdrvif.c **** 
+  44:../device/common/drvif/msdrvif.c **** 	if ( msdi->dmsdi.openfn == NULL ) return E_OK;
+  17                             		.loc 1 44 18
+  18 0010 ED A5 03                		mov.L	12[r10], r5
+  19 0013 AB 55                   		mov.L	48[r5], r5
+  20                             		.loc 1 44 5
+  21 0015 61 05                   		cmp	#0, r5
+  22 0017 1D                      		bne	.L2
+  23                             		.loc 1 44 43 discriminator 1
+  24 0018 66 05                   		mov.L	#0, r5
+  25 001a 2E 2C                   		bra	.L3
+  26                             	.L2:
+  45:../device/common/drvif/msdrvif.c **** 
+  46:../device/common/drvif/msdrvif.c **** 	Lock(&msdi->lock);
+  27                             		.loc 1 46 2
+  28 001c ED A5 03                		mov.L	12[r10], r5
+  29 001f 62 45                   		add	#4, r5
+  30 0021 EF 51                   		mov.L	r5, r1
+  31 0023 05 00 00 00             		bsr	_Lock
+  47:../device/common/drvif/msdrvif.c **** 	err = (*msdi->dmsdi.openfn)(devid, omode, msdi);
+  32                             		.loc 1 47 9
+  33 0027 ED A5 03                		mov.L	12[r10], r5
+  34 002a AB 55                   		mov.L	48[r5], r5
+  35 002c ED A3 03                		mov.L	12[r10], r3
+  36 002f ED A2 02                		mov.L	8[r10], r2
+  37 0032 ED A1 01                		mov.L	4[r10], r1
+  38 0035 7F 15                   		jsr	r5
+  39                             	.LVL0:
+  40 0037 E3 A1                   		mov.L	r1, [r10]
+  48:../device/common/drvif/msdrvif.c **** 	Unlock(&msdi->lock);
+  41                             		.loc 1 48 2
+  42 0039 ED A5 03                		mov.L	12[r10], r5
+  43 003c 62 45                   		add	#4, r5
+  44 003e EF 51                   		mov.L	r5, r1
+  45 0040 05 00 00 00             		bsr	_Unlock
+  49:../device/common/drvif/msdrvif.c **** 
+  50:../device/common/drvif/msdrvif.c **** 	return err;
+  46                             		.loc 1 50 9
+  47 0044 EC A5                   		mov.L	[r10], r5
+  48                             	.L3:
+  51:../device/common/drvif/msdrvif.c **** }
+  49                             		.loc 1 51 1
+  50 0046 EF 51                   		mov.L	r5, r1
+  51 0048 3F AA 05                		rtsd	#20, r10-r10
+  52                             	.LFE6:
+  55                             	_msdi_closefn:
+  56                             	.LFB7:
+  52:../device/common/drvif/msdrvif.c **** 
+  53:../device/common/drvif/msdrvif.c **** /*
+  54:../device/common/drvif/msdrvif.c ****  * Close cunction
+  55:../device/common/drvif/msdrvif.c ****  */
+  56:../device/common/drvif/msdrvif.c **** LOCAL ER msdi_closefn( ID devid, UINT option, T_MSDI *msdi )
+  57:../device/common/drvif/msdrvif.c **** {
+  57                             		.loc 1 57 1
+  58 004b 7E AA                   		push.l	r10
+  59                             	.LCFI2:
+  60 004d 71 0A F0                		add	#-16, r0, r10
+  61                             	.LCFI3:
+  62 0050 EF A0                   		mov.L	r10, r0
+  63 0052 E7 A1 01                		mov.L	r1, 4[r10]
+  64 0055 E7 A2 02                		mov.L	r2, 8[r10]
+  65 0058 E7 A3 03                		mov.L	r3, 12[r10]
+  58:../device/common/drvif/msdrvif.c **** 	ER	err;
+  59:../device/common/drvif/msdrvif.c **** 
+  60:../device/common/drvif/msdrvif.c **** 	if ( msdi->dmsdi.closefn == NULL ) return E_OK;
+  66                             		.loc 1 60 18
+  67 005b ED A5 03                		mov.L	12[r10], r5
+  68 005e AB 5D                   		mov.L	52[r5], r5
+  69                             		.loc 1 60 5
+  70 0060 61 05                   		cmp	#0, r5
+  71 0062 1D                      		bne	.L5
+  72                             		.loc 1 60 44 discriminator 1
+  73 0063 66 05                   		mov.L	#0, r5
+  74 0065 2E 2C                   		bra	.L6
+  75                             	.L5:
+  61:../device/common/drvif/msdrvif.c **** 
+  62:../device/common/drvif/msdrvif.c **** 	Lock(&msdi->lock);
+  76                             		.loc 1 62 2
+  77 0067 ED A5 03                		mov.L	12[r10], r5
+  78 006a 62 45                   		add	#4, r5
+  79 006c EF 51                   		mov.L	r5, r1
+  80 006e 05 00 00 00             		bsr	_Lock
+  63:../device/common/drvif/msdrvif.c **** 	err = (*msdi->dmsdi.closefn)(devid, option, msdi);
+  81                             		.loc 1 63 9
+  82 0072 ED A5 03                		mov.L	12[r10], r5
+  83 0075 AB 5D                   		mov.L	52[r5], r5
+  84 0077 ED A3 03                		mov.L	12[r10], r3
+  85 007a ED A2 02                		mov.L	8[r10], r2
+  86 007d ED A1 01                		mov.L	4[r10], r1
+  87 0080 7F 15                   		jsr	r5
+  88                             	.LVL1:
+  89 0082 E3 A1                   		mov.L	r1, [r10]
+  64:../device/common/drvif/msdrvif.c **** 	Unlock(&msdi->lock);
+  90                             		.loc 1 64 2
+  91 0084 ED A5 03                		mov.L	12[r10], r5
+  92 0087 62 45                   		add	#4, r5
+  93 0089 EF 51                   		mov.L	r5, r1
+  94 008b 05 00 00 00             		bsr	_Unlock
+  65:../device/common/drvif/msdrvif.c **** 
+  66:../device/common/drvif/msdrvif.c **** 	return err;
+  95                             		.loc 1 66 9
+  96 008f EC A5                   		mov.L	[r10], r5
+  97                             	.L6:
+  67:../device/common/drvif/msdrvif.c **** }
+  98                             		.loc 1 67 1
+  99 0091 EF 51                   		mov.L	r5, r1
+ 100 0093 3F AA 05                		rtsd	#20, r10-r10
+ 101                             	.LFE7:
+ 104                             	_msdi_execfn:
+ 105                             	.LFB8:
+  68:../device/common/drvif/msdrvif.c **** 
+  69:../device/common/drvif/msdrvif.c **** /*
+  70:../device/common/drvif/msdrvif.c ****  * Processing start function
+  71:../device/common/drvif/msdrvif.c ****  */
+  72:../device/common/drvif/msdrvif.c **** LOCAL ER msdi_execfn( T_DEVREQ *req, TMO tmout, T_MSDI *msdi )
+  73:../device/common/drvif/msdrvif.c **** {
+ 106                             		.loc 1 73 1
+ 107 0096 7E AA                   		push.l	r10
+ 108                             	.LCFI4:
+ 109 0098 71 0A EC                		add	#-20, r0, r10
+ 110                             	.LCFI5:
+ 111 009b EF A0                   		mov.L	r10, r0
+ 112 009d E7 A1 02                		mov.L	r1, 8[r10]
+ 113 00a0 E7 A2 03                		mov.L	r2, 12[r10]
+ 114 00a3 E7 A3 04                		mov.L	r3, 16[r10]
+  74:../device/common/drvif/msdrvif.c **** 	INT	(*fp)( T_DEVREQ*, T_MSDI* );
+  75:../device/common/drvif/msdrvif.c **** 	ER	err;
+  76:../device/common/drvif/msdrvif.c **** 
+  77:../device/common/drvif/msdrvif.c **** 	fp = ( req->cmd == TDC_READ )? msdi->dmsdi.readfn: msdi->dmsdi.writefn;
+ 115                             		.loc 1 77 18
+ 116 00a6 ED A5 02                		mov.L	8[r10], r5
+ 117 00a9 8B 55                   		mov.B	12[r5], r5
+ 118 00ab 64 F5                   		and	#15, r5
+ 119                             		.loc 1 77 51
+ 120 00ad 5B 55                   		movu.B	r5, r5
+ 121 00af 61 15                   		cmp	#1, r5
+ 122 00b1 1F                      		bne	.L8
+ 123                             		.loc 1 77 51 is_stmt 0 discriminator 1
+ 124 00b2 ED A5 04                		mov.L	16[r10], r5
+ 125 00b5 AB D5                   		mov.L	56[r5], r5
+ 126 00b7 0E                      		bra	.L9
+ 127                             	.L8:
+ 128                             		.loc 1 77 51 discriminator 2
+ 129 00b8 ED A5 04                		mov.L	16[r10], r5
+ 130 00bb AB DD                   		mov.L	60[r5], r5
+ 131                             	.L9:
+ 132                             		.loc 1 77 5 is_stmt 1 discriminator 4
+ 133 00bd E3 A5                   		mov.L	r5, [r10]
+  78:../device/common/drvif/msdrvif.c **** 	if ( fp == NULL ) return E_NOSPT;
+ 134                             		.loc 1 78 5 discriminator 4
+ 135 00bf EC A5                   		mov.L	[r10], r5
+ 136 00c1 61 05                   		cmp	#0, r5
+ 137 00c3 1E                      		bne	.L10
+ 138                             		.loc 1 78 27 discriminator 1
+ 139 00c4 FB 56 F7                		mov.L	#-9, r5
+ 140 00c7 2E 46                   		bra	.L11
+ 141                             	.L10:
+  79:../device/common/drvif/msdrvif.c **** 
+  80:../device/common/drvif/msdrvif.c **** 	if ( req->start >= 0 && msdi->dmsdi.blksz <= 0) return E_NOSPT;
+ 142                             		.loc 1 80 10
+ 143 00c9 ED A5 02                		mov.L	8[r10], r5
+ 144 00cc A9 55                   		mov.L	16[r5], r5
+ 145                             		.loc 1 80 5
+ 146 00ce 61 05                   		cmp	#0, r5
+ 147 00d0 29 10                   		blt	.L12
+ 148                             		.loc 1 80 37 discriminator 1
+ 149 00d2 ED A5 04                		mov.L	16[r10], r5
+ 150 00d5 AA DD                   		mov.L	44[r5], r5
+ 151                             		.loc 1 80 23 discriminator 1
+ 152 00d7 61 05                   		cmp	#0, r5
+ 153 00d9 2A 07                   		bgt	.L12
+ 154                             		.loc 1 80 57 discriminator 2
+ 155 00db FB 56 F7                		mov.L	#-9, r5
+ 156 00de 2E 2F                   		bra	.L11
+ 157                             	.L12:
+  81:../device/common/drvif/msdrvif.c **** 
+  82:../device/common/drvif/msdrvif.c **** 	/* I/O processing */
+  83:../device/common/drvif/msdrvif.c **** 	Lock(&msdi->lock);
+ 158                             		.loc 1 83 2
+ 159 00e0 ED A5 04                		mov.L	16[r10], r5
+ 160 00e3 62 45                   		add	#4, r5
+ 161 00e5 EF 51                   		mov.L	r5, r1
+ 162 00e7 05 00 00 00             		bsr	_Lock
+  84:../device/common/drvif/msdrvif.c **** 	err = (*fp)(req, msdi);
+ 163                             		.loc 1 84 9
+ 164 00eb EC A5                   		mov.L	[r10], r5
+ 165 00ed ED A2 04                		mov.L	16[r10], r2
+ 166 00f0 ED A1 02                		mov.L	8[r10], r1
+ 167 00f3 7F 15                   		jsr	r5
+ 168                             	.LVL2:
+ 169 00f5 E7 A1 01                		mov.L	r1, 4[r10]
+  85:../device/common/drvif/msdrvif.c **** 	Unlock(&msdi->lock);
+ 170                             		.loc 1 85 2
+ 171 00f8 ED A5 04                		mov.L	16[r10], r5
+ 172 00fb 62 45                   		add	#4, r5
+ 173 00fd EF 51                   		mov.L	r5, r1
+ 174 00ff 05 00 00 00             		bsr	_Unlock
+  86:../device/common/drvif/msdrvif.c **** 
+  87:../device/common/drvif/msdrvif.c **** 	req->error = err;
+ 175                             		.loc 1 87 13
+ 176 0103 ED A5 02                		mov.L	8[r10], r5
+ 177 0106 ED A4 01                		mov.L	4[r10], r4
+ 178 0109 A2 54                   		mov.L	r4, 32[r5]
+  88:../device/common/drvif/msdrvif.c **** 	return E_OK;
+ 179                             		.loc 1 88 9
+ 180 010b 66 05                   		mov.L	#0, r5
+ 181                             	.L11:
+  89:../device/common/drvif/msdrvif.c **** }
+ 182                             		.loc 1 89 1
+ 183 010d EF 51                   		mov.L	r5, r1
+ 184 010f 3F AA 06                		rtsd	#24, r10-r10
+ 185                             	.LFE8:
+ 188                             	_msdi_waitfn:
+ 189                             	.LFB9:
+  90:../device/common/drvif/msdrvif.c **** 
+  91:../device/common/drvif/msdrvif.c **** /*
+  92:../device/common/drvif/msdrvif.c ****  * Wait-for-completion function
+  93:../device/common/drvif/msdrvif.c ****  */
+  94:../device/common/drvif/msdrvif.c **** LOCAL INT msdi_waitfn( T_DEVREQ *req, INT nreq, TMO tmout, T_MSDI *msdi )
+  95:../device/common/drvif/msdrvif.c **** {
+ 190                             		.loc 1 95 1
+ 191 0112 7E AA                   		push.l	r10
+ 192                             	.LCFI6:
+ 193 0114 71 0A F0                		add	#-16, r0, r10
+ 194                             	.LCFI7:
+ 195 0117 EF A0                   		mov.L	r10, r0
+ 196 0119 E3 A1                   		mov.L	r1, [r10]
+ 197 011b E7 A2 01                		mov.L	r2, 4[r10]
+ 198 011e E7 A3 02                		mov.L	r3, 8[r10]
+ 199 0121 E7 A4 03                		mov.L	r4, 12[r10]
+  96:../device/common/drvif/msdrvif.c **** 	return 0;
+ 200                             		.loc 1 96 9
+ 201 0124 66 05                   		mov.L	#0, r5
+  97:../device/common/drvif/msdrvif.c **** }
+ 202                             		.loc 1 97 1
+ 203 0126 EF 51                   		mov.L	r5, r1
+ 204 0128 3F AA 05                		rtsd	#20, r10-r10
+ 205                             	.LFE9:
+ 208                             	_msdi_abortfn:
+ 209                             	.LFB10:
+  98:../device/common/drvif/msdrvif.c **** 
+  99:../device/common/drvif/msdrvif.c **** /*
+ 100:../device/common/drvif/msdrvif.c ****  * Abort processing function
+ 101:../device/common/drvif/msdrvif.c ****  */
+ 102:../device/common/drvif/msdrvif.c **** LOCAL ER msdi_abortfn( ID tskid, T_DEVREQ *req, INT nreq, T_MSDI *msdi )
+ 103:../device/common/drvif/msdrvif.c **** {
+ 210                             		.loc 1 103 1
+ 211 012b 7E AA                   		push.l	r10
+ 212                             	.LCFI8:
+ 213 012d 71 0A F0                		add	#-16, r0, r10
+ 214                             	.LCFI9:
+ 215 0130 EF A0                   		mov.L	r10, r0
+ 216 0132 E3 A1                   		mov.L	r1, [r10]
+ 217 0134 E7 A2 01                		mov.L	r2, 4[r10]
+ 218 0137 E7 A3 02                		mov.L	r3, 8[r10]
+ 219 013a E7 A4 03                		mov.L	r4, 12[r10]
+ 104:../device/common/drvif/msdrvif.c **** 	return E_OK;
+ 220                             		.loc 1 104 9
+ 221 013d 66 05                   		mov.L	#0, r5
+ 105:../device/common/drvif/msdrvif.c **** }
+ 222                             		.loc 1 105 1
+ 223 013f EF 51                   		mov.L	r5, r1
+ 224 0141 3F AA 05                		rtsd	#20, r10-r10
+ 225                             	.LFE10:
+ 228                             	_msdi_eventfn:
+ 229                             	.LFB11:
+ 106:../device/common/drvif/msdrvif.c **** 
+ 107:../device/common/drvif/msdrvif.c **** /*
+ 108:../device/common/drvif/msdrvif.c ****  * Event function
+ 109:../device/common/drvif/msdrvif.c ****  */
+ 110:../device/common/drvif/msdrvif.c **** LOCAL INT msdi_eventfn( INT evttyp, void *evtinf, T_MSDI *msdi )
+ 111:../device/common/drvif/msdrvif.c **** {
+ 230                             		.loc 1 111 1
+ 231 0144 7E AA                   		push.l	r10
+ 232                             	.LCFI10:
+ 233 0146 71 0A F0                		add	#-16, r0, r10
+ 234                             	.LCFI11:
+ 235 0149 EF A0                   		mov.L	r10, r0
+ 236 014b E7 A1 01                		mov.L	r1, 4[r10]
+ 237 014e E7 A2 02                		mov.L	r2, 8[r10]
+ 238 0151 E7 A3 03                		mov.L	r3, 12[r10]
+ 112:../device/common/drvif/msdrvif.c **** 	INT	ret;
+ 113:../device/common/drvif/msdrvif.c **** 
+ 114:../device/common/drvif/msdrvif.c **** 	if ( msdi->dmsdi.eventfn == NULL ) return E_OK;
+ 239                             		.loc 1 114 18
+ 240 0154 ED A5 03                		mov.L	12[r10], r5
+ 241 0157 AC 55                   		mov.L	64[r5], r5
+ 242                             		.loc 1 114 5
+ 243 0159 61 05                   		cmp	#0, r5
+ 244 015b 1D                      		bne	.L18
+ 245                             		.loc 1 114 44 discriminator 1
+ 246 015c 66 05                   		mov.L	#0, r5
+ 247 015e 2E 2C                   		bra	.L19
+ 248                             	.L18:
+ 115:../device/common/drvif/msdrvif.c **** 
+ 116:../device/common/drvif/msdrvif.c **** 	Lock(&msdi->lock);
+ 249                             		.loc 1 116 2
+ 250 0160 ED A5 03                		mov.L	12[r10], r5
+ 251 0163 62 45                   		add	#4, r5
+ 252 0165 EF 51                   		mov.L	r5, r1
+ 253 0167 05 00 00 00             		bsr	_Lock
+ 117:../device/common/drvif/msdrvif.c **** 	ret = (*msdi->dmsdi.eventfn)(evttyp, evtinf, msdi);
+ 254                             		.loc 1 117 9
+ 255 016b ED A5 03                		mov.L	12[r10], r5
+ 256 016e AC 55                   		mov.L	64[r5], r5
+ 257 0170 ED A3 03                		mov.L	12[r10], r3
+ 258 0173 ED A2 02                		mov.L	8[r10], r2
+ 259 0176 ED A1 01                		mov.L	4[r10], r1
+ 260 0179 7F 15                   		jsr	r5
+ 261                             	.LVL3:
+ 262 017b E3 A1                   		mov.L	r1, [r10]
+ 118:../device/common/drvif/msdrvif.c **** 	Unlock(&msdi->lock);
+ 263                             		.loc 1 118 2
+ 264 017d ED A5 03                		mov.L	12[r10], r5
+ 265 0180 62 45                   		add	#4, r5
+ 266 0182 EF 51                   		mov.L	r5, r1
+ 267 0184 05 00 00 00             		bsr	_Unlock
+ 119:../device/common/drvif/msdrvif.c **** 
+ 120:../device/common/drvif/msdrvif.c **** 	return ret;
+ 268                             		.loc 1 120 9
+ 269 0188 EC A5                   		mov.L	[r10], r5
+ 270                             	.L19:
+ 121:../device/common/drvif/msdrvif.c **** }
+ 271                             		.loc 1 121 1
+ 272 018a EF 51                   		mov.L	r5, r1
+ 273 018c 3F AA 05                		rtsd	#20, r10-r10
+ 274                             	.LFE11:
+ 276                             		.global	_msdi_def_dev
+ 278                             	_msdi_def_dev:
+ 279                             	.LFB12:
+ 122:../device/common/drvif/msdrvif.c **** 
+ 123:../device/common/drvif/msdrvif.c **** /* ------------------------------------------------------------------------ */
+ 124:../device/common/drvif/msdrvif.c **** /*
+ 125:../device/common/drvif/msdrvif.c ****  *	Device registration
+ 126:../device/common/drvif/msdrvif.c ****  */
+ 127:../device/common/drvif/msdrvif.c **** 
+ 128:../device/common/drvif/msdrvif.c **** /*
+ 129:../device/common/drvif/msdrvif.c ****  * SDI Device registration
+ 130:../device/common/drvif/msdrvif.c ****  */
+ 131:../device/common/drvif/msdrvif.c **** EXPORT ER msdi_def_dev( T_DMSDI *dmsdi, T_IDEV *idev, T_MSDI **p_msdi )
+ 132:../device/common/drvif/msdrvif.c **** {
+ 280                             		.loc 1 132 1
+ 281 018f 7E AA                   		push.l	r10
+ 282                             	.LCFI12:
+ 283 0191 71 0A C0                		add	#-64, r0, r10
+ 284                             	.LCFI13:
+ 285 0194 EF A0                   		mov.L	r10, r0
+ 286 0196 E7 A1 0D                		mov.L	r1, 52[r10]
+ 287 0199 E7 A2 0E                		mov.L	r2, 56[r10]
+ 288 019c E7 A3 0F                		mov.L	r3, 60[r10]
+ 133:../device/common/drvif/msdrvif.c **** 	T_MSDI	*msdi;
+ 134:../device/common/drvif/msdrvif.c **** 	T_DDEV	ddev;
+ 135:../device/common/drvif/msdrvif.c **** 	ER	err;
+ 136:../device/common/drvif/msdrvif.c **** 
+ 137:../device/common/drvif/msdrvif.c **** 	/* Create "SDI"*/
+ 138:../device/common/drvif/msdrvif.c **** 	msdi = Kmalloc(sizeof(T_MSDI));
+ 289                             		.loc 1 138 9
+ 290 019f 75 41 44                		mov.L	#0x44, r1
+ 291 01a2 05 00 00 00             		bsr	_Kmalloc
+ 292 01a6 E7 A1 01                		mov.L	r1, 4[r10]
+ 139:../device/common/drvif/msdrvif.c **** 	if ( msdi == NULL ) {
+ 293                             		.loc 1 139 5
+ 294 01a9 ED A5 01                		mov.L	4[r10], r5
+ 295 01ac 61 05                   		cmp	#0, r5
+ 296 01ae 1F                      		bne	.L21
+ 140:../device/common/drvif/msdrvif.c **** 		err = E_NOMEM;
+ 297                             		.loc 1 140 7
+ 298 01af F8 A6 DF                		mov.L	#-33, [r10]
+ 141:../device/common/drvif/msdrvif.c **** 		goto err_ret1;
+ 299                             		.loc 1 141 3
+ 300 01b2 38 D0 00                		bra	.L22
+ 301                             	.L21:
+ 142:../device/common/drvif/msdrvif.c **** 	}
+ 143:../device/common/drvif/msdrvif.c **** 
+ 144:../device/common/drvif/msdrvif.c **** 	msdi->dmsdi = *dmsdi;		/* Structure Copy */
+ 302                             		.loc 1 144 14
+ 303 01b5 ED A5 01                		mov.L	4[r10], r5
+ 304 01b8 ED A3 0D                		mov.L	52[r10], r3
+ 305 01bb 75 44 34                		mov.L	#52, r4
+ 306 01be 71 55 10                		add	#16, r5
+ 307 01c1 EF 51                   		mov.L	r5, r1
+ 308 01c3 EF 32                   		mov.L	r3, r2
+ 309 01c5 EF 43                   		mov.L	r4, r3
+ 310 01c7 7F 8F                   		smovf
+ 145:../device/common/drvif/msdrvif.c **** 
+ 146:../device/common/drvif/msdrvif.c **** 	/* Create the lock for exclusive access control */
+ 147:../device/common/drvif/msdrvif.c **** 	err = CreateLock(&msdi->lock, dmsdi->devnm);
+ 311                             		.loc 1 147 8
+ 312 01c9 ED A5 01                		mov.L	4[r10], r5
+ 313 01cc 71 54 04                		add	#4, r5, r4
+ 314                             		.loc 1 147 37
+ 315 01cf ED A5 0D                		mov.L	52[r10], r5
+ 316 01d2 62 45                   		add	#4, r5
+ 317                             		.loc 1 147 8
+ 318 01d4 EF 52                   		mov.L	r5, r2
+ 319 01d6 EF 41                   		mov.L	r4, r1
+ 320 01d8 05 00 00 00             		bsr	_CreateLock
+ 321 01dc E3 A1                   		mov.L	r1, [r10]
+ 148:../device/common/drvif/msdrvif.c **** 	if ( err < E_OK ) goto err_ret2;
+ 322                             		.loc 1 148 5
+ 323 01de EC A5                   		mov.L	[r10], r5
+ 324 01e0 61 05                   		cmp	#0, r5
+ 325 01e2 28 05 38 96 00          		blt	.L31
+ 149:../device/common/drvif/msdrvif.c **** 
+ 150:../device/common/drvif/msdrvif.c **** 	/* Device registration */
+ 151:../device/common/drvif/msdrvif.c **** 	ddev.exinf   = msdi;
+ 326                             		.loc 1 151 15
+ 327 01e7 ED A5 01                		mov.L	4[r10], r5
+ 328 01ea E7 A5 02                		mov.L	r5, 8[r10]
+ 152:../device/common/drvif/msdrvif.c **** 	ddev.drvatr  = dmsdi->drvatr;
+ 329                             		.loc 1 152 22
+ 330 01ed ED A5 0D                		mov.L	52[r10], r5
+ 331 01f0 A9 55                   		mov.L	16[r5], r5
+ 332                             		.loc 1 152 15
+ 333 01f2 E7 A5 03                		mov.L	r5, 12[r10]
+ 153:../device/common/drvif/msdrvif.c **** 	ddev.devatr  = dmsdi->devatr;
+ 334                             		.loc 1 153 22
+ 335 01f5 ED A5 0D                		mov.L	52[r10], r5
+ 336 01f8 A9 5D                   		mov.L	20[r5], r5
+ 337                             		.loc 1 153 15
+ 338 01fa E7 A5 04                		mov.L	r5, 16[r10]
+ 154:../device/common/drvif/msdrvif.c **** 	ddev.nsub    = dmsdi->nsub;
+ 339                             		.loc 1 154 22
+ 340 01fd ED A5 0D                		mov.L	52[r10], r5
+ 341 0200 A9 D5                   		mov.L	24[r5], r5
+ 342                             		.loc 1 154 15
+ 343 0202 E7 A5 05                		mov.L	r5, 20[r10]
+ 155:../device/common/drvif/msdrvif.c **** 	ddev.blksz   = dmsdi->blksz;
+ 344                             		.loc 1 155 22
+ 345 0205 ED A5 0D                		mov.L	52[r10], r5
+ 346 0208 A9 DD                   		mov.L	28[r5], r5
+ 347                             		.loc 1 155 15
+ 348 020a E7 A5 06                		mov.L	r5, 24[r10]
+ 156:../device/common/drvif/msdrvif.c **** 	ddev.openfn  = (FP)msdi_openfn;
+ 349                             		.loc 1 156 15
+ 350 020d F9 A2 07 00 00 00 00    		mov.L	#_msdi_openfn, 28[r10]
+ 157:../device/common/drvif/msdrvif.c **** 	ddev.closefn = (FP)msdi_closefn;
+ 351                             		.loc 1 157 15
+ 352 0214 F9 A2 08 4B 00 00 00    		mov.L	#_msdi_closefn, 32[r10]
+ 158:../device/common/drvif/msdrvif.c **** 	ddev.execfn  = (FP)msdi_execfn;
+ 353                             		.loc 1 158 15
+ 354 021b F9 A2 09 96 00 00 00    		mov.L	#_msdi_execfn, 36[r10]
+ 159:../device/common/drvif/msdrvif.c **** 	ddev.waitfn  = (FP)msdi_waitfn;
+ 355                             		.loc 1 159 15
+ 356 0222 F9 A2 0A 12 01 00 00    		mov.L	#_msdi_waitfn, 40[r10]
+ 160:../device/common/drvif/msdrvif.c **** 	ddev.abortfn = (FP)msdi_abortfn;
+ 357                             		.loc 1 160 15
+ 358 0229 F9 A2 0B 2B 01 00 00    		mov.L	#_msdi_abortfn, 44[r10]
+ 161:../device/common/drvif/msdrvif.c **** 	ddev.eventfn = (FP)msdi_eventfn;
+ 359                             		.loc 1 161 15
+ 360 0230 F9 A2 0C 44 01 00 00    		mov.L	#_msdi_eventfn, 48[r10]
+ 162:../device/common/drvif/msdrvif.c **** 
+ 163:../device/common/drvif/msdrvif.c **** 	err = tk_def_dev(msdi->dmsdi.devnm, &ddev, idev);
+ 361                             		.loc 1 163 30
+ 362 0237 ED A5 01                		mov.L	4[r10], r5
+ 363 023a 71 55 14                		add	#20, r5
+ 364                             		.loc 1 163 8
+ 365 023d 71 A4 08                		add	#8, r10, r4
+ 366 0240 ED A3 0E                		mov.L	56[r10], r3
+ 367 0243 EF 42                   		mov.L	r4, r2
+ 368 0245 EF 51                   		mov.L	r5, r1
+ 369 0247 05 00 00 00             		bsr	_tk_def_dev
+ 370 024b E3 A1                   		mov.L	r1, [r10]
+ 164:../device/common/drvif/msdrvif.c **** 	if ( err < E_OK )	goto err_ret3;
+ 371                             		.loc 1 164 5
+ 372 024d EC A5                   		mov.L	[r10], r5
+ 373 024f 61 05                   		cmp	#0, r5
+ 374 0251 29 1B                   		blt	.L32
+ 165:../device/common/drvif/msdrvif.c **** 	
+ 166:../device/common/drvif/msdrvif.c **** 	msdi->devid = (ID)err;
+ 375                             		.loc 1 166 14
+ 376 0253 ED A5 01                		mov.L	4[r10], r5
+ 377 0256 EC A4                   		mov.L	[r10], r4
+ 378 0258 E3 54                   		mov.L	r4, [r5]
+ 167:../device/common/drvif/msdrvif.c **** 	if(p_msdi != NULL) {
+ 379                             		.loc 1 167 4
+ 380 025a ED A5 0F                		mov.L	60[r10], r5
+ 381 025d 61 05                   		cmp	#0, r5
+ 382 025f 11                      		beq	.L27
+ 168:../device/common/drvif/msdrvif.c **** 		*p_msdi = msdi;
+ 383                             		.loc 1 168 11
+ 384 0260 ED A5 0F                		mov.L	60[r10], r5
+ 385 0263 ED A4 01                		mov.L	4[r10], r4
+ 386 0266 E3 54                   		mov.L	r4, [r5]
+ 387                             	.L27:
+ 169:../device/common/drvif/msdrvif.c **** 	}
+ 170:../device/common/drvif/msdrvif.c **** 
+ 171:../device/common/drvif/msdrvif.c **** 	return E_OK;
+ 388                             		.loc 1 171 9
+ 389 0268 66 05                   		mov.L	#0, r5
+ 390 026a 2E 1A                   		bra	.L29
+ 391                             	.L32:
+ 164:../device/common/drvif/msdrvif.c **** 	
+ 392                             		.loc 1 164 20
+ 393 026c 03                      		nop
+ 394                             	.L26:
+ 172:../device/common/drvif/msdrvif.c **** 
+ 173:../device/common/drvif/msdrvif.c **** err_ret3:
+ 174:../device/common/drvif/msdrvif.c **** 	DeleteLock(&msdi->lock);
+ 395                             		.loc 1 174 2
+ 396 026d ED A5 01                		mov.L	4[r10], r5
+ 397 0270 62 45                   		add	#4, r5
+ 398 0272 EF 51                   		mov.L	r5, r1
+ 399 0274 05 00 00 00             		bsr	_DeleteLock
+ 400 0278 2E 03                   		bra	.L24
+ 401                             	.L31:
+ 148:../device/common/drvif/msdrvif.c **** 
+ 402                             		.loc 1 148 20
+ 403 027a 03                      		nop
+ 404                             	.L24:
+ 175:../device/common/drvif/msdrvif.c **** err_ret2:
+ 176:../device/common/drvif/msdrvif.c **** 	Kfree(msdi);
+ 405                             		.loc 1 176 2
+ 406 027b ED A1 01                		mov.L	4[r10], r1
+ 407 027e 05 00 00 00             		bsr	_Kfree
+ 408                             	.L22:
+ 177:../device/common/drvif/msdrvif.c **** err_ret1:
+ 178:../device/common/drvif/msdrvif.c **** 	return err;
+ 409                             		.loc 1 178 9
+ 410 0282 EC A5                   		mov.L	[r10], r5
+ 411                             	.L29:
+ 179:../device/common/drvif/msdrvif.c **** }
+ 412                             		.loc 1 179 1 discriminator 1
+ 413 0284 EF 51                   		mov.L	r5, r1
+ 414 0286 3F AA 11                		rtsd	#68, r10-r10
+ 415                             	.LFE12:
+ 417                             		.global	_msdi_del_dev
+ 419                             	_msdi_del_dev:
+ 420                             	.LFB13:
+ 180:../device/common/drvif/msdrvif.c **** 
+ 181:../device/common/drvif/msdrvif.c **** /*
+ 182:../device/common/drvif/msdrvif.c ****  * Deregistration
+ 183:../device/common/drvif/msdrvif.c ****  */
+ 184:../device/common/drvif/msdrvif.c **** EXPORT ER msdi_del_dev( T_MSDI *msdi )
+ 185:../device/common/drvif/msdrvif.c **** {
+ 421                             		.loc 1 185 1
+ 422 0289 7E AA                   		push.l	r10
+ 423                             	.LCFI14:
+ 424 028b 71 0A F8                		add	#-8, r0, r10
+ 425                             	.LCFI15:
+ 426 028e EF A0                   		mov.L	r10, r0
+ 427 0290 E7 A1 01                		mov.L	r1, 4[r10]
+ 186:../device/common/drvif/msdrvif.c **** 	ER	err;
+ 187:../device/common/drvif/msdrvif.c **** 
+ 188:../device/common/drvif/msdrvif.c **** 	/* Deregister device */
+ 189:../device/common/drvif/msdrvif.c **** 	err = tk_def_dev(msdi->dmsdi.devnm, NULL, NULL);
+ 428                             		.loc 1 189 30
+ 429 0293 ED A5 01                		mov.L	4[r10], r5
+ 430 0296 71 55 14                		add	#20, r5
+ 431                             		.loc 1 189 8
+ 432 0299 66 03                   		mov.L	#0, r3
+ 433 029b 66 02                   		mov.L	#0, r2
+ 434 029d EF 51                   		mov.L	r5, r1
+ 435 029f 05 00 00 00             		bsr	_tk_def_dev
+ 436 02a3 E3 A1                   		mov.L	r1, [r10]
+ 190:../device/common/drvif/msdrvif.c **** 	if ( err > E_OK ) {
+ 437                             		.loc 1 190 5
+ 438 02a5 EC A5                   		mov.L	[r10], r5
+ 439 02a7 61 05                   		cmp	#0, r5
+ 440 02a9 2B 17                   		ble	.L34
+ 191:../device/common/drvif/msdrvif.c **** 		DeleteLock(&msdi->lock);	/* Delete the lock for exclusive access control */
+ 441                             		.loc 1 191 3
+ 442 02ab ED A5 01                		mov.L	4[r10], r5
+ 443 02ae 62 45                   		add	#4, r5
+ 444 02b0 EF 51                   		mov.L	r5, r1
+ 445 02b2 05 00 00 00             		bsr	_DeleteLock
+ 192:../device/common/drvif/msdrvif.c **** 		Kfree(msdi);			/* Delete "SDI" */
+ 446                             		.loc 1 192 3
+ 447 02b6 ED A1 01                		mov.L	4[r10], r1
+ 448 02b9 05 00 00 00             		bsr	_Kfree
+ 193:../device/common/drvif/msdrvif.c **** 		err = E_OK;
+ 449                             		.loc 1 193 7
+ 450 02bd F8 A6 00                		mov.L	#0, [r10]
+ 451                             	.L34:
+ 194:../device/common/drvif/msdrvif.c **** 	}
+ 195:../device/common/drvif/msdrvif.c **** 	return err;
+ 452                             		.loc 1 195 9
+ 453 02c0 EC A5                   		mov.L	[r10], r5
+ 196:../device/common/drvif/msdrvif.c **** }
+ 454                             		.loc 1 196 1
+ 455 02c2 EF 51                   		mov.L	r5, r1
+ 456 02c4 3F AA 03                		rtsd	#12, r10-r10
+ 457                             	.LFE13:
+ 629                             	.Letext0:
+ 630                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 631                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 632                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syslib.h"
+ 633                             		.file 5 "../device/common/drvif/msdrvif.h"

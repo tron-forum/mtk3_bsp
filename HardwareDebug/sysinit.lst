@@ -1,0 +1,303 @@
+   1                             		.file	"sysinit.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.section C,"a",@progbits
+   5                             		.p2align 2
+   6                             	.LC0:
+   7 0000 21 45 52 52 4F 52 21 20 		.string	"!ERROR! init_Imalloc\n"
+   7      69 6E 69 74 5F 49 6D 61 
+   7      6C 6C 6F 63 0A 00 
+   8                             	.LC1:
+   9 0016 21 45 52 52 4F 52 21 20 		.string	"!ERROR! init_device\n"
+   9      69 6E 69 74 5F 64 65 76 
+   9      69 63 65 0A 00 
+  10                             	.LC2:
+  11 002b 21 45 52 52 4F 52 21 20 		.string	"!ERROR! init_initialize\n"
+  11      69 6E 69 74 5F 69 6E 69 
+  11      74 69 61 6C 69 7A 65 0A 
+  11      00 
+  12                             	.LC3:
+  13 0044 21 45 52 52 4F 52 21 20 		.string	"!ERROR! kernel object initialize\n"
+  13      6B 65 72 6E 65 6C 20 6F 
+  13      62 6A 65 63 74 20 69 6E 
+  13      69 74 69 61 6C 69 7A 65 
+  13      0A 00 
+  14                             	.LC4:
+  15 0066 21 45 52 52 4F 52 21 20 		.string	"!ERROR! System timer startup\n"
+  15      53 79 73 74 65 6D 20 74 
+  15      69 6D 65 72 20 73 74 61 
+  15      72 74 75 70 0A 00 
+  16                             	.LC5:
+  17 0084 21 45 52 52 4F 52 21 20 		.string	"!ERROR! Initial Task can not start\n"
+  17      49 6E 69 74 69 61 6C 20 
+  17      54 61 73 6B 20 63 61 6E 
+  17      20 6E 6F 74 20 73 74 61 
+  17      72 74 0A 00 
+  18                             	.LC6:
+  19 00a8 21 45 52 52 4F 52 21 20 		.string	"!ERROR! Initial Task can not creat\n"
+  19      49 6E 69 74 69 61 6C 20 
+  19      54 61 73 6B 20 63 61 6E 
+  19      20 6E 6F 74 20 63 72 65 
+  19      61 74 0A 00 
+  20                             		.section P,"ax"
+  21                             		.global	_main
+  23                             	_main:
+  24                             	.LFB19:
+  25                             		.file 1 "../kernel/sysinit/sysinit.c"
+   1:../kernel/sysinit/sysinit.c **** /*
+   2:../kernel/sysinit/sysinit.c ****  *----------------------------------------------------------------------
+   3:../kernel/sysinit/sysinit.c ****  *    micro T-Kernel 3.00.01
+   4:../kernel/sysinit/sysinit.c ****  *
+   5:../kernel/sysinit/sysinit.c ****  *    Copyright (C) 2006-2020 by Ken Sakamura.
+   6:../kernel/sysinit/sysinit.c ****  *    This software is distributed under the T-License 2.2.
+   7:../kernel/sysinit/sysinit.c ****  *----------------------------------------------------------------------
+   8:../kernel/sysinit/sysinit.c ****  *
+   9:../kernel/sysinit/sysinit.c ****  *    Released by TRON Forum(http://www.tron.org) at 2020/05/29.
+  10:../kernel/sysinit/sysinit.c ****  *
+  11:../kernel/sysinit/sysinit.c ****  *----------------------------------------------------------------------
+  12:../kernel/sysinit/sysinit.c ****  */
+  13:../kernel/sysinit/sysinit.c **** 
+  14:../kernel/sysinit/sysinit.c **** /*
+  15:../kernel/sysinit/sysinit.c ****  *	sysinit.c
+  16:../kernel/sysinit/sysinit.c ****  *	micro T-Kernel Startup / Finalization
+  17:../kernel/sysinit/sysinit.c ****  */
+  18:../kernel/sysinit/sysinit.c **** #include "kernel.h"
+  19:../kernel/sysinit/sysinit.c **** #include <tm/tmonitor.h>
+  20:../kernel/sysinit/sysinit.c **** 
+  21:../kernel/sysinit/sysinit.c **** /*
+  22:../kernel/sysinit/sysinit.c ****  * Start micro T-Kernel
+  23:../kernel/sysinit/sysinit.c ****  *    Initialize sequence before micro T-Kernel start.
+  24:../kernel/sysinit/sysinit.c ****  *    Perform preparation necessary to start micro T-Kernel.
+  25:../kernel/sysinit/sysinit.c ****  */
+  26:../kernel/sysinit/sysinit.c **** EXPORT INT main( void )
+  27:../kernel/sysinit/sysinit.c **** {
+  26                             		.loc 1 27 1
+  27 0000 7E AA                   		push.l	r10
+  28                             	.LCFI0:
+  29 0002 71 0A FC                		add	#-4, r0, r10
+  30                             	.LCFI1:
+  31 0005 EF A0                   		mov.L	r10, r0
+  28:../kernel/sysinit/sysinit.c **** 	ER	ercd;
+  29:../kernel/sysinit/sysinit.c **** 
+  30:../kernel/sysinit/sysinit.c **** 	DISABLE_INTERRUPT;
+  32                             		.loc 1 30 2
+  33 0007 05 00 00 00             		bsr	_disint
+  31:../kernel/sysinit/sysinit.c **** 
+  32:../kernel/sysinit/sysinit.c **** #if USE_TMONITOR
+  33:../kernel/sysinit/sysinit.c **** 	/* Initialize T-Monitor Compatible Library */
+  34:../kernel/sysinit/sysinit.c **** 	libtm_init();
+  34                             		.loc 1 34 2
+  35 000b 05 00 00 00             		bsr	_libtm_init
+  35:../kernel/sysinit/sysinit.c **** #endif
+  36:../kernel/sysinit/sysinit.c **** 
+  37:../kernel/sysinit/sysinit.c **** #if USE_IMALLOC
+  38:../kernel/sysinit/sysinit.c **** 	/* Initialize Internal memory allocation (Imalloc) */
+  39:../kernel/sysinit/sysinit.c **** 	ercd = knl_init_Imalloc();
+  36                             		.loc 1 39 9
+  37 000f 05 00 00 00             		bsr	_knl_init_Imalloc
+  38 0013 E3 A1                   		mov.L	r1, [r10]
+  40:../kernel/sysinit/sysinit.c **** 	if ( ercd < E_OK ) {
+  39                             		.loc 1 40 5
+  40 0015 EC A5                   		mov.L	[r10], r5
+  41 0017 61 05                   		cmp	#0, r5
+  42 0019 28 0F                   		bge	.L2
+  41:../kernel/sysinit/sysinit.c **** 		SYSTEM_MESSAGE("!ERROR! init_Imalloc\n");
+  43                             		.loc 1 41 3
+  44 001b FB 12 00 00 00 00       		mov.L	#.LC0, r1
+  45 0021 05 00 00 00             		bsr	_tm_putstring
+  42:../kernel/sysinit/sysinit.c **** 		goto err_ret;
+  46                             		.loc 1 42 3
+  47 0025 38 AB 00                		bra	.L3
+  48                             	.L2:
+  43:../kernel/sysinit/sysinit.c **** 	}
+  44:../kernel/sysinit/sysinit.c **** #endif /* USE_IMALLOC */
+  45:../kernel/sysinit/sysinit.c **** 
+  46:../kernel/sysinit/sysinit.c **** 	/* Initialize Device before micro T-Kernel starts */
+  47:../kernel/sysinit/sysinit.c **** 	ercd = knl_init_device();
+  49                             		.loc 1 47 9
+  50 0028 05 00 00 00             		bsr	_knl_init_device
+  51 002c E3 A1                   		mov.L	r1, [r10]
+  48:../kernel/sysinit/sysinit.c **** 	if ( ercd < E_OK ) {
+  52                             		.loc 1 48 5
+  53 002e EC A5                   		mov.L	[r10], r5
+  54 0030 61 05                   		cmp	#0, r5
+  55 0032 28 0F                   		bge	.L4
+  49:../kernel/sysinit/sysinit.c **** 		SYSTEM_MESSAGE("!ERROR! init_device\n");
+  56                             		.loc 1 49 3
+  57 0034 FB 12 16 00 00 00       		mov.L	#.LC1, r1
+  58 003a 05 00 00 00             		bsr	_tm_putstring
+  50:../kernel/sysinit/sysinit.c **** 		goto err_ret;
+  59                             		.loc 1 50 3
+  60 003e 38 92 00                		bra	.L3
+  61                             	.L4:
+  51:../kernel/sysinit/sysinit.c **** 	}
+  52:../kernel/sysinit/sysinit.c **** 
+  53:../kernel/sysinit/sysinit.c **** 	/* Interrupt initialize */
+  54:../kernel/sysinit/sysinit.c **** 	ercd = knl_init_interrupt();
+  62                             		.loc 1 54 9
+  63 0041 05 00 00 00             		bsr	_knl_init_interrupt
+  64 0045 E3 A1                   		mov.L	r1, [r10]
+  55:../kernel/sysinit/sysinit.c **** 	if ( ercd < E_OK ) {
+  65                             		.loc 1 55 5
+  66 0047 EC A5                   		mov.L	[r10], r5
+  67 0049 61 05                   		cmp	#0, r5
+  68 004b 28 0E                   		bge	.L5
+  56:../kernel/sysinit/sysinit.c **** 		SYSTEM_MESSAGE("!ERROR! init_initialize\n");
+  69                             		.loc 1 56 3
+  70 004d FB 12 2B 00 00 00       		mov.L	#.LC2, r1
+  71 0053 05 00 00 00             		bsr	_tm_putstring
+  57:../kernel/sysinit/sysinit.c **** 		goto err_ret;
+  72                             		.loc 1 57 3
+  73 0057 2E 79                   		bra	.L3
+  74                             	.L5:
+  58:../kernel/sysinit/sysinit.c **** 	}
+  59:../kernel/sysinit/sysinit.c **** 
+  60:../kernel/sysinit/sysinit.c **** 	/* Initialize Kernel-objects  */
+  61:../kernel/sysinit/sysinit.c **** 	ercd = knl_init_object();
+  75                             		.loc 1 61 9
+  76 0059 05 00 00 00             		bsr	_knl_init_object
+  77 005d E3 A1                   		mov.L	r1, [r10]
+  62:../kernel/sysinit/sysinit.c **** 	if ( ercd < E_OK ) {
+  78                             		.loc 1 62 5
+  79 005f EC A5                   		mov.L	[r10], r5
+  80 0061 61 05                   		cmp	#0, r5
+  81 0063 28 0E                   		bge	.L6
+  63:../kernel/sysinit/sysinit.c **** 		SYSTEM_MESSAGE("!ERROR! kernel object initialize\n");
+  82                             		.loc 1 63 3
+  83 0065 FB 12 44 00 00 00       		mov.L	#.LC3, r1
+  84 006b 05 00 00 00             		bsr	_tm_putstring
+  64:../kernel/sysinit/sysinit.c **** 		goto err_ret1;
+  85                             		.loc 1 64 3
+  86 006f 2E 5C                   		bra	.L7
+  87                             	.L6:
+  65:../kernel/sysinit/sysinit.c **** 	}
+  66:../kernel/sysinit/sysinit.c **** 
+  67:../kernel/sysinit/sysinit.c **** 	/* Start System Timer */
+  68:../kernel/sysinit/sysinit.c **** 	ercd = knl_timer_startup();
+  88                             		.loc 1 68 9
+  89 0071 05 00 00 00             		bsr	_knl_timer_startup
+  90 0075 E3 A1                   		mov.L	r1, [r10]
+  69:../kernel/sysinit/sysinit.c **** 	if ( ercd < E_OK ) {
+  91                             		.loc 1 69 5
+  92 0077 EC A5                   		mov.L	[r10], r5
+  93 0079 61 05                   		cmp	#0, r5
+  94 007b 28 0E                   		bge	.L8
+  70:../kernel/sysinit/sysinit.c **** 		SYSTEM_MESSAGE("!ERROR! System timer startup\n");
+  95                             		.loc 1 70 3
+  96 007d FB 12 66 00 00 00       		mov.L	#.LC4, r1
+  97 0083 05 00 00 00             		bsr	_tm_putstring
+  71:../kernel/sysinit/sysinit.c **** 		goto err_ret1;
+  98                             		.loc 1 71 3
+  99 0087 2E 44                   		bra	.L7
+ 100                             	.L8:
+  72:../kernel/sysinit/sysinit.c **** 	}
+  73:../kernel/sysinit/sysinit.c **** 
+  74:../kernel/sysinit/sysinit.c **** 	/* Create & start initial task */
+  75:../kernel/sysinit/sysinit.c **** 	ercd = tk_cre_tsk((CONST T_CTSK *)&knl_init_ctsk);
+ 101                             		.loc 1 75 9
+ 102 0089 FB 12 00 00 00 00       		mov.L	#_knl_init_ctsk, r1
+ 103 008f 05 00 00 00             		bsr	_tk_cre_tsk
+ 104 0093 E3 A1                   		mov.L	r1, [r10]
+  76:../kernel/sysinit/sysinit.c **** 	if ( ercd >= E_OK ) {
+ 105                             		.loc 1 76 5
+ 106 0095 EC A5                   		mov.L	[r10], r5
+ 107 0097 61 05                   		cmp	#0, r5
+ 108 0099 29 24                   		blt	.L9
+  77:../kernel/sysinit/sysinit.c **** 		ercd = tk_sta_tsk((ID)ercd, 0);
+ 109                             		.loc 1 77 10
+ 110 009b 66 02                   		mov.L	#0, r2
+ 111 009d EC A1                   		mov.L	[r10], r1
+ 112 009f 05 00 00 00             		bsr	_tk_sta_tsk
+ 113 00a3 E3 A1                   		mov.L	r1, [r10]
+  78:../kernel/sysinit/sysinit.c **** 		if ( ercd >= E_OK ) {
+ 114                             		.loc 1 78 6
+ 115 00a5 EC A5                   		mov.L	[r10], r5
+ 116 00a7 61 05                   		cmp	#0, r5
+ 117 00a9 29 08                   		blt	.L10
+  79:../kernel/sysinit/sysinit.c **** 			knl_force_dispatch();
+ 118                             		.loc 1 79 4
+ 119 00ab 05 00 00 00             		bsr	_knl_force_dispatch
+ 120 00af 2E 18                   		bra	.L12
+ 121                             	.L10:
+  80:../kernel/sysinit/sysinit.c **** 			/**** Start Initial Task. ****/
+  81:../kernel/sysinit/sysinit.c **** 			/**** No return ****/
+  82:../kernel/sysinit/sysinit.c **** 		} else {
+  83:../kernel/sysinit/sysinit.c **** 			SYSTEM_MESSAGE("!ERROR! Initial Task can not start\n");
+ 122                             		.loc 1 83 4
+ 123 00b1 FB 12 84 00 00 00       		mov.L	#.LC5, r1
+ 124 00b7 05 00 00 00             		bsr	_tm_putstring
+ 125 00bb 2E 0C                   		bra	.L12
+ 126                             	.L9:
+  84:../kernel/sysinit/sysinit.c **** 		}
+  85:../kernel/sysinit/sysinit.c **** 	} else {
+  86:../kernel/sysinit/sysinit.c **** 		SYSTEM_MESSAGE("!ERROR! Initial Task can not creat\n");
+ 127                             		.loc 1 86 3
+ 128 00bd FB 12 A8 00 00 00       		mov.L	#.LC6, r1
+ 129 00c3 05 00 00 00             		bsr	_tm_putstring
+ 130                             	.L12:
+  87:../kernel/sysinit/sysinit.c **** 	}
+  88:../kernel/sysinit/sysinit.c **** 
+  89:../kernel/sysinit/sysinit.c **** 	/* After this, Error handling */
+  90:../kernel/sysinit/sysinit.c **** 
+  91:../kernel/sysinit/sysinit.c **** #if USE_SHUTDOWN
+  92:../kernel/sysinit/sysinit.c **** 	knl_timer_shutdown();	/* Stop System timer */
+ 131                             		.loc 1 92 2
+ 132 00c7 05 00 00 00             		bsr	_knl_timer_shutdown
+ 133                             	.L7:
+  93:../kernel/sysinit/sysinit.c **** err_ret1:
+  94:../kernel/sysinit/sysinit.c **** 	knl_shutdown_hw();	/* Hardware-dependent Finalization */
+ 134                             		.loc 1 94 2
+ 135 00cb 05 00 00 00             		bsr	_knl_shutdown_hw
+ 136 00cf 03                      		.balign 8,3,3
+ 137                             	.L3:
+ 138                             	.L13:
+  95:../kernel/sysinit/sysinit.c **** 	/**** No return ****/
+  96:../kernel/sysinit/sysinit.c **** #else
+  97:../kernel/sysinit/sysinit.c **** err_ret1:
+  98:../kernel/sysinit/sysinit.c **** #endif /* USE_SHUTDOWN */
+  99:../kernel/sysinit/sysinit.c **** 
+ 100:../kernel/sysinit/sysinit.c **** err_ret:
+ 101:../kernel/sysinit/sysinit.c **** 	while(1);
+ 139                             		.loc 1 101 7 discriminator 1
+ 140 00d0 2E 00                   		bra	.L13
+ 141                             	.LFE19:
+ 143                             		.global	_knl_tkernel_exit
+ 145                             	_knl_tkernel_exit:
+ 146                             	.LFB20:
+ 102:../kernel/sysinit/sysinit.c **** 	return 0;
+ 103:../kernel/sysinit/sysinit.c **** }
+ 104:../kernel/sysinit/sysinit.c **** 
+ 105:../kernel/sysinit/sysinit.c **** /*
+ 106:../kernel/sysinit/sysinit.c ****  * Exit micro T-Kernel from Initial Task.
+ 107:../kernel/sysinit/sysinit.c ****  */
+ 108:../kernel/sysinit/sysinit.c **** #if USE_SHUTDOWN
+ 109:../kernel/sysinit/sysinit.c **** EXPORT void knl_tkernel_exit( void )
+ 110:../kernel/sysinit/sysinit.c **** {
+ 147                             		.loc 1 110 1
+ 148 00d2 7E AA                   		push.l	r10
+ 149                             	.LCFI2:
+ 150 00d4 EF 0A                   		mov.L	r0, r10
+ 151                             	.LCFI3:
+ 111:../kernel/sysinit/sysinit.c **** 	knl_timer_shutdown();	/* Stop System timer */
+ 152                             		.loc 1 111 2
+ 153 00d6 05 00 00 00             		bsr	_knl_timer_shutdown
+ 112:../kernel/sysinit/sysinit.c **** 	knl_shutdown_hw();	/* Hardware-dependent Finalization */
+ 154                             		.loc 1 112 2
+ 155 00da 05 00 00 00             		bsr	_knl_shutdown_hw
+ 156                             	.L15:
+ 113:../kernel/sysinit/sysinit.c **** 	/**** No return ****/
+ 114:../kernel/sysinit/sysinit.c **** 
+ 115:../kernel/sysinit/sysinit.c **** 	while(1);
+ 157                             		.loc 1 115 7 discriminator 1
+ 158 00de 2E 00                   		bra	.L15
+ 159                             	.LFE20:
+ 216                             	.Letext0:
+ 217                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 218                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 219                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+ 220                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 221                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 222                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 223                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 224                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
+ 225                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s

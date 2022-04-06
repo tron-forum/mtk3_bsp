@@ -1,0 +1,215 @@
+   1                             		.file	"tkinit.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.global	_knl_init_object
+   6                             	_knl_init_object:
+   7                             	.LFB19:
+   8                             		.file 1 "../kernel/tkernel/tkinit.c"
+   1:../kernel/tkernel/tkinit.c **** /*
+   2:../kernel/tkernel/tkinit.c ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/tkinit.c ****  *    micro T-Kernel 3.00.00
+   4:../kernel/tkernel/tkinit.c ****  *
+   5:../kernel/tkernel/tkinit.c ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:../kernel/tkernel/tkinit.c ****  *    This software is distributed under the T-License 2.1.
+   7:../kernel/tkernel/tkinit.c ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/tkinit.c ****  *
+   9:../kernel/tkernel/tkinit.c ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:../kernel/tkernel/tkinit.c ****  *
+  11:../kernel/tkernel/tkinit.c ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/tkinit.c ****  */
+  13:../kernel/tkernel/tkinit.c **** 
+  14:../kernel/tkernel/tkinit.c **** /*
+  15:../kernel/tkernel/tkinit.c ****  *	tkinit.c
+  16:../kernel/tkernel/tkinit.c ****  *	Initialize micro T-Kernel objects.
+  17:../kernel/tkernel/tkinit.c ****  */
+  18:../kernel/tkernel/tkinit.c **** 
+  19:../kernel/tkernel/tkinit.c **** #include "kernel.h"
+  20:../kernel/tkernel/tkinit.c **** #include "timer.h"
+  21:../kernel/tkernel/tkinit.c **** 
+  22:../kernel/tkernel/tkinit.c **** /*
+  23:../kernel/tkernel/tkinit.c ****  * Each kernel-object initialization
+  24:../kernel/tkernel/tkinit.c ****  */
+  25:../kernel/tkernel/tkinit.c **** EXPORT ER knl_init_object( void)
+  26:../kernel/tkernel/tkinit.c **** {	
+   9                             		.loc 1 26 1
+  10 0000 7E AA                   		push.l	r10
+  11                             	.LCFI0:
+  12 0002 71 0A FC                		add	#-4, r0, r10
+  13                             	.LCFI1:
+  14 0005 EF A0                   		mov.L	r10, r0
+  27:../kernel/tkernel/tkinit.c **** 	ER	ercd;
+  28:../kernel/tkernel/tkinit.c **** 
+  29:../kernel/tkernel/tkinit.c **** 	ercd = knl_task_initialize();
+  15                             		.loc 1 29 9
+  16 0007 05 00 00 00             		bsr	_knl_task_initialize
+  17 000b E3 A1                   		mov.L	r1, [r10]
+  30:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  18                             		.loc 1 30 4
+  19 000d EC A5                   		mov.L	[r10], r5
+  20 000f 61 05                   		cmp	#0, r5
+  21 0011 28 07                   		bge	.L2
+  22                             		.loc 1 30 25 discriminator 1
+  23 0013 EC A5                   		mov.L	[r10], r5
+  24 0015 38 95 00                		bra	.L3
+  25                             	.L2:
+  31:../kernel/tkernel/tkinit.c **** 
+  32:../kernel/tkernel/tkinit.c **** #if USE_SEMAPHORE
+  33:../kernel/tkernel/tkinit.c **** 	ercd = knl_semaphore_initialize();
+  26                             		.loc 1 33 9
+  27 0018 05 00 00 00             		bsr	_knl_semaphore_initialize
+  28 001c E3 A1                   		mov.L	r1, [r10]
+  34:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  29                             		.loc 1 34 4
+  30 001e EC A5                   		mov.L	[r10], r5
+  31 0020 61 05                   		cmp	#0, r5
+  32 0022 28 07                   		bge	.L4
+  33                             		.loc 1 34 25 discriminator 1
+  34 0024 EC A5                   		mov.L	[r10], r5
+  35 0026 38 84 00                		bra	.L3
+  36                             	.L4:
+  35:../kernel/tkernel/tkinit.c **** #endif
+  36:../kernel/tkernel/tkinit.c **** #if USE_EVENTFLAG
+  37:../kernel/tkernel/tkinit.c **** 	ercd = knl_eventflag_initialize();
+  37                             		.loc 1 37 9
+  38 0029 05 00 00 00             		bsr	_knl_eventflag_initialize
+  39 002d E3 A1                   		mov.L	r1, [r10]
+  38:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  40                             		.loc 1 38 4
+  41 002f EC A5                   		mov.L	[r10], r5
+  42 0031 61 05                   		cmp	#0, r5
+  43 0033 28 06                   		bge	.L5
+  44                             		.loc 1 38 25 discriminator 1
+  45 0035 EC A5                   		mov.L	[r10], r5
+  46 0037 2E 73                   		bra	.L3
+  47                             	.L5:
+  39:../kernel/tkernel/tkinit.c **** #endif
+  40:../kernel/tkernel/tkinit.c **** #if USE_MAILBOX
+  41:../kernel/tkernel/tkinit.c **** 	ercd = knl_mailbox_initialize();
+  48                             		.loc 1 41 9
+  49 0039 05 00 00 00             		bsr	_knl_mailbox_initialize
+  50 003d E3 A1                   		mov.L	r1, [r10]
+  42:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  51                             		.loc 1 42 4
+  52 003f EC A5                   		mov.L	[r10], r5
+  53 0041 61 05                   		cmp	#0, r5
+  54 0043 28 06                   		bge	.L6
+  55                             		.loc 1 42 25 discriminator 1
+  56 0045 EC A5                   		mov.L	[r10], r5
+  57 0047 2E 63                   		bra	.L3
+  58                             	.L6:
+  43:../kernel/tkernel/tkinit.c **** #endif
+  44:../kernel/tkernel/tkinit.c **** #if USE_MESSAGEBUFFER
+  45:../kernel/tkernel/tkinit.c **** 	ercd = knl_messagebuffer_initialize();
+  59                             		.loc 1 45 9
+  60 0049 05 00 00 00             		bsr	_knl_messagebuffer_initialize
+  61 004d E3 A1                   		mov.L	r1, [r10]
+  46:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  62                             		.loc 1 46 4
+  63 004f EC A5                   		mov.L	[r10], r5
+  64 0051 61 05                   		cmp	#0, r5
+  65 0053 28 06                   		bge	.L7
+  66                             		.loc 1 46 25 discriminator 1
+  67 0055 EC A5                   		mov.L	[r10], r5
+  68 0057 2E 53                   		bra	.L3
+  69                             	.L7:
+  47:../kernel/tkernel/tkinit.c **** #endif
+  48:../kernel/tkernel/tkinit.c **** #if USE_LEGACY_API && USE_RENDEZVOUS
+  49:../kernel/tkernel/tkinit.c **** 	ercd = knl_rendezvous_initialize();
+  50:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  51:../kernel/tkernel/tkinit.c **** #endif
+  52:../kernel/tkernel/tkinit.c **** #if USE_MUTEX
+  53:../kernel/tkernel/tkinit.c **** 	ercd = knl_mutex_initialize();
+  70                             		.loc 1 53 9
+  71 0059 05 00 00 00             		bsr	_knl_mutex_initialize
+  72 005d E3 A1                   		mov.L	r1, [r10]
+  54:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  73                             		.loc 1 54 4
+  74 005f EC A5                   		mov.L	[r10], r5
+  75 0061 61 05                   		cmp	#0, r5
+  76 0063 28 06                   		bge	.L8
+  77                             		.loc 1 54 25 discriminator 1
+  78 0065 EC A5                   		mov.L	[r10], r5
+  79 0067 2E 43                   		bra	.L3
+  80                             	.L8:
+  55:../kernel/tkernel/tkinit.c **** #endif
+  56:../kernel/tkernel/tkinit.c **** #if USE_MEMORYPOOL
+  57:../kernel/tkernel/tkinit.c **** 	ercd = knl_memorypool_initialize();
+  81                             		.loc 1 57 9
+  82 0069 05 00 00 00             		bsr	_knl_memorypool_initialize
+  83 006d E3 A1                   		mov.L	r1, [r10]
+  58:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  84                             		.loc 1 58 4
+  85 006f EC A5                   		mov.L	[r10], r5
+  86 0071 61 05                   		cmp	#0, r5
+  87 0073 28 06                   		bge	.L9
+  88                             		.loc 1 58 25 discriminator 1
+  89 0075 EC A5                   		mov.L	[r10], r5
+  90 0077 2E 33                   		bra	.L3
+  91                             	.L9:
+  59:../kernel/tkernel/tkinit.c **** #endif
+  60:../kernel/tkernel/tkinit.c **** #if USE_FIX_MEMORYPOOL
+  61:../kernel/tkernel/tkinit.c **** 	ercd = knl_fix_memorypool_initialize();
+  92                             		.loc 1 61 9
+  93 0079 05 00 00 00             		bsr	_knl_fix_memorypool_initialize
+  94 007d E3 A1                   		mov.L	r1, [r10]
+  62:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+  95                             		.loc 1 62 4
+  96 007f EC A5                   		mov.L	[r10], r5
+  97 0081 61 05                   		cmp	#0, r5
+  98 0083 28 06                   		bge	.L10
+  99                             		.loc 1 62 25 discriminator 1
+ 100 0085 EC A5                   		mov.L	[r10], r5
+ 101 0087 2E 23                   		bra	.L3
+ 102                             	.L10:
+  63:../kernel/tkernel/tkinit.c **** #endif
+  64:../kernel/tkernel/tkinit.c **** #if USE_CYCLICHANDLER
+  65:../kernel/tkernel/tkinit.c **** 	ercd = knl_cyclichandler_initialize();
+ 103                             		.loc 1 65 9
+ 104 0089 05 00 00 00             		bsr	_knl_cyclichandler_initialize
+ 105 008d E3 A1                   		mov.L	r1, [r10]
+  66:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+ 106                             		.loc 1 66 4
+ 107 008f EC A5                   		mov.L	[r10], r5
+ 108 0091 61 05                   		cmp	#0, r5
+ 109 0093 28 06                   		bge	.L11
+ 110                             		.loc 1 66 25 discriminator 1
+ 111 0095 EC A5                   		mov.L	[r10], r5
+ 112 0097 2E 13                   		bra	.L3
+ 113                             	.L11:
+  67:../kernel/tkernel/tkinit.c **** #endif
+  68:../kernel/tkernel/tkinit.c **** #if USE_ALARMHANDLER
+  69:../kernel/tkernel/tkinit.c **** 	ercd = knl_alarmhandler_initialize();
+ 114                             		.loc 1 69 9
+ 115 0099 05 00 00 00             		bsr	_knl_alarmhandler_initialize
+ 116 009d E3 A1                   		mov.L	r1, [r10]
+  70:../kernel/tkernel/tkinit.c **** 	if(ercd < E_OK) return ercd;
+ 117                             		.loc 1 70 4
+ 118 009f EC A5                   		mov.L	[r10], r5
+ 119 00a1 61 05                   		cmp	#0, r5
+ 120 00a3 28 05                   		bge	.L12
+ 121                             		.loc 1 70 25 discriminator 1
+ 122 00a5 EC A5                   		mov.L	[r10], r5
+ 123 00a7 0B                      		bra	.L3
+ 124                             	.L12:
+  71:../kernel/tkernel/tkinit.c **** #endif
+  72:../kernel/tkernel/tkinit.c **** 
+  73:../kernel/tkernel/tkinit.c **** 	return E_OK;
+ 125                             		.loc 1 73 9
+ 126 00a8 66 05                   		mov.L	#0, r5
+ 127                             		.balign 8,3,1
+ 128                             	.L3:
+  74:../kernel/tkernel/tkinit.c **** }
+ 129                             		.loc 1 74 1
+ 130 00aa EF 51                   		mov.L	r5, r1
+ 131 00ac 3F AA 02                		rtsd	#8, r10-r10
+ 132                             	.LFE19:
+ 171                             	.Letext0:
+ 172                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 173                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 174                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
+ 175                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
+ 176                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
+ 177                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
+ 178                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
+ 179                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
+ 180                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
