@@ -60,8 +60,8 @@
  * A/D converter interrupt number
  *	Can be set between INTB128 and INTB207
 */
-#define	INTNO_S12ADI0		128
-#define	INTNO_S12ADI1		129
+#define	INTNO_S12ADI0		130
+#define	INTNO_S12ADI1		131
 
 #define	DEVCNF_ADC0_INTPRI	5	// Interrupt priority
 #define	DEVCNF_ADC1_INTPRI	5	// Interrupt priority

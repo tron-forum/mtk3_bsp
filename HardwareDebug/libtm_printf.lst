@@ -96,7 +96,7 @@
   42 003b 60 14                   		sub	#1, r4
   43 003d E7 A4 01                		mov.L	r4, 4[r10]
   44                             		.loc 1 55 17 discriminator 3
-  45 0040 FB 42 08 00 00 00       		mov.L	#_digits.2214, r4
+  45 0040 FB 42 08 00 00 00       		mov.L	#_digits.2217, r4
   46 0046 FE 45 44                		mov.B	[r5,r4], r4
   47                             		.loc 1 55 9 discriminator 3
   48 0049 ED A5 01                		mov.L	4[r10], r5
@@ -128,7 +128,7 @@
   69 0071 60 14                   		sub	#1, r4
   70 0073 E7 A4 01                		mov.L	r4, 4[r10]
   71                             		.loc 1 57 16
-  72 0076 FB 42 08 00 00 00       		mov.L	#_digits.2214, r4
+  72 0076 FB 42 08 00 00 00       		mov.L	#_digits.2217, r4
   73 007c FE 45 44                		mov.B	[r5,r4], r4
   74                             		.loc 1 57 8
   75 007f ED A5 01                		mov.L	4[r10], r5
@@ -1505,7 +1505,7 @@
  1132                             	.LFE11:
  1134                             		.section C,"a",@progbits
  1135                             		.p2align 2
- 1138                             	_digits.2214:
+ 1138                             	_digits.2217:
  1139 0008 30 31 32 33 34 35 36 37 		.ascii	"0123456789abcdef0123456789ABCDEF"
  1139      38 39 61 62 63 64 65 66 
  1139      30 31 32 33 34 35 36 37 

@@ -431,27 +431,33 @@
 
 #define TCCR_CSS_16BIT		(0x18)
 
+/* TMR interrupt factor number */
+#define INTFN_CMIA0		3
+#define INTFN_CMIB0		4
+#define INTFN_OVI0		5
+#define INTFN_CMIA1		6
+#define INTFN_CMIB1		7
+#define INTFN_OVI1		8
+#define INTFN_CMIA2		9
+#define INTFN_CMIB2		10
+#define INTFN_OVI2		11
+#define INTFN_CMIA3		12
+#define INTFN_CMIB3		13
+#define INTFN_OVI3		14
+
 /* Physical timer clock */
 #define TMR01_CLOCK		(0x08)		// Count PCLK
 #define TMR23_CLOCK		(0x08)		// Count PCLK
 
-/* Physical timer interrupt number */
-#define INTNO_CMIA0		174
-#define INTNO_CMIB0		175
-#define INTNO_OVI0		176
-#define INTNO_CMIA1		177
-#define INTNO_CMIB1		178
-#define INTNO_OVI1		179
-#define INTNO_CMIA2		180
-#define INTNO_CMIB2		181
-#define INTNO_OVI2		182
-#define INTNO_CMIA3		183
-#define INTNO_CMIB3		184
-#define INTNO_OVI3		185
+/* Physical timer interrupt factor number
+ *	Can be set between INTB128 and INTB207
+ */
+#define INTNO_PTMR1		128
+#define INTNO_PTMR2		129
 
 /* Physical timer interrupt priority */
-#define INTPRI_TMR01		5
-#define INTPRI_TMR23		5
+#define INTPRI_PTMR1		5
+#define INTPRI_PTMR2		5
 
 /* Phycail timer Maximum count */
 #define PTMR_MAX_CNT    (0x0000FFFF)

@@ -212,27 +212,17 @@ EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
 		out_h(ADC_ADSSTRO, DEVCNF_ADC1_ADSSTRO_INI);
 	}
 
-#if DEVCONF_ADC_SET_PERI	// Set Software Configurable Interrupt
 	intno = unit?INTNO_S12ADI1:INTNO_S12ADI0;
-
-	out_b(ICU_IER(intno), (in_b(ICU_IER(intno)) & ~(ICU_IER_IEN(intno))));
-
-	if(intno >= 128 && intno <= 143) {
-		out_b(ICU_SLIBXR(intno), unit?INT_S12ADI1:INT_S12ADI0);
-	} else if(intno >= 144 && intno <= 207) {
-		out_b(ICU_SLIBR(intno), unit?INT_S12ADI1:INT_S12ADI0);
-	} else {
-		return E_SYS;
-	}
-
-	out_b(ICU_IR(intno), 0);
-	out_b(ICU_IER(intno), (in_b(ICU_IER(intno)) | (ICU_IER_IEN(intno))));
-#endif /* DEVCONF_ADC_SET_PERI */
-
 	ll_devcb[unit].intno = intno;
 
+#if DEVCONF_ADC_SET_PERI	// Set Software Configurable Interrupt
+	err = SetPERI(intno, unit?INTFN_S12ADI1:INTFN_S12ADI0);
+	if(err < E_OK) return E_SYS;
+#endif /* DEVCONF_ADC_SET_PERI */
+
+
 	/* Interrupt handler definition */
-	err = tk_def_int(unit?INTNO_S12ADI1:INTNO_S12ADI0, &dint);
+	err = tk_def_int(intno, &dint);
 
 	return err;
 }

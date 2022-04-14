@@ -33,6 +33,13 @@
 #define IM_LOW		0x0001		/* L level/Interrupt at falling edge */
 #define IM_BOTH		0x0003		/* L level/Interrupt at both edge */
 
+
+/* 
+ * Set Software Configurable Interrupt (PERIA & PERIB)
+ */
+IMPORT ER SetPERI(UINT intno, UINT fctno);
+
+
 /* ------------------------------------------------------------------------ */
 /*
  * I/O port access

@@ -35,8 +35,8 @@ typedef struct {
 } T_PTMRCB;
 
 T_PTMRCB ptmrcb[TK_MAX_PTIMER] = {
-	{ TMR01_BASE, -1, 0, (FP)NULL, INTPRI_TMR01, 0, TMR01_CLOCK, 0 },
-	{ TMR23_BASE, -1, 0, (FP)NULL, INTPRI_TMR23, 0, TMR23_CLOCK, 0 },
+	{ TMR01_BASE, -1, 0, (FP)NULL, INTPRI_PTMR1, INTNO_PTMR1, TMR01_CLOCK, 0 },
+	{ TMR23_BASE, -1, 0, (FP)NULL, INTPRI_PTMR2, INTNO_PTMR2, TMR23_CLOCK, 0 },
 };
 
 #define	TMR_TCR		(p_cb->baddr + TCR)
@@ -70,8 +70,8 @@ LOCAL void (* const inthdr_tbl[])() = {
 	ptmr1_inthdr, ptmr2_inthdr
 };
 
-#define INTNO_CMIA(no)	(no==1?INTNO_CMIA0:INTNO_CMIA2)
-#define INTNO_OVI(no)	(no==1?INTNO_OVI0:INTNO_OVI2)
+#define INTFN_CMIA(no)	(no==1?INTFN_CMIA0:INTFN_CMIA2)
+#define INTFN_OVI(no)	(no==1?INTFN_OVI0:INTFN_OVI2)
 
 /*
  * Start of physical timer operation
@@ -97,10 +97,10 @@ EXPORT ER StartPhysicalTimer( UINT ptmrno, UW limit, UINT mode)
 	if( limit != PTMR_MAX_CNT ) {
 		out_h(TMR_TCOR, limit);				// Set Compare match register
 		out_b(TMR_TCR, TCR_CMIEA | TCR_CCLR_CMA);	// Enable CMIAn
-		p_cb->intno = INTNO_CMIA(ptmrno);
+		SetPERI(p_cb->intno, INTFN_CMIA(ptmrno));	// Set PERIB
 	} else {
 		out_b(TMR_TCR, TCR_OVIE);			// Enable OVIn
-		p_cb->intno = INTNO_OVI(ptmrno);
+		SetPERI(p_cb->intno, INTFN_OVI(ptmrno));		// Set PERIB
 	}
 
 	/* Register interrupt handler */

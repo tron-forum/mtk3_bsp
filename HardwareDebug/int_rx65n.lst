@@ -1,4 +1,311 @@
    1                             		.file	"int_rx65n.c"
    2                             		.section P,"ax"
    3                             	.Ltext0:
-   4                             	.Letext0:
+   5                             	_out_b:
+   6                             	.LFB2:
+   7                             		.file 1 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include\\tk\\sysdepend\\cpu\\rx65n\\syslib
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    micro T-Kernel 3.00.06.B0
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Copyright (C) 2022 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	syslib.h
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	micro T-Kernel System Library  (RX65N depended)
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #ifndef __TK_SYSLIB_CPU_DEPEND_H__
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define __TK_SYSLIB_CPU_DEPEND_H__
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #include "../core/rxv2/syslib.h"
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*----------------------------------------------------------------------*/
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Interrupt controller Control
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LEVEL	0x0004		/* Level trigger */
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_EDGE		0x0000		/* Edge trigger */
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_HI		0x0000		/* H level/Interrupt at rising edge */
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LOW		0x0001		/* L level/Interrupt at falling edge */
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_BOTH		0x0003		/* L level/Interrupt at both edge */
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* 
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Set Software Configurable Interrupt (PERIA & PERIB)
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** IMPORT ER SetPERI(UINT intno, UINT fctno);
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* ------------------------------------------------------------------------ */
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * I/O port access
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	for memory mapped I/O
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_w( UW port, UW data )
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UW*)port = data;
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_h( UW port, UH data )
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UH*)port = data;
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_b( UW port, UB data )
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+   8                             		.loc 1 57 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A F8                		add	#-8, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E3 A1                   		mov.L	r1, [r10]
+  15 0009 C7 A2 04                		mov.B	r2, 4[r10]
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UB*)port = data;
+  16                             		.loc 1 58 3
+  17 000c EC A5                   		mov.L	[r10], r5
+  18                             		.loc 1 58 14
+  19 000e CD A4 04                		mov.B	4[r10], r4
+  20 0011 C3 54                   		mov.B	r4, [r5]
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  21                             		.loc 1 59 1
+  22 0013 03                      		nop
+  23 0014 3F AA 03                		rtsd	#12, r10-r10
+  24                             	.LFE2:
+  27                             	_in_b:
+  28                             	.LFB5:
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UW in_w( UW port )
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UW*)port;
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UH in_h( UW port )
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  67:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UH*)port;
+  68:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  69:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UB in_b( UW port )
+  70:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  29                             		.loc 1 70 1
+  30 0017 7E AA                   		push.l	r10
+  31                             	.LCFI2:
+  32 0019 71 0A FC                		add	#-4, r0, r10
+  33                             	.LCFI3:
+  34 001c EF A0                   		mov.L	r10, r0
+  35 001e E3 A1                   		mov.L	r1, [r10]
+  71:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UB*)port;
+  36                             		.loc 1 71 10
+  37 0020 EC A5                   		mov.L	[r10], r5
+  38                             		.loc 1 71 9
+  39 0022 CC 55                   		mov.B	[r5], r5
+  40 0024 5B 55                   		movu.B	r5, r5
+  72:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  41                             		.loc 1 72 1
+  42 0026 EF 51                   		mov.L	r5, r1
+  43 0028 3F AA 02                		rtsd	#8, r10-r10
+  44                             	.LFE5:
+  46                             		.global	_SetPERI
+  48                             	_SetPERI:
+  49                             	.LFB6:
+  50                             		.file 2 "../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c"
+   1:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** ﻿/*
+   2:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *----------------------------------------------------------------------
+   3:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *    micro T-Kernel 3.00.06.B0
+   4:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *
+   5:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *    Copyright (C) 2022 by Ken Sakamura.
+   6:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *    This software is distributed under the T-License 2.2.
+   7:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *----------------------------------------------------------------------
+   8:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *
+   9:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *
+  11:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *----------------------------------------------------------------------
+  12:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  */
+  13:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 
+  14:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** #include <sys/machine.h>
+  15:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** #ifdef CPU_RX65N
+  16:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 
+  17:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** /*
+  18:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *	int.c
+  19:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *
+  20:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *	Interrupt controll (RX65N )
+  21:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  */
+  22:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** #include <tk/tkernel.h>
+  23:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** #include <tk/syslib.h>
+  24:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 
+  25:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** /* 
+  26:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  * Set Software Configurable Interrupt (PERIA & PERIB)
+  27:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *	intno: Interrupt number  128~207(PERIB), 208~255(PERIA)
+  28:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  *	fctno: Interrupt factor number
+  29:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c ****  */
+  30:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** EXPORT ER SetPERI(UINT intno, UINT fctno)
+  31:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** {
+  51                             		.loc 2 31 1
+  52 002b 6E 6A                   		pushm	r6-r10
+  53                             	.LCFI4:
+  54 002d 71 0A F8                		add	#-8, r0, r10
+  55                             	.LCFI5:
+  56 0030 EF A0                   		mov.L	r10, r0
+  57 0032 E3 A1                   		mov.L	r1, [r10]
+  58 0034 E7 A2 01                		mov.L	r2, 4[r10]
+  32:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	if((intno < 128) || (intno >255)) return E_PAR;		// Interrupt number is out of range
+  59                             		.loc 2 32 4
+  60 0037 EC A5                   		mov.L	[r10], r5
+  61 0039 75 55 7F                		cmp	#0x7f, r5
+  62 003c 25 09                   		bleu	.L5
+  63                             		.loc 2 32 19 discriminator 2
+  64 003e EC A5                   		mov.L	[r10], r5
+  65 0040 75 55 FF                		cmp	#0xff, r5
+  66 0043 25 08                   		bleu	.L6
+  67                             	.L5:
+  68                             		.loc 2 32 43 discriminator 3
+  69 0045 FB 56 EF                		mov.L	#-17, r5
+  70 0048 38 DF 00                		bra	.L7
+  71                             	.L6:
+  33:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	if(in_b(ICU_SLIPRCR)!=0) return E_RONLY;		// Changes are prohibited
+  72                             		.loc 2 33 5
+  73 004b FB 1E 00 7A 08          		mov.L	#0x87a00, r1
+  74 0050 39 C7 FF                		bsr	_in_b
+  75 0053 EF 15                   		mov.L	r1, r5
+  76                             		.loc 2 33 4
+  77 0055 5B 55                   		movu.B	r5, r5
+  78 0057 61 05                   		cmp	#0, r5
+  79 0059 17                      		beq	.L8
+  80                             		.loc 2 33 34 discriminator 1
+  81 005a FB 56 BD                		mov.L	#-67, r5
+  82 005d 38 CA 00                		bra	.L7
+  83                             	.L8:
+  34:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 
+  35:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	out_b(ICU_IER(intno), (in_b(ICU_IER(intno)) & ~(ICU_IER_IEN(intno))));
+  84                             		.loc 2 35 8
+  85 0060 EC A5                   		mov.L	[r10], r5
+  86 0062 68 35                   		shlr	#3, r5
+  87                             		.loc 2 35 2
+  88 0064 73 56 00 72 08          		add	#0x87200, r5, r6
+  89                             		.loc 2 35 30
+  90 0069 EC A5                   		mov.L	[r10], r5
+  91 006b 68 35                   		shlr	#3, r5
+  92                             		.loc 2 35 25
+  93 006d 73 55 00 72 08          		add	#0x87200, r5
+  94 0072 EF 51                   		mov.L	r5, r1
+  95 0074 39 A3 FF                		bsr	_in_b
+  96 0077 EF 15                   		mov.L	r1, r5
+  97 0079 CF 53                   		mov.B	r5, r3
+  98                             		.loc 2 35 50
+  99 007b EC A5                   		mov.L	[r10], r5
+ 100 007d 64 75                   		and	#7, r5
+ 101 007f 66 14                   		mov.L	#1, r4
+ 102 0081 EF 47                   		mov.L	r4, r7
+ 103 0083 FD 62 57                		shll	r5, r7
+ 104 0086 EF 75                   		mov.L	r7, r5
+ 105                             		.loc 2 35 46
+ 106 0088 7E 05                   		not	r5
+ 107 008a 53 35                   		and	r3, r5
+ 108                             		.loc 2 35 2
+ 109 008c CF 52                   		mov.B	r5, r2
+ 110 008e EF 61                   		mov.L	r6, r1
+ 111 0090 39 70 FF                		bsr	_out_b
+  36:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 
+  37:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	if(intno >= 128 && intno <= 143) {
+ 112                             		.loc 2 37 4
+ 113 0093 EC A5                   		mov.L	[r10], r5
+ 114 0095 75 55 7F                		cmp	#0x7f, r5
+ 115 0098 25 1C                   		bleu	.L9
+ 116                             		.loc 2 37 18 discriminator 1
+ 117 009a EC A5                   		mov.L	[r10], r5
+ 118 009c 75 55 8F                		cmp	#0x8f, r5
+ 119 009f 24 15                   		bgtu	.L9
+  38:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 		out_b(ICU_SLIBXR(intno), fctno);
+ 120                             		.loc 2 38 3
+ 121 00a1 EC A5                   		mov.L	[r10], r5
+ 122 00a3 73 55 00 77 08          		add	#0x87700, r5
+ 123 00a8 ED A4 01                		mov.L	4[r10], r4
+ 124 00ab CF 42                   		mov.B	r4, r2
+ 125 00ad EF 51                   		mov.L	r5, r1
+ 126 00af 39 51 FF                		bsr	_out_b
+ 127 00b2 2E 34                   		bra	.L10
+ 128                             	.L9:
+  39:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	} else if(intno >= 144 && intno <= 207) {
+ 129                             		.loc 2 39 11
+ 130 00b4 EC A5                   		mov.L	[r10], r5
+ 131 00b6 75 55 8F                		cmp	#0x8f, r5
+ 132 00b9 25 1C                   		bleu	.L11
+ 133                             		.loc 2 39 25 discriminator 1
+ 134 00bb EC A5                   		mov.L	[r10], r5
+ 135 00bd 75 55 CF                		cmp	#0xcf, r5
+ 136 00c0 24 15                   		bgtu	.L11
+  40:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 		out_b(ICU_SLIBR(intno), fctno);
+ 137                             		.loc 2 40 3
+ 138 00c2 EC A5                   		mov.L	[r10], r5
+ 139 00c4 73 55 00 77 08          		add	#0x87700, r5
+ 140 00c9 ED A4 01                		mov.L	4[r10], r4
+ 141 00cc CF 42                   		mov.B	r4, r2
+ 142 00ce EF 51                   		mov.L	r5, r1
+ 143 00d0 39 30 FF                		bsr	_out_b
+ 144 00d3 2E 13                   		bra	.L10
+ 145                             	.L11:
+  41:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	} else {
+  42:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 		out_b(ICU_SLIAR(intno), fctno);
+ 146                             		.loc 2 42 3
+ 147 00d5 EC A5                   		mov.L	[r10], r5
+ 148 00d7 73 55 00 79 08          		add	#0x87900, r5
+ 149 00dc ED A4 01                		mov.L	4[r10], r4
+ 150 00df CF 42                   		mov.B	r4, r2
+ 151 00e1 EF 51                   		mov.L	r5, r1
+ 152 00e3 39 1D FF                		bsr	_out_b
+ 153                             	.L10:
+  43:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	}
+  44:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 
+  45:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	out_b(ICU_IR(intno), 0);
+ 154                             		.loc 2 45 2
+ 155 00e6 EC A5                   		mov.L	[r10], r5
+ 156 00e8 73 55 00 70 08          		add	#0x87000, r5
+ 157 00ed 66 02                   		mov	#0, r2
+ 158 00ef EF 51                   		mov.L	r5, r1
+ 159 00f1 39 0F FF                		bsr	_out_b
+  46:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	out_b(ICU_IER(intno), (in_b(ICU_IER(intno)) | (ICU_IER_IEN(intno))));
+ 160                             		.loc 2 46 8
+ 161 00f4 EC A5                   		mov.L	[r10], r5
+ 162 00f6 68 35                   		shlr	#3, r5
+ 163                             		.loc 2 46 2
+ 164 00f8 73 56 00 72 08          		add	#0x87200, r5, r6
+ 165                             		.loc 2 46 30
+ 166 00fd EC A5                   		mov.L	[r10], r5
+ 167 00ff 68 35                   		shlr	#3, r5
+ 168                             		.loc 2 46 25
+ 169 0101 73 55 00 72 08          		add	#0x87200, r5
+ 170 0106 EF 51                   		mov.L	r5, r1
+ 171 0108 39 0F FF                		bsr	_in_b
+ 172 010b EF 15                   		mov.L	r1, r5
+ 173 010d CF 54                   		mov.B	r5, r4
+ 174                             		.loc 2 46 49
+ 175 010f EC A5                   		mov.L	[r10], r5
+ 176 0111 64 75                   		and	#7, r5
+ 177 0113 66 13                   		mov.L	#1, r3
+ 178 0115 EF 37                   		mov.L	r3, r7
+ 179 0117 FD 62 57                		shll	r5, r7
+ 180 011a EF 75                   		mov.L	r7, r5
+ 181                             		.loc 2 46 46
+ 182 011c 57 45                   		or	r4, r5
+ 183                             		.loc 2 46 2
+ 184 011e CF 52                   		mov.B	r5, r2
+ 185 0120 EF 61                   		mov.L	r6, r1
+ 186 0122 39 DE FE                		bsr	_out_b
+  47:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 
+  48:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** 	return E_OK;
+ 187                             		.loc 2 48 9
+ 188 0125 66 05                   		mov.L	#0, r5
+ 189                             	.L7:
+  49:../lib/libtk/sysdepend/cpu/rx65n/int_rx65n.c **** }
+ 190                             		.loc 2 49 1
+ 191 0127 EF 51                   		mov.L	r5, r1
+ 192 0129 3F 6A 07                		rtsd	#28, r6-r10
+ 193                             	.LFE6:
+ 278                             	.Letext0:
+ 279                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"

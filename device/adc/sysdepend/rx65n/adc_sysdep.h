@@ -60,12 +60,12 @@
 /*
  * A/D converter interrupt factor number
 */
-#define	INT_S12ADI0	64
-#define	INT_S12GBADI0	65
-#define	INT_S12GCADI0	66
+#define	INTFN_S12ADI0	64
+#define	INTFN_S12GBADI0	65
+#define	INTFN_S12GCADI0	66
 
-#define	INT_S12ADI1	68
-#define	INT_S12GBADI1	69
-#define	INT_S12GCADI1	70
+#define	INTFN_S12ADI1	68
+#define	INTFN_S12GBADI1	69
+#define	INTFN_S12GCADI1	70
 
 #endif		/* __DEV_ADC_RX65N_H__ */
