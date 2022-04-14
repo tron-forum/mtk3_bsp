@@ -1,5 +1,6 @@
 #include <tk/tkernel.h>
 #include <tm/tmonitor.h>
+#include "gesture.h"
 
 ID	flgid1;
 
@@ -13,6 +14,7 @@ void tsk1(INT stacd, void *exinf)
 		if(data != pdata) {
 			if(!data) {
 				pdata = data; // dummy
+				out_b(PORTD_PODR, in_b(PORTD_PODR)^(1<<7));
 			}
 			pdata = data;
 		}
@@ -23,20 +25,76 @@ void tsk1(INT stacd, void *exinf)
 
 void tsk2(INT stacd, void *exinf)
 {
-	while(1) {
-		tk_dly_tsk(1000);
-		out_b(PORTD_PODR, in_b(PORTD_PODR)^(1<<6));
+	ID	dd_i2c;
+	UW	val;
+	ER	err;
+
+	dd_i2c = tk_opn_dev((UB*)"iica", TD_UPDATE);
+
+	err = gesture_sensor_init(dd_i2c);
+	if(err < E_OK) {
+		tm_printf((UB*)"ERROR\n");
+	} else{
+		tm_printf((UB*)"OK\n");
 	}
 
+#if 0
+	if(err < E_OK) {
+		err = gesture_sensor_init(dd_i2c);
+		if(err < E_OK) {
+			err = gesture_sensor_init(dd_i2c);
+		}
+	}
+#endif
+
+	while(1) {
+		// Gesture sensor
+		err = gesture_sensor_get(dd_i2c, &val);
+		if(err<E_OK) tm_printf((UB*)"Sensor Read error %d\n", err);
+
+		if(val != 0) {
+			tm_printf((UB*)"sense %x\n", val);
+		}
+#if 0
+		if(val & GES_RIGHT_FLAG ) {
+			tm_printf((UB*)"Right\n");
+		} else if(val & GES_LEFT_FLAG) {
+			tm_printf((UB*)"Left\n");
+		} else if(val & GES_UP_FLAG) {
+			tm_printf((UB*)"Up\n");
+		} else if(val & GES_DOWN_FLAG) {
+			tm_printf((UB*)"Down\n");
+		}
+
+		if(val & GES_FORWARD_FLAG) {
+			tm_printf((UB*)"Forward\n");
+		} else if(val & GES_BACKWARD_FLAG) {
+			tm_printf((UB*)"Balckward\n");
+		}
+		if(val & GES_CLOCKWISE_FLAG) {
+			tm_printf((UB*)"Clockwise\n");
+		} else if(val & GES_COUNT_CLOCKWISE_FLAG) {
+			tm_printf((UB*)"Anti-Cockwise\n");
+		}
+#endif
+		tk_dly_tsk(500);
+	}
 }
 
 void tsk3(INT stacd, void *exinf)
 {
+	ID	dd;
+	ER	err;
+	UW	data;
+	SZ	asz;
+
+	dd = tk_opn_dev((UB*)"adca", TD_UPDATE);
 	while(1) {
-		tk_dly_tsk(2000);
-		out_b(PORTD_PODR, in_b(PORTD_PODR)^(1<<7));
+		err = tk_srea_dev(dd, 0, &data, 1, &asz);
+		tk_dly_tsk(500);
 	}
 
+	tk_exd_tsk();	/* Exit task */
 }
 
 const T_CTSK	ctsk1 = {

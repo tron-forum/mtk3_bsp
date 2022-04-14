@@ -26,7 +26,7 @@
  */
 
 #define DEVCNF_USE_SER		0		// Serial communication device 
-#define DEVCNF_USE_ADC		0		// A/D conversion device
-#define DEVCNF_USE_IIC		0		// I2C communication device
+#define DEVCNF_USE_ADC		1		// A/D conversion device
+#define DEVCNF_USE_IIC		1		// I2C communication device
 
 #endif	/* __DEV_CONFIG_H__ */

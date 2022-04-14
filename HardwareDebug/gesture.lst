@@ -1,0 +1,657 @@
+   1                             		.file	"gesture.c"
+   2                             		.section P,"ax"
+   3                             	.Ltext0:
+   4                             		.section D,"aw",@progbits
+   5                             		.p2align 2
+   8                             	_init_reg_tbl:
+   9 0000 EF                      		.byte	-17
+  10 0001 00                      		.byte	0
+  11 0002 32                      		.byte	50
+  12 0003 29                      		.byte	41
+  13 0004 33                      		.byte	51
+  14 0005 01                      		.byte	1
+  15 0006 34                      		.byte	52
+  16 0007 00                      		.byte	0
+  17 0008 35                      		.byte	53
+  18 0009 01                      		.byte	1
+  19 000a 36                      		.byte	54
+  20 000b 00                      		.byte	0
+  21 000c 37                      		.byte	55
+  22 000d 07                      		.byte	7
+  23 000e 38                      		.byte	56
+  24 000f 17                      		.byte	23
+  25 0010 39                      		.byte	57
+  26 0011 06                      		.byte	6
+  27 0012 3A                      		.byte	58
+  28 0013 12                      		.byte	18
+  29 0014 3F                      		.byte	63
+  30 0015 00                      		.byte	0
+  31 0016 40                      		.byte	0x40
+  32 0017 02                      		.byte	2
+  33 0018 41                      		.byte	0x41
+  34 0019 FF                      		.byte	-1
+  35 001a 42                      		.byte	0x42
+  36 001b 01                      		.byte	1
+  37 001c 46                      		.byte	0x46
+  38 001d 2D                      		.byte	45
+  39 001e 47                      		.byte	0x47
+  40 001f 0F                      		.byte	15
+  41 0020 48                      		.byte	0x48
+  42 0021 3C                      		.byte	60
+  43 0022 49                      		.byte	0x49
+  44 0023 00                      		.byte	0
+  45 0024 4A                      		.byte	0x4a
+  46 0025 1E                      		.byte	30
+  47 0026 4B                      		.byte	0x4b
+  48 0027 00                      		.byte	0
+  49 0028 4C                      		.byte	0x4c
+  50 0029 20                      		.byte	32
+  51 002a 4D                      		.byte	0x4d
+  52 002b 00                      		.byte	0
+  53 002c 4E                      		.byte	0x4e
+  54 002d 1A                      		.byte	26
+  55 002e 4F                      		.byte	0x4f
+  56 002f 14                      		.byte	20
+  57 0030 50                      		.byte	0x50
+  58 0031 00                      		.byte	0
+  59 0032 51                      		.byte	0x51
+  60 0033 10                      		.byte	16
+  61 0034 52                      		.byte	0x52
+  62 0035 00                      		.byte	0
+  63 0036 5C                      		.byte	0x5c
+  64 0037 02                      		.byte	2
+  65 0038 5D                      		.byte	0x5d
+  66 0039 00                      		.byte	0
+  67 003a 5E                      		.byte	0x5e
+  68 003b 10                      		.byte	16
+  69 003c 5F                      		.byte	0x5f
+  70 003d 3F                      		.byte	63
+  71 003e 60                      		.byte	0x60
+  72 003f 27                      		.byte	39
+  73 0040 61                      		.byte	0x61
+  74 0041 28                      		.byte	40
+  75 0042 62                      		.byte	0x62
+  76 0043 00                      		.byte	0
+  77 0044 63                      		.byte	0x63
+  78 0045 03                      		.byte	3
+  79 0046 64                      		.byte	0x64
+  80 0047 F7                      		.byte	-9
+  81 0048 65                      		.byte	0x65
+  82 0049 03                      		.byte	3
+  83 004a 66                      		.byte	0x66
+  84 004b D9                      		.byte	-39
+  85 004c 67                      		.byte	0x67
+  86 004d 03                      		.byte	3
+  87 004e 68                      		.byte	0x68
+  88 004f 01                      		.byte	1
+  89 0050 69                      		.byte	0x69
+  90 0051 C8                      		.byte	-56
+  91 0052 6A                      		.byte	0x6a
+  92 0053 40                      		.byte	0x40
+  93 0054 6D                      		.byte	0x6d
+  94 0055 04                      		.byte	4
+  95 0056 6E                      		.byte	0x6e
+  96 0057 00                      		.byte	0
+  97 0058 6F                      		.byte	0x6f
+  98 0059 00                      		.byte	0
+  99 005a 70                      		.byte	0x70
+ 100 005b 80                      		.byte	-128
+ 101 005c 71                      		.byte	0x71
+ 102 005d 00                      		.byte	0
+ 103 005e 72                      		.byte	0x72
+ 104 005f 00                      		.byte	0
+ 105 0060 73                      		.byte	0x73
+ 106 0061 00                      		.byte	0
+ 107 0062 74                      		.byte	0x74
+ 108 0063 F0                      		.byte	-16
+ 109 0064 75                      		.byte	0x75
+ 110 0065 00                      		.byte	0
+ 111 0066 80                      		.byte	-128
+ 112 0067 42                      		.byte	0x42
+ 113 0068 81                      		.byte	-127
+ 114 0069 44                      		.byte	0x44
+ 115 006a 82                      		.byte	-126
+ 116 006b 04                      		.byte	4
+ 117 006c 83                      		.byte	-125
+ 118 006d 20                      		.byte	32
+ 119 006e 84                      		.byte	-124
+ 120 006f 20                      		.byte	32
+ 121 0070 85                      		.byte	-123
+ 122 0071 00                      		.byte	0
+ 123 0072 86                      		.byte	-122
+ 124 0073 10                      		.byte	16
+ 125 0074 87                      		.byte	-121
+ 126 0075 00                      		.byte	0
+ 127 0076 88                      		.byte	-120
+ 128 0077 05                      		.byte	5
+ 129 0078 89                      		.byte	-119
+ 130 0079 18                      		.byte	24
+ 131 007a 8A                      		.byte	-118
+ 132 007b 10                      		.byte	16
+ 133 007c 8B                      		.byte	-117
+ 134 007d 01                      		.byte	1
+ 135 007e 8C                      		.byte	-116
+ 136 007f 37                      		.byte	55
+ 137 0080 8D                      		.byte	-115
+ 138 0081 00                      		.byte	0
+ 139 0082 8E                      		.byte	-114
+ 140 0083 F0                      		.byte	-16
+ 141 0084 8F                      		.byte	-113
+ 142 0085 81                      		.byte	-127
+ 143 0086 90                      		.byte	-112
+ 144 0087 06                      		.byte	6
+ 145 0088 91                      		.byte	-111
+ 146 0089 06                      		.byte	6
+ 147 008a 92                      		.byte	-110
+ 148 008b 1E                      		.byte	30
+ 149 008c 93                      		.byte	-109
+ 150 008d 0D                      		.byte	13
+ 151 008e 94                      		.byte	-108
+ 152 008f 0A                      		.byte	10
+ 153 0090 95                      		.byte	-107
+ 154 0091 0A                      		.byte	10
+ 155 0092 96                      		.byte	-106
+ 156 0093 0C                      		.byte	12
+ 157 0094 97                      		.byte	-105
+ 158 0095 05                      		.byte	5
+ 159 0096 98                      		.byte	-104
+ 160 0097 0A                      		.byte	10
+ 161 0098 99                      		.byte	-103
+ 162 0099 41                      		.byte	0x41
+ 163 009a 9A                      		.byte	-102
+ 164 009b 14                      		.byte	20
+ 165 009c 9B                      		.byte	-101
+ 166 009d 0A                      		.byte	10
+ 167 009e 9C                      		.byte	-100
+ 168 009f 3F                      		.byte	63
+ 169 00a0 9D                      		.byte	-99
+ 170 00a1 33                      		.byte	51
+ 171 00a2 9E                      		.byte	-98
+ 172 00a3 AE                      		.byte	-82
+ 173 00a4 9F                      		.byte	-97
+ 174 00a5 F9                      		.byte	-7
+ 175 00a6 A0                      		.byte	-96
+ 176 00a7 48                      		.byte	0x48
+ 177 00a8 A1                      		.byte	-95
+ 178 00a9 13                      		.byte	19
+ 179 00aa A2                      		.byte	-94
+ 180 00ab 10                      		.byte	16
+ 181 00ac A3                      		.byte	-93
+ 182 00ad 08                      		.byte	8
+ 183 00ae A4                      		.byte	-92
+ 184 00af 30                      		.byte	48
+ 185 00b0 A5                      		.byte	-91
+ 186 00b1 19                      		.byte	25
+ 187 00b2 A6                      		.byte	-90
+ 188 00b3 10                      		.byte	16
+ 189 00b4 A7                      		.byte	-89
+ 190 00b5 08                      		.byte	8
+ 191 00b6 A8                      		.byte	-88
+ 192 00b7 24                      		.byte	36
+ 193 00b8 A9                      		.byte	-87
+ 194 00b9 04                      		.byte	4
+ 195 00ba AA                      		.byte	-86
+ 196 00bb 1E                      		.byte	30
+ 197 00bc AB                      		.byte	-85
+ 198 00bd 1E                      		.byte	30
+ 199 00be CC                      		.byte	-52
+ 200 00bf 19                      		.byte	25
+ 201 00c0 CD                      		.byte	-51
+ 202 00c1 0B                      		.byte	11
+ 203 00c2 CE                      		.byte	-50
+ 204 00c3 13                      		.byte	19
+ 205 00c4 CF                      		.byte	-49
+ 206 00c5 64                      		.byte	0x64
+ 207 00c6 D0                      		.byte	-48
+ 208 00c7 21                      		.byte	33
+ 209 00c8 D1                      		.byte	-47
+ 210 00c9 0F                      		.byte	15
+ 211 00ca D2                      		.byte	-46
+ 212 00cb 88                      		.byte	-120
+ 213 00cc E0                      		.byte	-32
+ 214 00cd 01                      		.byte	1
+ 215 00ce E1                      		.byte	-31
+ 216 00cf 04                      		.byte	4
+ 217 00d0 E2                      		.byte	-30
+ 218 00d1 41                      		.byte	0x41
+ 219 00d2 E3                      		.byte	-29
+ 220 00d3 D6                      		.byte	-42
+ 221 00d4 E4                      		.byte	-28
+ 222 00d5 00                      		.byte	0
+ 223 00d6 E5                      		.byte	-27
+ 224 00d7 0C                      		.byte	12
+ 225 00d8 E6                      		.byte	-26
+ 226 00d9 0A                      		.byte	10
+ 227 00da E7                      		.byte	-25
+ 228 00db 00                      		.byte	0
+ 229 00dc E8                      		.byte	-24
+ 230 00dd 00                      		.byte	0
+ 231 00de E9                      		.byte	-23
+ 232 00df 00                      		.byte	0
+ 233 00e0 EE                      		.byte	-18
+ 234 00e1 07                      		.byte	7
+ 235 00e2 EF                      		.byte	-17
+ 236 00e3 01                      		.byte	1
+ 237 00e4 00                      		.byte	0
+ 238 00e5 1E                      		.byte	30
+ 239 00e6 01                      		.byte	1
+ 240 00e7 1E                      		.byte	30
+ 241 00e8 02                      		.byte	2
+ 242 00e9 0F                      		.byte	15
+ 243 00ea 03                      		.byte	3
+ 244 00eb 10                      		.byte	16
+ 245 00ec 04                      		.byte	4
+ 246 00ed 02                      		.byte	2
+ 247 00ee 05                      		.byte	5
+ 248 00ef 00                      		.byte	0
+ 249 00f0 06                      		.byte	6
+ 250 00f1 B0                      		.byte	-80
+ 251 00f2 07                      		.byte	7
+ 252 00f3 04                      		.byte	4
+ 253 00f4 08                      		.byte	8
+ 254 00f5 0D                      		.byte	13
+ 255 00f6 09                      		.byte	9
+ 256 00f7 0E                      		.byte	14
+ 257 00f8 0A                      		.byte	10
+ 258 00f9 9C                      		.byte	-100
+ 259 00fa 0B                      		.byte	11
+ 260 00fb 04                      		.byte	4
+ 261 00fc 0C                      		.byte	12
+ 262 00fd 05                      		.byte	5
+ 263 00fe 0D                      		.byte	13
+ 264 00ff 0F                      		.byte	15
+ 265 0100 0E                      		.byte	14
+ 266 0101 02                      		.byte	2
+ 267 0102 0F                      		.byte	15
+ 268 0103 12                      		.byte	18
+ 269 0104 10                      		.byte	16
+ 270 0105 02                      		.byte	2
+ 271 0106 11                      		.byte	17
+ 272 0107 02                      		.byte	2
+ 273 0108 12                      		.byte	18
+ 274 0109 00                      		.byte	0
+ 275 010a 13                      		.byte	19
+ 276 010b 01                      		.byte	1
+ 277 010c 14                      		.byte	20
+ 278 010d 05                      		.byte	5
+ 279 010e 15                      		.byte	21
+ 280 010f 07                      		.byte	7
+ 281 0110 16                      		.byte	22
+ 282 0111 05                      		.byte	5
+ 283 0112 17                      		.byte	23
+ 284 0113 07                      		.byte	7
+ 285 0114 18                      		.byte	24
+ 286 0115 01                      		.byte	1
+ 287 0116 19                      		.byte	25
+ 288 0117 04                      		.byte	4
+ 289 0118 1A                      		.byte	26
+ 290 0119 05                      		.byte	5
+ 291 011a 1B                      		.byte	27
+ 292 011b 0C                      		.byte	12
+ 293 011c 1C                      		.byte	28
+ 294 011d 2A                      		.byte	42
+ 295 011e 1D                      		.byte	29
+ 296 011f 01                      		.byte	1
+ 297 0120 1E                      		.byte	30
+ 298 0121 00                      		.byte	0
+ 299 0122 21                      		.byte	33
+ 300 0123 00                      		.byte	0
+ 301 0124 22                      		.byte	34
+ 302 0125 00                      		.byte	0
+ 303 0126 23                      		.byte	35
+ 304 0127 00                      		.byte	0
+ 305 0128 25                      		.byte	37
+ 306 0129 01                      		.byte	1
+ 307 012a 26                      		.byte	38
+ 308 012b 00                      		.byte	0
+ 309 012c 27                      		.byte	39
+ 310 012d 39                      		.byte	57
+ 311 012e 28                      		.byte	40
+ 312 012f 7F                      		.byte	0x7f
+ 313 0130 29                      		.byte	41
+ 314 0131 08                      		.byte	8
+ 315 0132 30                      		.byte	48
+ 316 0133 03                      		.byte	3
+ 317 0134 31                      		.byte	49
+ 318 0135 00                      		.byte	0
+ 319 0136 32                      		.byte	50
+ 320 0137 1A                      		.byte	26
+ 321 0138 33                      		.byte	51
+ 322 0139 1A                      		.byte	26
+ 323 013a 34                      		.byte	52
+ 324 013b 07                      		.byte	7
+ 325 013c 35                      		.byte	53
+ 326 013d 07                      		.byte	7
+ 327 013e 36                      		.byte	54
+ 328 013f 01                      		.byte	1
+ 329 0140 37                      		.byte	55
+ 330 0141 FF                      		.byte	-1
+ 331 0142 38                      		.byte	56
+ 332 0143 36                      		.byte	54
+ 333 0144 39                      		.byte	57
+ 334 0145 07                      		.byte	7
+ 335 0146 3A                      		.byte	58
+ 336 0147 00                      		.byte	0
+ 337 0148 3E                      		.byte	62
+ 338 0149 FF                      		.byte	-1
+ 339 014a 3F                      		.byte	63
+ 340 014b 00                      		.byte	0
+ 341 014c 40                      		.byte	0x40
+ 342 014d 77                      		.byte	0x77
+ 343 014e 41                      		.byte	0x41
+ 344 014f 40                      		.byte	0x40
+ 345 0150 42                      		.byte	0x42
+ 346 0151 00                      		.byte	0
+ 347 0152 43                      		.byte	0x43
+ 348 0153 30                      		.byte	48
+ 349 0154 44                      		.byte	0x44
+ 350 0155 A0                      		.byte	-96
+ 351 0156 45                      		.byte	0x45
+ 352 0157 5C                      		.byte	0x5c
+ 353 0158 46                      		.byte	0x46
+ 354 0159 00                      		.byte	0
+ 355 015a 47                      		.byte	0x47
+ 356 015b 00                      		.byte	0
+ 357 015c 48                      		.byte	0x48
+ 358 015d 58                      		.byte	0x58
+ 359 015e 4A                      		.byte	0x4a
+ 360 015f 1E                      		.byte	30
+ 361 0160 4B                      		.byte	0x4b
+ 362 0161 1E                      		.byte	30
+ 363 0162 4C                      		.byte	0x4c
+ 364 0163 00                      		.byte	0
+ 365 0164 4D                      		.byte	0x4d
+ 366 0165 00                      		.byte	0
+ 367 0166 4E                      		.byte	0x4e
+ 368 0167 A0                      		.byte	-96
+ 369 0168 4F                      		.byte	0x4f
+ 370 0169 80                      		.byte	-128
+ 371 016a 50                      		.byte	0x50
+ 372 016b 00                      		.byte	0
+ 373 016c 51                      		.byte	0x51
+ 374 016d 00                      		.byte	0
+ 375 016e 52                      		.byte	0x52
+ 376 016f 00                      		.byte	0
+ 377 0170 53                      		.byte	0x53
+ 378 0171 00                      		.byte	0
+ 379 0172 54                      		.byte	0x54
+ 380 0173 00                      		.byte	0
+ 381 0174 57                      		.byte	0x57
+ 382 0175 80                      		.byte	-128
+ 383 0176 59                      		.byte	0x59
+ 384 0177 10                      		.byte	16
+ 385 0178 5A                      		.byte	0x5a
+ 386 0179 08                      		.byte	8
+ 387 017a 5B                      		.byte	0x5b
+ 388 017b 94                      		.byte	-108
+ 389 017c 5C                      		.byte	0x5c
+ 390 017d E8                      		.byte	-24
+ 391 017e 5D                      		.byte	0x5d
+ 392 017f 08                      		.byte	8
+ 393 0180 5E                      		.byte	0x5e
+ 394 0181 3D                      		.byte	61
+ 395 0182 5F                      		.byte	0x5f
+ 396 0183 99                      		.byte	-103
+ 397 0184 60                      		.byte	0x60
+ 398 0185 45                      		.byte	0x45
+ 399 0186 61                      		.byte	0x61
+ 400 0187 40                      		.byte	0x40
+ 401 0188 63                      		.byte	0x63
+ 402 0189 2D                      		.byte	45
+ 403 018a 64                      		.byte	0x64
+ 404 018b 02                      		.byte	2
+ 405 018c 65                      		.byte	0x65
+ 406 018d 96                      		.byte	-106
+ 407 018e 66                      		.byte	0x66
+ 408 018f 00                      		.byte	0
+ 409 0190 67                      		.byte	0x67
+ 410 0191 97                      		.byte	-105
+ 411 0192 68                      		.byte	0x68
+ 412 0193 01                      		.byte	1
+ 413 0194 69                      		.byte	0x69
+ 414 0195 CD                      		.byte	-51
+ 415 0196 6A                      		.byte	0x6a
+ 416 0197 01                      		.byte	1
+ 417 0198 6B                      		.byte	0x6b
+ 418 0199 B0                      		.byte	-80
+ 419 019a 6C                      		.byte	0x6c
+ 420 019b 04                      		.byte	4
+ 421 019c 6D                      		.byte	0x6d
+ 422 019d 2C                      		.byte	44
+ 423 019e 6E                      		.byte	0x6e
+ 424 019f 01                      		.byte	1
+ 425 01a0 6F                      		.byte	0x6f
+ 426 01a1 32                      		.byte	50
+ 427 01a2 71                      		.byte	0x71
+ 428 01a3 00                      		.byte	0
+ 429 01a4 72                      		.byte	0x72
+ 430 01a5 01                      		.byte	1
+ 431 01a6 73                      		.byte	0x73
+ 432 01a7 35                      		.byte	53
+ 433 01a8 74                      		.byte	0x74
+ 434 01a9 00                      		.byte	0
+ 435 01aa 75                      		.byte	0x75
+ 436 01ab 33                      		.byte	51
+ 437 01ac 76                      		.byte	0x76
+ 438 01ad 31                      		.byte	49
+ 439 01ae 77                      		.byte	0x77
+ 440 01af 01                      		.byte	1
+ 441 01b0 7C                      		.byte	0x7c
+ 442 01b1 84                      		.byte	-124
+ 443 01b2 7D                      		.byte	0x7d
+ 444 01b3 03                      		.byte	3
+ 445 01b4 7E                      		.byte	0x7e
+ 446 01b5 01                      		.byte	1
+ 447 01b6 00 00                   		.section P,"ax"
+ 448                             		.global	_gesture_sensor_init
+ 450                             	_gesture_sensor_init:
+ 451                             	.LFB6:
+ 452                             		.file 1 "../app_program/gesture.c"
+   1:../app_program/gesture.c **** ﻿/*
+   2:../app_program/gesture.c ****  *----------------------------------------------------------------------
+   3:../app_program/gesture.c ****  *    micro T-Kernel 3.00
+   4:../app_program/gesture.c ****  *
+   5:../app_program/gesture.c ****  *	PAJ7620 Gesture sensor control
+   6:../app_program/gesture.c ****  *----------------------------------------------------------------------
+   7:../app_program/gesture.c ****  */
+   8:../app_program/gesture.c **** #include <tk/tkernel.h>
+   9:../app_program/gesture.c **** #include <tk/device.h>
+  10:../app_program/gesture.c **** #include <tm/tmonitor.h>
+  11:../app_program/gesture.c **** 
+  12:../app_program/gesture.c **** #include "gesture.h"
+  13:../app_program/gesture.c **** 
+  14:../app_program/gesture.c **** /* PFJ7620 gesture sensor definition */ 
+  15:../app_program/gesture.c **** #define	I2C_SADR	(0x73)
+  16:../app_program/gesture.c **** 
+  17:../app_program/gesture.c **** /* REGISTER BANK 0 */
+  18:../app_program/gesture.c **** #define	PAJ7620_ADDR_SUSPEND_CMD	(0x03)	// 0:Suspend 1:Wake up
+  19:../app_program/gesture.c **** #define	PAJ7620_ADDR_GES_PS_DET_MASK_0	(0x41)
+  20:../app_program/gesture.c **** #define	PAJ7620_ADDR_GES_PS_DET_MASK_1	(0x42)
+  21:../app_program/gesture.c **** #define	PAJ7620_ADDR_GES_PS_DET_FLAG_0	(0x43)
+  22:../app_program/gesture.c **** #define	PAJ7620_ADDR_GES_PS_DET_FLAG_1	(0x44)
+  23:../app_program/gesture.c **** 
+  24:../app_program/gesture.c **** /* REGISTER BANK 1 */
+  25:../app_program/gesture.c **** #define	PAJ7620_ADDR_OPERATION_ENABLE	(0x72)	// 0:Disable 1:Enable
+  26:../app_program/gesture.c **** 
+  27:../app_program/gesture.c **** /* REGISTER BANK 0/1 */
+  28:../app_program/gesture.c **** #define	PAJ7620_REGITER_BANK_SEL	(0xEF)
+  29:../app_program/gesture.c **** 
+  30:../app_program/gesture.c **** /* Initial register state */
+  31:../app_program/gesture.c **** typedef struct {
+  32:../app_program/gesture.c **** 	UB	addr;
+  33:../app_program/gesture.c **** 	UB	data;
+  34:../app_program/gesture.c **** } T_REG;
+  35:../app_program/gesture.c **** LOCAL T_REG init_reg_tbl[] = {	
+  36:../app_program/gesture.c **** 	{0xEF,0x00},{0x32,0x29},{0x33,0x01},{0x34,0x00},{0x35,0x01},{0x36,0x00},{0x37,0x07},{0x38,0x17},{0
+  37:../app_program/gesture.c **** 	{0x40,0x02},{0x41,0xFF},{0x42,0x01},{0x46,0x2D},{0x47,0x0F},{0x48,0x3C},{0x49,0x00},{0x4A,0x1E},{0
+  38:../app_program/gesture.c **** 	{0x4E,0x1A},{0x4F,0x14},{0x50,0x00},{0x51,0x10},{0x52,0x00},{0x5C,0x02},{0x5D,0x00},{0x5E,0x10},{0
+  39:../app_program/gesture.c **** 	{0x62,0x00},{0x63,0x03},{0x64,0xF7},{0x65,0x03},{0x66,0xD9},{0x67,0x03},{0x68,0x01},{0x69,0xC8},{0
+  40:../app_program/gesture.c **** 	{0x6F,0x00},{0x70,0x80},{0x71,0x00},{0x72,0x00},{0x73,0x00},{0x74,0xF0},{0x75,0x00},{0x80,0x42},{0
+  41:../app_program/gesture.c **** 	{0x84,0x20},{0x85,0x00},{0x86,0x10},{0x87,0x00},{0x88,0x05},{0x89,0x18},{0x8A,0x10},{0x8B,0x01},{0
+  42:../app_program/gesture.c **** 	{0x8F,0x81},{0x90,0x06},{0x91,0x06},{0x92,0x1E},{0x93,0x0D},{0x94,0x0A},{0x95,0x0A},{0x96,0x0C},{0
+  43:../app_program/gesture.c **** 	{0x9A,0x14},{0x9B,0x0A},{0x9C,0x3F},{0x9D,0x33},{0x9E,0xAE},{0x9F,0xF9},{0xA0,0x48},{0xA1,0x13},{0
+  44:../app_program/gesture.c **** 	{0xA5,0x19},{0xA6,0x10},{0xA7,0x08},{0xA8,0x24},{0xA9,0x04},{0xAA,0x1E},{0xAB,0x1E},{0xCC,0x19},{0
+  45:../app_program/gesture.c **** 	{0xD0,0x21},{0xD1,0x0F},{0xD2,0x88},{0xE0,0x01},{0xE1,0x04},{0xE2,0x41},{0xE3,0xD6},{0xE4,0x00},{0
+  46:../app_program/gesture.c **** 	{0xE8,0x00},{0xE9,0x00},{0xEE,0x07},{0xEF,0x01},{0x00,0x1E},{0x01,0x1E},{0x02,0x0F},{0x03,0x10},{0
+  47:../app_program/gesture.c **** 	{0x07,0x04},{0x08,0x0D},{0x09,0x0E},{0x0A,0x9C},{0x0B,0x04},{0x0C,0x05},{0x0D,0x0F},{0x0E,0x02},{0
+  48:../app_program/gesture.c **** 	{0x12,0x00},{0x13,0x01},{0x14,0x05},{0x15,0x07},{0x16,0x05},{0x17,0x07},{0x18,0x01},{0x19,0x04},{0
+  49:../app_program/gesture.c **** 	{0x1D,0x01},{0x1E,0x00},{0x21,0x00},{0x22,0x00},{0x23,0x00},{0x25,0x01},{0x26,0x00},{0x27,0x39},{0
+  50:../app_program/gesture.c **** 	{0x31,0x00},{0x32,0x1A},{0x33,0x1A},{0x34,0x07},{0x35,0x07},{0x36,0x01},{0x37,0xFF},{0x38,0x36},{0
+  51:../app_program/gesture.c **** 	{0x3F,0x00},{0x40,0x77},{0x41,0x40},{0x42,0x00},{0x43,0x30},{0x44,0xA0},{0x45,0x5C},{0x46,0x00},{0
+  52:../app_program/gesture.c **** 	{0x4B,0x1E},{0x4C,0x00},{0x4D,0x00},{0x4E,0xA0},{0x4F,0x80},{0x50,0x00},{0x51,0x00},{0x52,0x00},{0
+  53:../app_program/gesture.c **** 	{0x59,0x10},{0x5A,0x08},{0x5B,0x94},{0x5C,0xE8},{0x5D,0x08},{0x5E,0x3D},{0x5F,0x99},{0x60,0x45},{0
+  54:../app_program/gesture.c **** 	{0x65,0x96},{0x66,0x00},{0x67,0x97},{0x68,0x01},{0x69,0xCD},{0x6A,0x01},{0x6B,0xB0},{0x6C,0x04},{0
+  55:../app_program/gesture.c **** 	{0x71,0x00},{0x72,0x01},{0x73,0x35},{0x74,0x00},{0x75,0x33},{0x76,0x31},{0x77,0x01},{0x7C,0x84},{0
+  56:../app_program/gesture.c **** };
+  57:../app_program/gesture.c **** 
+  58:../app_program/gesture.c **** 
+  59:../app_program/gesture.c **** IMPORT T_REG init_reg_tbl[];
+  60:../app_program/gesture.c **** 
+  61:../app_program/gesture.c **** EXPORT ER gesture_sensor_init(ID dd_i2c)
+  62:../app_program/gesture.c **** {
+ 453                             		.loc 1 62 1
+ 454 0000 7E AA                   		push.l	r10
+ 455                             	.LCFI0:
+ 456 0002 71 0A F0                		add	#-16, r0, r10
+ 457                             	.LCFI1:
+ 458 0005 EF A0                   		mov.L	r10, r0
+ 459 0007 E7 A1 03                		mov.L	r1, 12[r10]
+  63:../app_program/gesture.c **** 	T_REG	*p_tbl;
+  64:../app_program/gesture.c **** 	ER	err;
+  65:../app_program/gesture.c **** 
+  66:../app_program/gesture.c **** 	p_tbl = init_reg_tbl;
+ 460                             		.loc 1 66 8
+ 461 000a F8 A2 00 00 00 00       		mov.L	#_init_reg_tbl, [r10]
+ 462                             	.LBB2:
+  67:../app_program/gesture.c **** 	for(INT	i = 0; i < (sizeof(init_reg_tbl)/sizeof(T_REG)); p_tbl++, i++) {
+ 463                             		.loc 1 67 10
+ 464 0010 F9 A6 02 00             		mov.L	#0, 8[r10]
+ 465                             		.loc 1 67 2
+ 466 0014 2E 36                   		bra	.L2
+ 467                             	.L5:
+  68:../app_program/gesture.c **** 		err = i2c_write_reg(dd_i2c, I2C_SADR, p_tbl->addr, p_tbl->data);
+ 468                             		.loc 1 68 46
+ 469 0016 EC A5                   		mov.L	[r10], r5
+ 470 0018 CC 55                   		mov.B	[r5], r5
+ 471                             		.loc 1 68 9
+ 472 001a 5B 53                   		movu.B	r5, r3
+ 473 001c EC A5                   		mov.L	[r10], r5
+ 474 001e 88 5D                   		mov.B	1[r5], r5
+ 475 0020 CF 54                   		mov.B	r5, r4
+ 476 0022 75 42 73                		mov.L	#0x73, r2
+ 477 0025 ED A1 03                		mov.L	12[r10], r1
+ 478 0028 05 00 00 00             		bsr	_i2c_write_reg
+ 479 002c E7 A1 01                		mov.L	r1, 4[r10]
+  69:../app_program/gesture.c **** 		if(err < E_OK) break;
+ 480                             		.loc 1 69 5
+ 481 002f ED A5 01                		mov.L	4[r10], r5
+ 482 0032 61 05                   		cmp	#0, r5
+ 483 0034 29 20                   		blt	.L7
+  70:../app_program/gesture.c **** 		tk_dly_tsk(1);
+ 484                             		.loc 1 70 3 discriminator 2
+ 485 0036 66 11                   		mov.L	#1, r1
+ 486 0038 05 00 00 00             		bsr	_tk_dly_tsk
+  67:../app_program/gesture.c **** 		err = i2c_write_reg(dd_i2c, I2C_SADR, p_tbl->addr, p_tbl->data);
+ 487                             		.loc 1 67 64 discriminator 2
+ 488 003c EC A5                   		mov.L	[r10], r5
+ 489 003e 62 25                   		add	#2, r5
+ 490 0040 E3 A5                   		mov.L	r5, [r10]
+  67:../app_program/gesture.c **** 		err = i2c_write_reg(dd_i2c, I2C_SADR, p_tbl->addr, p_tbl->data);
+ 491                             		.loc 1 67 69 discriminator 2
+ 492 0042 ED A5 02                		mov.L	8[r10], r5
+ 493 0045 62 15                   		add	#1, r5
+ 494 0047 E7 A5 02                		mov.L	r5, 8[r10]
+ 495                             	.L2:
+  67:../app_program/gesture.c **** 		err = i2c_write_reg(dd_i2c, I2C_SADR, p_tbl->addr, p_tbl->data);
+ 496                             		.loc 1 67 19 discriminator 1
+ 497 004a ED A5 02                		mov.L	8[r10], r5
+  67:../app_program/gesture.c **** 		err = i2c_write_reg(dd_i2c, I2C_SADR, p_tbl->addr, p_tbl->data);
+ 498                             		.loc 1 67 2 discriminator 1
+ 499 004d 75 55 DA                		cmp	#0xda, r5
+ 500 0050 25 C6                   		bleu	.L5
+ 501 0052 2E 03                   		bra	.L4
+ 502                             	.L7:
+  69:../app_program/gesture.c **** 		if(err < E_OK) break;
+ 503                             		.loc 1 69 3
+ 504 0054 03                      		nop
+ 505                             	.L4:
+ 506                             	.LBE2:
+  71:../app_program/gesture.c **** 	}
+  72:../app_program/gesture.c **** 	return err;
+ 507                             		.loc 1 72 9
+ 508 0055 ED A5 01                		mov.L	4[r10], r5
+  73:../app_program/gesture.c **** }
+ 509                             		.loc 1 73 1
+ 510 0058 EF 51                   		mov.L	r5, r1
+ 511 005a 3F AA 05                		rtsd	#20, r10-r10
+ 512                             	.LFE6:
+ 514                             		.global	_gesture_sensor_get
+ 516                             	_gesture_sensor_get:
+ 517                             	.LFB7:
+  74:../app_program/gesture.c **** 
+  75:../app_program/gesture.c **** EXPORT	ER gesture_sensor_get(ID dd_i2c, UW *val)
+  76:../app_program/gesture.c **** {
+ 518                             		.loc 1 76 1
+ 519 005d 7E AA                   		push.l	r10
+ 520                             	.LCFI2:
+ 521 005f 71 0A F0                		add	#-16, r0, r10
+ 522                             	.LCFI3:
+ 523 0062 EF A0                   		mov.L	r10, r0
+ 524 0064 E7 A1 02                		mov.L	r1, 8[r10]
+ 525 0067 E7 A2 03                		mov.L	r2, 12[r10]
+  77:../app_program/gesture.c **** 	UB	data;
+  78:../app_program/gesture.c **** 	ER	err;
+  79:../app_program/gesture.c **** 
+  80:../app_program/gesture.c **** 	i2c_write_reg(dd_i2c, I2C_SADR, PAJ7620_REGITER_BANK_SEL, 0);
+ 526                             		.loc 1 80 2
+ 527 006a 66 04                   		mov	#0, r4
+ 528 006c 75 43 EF                		mov.L	#0xef, r3
+ 529 006f 75 42 73                		mov.L	#0x73, r2
+ 530 0072 ED A1 02                		mov.L	8[r10], r1
+ 531 0075 05 00 00 00             		bsr	_i2c_write_reg
+  81:../app_program/gesture.c **** 	tk_dly_tsk(1);
+ 532                             		.loc 1 81 2
+ 533 0079 66 11                   		mov.L	#1, r1
+ 534 007b 05 00 00 00             		bsr	_tk_dly_tsk
+  82:../app_program/gesture.c **** 
+  83:../app_program/gesture.c **** 	*val = 0;
+ 535                             		.loc 1 83 7
+ 536 007f ED A5 03                		mov.L	12[r10], r5
+ 537 0082 F8 56 00                		mov.L	#0, [r5]
+  84:../app_program/gesture.c **** 	err = i2c_read_reg(dd_i2c, I2C_SADR, PAJ7620_ADDR_GES_PS_DET_FLAG_0, &data);
+ 538                             		.loc 1 84 8
+ 539 0085 71 A5 04                		add	#4, r10, r5
+ 540 0088 EF 54                   		mov.L	r5, r4
+ 541 008a 75 43 43                		mov.L	#0x43, r3
+ 542 008d 75 42 73                		mov.L	#0x73, r2
+ 543 0090 ED A1 02                		mov.L	8[r10], r1
+ 544 0093 05 00 00 00             		bsr	_i2c_read_reg
+ 545 0097 E3 A1                   		mov.L	r1, [r10]
+  85:../app_program/gesture.c **** 	if(err < E_OK) return err;
+ 546                             		.loc 1 85 4
+ 547 0099 EC A5                   		mov.L	[r10], r5
+ 548 009b 61 05                   		cmp	#0, r5
+ 549 009d 28 06                   		bge	.L9
+ 550                             		.loc 1 85 24 discriminator 1
+ 551 009f EC A5                   		mov.L	[r10], r5
+ 552 00a1 2E 0E                   		bra	.L11
+ 553                             	.L9:
+  86:../app_program/gesture.c **** 
+  87:../app_program/gesture.c **** 	*val = data;
+ 554                             		.loc 1 87 7
+ 555 00a3 CD A5 04                		mov.B	4[r10], r5
+ 556 00a6 5B 54                   		movu.B	r5, r4
+ 557 00a8 ED A5 03                		mov.L	12[r10], r5
+ 558 00ab E3 54                   		mov.L	r4, [r5]
+  88:../app_program/gesture.c **** 
+  89:../app_program/gesture.c **** 	return E_OK;
+ 559                             		.loc 1 89 9
+ 560 00ad 66 05                   		mov.L	#0, r5
+ 561                             	.L11:
+  90:../app_program/gesture.c **** }
+ 562                             		.loc 1 90 1 discriminator 1
+ 563 00af EF 51                   		mov.L	r5, r1
+ 564 00b1 3F AA 05                		rtsd	#20, r10-r10
+ 565                             	.LFE7:
+ 623                             	.Letext0:
+ 624                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"

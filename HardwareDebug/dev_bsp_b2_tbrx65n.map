@@ -2,6 +2,7 @@
 Allocating common symbols
 Common symbol       size              file
 
+ll_devcb            0x60              ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
 flgid1              0x4               ./app_program/app_main.o
 knl_lowmem_top      0x4               ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
 knl_lowmem_limit    0x4               ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
@@ -160,6 +161,7 @@ LOAD ./device/adc/sysdepend/rx65n/adc_rx65n.o
 LOAD ./device/adc/sysdepend/rx231/adc_rx231.o
 LOAD ./device/adc/adc.o
 LOAD ./app_program/app_main.o
+LOAD ./app_program/gesture.o
 START GROUP
 LOAD d:/tkernel_dev/tools_rx/gcc for renesas rx 8.3.0.202004-gnurx-elf/rx-elf/rx-elf/bin/../lib/gcc/rx-elf/8.3.0.202004-GNURX/../../../../rx-elf/lib/rxv2\libm.a
 LOAD d:/tkernel_dev/tools_rx/gcc for renesas rx 8.3.0.202004-gnurx-elf/rx-elf/rx-elf/bin/../lib/gcc/rx-elf/8.3.0.202004-GNURX/../../../../rx-elf/lib/rxv2\libc.a
@@ -178,7 +180,7 @@ END GROUP
  .fvectors      0xfffffffc        0x4 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
                 0xfffffffc                reset_vect
 
-.text           0xfff80000     0xc535
+.text           0xfff80000     0xe08e
  *(.text)
  .text          0xfff80000      0xcf0 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
                 0xfff80000                hll_inthdr_entry_0
@@ -720,143 +722,167 @@ END GROUP
  P              0xfff8baa0      0x108 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
                 0xfff8baf9                startup_clock
                 0xfff8bba0                shutdown_clock
- P              0xfff8bba8       0x21 ./kernel/sysdepend/rtb_rx65n/devinit.o
+ P              0xfff8bba8       0x47 ./kernel/sysdepend/rtb_rx65n/devinit.o
                 0xfff8bba8                knl_init_device
                 0xfff8bbb3                knl_start_device
-                0xfff8bbbe                knl_finish_device
- *fill*         0xfff8bbc9        0x7 
- P              0xfff8bbd0      0x160 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
-                0xfff8bc15                knl_startup_hw
-                0xfff8bccb                knl_shutdown_hw
-                0xfff8bcd9                knl_restart_hw
- P              0xfff8bd30       0x10 ./kernel/sysdepend/rtb_rx65n/power_save.o
-                0xfff8bd30                low_pow
-                0xfff8bd38                off_pow
- P              0xfff8bd40        0x0 ./kernel/sysdepend/nucleo_l476/devinit.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/nucleo_l476/hw_setting.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/nucleo_l476/power_save.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/nucleo_h723/devinit.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/nucleo_h723/hw_setting.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/nucleo_h723/power_save.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_stm32l4/devinit.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_stm32l4/hw_setting.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_stm32l4/power_save.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_rza2m/devinit.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_rza2m/hw_setting.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_rza2m/power_save.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_rx231/devinit.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_rx231/hw_setting.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_rx231/power_save.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_m367/devinit.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_m367/hw_setting.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/iote_m367/power_save.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rza2m/sf_boot.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rx231/cpu_clock.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rx231/hllint_ent.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
- P              0xfff8bd40        0x0 ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
- P              0xfff8bd40      0x113 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
-                0xfff8bd40                knl_set_reg
-                0xfff8bdbf                knl_get_reg
-                0xfff8be32                knl_force_dispatch
-                0xfff8be47                knl_dispatch
- P              0xfff8be53        0x0 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
- P              0xfff8be53       0x74 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
-                0xfff8be53                NMI_Handler
-                0xfff8be65                SuperVisorInst_Handler
-                0xfff8be77                AccessInst_Handler
-                0xfff8be89                UndefinedInst_Handler
-                0xfff8be9b                FloatingPoint_Handler
-                0xfff8bead                Default_Handler
- P              0xfff8bec7        0x0 ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
- P              0xfff8bec7       0x94 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
-                0xfff8bec7                knl_define_inthdr
-                0xfff8bf50                knl_init_interrupt
- P              0xfff8bf5b        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
- P              0xfff8bf5b      0x13c ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
-                0xfff8bf6d                reset_main
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7m/dispatch.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/dispatch.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_entry.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/int_asm.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_hdl.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
- P              0xfff8c097        0x0 ./kernel/sysdepend/cpu/core/armv7a/vector_tbl.o
- P              0xfff8c097       0x9d ./kernel/inittask/inittask.o
- P              0xfff8c134        0x0 ./device/ser/sysdepend/tx03_m367/ser_m367.o
- P              0xfff8c134        0x0 ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
- P              0xfff8c134        0x0 ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
- P              0xfff8c134        0x0 ./device/ser/sysdepend/rza2m/ser_rza2m.o
- P              0xfff8c134        0x0 ./device/ser/sysdepend/rx65n/ser_rx65n.o
- P              0xfff8c134        0x0 ./device/ser/sysdepend/rx231/ser_rx231.o
- P              0xfff8c134        0x0 ./device/ser/ser.o
- P              0xfff8c134        0x0 ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
- P              0xfff8c134        0x0 ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
- P              0xfff8c134        0x0 ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
- P              0xfff8c134        0x0 ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
- P              0xfff8c134        0x0 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
- P              0xfff8c134        0x0 ./device/i2c/sysdepend/rx231/i2c_rx231.o
- P              0xfff8c134        0x0 ./device/i2c/i2c.o
- P              0xfff8c134      0x2c7 ./device/common/drvif/msdrvif.o
-                0xfff8c2c3                msdi_def_dev
-                0xfff8c3bd                msdi_del_dev
- P              0xfff8c3fb        0x0 ./device/adc/sysdepend/tx03_m367/adc_m367.o
- P              0xfff8c3fb        0x0 ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
- P              0xfff8c3fb        0x0 ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
- P              0xfff8c3fb        0x0 ./device/adc/sysdepend/rza2m/adc_rza2m.o
- P              0xfff8c3fb        0x0 ./device/adc/sysdepend/rx65n/adc_rx65n.o
- P              0xfff8c3fb        0x0 ./device/adc/sysdepend/rx231/adc_rx231.o
- P              0xfff8c3fb        0x0 ./device/adc/adc.o
- P              0xfff8c3fb      0x13a ./app_program/app_main.o
-                0xfff8c438                tsk1
-                0xfff8c484                tsk2
-                0xfff8c4b2                tsk3
-                0xfff8c4e0                usermain
-                0xfff8c535                etext = .
+                0xfff8bbe4                knl_finish_device
+ *fill*         0xfff8bbef        0x1 
+ P              0xfff8bbf0      0x160 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+                0xfff8bc35                knl_startup_hw
+                0xfff8bceb                knl_shutdown_hw
+                0xfff8bcf9                knl_restart_hw
+ P              0xfff8bd50       0x10 ./kernel/sysdepend/rtb_rx65n/power_save.o
+                0xfff8bd50                low_pow
+                0xfff8bd58                off_pow
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/nucleo_l476/devinit.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/nucleo_l476/hw_setting.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/nucleo_l476/power_save.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/nucleo_h723/devinit.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/nucleo_h723/hw_setting.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/nucleo_h723/power_save.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_stm32l4/devinit.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_stm32l4/hw_setting.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_stm32l4/power_save.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_rza2m/devinit.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_rza2m/hw_setting.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_rza2m/power_save.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_rx231/devinit.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_rx231/hw_setting.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_rx231/power_save.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_m367/devinit.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_m367/hw_setting.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/iote_m367/power_save.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rza2m/sf_boot.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rx231/cpu_clock.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rx231/hllint_ent.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
+ P              0xfff8bd60        0x0 ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
+ P              0xfff8bd60      0x113 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+                0xfff8bd60                knl_set_reg
+                0xfff8bddf                knl_get_reg
+                0xfff8be52                knl_force_dispatch
+                0xfff8be67                knl_dispatch
+ P              0xfff8be73        0x0 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
+ P              0xfff8be73       0x74 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+                0xfff8be73                NMI_Handler
+                0xfff8be85                SuperVisorInst_Handler
+                0xfff8be97                AccessInst_Handler
+                0xfff8bea9                UndefinedInst_Handler
+                0xfff8bebb                FloatingPoint_Handler
+                0xfff8becd                Default_Handler
+ P              0xfff8bee7        0x0 ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
+ P              0xfff8bee7       0x94 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+                0xfff8bee7                knl_define_inthdr
+                0xfff8bf70                knl_init_interrupt
+ P              0xfff8bf7b        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
+ P              0xfff8bf7b      0x13c ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+                0xfff8bf8d                reset_main
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7m/dispatch.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/dispatch.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_entry.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/int_asm.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_hdl.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
+ P              0xfff8c0b7        0x0 ./kernel/sysdepend/cpu/core/armv7a/vector_tbl.o
+ P              0xfff8c0b7       0x9d ./kernel/inittask/inittask.o
+ P              0xfff8c154        0x0 ./device/ser/sysdepend/tx03_m367/ser_m367.o
+ P              0xfff8c154        0x0 ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
+ P              0xfff8c154        0x0 ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
+ P              0xfff8c154        0x0 ./device/ser/sysdepend/rza2m/ser_rza2m.o
+ P              0xfff8c154        0x0 ./device/ser/sysdepend/rx65n/ser_rx65n.o
+ P              0xfff8c154        0x0 ./device/ser/sysdepend/rx231/ser_rx231.o
+ P              0xfff8c154        0x0 ./device/ser/ser.o
+ P              0xfff8c154        0x0 ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
+ P              0xfff8c154        0x0 ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
+ P              0xfff8c154        0x0 ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
+ P              0xfff8c154        0x0 ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
+ *fill*         0xfff8c154        0x4 
+ P              0xfff8c158      0xba8 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+                0xfff8c953                dev_i2c_llctl
+                0xfff8cbfe                dev_i2c_llinit
+ P              0xfff8cd00        0x0 ./device/i2c/sysdepend/rx231/i2c_rx231.o
+ P              0xfff8cd00      0x4d8 ./device/i2c/i2c.o
+                0xfff8cf33                dev_i2c_openfn
+                0xfff8cf70                dev_i2c_closefn
+                0xfff8cfa6                dev_i2c_readfn
+                0xfff8cfe3                dev_i2c_writefn
+                0xfff8d020                dev_i2c_eventfn
+                0xfff8d037                dev_init_i2c
+                0xfff8d145                i2c_read_reg
+                0xfff8d193                i2c_write_reg
+ P              0xfff8d1d8      0x2c7 ./device/common/drvif/msdrvif.o
+                0xfff8d367                msdi_def_dev
+                0xfff8d461                msdi_del_dev
+ P              0xfff8d49f        0x0 ./device/adc/sysdepend/tx03_m367/adc_m367.o
+ P              0xfff8d49f        0x0 ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
+ P              0xfff8d49f        0x0 ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
+ P              0xfff8d49f        0x0 ./device/adc/sysdepend/rza2m/adc_rza2m.o
+ *fill*         0xfff8d49f        0x1 
+ P              0xfff8d4a0      0x638 ./device/adc/sysdepend/rx65n/adc_rx65n.o
+                0xfff8d4f6                adc_inthdr
+                0xfff8d6e3                dev_adc_llctl
+                0xfff8d7e2                dev_adc_llinit
+ P              0xfff8dad8        0x0 ./device/adc/sysdepend/rx231/adc_rx231.o
+ P              0xfff8dad8      0x348 ./device/adc/adc.o
+                0xfff8dc01                dev_adc_openfn
+                0xfff8dc3e                dev_adc_closefn
+                0xfff8dc74                dev_adc_readfn
+                0xfff8dcc1                dev_adc_writefn
+                0xfff8dcf6                dev_adc_eventfn
+                0xfff8dd0d                dev_init_adc
+ P              0xfff8de20      0x1ba ./app_program/app_main.o
+                0xfff8de5d                tsk1
+                0xfff8dec2                tsk2
+                0xfff8df48                tsk3
+                0xfff8df85                usermain
+ P              0xfff8dfda       0xb4 ./app_program/gesture.o
+                0xfff8dfda                gesture_sensor_init
+                0xfff8e037                gesture_sensor_get
+                0xfff8e08e                etext = .
 
-.rvectors       0xfff8c538      0x800
-                0xfff8c538                _rvectors_start = .
+.rvectors       0xfff8e090      0x800
+                0xfff8e090                _rvectors_start = .
  *(.rvectors)
- .rvectors      0xfff8c538      0x400 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
-                0xfff8c538                knl_int_vect_rom
-                0xfff8c938                _rvectors_end = .
-                0xfff8c938                . = ALIGN (0x4)
+ .rvectors      0xfff8e090      0x400 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
+                0xfff8e090                knl_int_vect_rom
+                0xfff8e490                _rvectors_end = .
+                0xfff8e490                . = ALIGN (0x4)
  *(.hvectors)
- .hvectors      0xfff8c938      0x400 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
-                0xfff8c938                knl_hll_inthdr_rom
+ .hvectors      0xfff8e490      0x400 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
+                0xfff8e490                knl_hll_inthdr_rom
 
-.init           0xfff8cd38        0x0
+.init           0xfff8e890        0x0
  *(.init)
-                0xfff8cd38                __preinit_array_start = .
+                0xfff8e890                __preinit_array_start = .
  *(.preinit_array)
-                0xfff8cd38                __preinit_array_end = .
-                0xfff8cd38                __init_array_start = ((. + 0x3) & 0xfffffffc)
+                0xfff8e890                __preinit_array_end = .
+                0xfff8e890                __init_array_start = ((. + 0x3) & 0xfffffffc)
  *(.init_array)
  *(SORT(.init_array.*))
-                0xfff8cd38                __init_array_end = .
-                0xfff8cd38                __fini_array_start = .
+                0xfff8e890                __init_array_end = .
+                0xfff8e890                __fini_array_start = .
  *(.fini_array)
  *(SORT(.fini_array.*))
-                0xfff8cd38                __fini_array_end = .
+                0xfff8e890                __fini_array_end = .
 
 .fini
  *(.fini)
@@ -865,40 +891,44 @@ END GROUP
  *(.got)
  *(.got.plt)
 
-.rodata         0xfff8cd38      0x698
+.rodata         0xfff8e890      0x754
  *(.rodata)
  *(.rodata.*)
  *(C_1)
  *(C_2)
  *(C)
- C              0xfff8cd38        0x4 ./lib/libtm/libtm.o
- C              0xfff8cd3c       0x28 ./lib/libtm/libtm_printf.o
- C              0xfff8cd64      0x1e0 ./lib/libtk/sysdepend/cpu/rx65n/ipr_rx65n.o
-                0xfff8cd64                IPR_index
- C              0xfff8cf44        0x8 ./lib/libtk/sysdepend/cpu/rx65n/ptimer_rx65n.o
- C              0xfff8cf4c        0x8 ./lib/libtk/fastlock.o
- C              0xfff8cf54        0x8 ./lib/libtk/fastmlock.o
- C              0xfff8cf5c        0x8 ./kernel/tkernel/device.o
- C              0xfff8cf64       0x10 ./kernel/tkernel/deviceio.o
- C              0xfff8cf74       0x18 ./kernel/tkernel/eventflag.o
- C              0xfff8cf8c       0x18 ./kernel/tkernel/mailbox.o
- C              0xfff8cfa4       0x18 ./kernel/tkernel/mempfix.o
- C              0xfff8cfbc       0x18 ./kernel/tkernel/mempool.o
- C              0xfff8cfd4       0x24 ./kernel/tkernel/messagebuf.o
- C              0xfff8cff8       0x24 ./kernel/tkernel/mutex.o
- C              0xfff8d01c       0x18 ./kernel/tkernel/semaphore.o
- C              0xfff8d034       0xc0 ./kernel/tkernel/task_manage.o
- C              0xfff8d0f4       0x18 ./kernel/tkernel/task_sync.o
- C              0xfff8d10c       0xcc ./kernel/sysinit/sysinit.o
- C              0xfff8d1d8       0x9c ./kernel/sysdepend/rtb_rx65n/hw_setting.o
- C              0xfff8d274       0xa8 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
- C              0xfff8d31c       0x6c ./kernel/inittask/inittask.o
-                0xfff8d31c                knl_init_ctsk
- C              0xfff8d388       0x48 ./app_program/app_main.o
-                0xfff8d388                ctsk1
-                0xfff8d3a0                ctsk2
-                0xfff8d3b8                ctsk3
-                0xfff8d3d0                _erodata = .
+ C              0xfff8e890        0x4 ./lib/libtm/libtm.o
+ C              0xfff8e894       0x28 ./lib/libtm/libtm_printf.o
+ C              0xfff8e8bc      0x1e0 ./lib/libtk/sysdepend/cpu/rx65n/ipr_rx65n.o
+                0xfff8e8bc                IPR_index
+ C              0xfff8ea9c        0x8 ./lib/libtk/sysdepend/cpu/rx65n/ptimer_rx65n.o
+ C              0xfff8eaa4        0x8 ./lib/libtk/fastlock.o
+ C              0xfff8eaac        0x8 ./lib/libtk/fastmlock.o
+ C              0xfff8eab4        0x8 ./kernel/tkernel/device.o
+ C              0xfff8eabc       0x10 ./kernel/tkernel/deviceio.o
+ C              0xfff8eacc       0x18 ./kernel/tkernel/eventflag.o
+ C              0xfff8eae4       0x18 ./kernel/tkernel/mailbox.o
+ C              0xfff8eafc       0x18 ./kernel/tkernel/mempfix.o
+ C              0xfff8eb14       0x18 ./kernel/tkernel/mempool.o
+ C              0xfff8eb2c       0x24 ./kernel/tkernel/messagebuf.o
+ C              0xfff8eb50       0x24 ./kernel/tkernel/mutex.o
+ C              0xfff8eb74       0x18 ./kernel/tkernel/semaphore.o
+ C              0xfff8eb8c       0xc0 ./kernel/tkernel/task_manage.o
+ C              0xfff8ec4c       0x18 ./kernel/tkernel/task_sync.o
+ C              0xfff8ec64       0xcc ./kernel/sysinit/sysinit.o
+ C              0xfff8ed30       0xd4 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+ C              0xfff8ee04       0xa8 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+ C              0xfff8eeac       0x6c ./kernel/inittask/inittask.o
+                0xfff8eeac                knl_init_ctsk
+ C              0xfff8ef18       0x3c ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+ C              0xfff8ef54        0x4 ./device/i2c/i2c.o
+ C              0xfff8ef58        0x8 ./device/adc/sysdepend/rx65n/adc_rx65n.o
+ C              0xfff8ef60        0x4 ./device/adc/adc.o
+ C              0xfff8ef64       0x80 ./app_program/app_main.o
+                0xfff8ef9c                ctsk1
+                0xfff8efb4                ctsk2
+                0xfff8efcc                ctsk3
+                0xfff8efe4                _erodata = .
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
@@ -909,20 +939,20 @@ END GROUP
 .jcr
  *(.jcr)
 
-.tors           0xfff8d3d0        0x0
-                0xfff8d3d0                __CTOR_LIST__ = .
-                0xfff8d3d0                . = ALIGN (0x2)
-                0xfff8d3d0                ___ctors = .
+.tors           0xfff8efe4        0x0
+                0xfff8efe4                __CTOR_LIST__ = .
+                0xfff8efe4                . = ALIGN (0x2)
+                0xfff8efe4                ___ctors = .
  *(.ctors)
-                0xfff8d3d0                ___ctors_end = .
-                0xfff8d3d0                __CTOR_END__ = .
-                0xfff8d3d0                __DTOR_LIST__ = .
-                0xfff8d3d0                ___dtors = .
+                0xfff8efe4                ___ctors_end = .
+                0xfff8efe4                __CTOR_END__ = .
+                0xfff8efe4                __DTOR_LIST__ = .
+                0xfff8efe4                ___dtors = .
  *(.dtors)
-                0xfff8d3d0                ___dtors_end = .
-                0xfff8d3d0                __DTOR_END__ = .
-                0xfff8d3d0                . = ALIGN (0x2)
-                0xfff8d3d0                __data_org = .
+                0xfff8efe4                ___dtors_end = .
+                0xfff8efe4                __DTOR_END__ = .
+                0xfff8efe4                . = ALIGN (0x2)
+                0xfff8efe4                __data_org = .
 
 .vector         0x00000000      0x800
                 0x00000000                . = ALIGN (0x4)
@@ -934,7 +964,7 @@ END GROUP
  .data_hvector  0x00000400      0x400 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
                 0x00000400                knl_hll_inthdr_ram
 
-.data           0x00000800       0x40 load address 0xfff8d3d0
+.data           0x00000800      0x1f8 load address 0xfff8efe4
                 0x00000800                . = ALIGN (0x4)
                 0x00000800                __data_start = .
  *(.data)
@@ -942,381 +972,386 @@ END GROUP
  *(D)
  D              0x00000800       0x40 ./lib/libtk/sysdepend/cpu/rx65n/ptimer_rx65n.o
                 0x00000800                ptmrcb
+ D              0x00000840      0x1b8 ./app_program/gesture.o
  *(D_1)
- D_1            0x00000840        0x0 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
- D_1            0x00000840        0x0 ./lib/libtm/sysdepend/nucleo_h723/tm_com.o
- D_1            0x00000840        0x0 ./lib/libtm/sysdepend/no_device/tm_com.o
- D_1            0x00000840        0x0 ./lib/libtm/sysdepend/iote_stm32l4/tm_com.o
- D_1            0x00000840        0x0 ./lib/libtm/sysdepend/iote_rza2m/tm_com.o
- D_1            0x00000840        0x0 ./lib/libtm/sysdepend/iote_rx231/tm_com.o
- D_1            0x00000840        0x0 ./lib/libtm/sysdepend/iote_m367/tm_com.o
- D_1            0x00000840        0x0 ./lib/libtm/libtm.o
- D_1            0x00000840        0x0 ./lib/libtm/libtm_printf.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/tx03_m367/int_m367.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/tx03_m367/ptimer_m367.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/stm32l4/int_stm32l4.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/stm32l4/ptimer_stm32l4.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/stm32h7/int_stm32h7.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/stm32h7/ptimer_stm32h7.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/rza2m/ptimer_rza2m.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/rx65n/int_rx65n.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/rx65n/ipr_rx65n.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/rx65n/ptimer_rx65n.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/rx231/int_rx231.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/rx231/ipr_rx231.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/rx231/ptimer_rx231.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/core/rxv2/wusec_rvx2.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/core/armv7m/int_armv7m.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/core/armv7m/wusec_armv7m.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/core/armv7a/int_armv7a.o
- D_1            0x00000840        0x0 ./lib/libtk/sysdepend/cpu/core/armv7a/wusec_armv7a.o
- D_1            0x00000840        0x0 ./lib/libtk/fastlock.o
- D_1            0x00000840        0x0 ./lib/libtk/fastmlock.o
- D_1            0x00000840        0x0 ./lib/libtk/kmalloc.o
- D_1            0x00000840        0x0 ./kernel/usermain/usermain.o
- D_1            0x00000840        0x0 ./kernel/tstdlib/bitop.o
- D_1            0x00000840        0x0 ./kernel/tstdlib/string.o
- D_1            0x00000840        0x0 ./kernel/tkernel/cpuctl.o
- D_1            0x00000840        0x0 ./kernel/tkernel/device.o
- D_1            0x00000840        0x0 ./kernel/tkernel/deviceio.o
- D_1            0x00000840        0x0 ./kernel/tkernel/eventflag.o
- D_1            0x00000840        0x0 ./kernel/tkernel/int.o
- D_1            0x00000840        0x0 ./kernel/tkernel/klock.o
- D_1            0x00000840        0x0 ./kernel/tkernel/mailbox.o
- D_1            0x00000840        0x0 ./kernel/tkernel/memory.o
- D_1            0x00000840        0x0 ./kernel/tkernel/mempfix.o
- D_1            0x00000840        0x0 ./kernel/tkernel/mempool.o
- D_1            0x00000840        0x0 ./kernel/tkernel/messagebuf.o
- D_1            0x00000840        0x0 ./kernel/tkernel/misc_calls.o
- D_1            0x00000840        0x0 ./kernel/tkernel/mutex.o
- D_1            0x00000840        0x0 ./kernel/tkernel/objname.o
- D_1            0x00000840        0x0 ./kernel/tkernel/power.o
- D_1            0x00000840        0x0 ./kernel/tkernel/rendezvous.o
- D_1            0x00000840        0x0 ./kernel/tkernel/semaphore.o
- D_1            0x00000840        0x0 ./kernel/tkernel/task.o
- D_1            0x00000840        0x0 ./kernel/tkernel/task_manage.o
- D_1            0x00000840        0x0 ./kernel/tkernel/task_sync.o
- D_1            0x00000840        0x0 ./kernel/tkernel/time_calls.o
- D_1            0x00000840        0x0 ./kernel/tkernel/timer.o
- D_1            0x00000840        0x0 ./kernel/tkernel/tkinit.o
- D_1            0x00000840        0x0 ./kernel/tkernel/wait.o
- D_1            0x00000840        0x0 ./kernel/sysinit/sysinit.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/rtb_rx65n/devinit.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/rtb_rx65n/power_save.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/nucleo_l476/devinit.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/nucleo_l476/hw_setting.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/nucleo_l476/power_save.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/nucleo_h723/devinit.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/nucleo_h723/hw_setting.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/nucleo_h723/power_save.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_stm32l4/devinit.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_stm32l4/hw_setting.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_stm32l4/power_save.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_rza2m/devinit.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_rza2m/hw_setting.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_rza2m/power_save.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_rx231/devinit.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_rx231/hw_setting.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_rx231/power_save.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_m367/devinit.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_m367/hw_setting.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/iote_m367/power_save.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rza2m/sf_boot.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rx231/cpu_clock.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rx231/hllint_ent.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7m/dispatch.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/dispatch.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_entry.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/int_asm.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_hdl.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
- D_1            0x00000840        0x0 ./kernel/sysdepend/cpu/core/armv7a/vector_tbl.o
- D_1            0x00000840        0x0 ./kernel/inittask/inittask.o
- D_1            0x00000840        0x0 ./device/ser/sysdepend/tx03_m367/ser_m367.o
- D_1            0x00000840        0x0 ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
- D_1            0x00000840        0x0 ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
- D_1            0x00000840        0x0 ./device/ser/sysdepend/rza2m/ser_rza2m.o
- D_1            0x00000840        0x0 ./device/ser/sysdepend/rx65n/ser_rx65n.o
- D_1            0x00000840        0x0 ./device/ser/sysdepend/rx231/ser_rx231.o
- D_1            0x00000840        0x0 ./device/ser/ser.o
- D_1            0x00000840        0x0 ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
- D_1            0x00000840        0x0 ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
- D_1            0x00000840        0x0 ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
- D_1            0x00000840        0x0 ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
- D_1            0x00000840        0x0 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
- D_1            0x00000840        0x0 ./device/i2c/sysdepend/rx231/i2c_rx231.o
- D_1            0x00000840        0x0 ./device/i2c/i2c.o
- D_1            0x00000840        0x0 ./device/common/drvif/msdrvif.o
- D_1            0x00000840        0x0 ./device/adc/sysdepend/tx03_m367/adc_m367.o
- D_1            0x00000840        0x0 ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
- D_1            0x00000840        0x0 ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
- D_1            0x00000840        0x0 ./device/adc/sysdepend/rza2m/adc_rza2m.o
- D_1            0x00000840        0x0 ./device/adc/sysdepend/rx65n/adc_rx65n.o
- D_1            0x00000840        0x0 ./device/adc/sysdepend/rx231/adc_rx231.o
- D_1            0x00000840        0x0 ./device/adc/adc.o
- D_1            0x00000840        0x0 ./app_program/app_main.o
+ D_1            0x000009f8        0x0 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
+ D_1            0x000009f8        0x0 ./lib/libtm/sysdepend/nucleo_h723/tm_com.o
+ D_1            0x000009f8        0x0 ./lib/libtm/sysdepend/no_device/tm_com.o
+ D_1            0x000009f8        0x0 ./lib/libtm/sysdepend/iote_stm32l4/tm_com.o
+ D_1            0x000009f8        0x0 ./lib/libtm/sysdepend/iote_rza2m/tm_com.o
+ D_1            0x000009f8        0x0 ./lib/libtm/sysdepend/iote_rx231/tm_com.o
+ D_1            0x000009f8        0x0 ./lib/libtm/sysdepend/iote_m367/tm_com.o
+ D_1            0x000009f8        0x0 ./lib/libtm/libtm.o
+ D_1            0x000009f8        0x0 ./lib/libtm/libtm_printf.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/tx03_m367/int_m367.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/tx03_m367/ptimer_m367.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/stm32l4/int_stm32l4.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/stm32l4/ptimer_stm32l4.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/stm32h7/int_stm32h7.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/stm32h7/ptimer_stm32h7.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/rza2m/ptimer_rza2m.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/rx65n/int_rx65n.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/rx65n/ipr_rx65n.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/rx65n/ptimer_rx65n.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/rx231/int_rx231.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/rx231/ipr_rx231.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/rx231/ptimer_rx231.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/core/rxv2/wusec_rvx2.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/core/armv7m/int_armv7m.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/core/armv7m/wusec_armv7m.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/core/armv7a/int_armv7a.o
+ D_1            0x000009f8        0x0 ./lib/libtk/sysdepend/cpu/core/armv7a/wusec_armv7a.o
+ D_1            0x000009f8        0x0 ./lib/libtk/fastlock.o
+ D_1            0x000009f8        0x0 ./lib/libtk/fastmlock.o
+ D_1            0x000009f8        0x0 ./lib/libtk/kmalloc.o
+ D_1            0x000009f8        0x0 ./kernel/usermain/usermain.o
+ D_1            0x000009f8        0x0 ./kernel/tstdlib/bitop.o
+ D_1            0x000009f8        0x0 ./kernel/tstdlib/string.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/cpuctl.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/device.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/deviceio.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/eventflag.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/int.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/klock.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/mailbox.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/memory.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/mempfix.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/mempool.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/messagebuf.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/misc_calls.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/mutex.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/objname.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/power.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/rendezvous.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/semaphore.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/task.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/task_manage.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/task_sync.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/time_calls.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/timer.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/tkinit.o
+ D_1            0x000009f8        0x0 ./kernel/tkernel/wait.o
+ D_1            0x000009f8        0x0 ./kernel/sysinit/sysinit.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/rtb_rx65n/devinit.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/rtb_rx65n/power_save.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/nucleo_l476/devinit.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/nucleo_l476/hw_setting.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/nucleo_l476/power_save.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/nucleo_h723/devinit.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/nucleo_h723/hw_setting.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/nucleo_h723/power_save.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_stm32l4/devinit.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_stm32l4/hw_setting.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_stm32l4/power_save.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_rza2m/devinit.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_rza2m/hw_setting.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_rza2m/power_save.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_rx231/devinit.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_rx231/hw_setting.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_rx231/power_save.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_m367/devinit.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_m367/hw_setting.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/iote_m367/power_save.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rza2m/sf_boot.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rx231/cpu_clock.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rx231/hllint_ent.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7m/dispatch.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/dispatch.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_entry.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/int_asm.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_hdl.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
+ D_1            0x000009f8        0x0 ./kernel/sysdepend/cpu/core/armv7a/vector_tbl.o
+ D_1            0x000009f8        0x0 ./kernel/inittask/inittask.o
+ D_1            0x000009f8        0x0 ./device/ser/sysdepend/tx03_m367/ser_m367.o
+ D_1            0x000009f8        0x0 ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
+ D_1            0x000009f8        0x0 ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
+ D_1            0x000009f8        0x0 ./device/ser/sysdepend/rza2m/ser_rza2m.o
+ D_1            0x000009f8        0x0 ./device/ser/sysdepend/rx65n/ser_rx65n.o
+ D_1            0x000009f8        0x0 ./device/ser/sysdepend/rx231/ser_rx231.o
+ D_1            0x000009f8        0x0 ./device/ser/ser.o
+ D_1            0x000009f8        0x0 ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
+ D_1            0x000009f8        0x0 ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
+ D_1            0x000009f8        0x0 ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
+ D_1            0x000009f8        0x0 ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
+ D_1            0x000009f8        0x0 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+ D_1            0x000009f8        0x0 ./device/i2c/sysdepend/rx231/i2c_rx231.o
+ D_1            0x000009f8        0x0 ./device/i2c/i2c.o
+ D_1            0x000009f8        0x0 ./device/common/drvif/msdrvif.o
+ D_1            0x000009f8        0x0 ./device/adc/sysdepend/tx03_m367/adc_m367.o
+ D_1            0x000009f8        0x0 ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
+ D_1            0x000009f8        0x0 ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
+ D_1            0x000009f8        0x0 ./device/adc/sysdepend/rza2m/adc_rza2m.o
+ D_1            0x000009f8        0x0 ./device/adc/sysdepend/rx65n/adc_rx65n.o
+ D_1            0x000009f8        0x0 ./device/adc/sysdepend/rx231/adc_rx231.o
+ D_1            0x000009f8        0x0 ./device/adc/adc.o
+ D_1            0x000009f8        0x0 ./app_program/app_main.o
+ D_1            0x000009f8        0x0 ./app_program/gesture.o
  *(D_2)
-                0x00000840                __data_end = .
+                0x000009f8                __data_end = .
 
 .gcc_exc
  *(.gcc_exc)
 
-.bss            0x00000840     0x23f4 load address 0xfff8d410
-                0x00000840                __bss_start = .
-                0x00000840                PROVIDE (__noinit_start, .)
+.bss            0x000009f8     0x2478 load address 0xfff8f1dc
+                0x000009f8                __bss_start = .
+                0x000009f8                PROVIDE (__noinit_start, .)
  *(.noinit)
- .noinit        0x00000840      0x264 ./kernel/tkernel/device.o
-                0x00000840                knl_DevMgrLock
-                0x00000850                knl_DefaultIDev
-                0x00000854                knl_DevCBtbl
-                0x00000a94                knl_UsedDevCB
-                0x00000a9c                knl_FreeDevCB
- .noinit        0x00000aa4      0x75c ./kernel/tkernel/deviceio.o
-                0x00000aa4                knl_OpnCBtbl
-                0x00000ea4                knl_FreeOpnCB
-                0x00000eac                knl_ReqCBtbl
-                0x000011ec                knl_FreeReqCB
-                0x000011f4                knl_resource_control_block
- .noinit        0x00001200      0x188 ./kernel/tkernel/eventflag.o
-                0x00001200                knl_flgcb_table
-                0x00001380                knl_free_flgcb
- .noinit        0x00001388       0xe8 ./kernel/tkernel/mailbox.o
-                0x00001388                knl_mbxcb_table
-                0x00001468                knl_free_mbxcb
- .noinit        0x00001470        0x4 ./kernel/tkernel/memory.o
-                0x00001470                knl_imacb
- .noinit        0x00001474      0x1c8 ./kernel/tkernel/mempfix.o
-                0x00001474                knl_mpfcb_table
-                0x00001634                knl_free_mpfcb
- .noinit        0x0000163c       0xd8 ./kernel/tkernel/mempool.o
-                0x0000163c                knl_mplcb_table
-                0x0000170c                knl_free_mplcb
- .noinit        0x00001714      0x1a8 ./kernel/tkernel/messagebuf.o
-                0x00001714                knl_mbfcb_table
-                0x000018b4                knl_free_mbfcb
- .noinit        0x000018bc       0x88 ./kernel/tkernel/mutex.o
-                0x000018bc                knl_mtxcb_table
-                0x0000193c                knl_free_mtxcb
- .noinit        0x00001944      0x1c8 ./kernel/tkernel/semaphore.o
-                0x00001944                knl_semcb_table
-                0x00001b04                knl_free_semcb
- .noinit        0x00001b0c      0xe24 ./kernel/tkernel/task.o
-                0x00001b0c                knl_dispatch_disabled
-                0x00001b10                knl_ctxtsk
-                0x00001b14                knl_schedtsk
-                0x00001b18                knl_ready_queue
-                0x00001c28                knl_tcb_table
-                0x00002928                knl_free_tcb
- .noinit        0x00002930      0x1d0 ./kernel/tkernel/time_calls.o
-                0x00002930                knl_cyccb_table
-                0x000029d0                knl_free_cyccb
-                0x000029d8                knl_almcb_table
-                0x00002af8                knl_free_almcb
- .noinit        0x00002b00       0x18 ./kernel/tkernel/timer.o
-                0x00002b00                knl_current_time
-                0x00002b08                knl_real_time_ofs
-                0x00002b10                knl_timer_queue
- .noinit        0x00002b18      0x100 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
-                0x00002b18                knl_tmp_stack
-                0x00002c18                PROVIDE (__noinit_end, .)
+ .noinit        0x000009f8      0x264 ./kernel/tkernel/device.o
+                0x000009f8                knl_DevMgrLock
+                0x00000a08                knl_DefaultIDev
+                0x00000a0c                knl_DevCBtbl
+                0x00000c4c                knl_UsedDevCB
+                0x00000c54                knl_FreeDevCB
+ .noinit        0x00000c5c      0x75c ./kernel/tkernel/deviceio.o
+                0x00000c5c                knl_OpnCBtbl
+                0x0000105c                knl_FreeOpnCB
+                0x00001064                knl_ReqCBtbl
+                0x000013a4                knl_FreeReqCB
+                0x000013ac                knl_resource_control_block
+ .noinit        0x000013b8      0x188 ./kernel/tkernel/eventflag.o
+                0x000013b8                knl_flgcb_table
+                0x00001538                knl_free_flgcb
+ .noinit        0x00001540       0xe8 ./kernel/tkernel/mailbox.o
+                0x00001540                knl_mbxcb_table
+                0x00001620                knl_free_mbxcb
+ .noinit        0x00001628        0x4 ./kernel/tkernel/memory.o
+                0x00001628                knl_imacb
+ .noinit        0x0000162c      0x1c8 ./kernel/tkernel/mempfix.o
+                0x0000162c                knl_mpfcb_table
+                0x000017ec                knl_free_mpfcb
+ .noinit        0x000017f4       0xd8 ./kernel/tkernel/mempool.o
+                0x000017f4                knl_mplcb_table
+                0x000018c4                knl_free_mplcb
+ .noinit        0x000018cc      0x1a8 ./kernel/tkernel/messagebuf.o
+                0x000018cc                knl_mbfcb_table
+                0x00001a6c                knl_free_mbfcb
+ .noinit        0x00001a74       0x88 ./kernel/tkernel/mutex.o
+                0x00001a74                knl_mtxcb_table
+                0x00001af4                knl_free_mtxcb
+ .noinit        0x00001afc      0x1c8 ./kernel/tkernel/semaphore.o
+                0x00001afc                knl_semcb_table
+                0x00001cbc                knl_free_semcb
+ .noinit        0x00001cc4      0xe24 ./kernel/tkernel/task.o
+                0x00001cc4                knl_dispatch_disabled
+                0x00001cc8                knl_ctxtsk
+                0x00001ccc                knl_schedtsk
+                0x00001cd0                knl_ready_queue
+                0x00001de0                knl_tcb_table
+                0x00002ae0                knl_free_tcb
+ .noinit        0x00002ae8      0x1d0 ./kernel/tkernel/time_calls.o
+                0x00002ae8                knl_cyccb_table
+                0x00002b88                knl_free_cyccb
+                0x00002b90                knl_almcb_table
+                0x00002cb0                knl_free_almcb
+ .noinit        0x00002cb8       0x18 ./kernel/tkernel/timer.o
+                0x00002cb8                knl_current_time
+                0x00002cc0                knl_real_time_ofs
+                0x00002cc8                knl_timer_queue
+ .noinit        0x00002cd0      0x100 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+                0x00002cd0                knl_tmp_stack
+                0x00002dd0                PROVIDE (__noinit_end, .)
  *(.bss)
  *(.bss.**)
  *(COMMON)
- COMMON         0x00002c18        0x8 ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
-                0x00002c18                knl_lowmem_top
-                0x00002c1c                knl_lowmem_limit
- COMMON         0x00002c20        0x4 ./app_program/app_main.o
-                0x00002c20                flgid1
+ COMMON         0x00002dd0        0x8 ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+                0x00002dd0                knl_lowmem_top
+                0x00002dd4                knl_lowmem_limit
+ COMMON         0x00002dd8       0x60 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+                0x00002dd8                ll_devcb
+ COMMON         0x00002e38        0x4 ./app_program/app_main.o
+                0x00002e38                flgid1
  *(B)
- B              0x00002c24        0x4 ./kernel/tkernel/deviceio.o
-                0x00002c24                knl_DisSusCnt
- B              0x00002c28        0x4 ./kernel/tkernel/power.o
-                0x00002c28                knl_lowpow_discnt
- B              0x00002c2c        0x4 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
-                0x00002c2c                knl_taskindp
- B              0x00002c30        0x4 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
-                0x00002c30                knl_int_nest
+ B              0x00002e3c        0x4 ./kernel/tkernel/deviceio.o
+                0x00002e3c                knl_DisSusCnt
+ B              0x00002e40        0x4 ./kernel/tkernel/power.o
+                0x00002e40                knl_lowpow_discnt
+ B              0x00002e44        0x4 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+                0x00002e44                knl_taskindp
+ B              0x00002e48        0x4 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+                0x00002e48                knl_int_nest
  *(B_1)
- B_1            0x00002c34        0x0 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
- B_1            0x00002c34        0x0 ./lib/libtm/sysdepend/nucleo_h723/tm_com.o
- B_1            0x00002c34        0x0 ./lib/libtm/sysdepend/no_device/tm_com.o
- B_1            0x00002c34        0x0 ./lib/libtm/sysdepend/iote_stm32l4/tm_com.o
- B_1            0x00002c34        0x0 ./lib/libtm/sysdepend/iote_rza2m/tm_com.o
- B_1            0x00002c34        0x0 ./lib/libtm/sysdepend/iote_rx231/tm_com.o
- B_1            0x00002c34        0x0 ./lib/libtm/sysdepend/iote_m367/tm_com.o
- B_1            0x00002c34        0x0 ./lib/libtm/libtm.o
- B_1            0x00002c34        0x0 ./lib/libtm/libtm_printf.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/tx03_m367/int_m367.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/tx03_m367/ptimer_m367.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/stm32l4/int_stm32l4.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/stm32l4/ptimer_stm32l4.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/stm32h7/int_stm32h7.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/stm32h7/ptimer_stm32h7.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/rza2m/ptimer_rza2m.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/rx65n/int_rx65n.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/rx65n/ipr_rx65n.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/rx65n/ptimer_rx65n.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/rx231/int_rx231.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/rx231/ipr_rx231.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/rx231/ptimer_rx231.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/core/rxv2/wusec_rvx2.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/core/armv7m/int_armv7m.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/core/armv7m/wusec_armv7m.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/core/armv7a/int_armv7a.o
- B_1            0x00002c34        0x0 ./lib/libtk/sysdepend/cpu/core/armv7a/wusec_armv7a.o
- B_1            0x00002c34        0x0 ./lib/libtk/fastlock.o
- B_1            0x00002c34        0x0 ./lib/libtk/fastmlock.o
- B_1            0x00002c34        0x0 ./lib/libtk/kmalloc.o
- B_1            0x00002c34        0x0 ./kernel/usermain/usermain.o
- B_1            0x00002c34        0x0 ./kernel/tstdlib/bitop.o
- B_1            0x00002c34        0x0 ./kernel/tstdlib/string.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/cpuctl.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/device.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/deviceio.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/eventflag.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/int.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/klock.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/mailbox.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/memory.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/mempfix.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/mempool.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/messagebuf.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/misc_calls.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/mutex.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/objname.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/power.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/rendezvous.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/semaphore.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/task.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/task_manage.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/task_sync.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/time_calls.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/timer.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/tkinit.o
- B_1            0x00002c34        0x0 ./kernel/tkernel/wait.o
- B_1            0x00002c34        0x0 ./kernel/sysinit/sysinit.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/rtb_rx65n/devinit.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/rtb_rx65n/power_save.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/nucleo_l476/devinit.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/nucleo_l476/hw_setting.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/nucleo_l476/power_save.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/nucleo_h723/devinit.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/nucleo_h723/hw_setting.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/nucleo_h723/power_save.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_stm32l4/devinit.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_stm32l4/hw_setting.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_stm32l4/power_save.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_rza2m/devinit.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_rza2m/hw_setting.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_rza2m/power_save.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_rx231/devinit.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_rx231/hw_setting.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_rx231/power_save.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_m367/devinit.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_m367/hw_setting.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/iote_m367/power_save.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rza2m/sf_boot.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rx231/cpu_clock.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rx231/hllint_ent.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7m/dispatch.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/dispatch.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_entry.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/int_asm.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_hdl.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
- B_1            0x00002c34        0x0 ./kernel/sysdepend/cpu/core/armv7a/vector_tbl.o
- B_1            0x00002c34        0x0 ./kernel/inittask/inittask.o
- B_1            0x00002c34        0x0 ./device/ser/sysdepend/tx03_m367/ser_m367.o
- B_1            0x00002c34        0x0 ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
- B_1            0x00002c34        0x0 ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
- B_1            0x00002c34        0x0 ./device/ser/sysdepend/rza2m/ser_rza2m.o
- B_1            0x00002c34        0x0 ./device/ser/sysdepend/rx65n/ser_rx65n.o
- B_1            0x00002c34        0x0 ./device/ser/sysdepend/rx231/ser_rx231.o
- B_1            0x00002c34        0x0 ./device/ser/ser.o
- B_1            0x00002c34        0x0 ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
- B_1            0x00002c34        0x0 ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
- B_1            0x00002c34        0x0 ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
- B_1            0x00002c34        0x0 ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
- B_1            0x00002c34        0x0 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
- B_1            0x00002c34        0x0 ./device/i2c/sysdepend/rx231/i2c_rx231.o
- B_1            0x00002c34        0x0 ./device/i2c/i2c.o
- B_1            0x00002c34        0x0 ./device/common/drvif/msdrvif.o
- B_1            0x00002c34        0x0 ./device/adc/sysdepend/tx03_m367/adc_m367.o
- B_1            0x00002c34        0x0 ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
- B_1            0x00002c34        0x0 ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
- B_1            0x00002c34        0x0 ./device/adc/sysdepend/rza2m/adc_rza2m.o
- B_1            0x00002c34        0x0 ./device/adc/sysdepend/rx65n/adc_rx65n.o
- B_1            0x00002c34        0x0 ./device/adc/sysdepend/rx231/adc_rx231.o
- B_1            0x00002c34        0x0 ./device/adc/adc.o
- B_1            0x00002c34        0x0 ./app_program/app_main.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/sysdepend/nucleo_h723/tm_com.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/sysdepend/no_device/tm_com.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/sysdepend/iote_stm32l4/tm_com.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/sysdepend/iote_rza2m/tm_com.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/sysdepend/iote_rx231/tm_com.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/sysdepend/iote_m367/tm_com.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/libtm.o
+ B_1            0x00002e4c        0x0 ./lib/libtm/libtm_printf.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/tx03_m367/int_m367.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/tx03_m367/ptimer_m367.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/stm32l4/int_stm32l4.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/stm32l4/ptimer_stm32l4.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/stm32h7/int_stm32h7.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/stm32h7/ptimer_stm32h7.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/rza2m/ptimer_rza2m.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/rx65n/int_rx65n.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/rx65n/ipr_rx65n.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/rx65n/ptimer_rx65n.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/rx231/int_rx231.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/rx231/ipr_rx231.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/rx231/ptimer_rx231.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/core/rxv2/int_rxv2.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/core/rxv2/wusec_rvx2.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/core/armv7m/int_armv7m.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/core/armv7m/wusec_armv7m.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/core/armv7a/int_armv7a.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/sysdepend/cpu/core/armv7a/wusec_armv7a.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/fastlock.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/fastmlock.o
+ B_1            0x00002e4c        0x0 ./lib/libtk/kmalloc.o
+ B_1            0x00002e4c        0x0 ./kernel/usermain/usermain.o
+ B_1            0x00002e4c        0x0 ./kernel/tstdlib/bitop.o
+ B_1            0x00002e4c        0x0 ./kernel/tstdlib/string.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/cpuctl.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/device.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/deviceio.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/eventflag.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/int.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/klock.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/mailbox.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/memory.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/mempfix.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/mempool.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/messagebuf.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/misc_calls.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/mutex.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/objname.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/power.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/rendezvous.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/semaphore.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/task.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/task_manage.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/task_sync.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/time_calls.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/timer.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/tkinit.o
+ B_1            0x00002e4c        0x0 ./kernel/tkernel/wait.o
+ B_1            0x00002e4c        0x0 ./kernel/sysinit/sysinit.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/rtb_rx65n/devinit.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/rtb_rx65n/power_save.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/nucleo_l476/devinit.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/nucleo_l476/hw_setting.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/nucleo_l476/power_save.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/nucleo_h723/devinit.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/nucleo_h723/hw_setting.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/nucleo_h723/power_save.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_stm32l4/devinit.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_stm32l4/hw_setting.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_stm32l4/power_save.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_rza2m/devinit.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_rza2m/hw_setting.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_rza2m/power_save.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_rx231/devinit.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_rx231/hw_setting.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_rx231/power_save.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_m367/devinit.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_m367/hw_setting.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/iote_m367/power_save.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rza2m/sf_boot.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rx231/cpu_clock.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rx231/hllint_ent.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7m/dispatch.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/dispatch.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_entry.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/int_asm.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_hdl.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
+ B_1            0x00002e4c        0x0 ./kernel/sysdepend/cpu/core/armv7a/vector_tbl.o
+ B_1            0x00002e4c        0x0 ./kernel/inittask/inittask.o
+ B_1            0x00002e4c        0x0 ./device/ser/sysdepend/tx03_m367/ser_m367.o
+ B_1            0x00002e4c        0x0 ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
+ B_1            0x00002e4c        0x0 ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
+ B_1            0x00002e4c        0x0 ./device/ser/sysdepend/rza2m/ser_rza2m.o
+ B_1            0x00002e4c        0x0 ./device/ser/sysdepend/rx65n/ser_rx65n.o
+ B_1            0x00002e4c        0x0 ./device/ser/sysdepend/rx231/ser_rx231.o
+ B_1            0x00002e4c        0x0 ./device/ser/ser.o
+ B_1            0x00002e4c        0x0 ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
+ B_1            0x00002e4c        0x0 ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
+ B_1            0x00002e4c        0x0 ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
+ B_1            0x00002e4c        0x0 ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
+ B_1            0x00002e4c        0x0 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+ B_1            0x00002e4c        0x0 ./device/i2c/sysdepend/rx231/i2c_rx231.o
+ B_1            0x00002e4c        0xc ./device/i2c/i2c.o
+ B_1            0x00002e58        0x0 ./device/common/drvif/msdrvif.o
+ B_1            0x00002e58        0x0 ./device/adc/sysdepend/tx03_m367/adc_m367.o
+ B_1            0x00002e58        0x0 ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
+ B_1            0x00002e58        0x0 ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
+ B_1            0x00002e58        0x0 ./device/adc/sysdepend/rza2m/adc_rza2m.o
+ B_1            0x00002e58       0x10 ./device/adc/sysdepend/rx65n/adc_rx65n.o
+ B_1            0x00002e68        0x0 ./device/adc/sysdepend/rx231/adc_rx231.o
+ B_1            0x00002e68        0x8 ./device/adc/adc.o
+ B_1            0x00002e70        0x0 ./app_program/app_main.o
+ B_1            0x00002e70        0x0 ./app_program/gesture.o
  *(B_2)
-                0x00002c34                __bss_end = .
-                0x00002c34                _end = .
+                0x00002e70                __bss_end = .
+                0x00002e70                _end = .
 OUTPUT(dev_bsp_b2_tbrx65n.elf elf32-rx-le)
 
-.debug_info     0x00000000    0x1fe7e
+.debug_info     0x00000000    0x21b25
  .debug_info    0x00000000       0x64 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
  .debug_info    0x00000064       0x64 ./lib/libtm/sysdepend/nucleo_h723/tm_com.o
  .debug_info    0x000000c8      0x110 ./lib/libtm/sysdepend/no_device/tm_com.o
@@ -1363,34 +1398,35 @@ OUTPUT(dev_bsp_b2_tbrx65n.elf elf32-rx-le)
  .debug_info    0x00015dfb      0xca1 ./kernel/tkernel/wait.o
  .debug_info    0x00016a9c      0x7ed ./kernel/sysinit/sysinit.o
  .debug_info    0x00017289      0x233 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
- .debug_info    0x000174bc      0x81d ./kernel/sysdepend/rtb_rx65n/devinit.o
- .debug_info    0x00017cd9      0x9b3 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
- .debug_info    0x0001868c      0x7ee ./kernel/sysdepend/rtb_rx65n/power_save.o
- .debug_info    0x00018e7a      0x795 ./kernel/sysdepend/nucleo_l476/power_save.o
- .debug_info    0x0001960f      0x795 ./kernel/sysdepend/nucleo_h723/power_save.o
- .debug_info    0x00019da4      0x795 ./kernel/sysdepend/iote_rx231/power_save.o
- .debug_info    0x0001a539      0x795 ./kernel/sysdepend/iote_m367/power_save.o
- .debug_info    0x0001acce       0x8a ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
- .debug_info    0x0001ad58      0x7cf ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
- .debug_info    0x0001b527      0x7cf ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
- .debug_info    0x0001bcf6      0xa1c ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
- .debug_info    0x0001c712       0x8c ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
- .debug_info    0x0001c79e      0x81d ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
- .debug_info    0x0001cfbb       0x8b ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
- .debug_info    0x0001d046      0x84b ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
- .debug_info    0x0001d891       0x8d ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
- .debug_info    0x0001d91e      0x89a ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
- .debug_info    0x0001e1b8      0x810 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
- .debug_info    0x0001e9c8      0x82b ./kernel/inittask/inittask.o
- .debug_info    0x0001f1f3       0x6b ./device/ser/ser.o
- .debug_info    0x0001f25e       0x6b ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
- .debug_info    0x0001f2c9       0x6b ./device/i2c/i2c.o
- .debug_info    0x0001f334      0x72c ./device/common/drvif/msdrvif.o
- .debug_info    0x0001fa60       0x6b ./device/adc/sysdepend/rx65n/adc_rx65n.o
- .debug_info    0x0001facb       0x6b ./device/adc/adc.o
- .debug_info    0x0001fb36      0x348 ./app_program/app_main.o
+ .debug_info    0x000174bc      0x820 ./kernel/sysdepend/rtb_rx65n/devinit.o
+ .debug_info    0x00017cdc      0x9b3 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+ .debug_info    0x0001868f      0x7ee ./kernel/sysdepend/rtb_rx65n/power_save.o
+ .debug_info    0x00018e7d      0x795 ./kernel/sysdepend/nucleo_l476/power_save.o
+ .debug_info    0x00019612      0x795 ./kernel/sysdepend/nucleo_h723/power_save.o
+ .debug_info    0x00019da7      0x795 ./kernel/sysdepend/iote_rx231/power_save.o
+ .debug_info    0x0001a53c      0x795 ./kernel/sysdepend/iote_m367/power_save.o
+ .debug_info    0x0001acd1       0x8a ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
+ .debug_info    0x0001ad5b      0x7cf ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
+ .debug_info    0x0001b52a      0x7cf ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
+ .debug_info    0x0001bcf9      0xa1c ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+ .debug_info    0x0001c715       0x8c ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
+ .debug_info    0x0001c7a1      0x81d ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+ .debug_info    0x0001cfbe       0x8b ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
+ .debug_info    0x0001d049      0x84b ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+ .debug_info    0x0001d894       0x8d ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
+ .debug_info    0x0001d921      0x89a ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+ .debug_info    0x0001e1bb      0x810 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
+ .debug_info    0x0001e9cb      0x82b ./kernel/inittask/inittask.o
+ .debug_info    0x0001f1f6       0x6b ./device/ser/ser.o
+ .debug_info    0x0001f261      0x72e ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+ .debug_info    0x0001f98f      0x950 ./device/i2c/i2c.o
+ .debug_info    0x000202df      0x72c ./device/common/drvif/msdrvif.o
+ .debug_info    0x00020a0b      0x47a ./device/adc/sysdepend/rx65n/adc_rx65n.o
+ .debug_info    0x00020e85      0x726 ./device/adc/adc.o
+ .debug_info    0x000215ab      0x3bb ./app_program/app_main.o
+ .debug_info    0x00021966      0x1bf ./app_program/gesture.o
 
-.debug_abbrev   0x00000000     0x6bd6
+.debug_abbrev   0x00000000     0x74f4
  .debug_abbrev  0x00000000       0x26 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
  .debug_abbrev  0x00000026       0x26 ./lib/libtm/sysdepend/nucleo_h723/tm_com.o
  .debug_abbrev  0x0000004c       0xa1 ./lib/libtm/sysdepend/no_device/tm_com.o
@@ -1437,34 +1473,35 @@ OUTPUT(dev_bsp_b2_tbrx65n.elf elf32-rx-le)
  .debug_abbrev  0x00004a63      0x26b ./kernel/tkernel/wait.o
  .debug_abbrev  0x00004cce      0x1b7 ./kernel/sysinit/sysinit.o
  .debug_abbrev  0x00004e85      0x119 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
- .debug_abbrev  0x00004f9e      0x1aa ./kernel/sysdepend/rtb_rx65n/devinit.o
- .debug_abbrev  0x00005148      0x221 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
- .debug_abbrev  0x00005369      0x17b ./kernel/sysdepend/rtb_rx65n/power_save.o
- .debug_abbrev  0x000054e4      0x15d ./kernel/sysdepend/nucleo_l476/power_save.o
- .debug_abbrev  0x00005641      0x15d ./kernel/sysdepend/nucleo_h723/power_save.o
- .debug_abbrev  0x0000579e      0x15d ./kernel/sysdepend/iote_rx231/power_save.o
- .debug_abbrev  0x000058fb      0x15d ./kernel/sysdepend/iote_m367/power_save.o
- .debug_abbrev  0x00005a58       0x14 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
- .debug_abbrev  0x00005a6c      0x16a ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
- .debug_abbrev  0x00005bd6      0x16a ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
- .debug_abbrev  0x00005d40      0x1ea ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
- .debug_abbrev  0x00005f2a       0x14 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
- .debug_abbrev  0x00005f3e      0x1a8 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
- .debug_abbrev  0x000060e6       0x14 ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
- .debug_abbrev  0x000060fa      0x1b7 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
- .debug_abbrev  0x000062b1       0x14 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
- .debug_abbrev  0x000062c5      0x1d3 ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
- .debug_abbrev  0x00006498      0x170 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
- .debug_abbrev  0x00006608      0x1d5 ./kernel/inittask/inittask.o
- .debug_abbrev  0x000067dd       0x26 ./device/ser/ser.o
- .debug_abbrev  0x00006803       0x26 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
- .debug_abbrev  0x00006829       0x26 ./device/i2c/i2c.o
- .debug_abbrev  0x0000684f      0x204 ./device/common/drvif/msdrvif.o
- .debug_abbrev  0x00006a53       0x26 ./device/adc/sysdepend/rx65n/adc_rx65n.o
- .debug_abbrev  0x00006a79       0x26 ./device/adc/adc.o
- .debug_abbrev  0x00006a9f      0x137 ./app_program/app_main.o
+ .debug_abbrev  0x00004f9e      0x1ac ./kernel/sysdepend/rtb_rx65n/devinit.o
+ .debug_abbrev  0x0000514a      0x221 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+ .debug_abbrev  0x0000536b      0x17b ./kernel/sysdepend/rtb_rx65n/power_save.o
+ .debug_abbrev  0x000054e6      0x15d ./kernel/sysdepend/nucleo_l476/power_save.o
+ .debug_abbrev  0x00005643      0x15d ./kernel/sysdepend/nucleo_h723/power_save.o
+ .debug_abbrev  0x000057a0      0x15d ./kernel/sysdepend/iote_rx231/power_save.o
+ .debug_abbrev  0x000058fd      0x15d ./kernel/sysdepend/iote_m367/power_save.o
+ .debug_abbrev  0x00005a5a       0x14 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
+ .debug_abbrev  0x00005a6e      0x16a ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
+ .debug_abbrev  0x00005bd8      0x16a ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
+ .debug_abbrev  0x00005d42      0x1ea ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+ .debug_abbrev  0x00005f2c       0x14 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
+ .debug_abbrev  0x00005f40      0x1a8 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+ .debug_abbrev  0x000060e8       0x14 ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
+ .debug_abbrev  0x000060fc      0x1b7 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+ .debug_abbrev  0x000062b3       0x14 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
+ .debug_abbrev  0x000062c7      0x1d3 ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+ .debug_abbrev  0x0000649a      0x170 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
+ .debug_abbrev  0x0000660a      0x1d5 ./kernel/inittask/inittask.o
+ .debug_abbrev  0x000067df       0x26 ./device/ser/ser.o
+ .debug_abbrev  0x00006805      0x230 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+ .debug_abbrev  0x00006a35      0x281 ./device/i2c/i2c.o
+ .debug_abbrev  0x00006cb6      0x204 ./device/common/drvif/msdrvif.o
+ .debug_abbrev  0x00006eba      0x1d2 ./device/adc/sysdepend/rx65n/adc_rx65n.o
+ .debug_abbrev  0x0000708c      0x232 ./device/adc/adc.o
+ .debug_abbrev  0x000072be      0x148 ./app_program/app_main.o
+ .debug_abbrev  0x00007406       0xee ./app_program/gesture.o
 
-.debug_aranges  0x00000000      0x840
+.debug_aranges  0x00000000      0x880
  .debug_aranges
                 0x00000000       0x18 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
  .debug_aranges
@@ -1598,19 +1635,21 @@ OUTPUT(dev_bsp_b2_tbrx65n.elf elf32-rx-le)
  .debug_aranges
                 0x00000788       0x18 ./device/ser/ser.o
  .debug_aranges
-                0x000007a0       0x18 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+                0x000007a0       0x20 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
  .debug_aranges
-                0x000007b8       0x18 ./device/i2c/i2c.o
+                0x000007c0       0x20 ./device/i2c/i2c.o
  .debug_aranges
-                0x000007d0       0x20 ./device/common/drvif/msdrvif.o
+                0x000007e0       0x20 ./device/common/drvif/msdrvif.o
  .debug_aranges
-                0x000007f0       0x18 ./device/adc/sysdepend/rx65n/adc_rx65n.o
+                0x00000800       0x20 ./device/adc/sysdepend/rx65n/adc_rx65n.o
  .debug_aranges
-                0x00000808       0x18 ./device/adc/adc.o
+                0x00000820       0x20 ./device/adc/adc.o
  .debug_aranges
-                0x00000820       0x20 ./app_program/app_main.o
+                0x00000840       0x20 ./app_program/app_main.o
+ .debug_aranges
+                0x00000860       0x20 ./app_program/gesture.o
 
-.debug_line     0x00000000     0xc1e3
+.debug_line     0x00000000     0xd259
  .debug_line    0x00000000       0x1d ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
  .debug_line    0x0000001d       0x1d ./lib/libtm/sysdepend/nucleo_h723/tm_com.o
  .debug_line    0x0000003a       0xa3 ./lib/libtm/sysdepend/no_device/tm_com.o
@@ -1671,83 +1710,84 @@ OUTPUT(dev_bsp_b2_tbrx65n.elf elf32-rx-le)
  .debug_line    0x0000900e      0x3d7 ./kernel/tkernel/wait.o
  .debug_line    0x000093e5      0x24c ./kernel/sysinit/sysinit.o
  .debug_line    0x00009631      0x1e3 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
- .debug_line    0x00009814      0x246 ./kernel/sysdepend/rtb_rx65n/devinit.o
- .debug_line    0x00009a5a      0x361 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
- .debug_line    0x00009dbb      0x234 ./kernel/sysdepend/rtb_rx65n/power_save.o
- .debug_line    0x00009fef        0x0 ./kernel/sysdepend/nucleo_l476/devinit.o
- .debug_line    0x00009fef        0x0 ./kernel/sysdepend/nucleo_l476/hw_setting.o
- .debug_line    0x00009fef      0x1b8 ./kernel/sysdepend/nucleo_l476/power_save.o
- .debug_line    0x0000a1a7        0x0 ./kernel/sysdepend/nucleo_h723/devinit.o
- .debug_line    0x0000a1a7        0x0 ./kernel/sysdepend/nucleo_h723/hw_setting.o
- .debug_line    0x0000a1a7      0x1b8 ./kernel/sysdepend/nucleo_h723/power_save.o
- .debug_line    0x0000a35f        0x0 ./kernel/sysdepend/iote_stm32l4/devinit.o
- .debug_line    0x0000a35f        0x0 ./kernel/sysdepend/iote_stm32l4/hw_setting.o
- .debug_line    0x0000a35f        0x0 ./kernel/sysdepend/iote_stm32l4/power_save.o
- .debug_line    0x0000a35f        0x0 ./kernel/sysdepend/iote_rza2m/devinit.o
- .debug_line    0x0000a35f        0x0 ./kernel/sysdepend/iote_rza2m/hw_setting.o
- .debug_line    0x0000a35f        0x0 ./kernel/sysdepend/iote_rza2m/power_save.o
- .debug_line    0x0000a35f        0x0 ./kernel/sysdepend/iote_rx231/devinit.o
- .debug_line    0x0000a35f        0x0 ./kernel/sysdepend/iote_rx231/hw_setting.o
- .debug_line    0x0000a35f      0x1b8 ./kernel/sysdepend/iote_rx231/power_save.o
- .debug_line    0x0000a517        0x0 ./kernel/sysdepend/iote_m367/devinit.o
- .debug_line    0x0000a517        0x0 ./kernel/sysdepend/iote_m367/hw_setting.o
- .debug_line    0x0000a517      0x1b8 ./kernel/sysdepend/iote_m367/power_save.o
- .debug_line    0x0000a6cf        0x0 ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
- .debug_line    0x0000a6cf        0x0 ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
- .debug_line    0x0000a6cf        0x0 ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
- .debug_line    0x0000a6cf        0x0 ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
- .debug_line    0x0000a6cf        0x0 ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
- .debug_line    0x0000a6cf        0x0 ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
- .debug_line    0x0000a6cf        0x0 ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
- .debug_line    0x0000a6cf        0x0 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
- .debug_line    0x0000a6cf      0x159 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
- .debug_line    0x0000a828      0x230 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
- .debug_line    0x0000aa58      0x231 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
- .debug_line    0x0000ac89        0x0 ./kernel/sysdepend/cpu/rx231/cpu_clock.o
- .debug_line    0x0000ac89        0x0 ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
- .debug_line    0x0000ac89        0x0 ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
- .debug_line    0x0000ac89      0x368 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
- .debug_line    0x0000aff1       0x86 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
- .debug_line    0x0000b077      0x243 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
- .debug_line    0x0000b2ba       0x8d ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
- .debug_line    0x0000b347      0x283 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
- .debug_line    0x0000b5ca       0x63 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
- .debug_line    0x0000b62d      0x32a ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
- .debug_line    0x0000b957      0x23b ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
- .debug_line    0x0000bb92        0x0 ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
- .debug_line    0x0000bb92        0x0 ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
- .debug_line    0x0000bb92        0x0 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
- .debug_line    0x0000bb92        0x0 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
- .debug_line    0x0000bb92        0x0 ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
- .debug_line    0x0000bb92        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
- .debug_line    0x0000bb92        0x0 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
- .debug_line    0x0000bb92        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
- .debug_line    0x0000bb92      0x232 ./kernel/inittask/inittask.o
- .debug_line    0x0000bdc4        0x0 ./device/ser/sysdepend/tx03_m367/ser_m367.o
- .debug_line    0x0000bdc4        0x0 ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
- .debug_line    0x0000bdc4        0x0 ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
- .debug_line    0x0000bdc4        0x0 ./device/ser/sysdepend/rza2m/ser_rza2m.o
- .debug_line    0x0000bdc4        0x0 ./device/ser/sysdepend/rx65n/ser_rx65n.o
- .debug_line    0x0000bdc4        0x0 ./device/ser/sysdepend/rx231/ser_rx231.o
- .debug_line    0x0000bdc4       0x1d ./device/ser/ser.o
- .debug_line    0x0000bde1        0x0 ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
- .debug_line    0x0000bde1        0x0 ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
- .debug_line    0x0000bde1        0x0 ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
- .debug_line    0x0000bde1        0x0 ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
- .debug_line    0x0000bde1       0x1d ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
- .debug_line    0x0000bdfe        0x0 ./device/i2c/sysdepend/rx231/i2c_rx231.o
- .debug_line    0x0000bdfe       0x1d ./device/i2c/i2c.o
- .debug_line    0x0000be1b      0x201 ./device/common/drvif/msdrvif.o
- .debug_line    0x0000c01c        0x0 ./device/adc/sysdepend/tx03_m367/adc_m367.o
- .debug_line    0x0000c01c        0x0 ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
- .debug_line    0x0000c01c        0x0 ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
- .debug_line    0x0000c01c        0x0 ./device/adc/sysdepend/rza2m/adc_rza2m.o
- .debug_line    0x0000c01c       0x1d ./device/adc/sysdepend/rx65n/adc_rx65n.o
- .debug_line    0x0000c039        0x0 ./device/adc/sysdepend/rx231/adc_rx231.o
- .debug_line    0x0000c039       0x1d ./device/adc/adc.o
- .debug_line    0x0000c056      0x18d ./app_program/app_main.o
+ .debug_line    0x00009814      0x260 ./kernel/sysdepend/rtb_rx65n/devinit.o
+ .debug_line    0x00009a74      0x361 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+ .debug_line    0x00009dd5      0x234 ./kernel/sysdepend/rtb_rx65n/power_save.o
+ .debug_line    0x0000a009        0x0 ./kernel/sysdepend/nucleo_l476/devinit.o
+ .debug_line    0x0000a009        0x0 ./kernel/sysdepend/nucleo_l476/hw_setting.o
+ .debug_line    0x0000a009      0x1b8 ./kernel/sysdepend/nucleo_l476/power_save.o
+ .debug_line    0x0000a1c1        0x0 ./kernel/sysdepend/nucleo_h723/devinit.o
+ .debug_line    0x0000a1c1        0x0 ./kernel/sysdepend/nucleo_h723/hw_setting.o
+ .debug_line    0x0000a1c1      0x1b8 ./kernel/sysdepend/nucleo_h723/power_save.o
+ .debug_line    0x0000a379        0x0 ./kernel/sysdepend/iote_stm32l4/devinit.o
+ .debug_line    0x0000a379        0x0 ./kernel/sysdepend/iote_stm32l4/hw_setting.o
+ .debug_line    0x0000a379        0x0 ./kernel/sysdepend/iote_stm32l4/power_save.o
+ .debug_line    0x0000a379        0x0 ./kernel/sysdepend/iote_rza2m/devinit.o
+ .debug_line    0x0000a379        0x0 ./kernel/sysdepend/iote_rza2m/hw_setting.o
+ .debug_line    0x0000a379        0x0 ./kernel/sysdepend/iote_rza2m/power_save.o
+ .debug_line    0x0000a379        0x0 ./kernel/sysdepend/iote_rx231/devinit.o
+ .debug_line    0x0000a379        0x0 ./kernel/sysdepend/iote_rx231/hw_setting.o
+ .debug_line    0x0000a379      0x1b8 ./kernel/sysdepend/iote_rx231/power_save.o
+ .debug_line    0x0000a531        0x0 ./kernel/sysdepend/iote_m367/devinit.o
+ .debug_line    0x0000a531        0x0 ./kernel/sysdepend/iote_m367/hw_setting.o
+ .debug_line    0x0000a531      0x1b8 ./kernel/sysdepend/iote_m367/power_save.o
+ .debug_line    0x0000a6e9        0x0 ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
+ .debug_line    0x0000a6e9        0x0 ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
+ .debug_line    0x0000a6e9        0x0 ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
+ .debug_line    0x0000a6e9        0x0 ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
+ .debug_line    0x0000a6e9        0x0 ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
+ .debug_line    0x0000a6e9        0x0 ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
+ .debug_line    0x0000a6e9        0x0 ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
+ .debug_line    0x0000a6e9        0x0 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
+ .debug_line    0x0000a6e9      0x159 ./kernel/sysdepend/cpu/rx65n/hllint_ent.o
+ .debug_line    0x0000a842      0x230 ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
+ .debug_line    0x0000aa72      0x231 ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
+ .debug_line    0x0000aca3        0x0 ./kernel/sysdepend/cpu/rx231/cpu_clock.o
+ .debug_line    0x0000aca3        0x0 ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
+ .debug_line    0x0000aca3        0x0 ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
+ .debug_line    0x0000aca3      0x368 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+ .debug_line    0x0000b00b       0x86 ./kernel/sysdepend/cpu/core/rxv2/dispatch.o
+ .debug_line    0x0000b091      0x243 ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+ .debug_line    0x0000b2d4       0x8d ./kernel/sysdepend/cpu/core/rxv2/int_asm.o
+ .debug_line    0x0000b361      0x283 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+ .debug_line    0x0000b5e4       0x63 ./kernel/sysdepend/cpu/core/rxv2/reset_hdl.o
+ .debug_line    0x0000b647      0x32a ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+ .debug_line    0x0000b971      0x23b ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
+ .debug_line    0x0000bbac        0x0 ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
+ .debug_line    0x0000bbac        0x0 ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
+ .debug_line    0x0000bbac        0x0 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
+ .debug_line    0x0000bbac        0x0 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
+ .debug_line    0x0000bbac        0x0 ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
+ .debug_line    0x0000bbac        0x0 ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
+ .debug_line    0x0000bbac        0x0 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
+ .debug_line    0x0000bbac        0x0 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
+ .debug_line    0x0000bbac      0x232 ./kernel/inittask/inittask.o
+ .debug_line    0x0000bdde        0x0 ./device/ser/sysdepend/tx03_m367/ser_m367.o
+ .debug_line    0x0000bdde        0x0 ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
+ .debug_line    0x0000bdde        0x0 ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
+ .debug_line    0x0000bdde        0x0 ./device/ser/sysdepend/rza2m/ser_rza2m.o
+ .debug_line    0x0000bdde        0x0 ./device/ser/sysdepend/rx65n/ser_rx65n.o
+ .debug_line    0x0000bdde        0x0 ./device/ser/sysdepend/rx231/ser_rx231.o
+ .debug_line    0x0000bdde       0x1d ./device/ser/ser.o
+ .debug_line    0x0000bdfb        0x0 ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
+ .debug_line    0x0000bdfb        0x0 ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
+ .debug_line    0x0000bdfb        0x0 ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
+ .debug_line    0x0000bdfb        0x0 ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
+ .debug_line    0x0000bdfb      0x590 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+ .debug_line    0x0000c38b        0x0 ./device/i2c/sysdepend/rx231/i2c_rx231.o
+ .debug_line    0x0000c38b      0x364 ./device/i2c/i2c.o
+ .debug_line    0x0000c6ef      0x201 ./device/common/drvif/msdrvif.o
+ .debug_line    0x0000c8f0        0x0 ./device/adc/sysdepend/tx03_m367/adc_m367.o
+ .debug_line    0x0000c8f0        0x0 ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
+ .debug_line    0x0000c8f0        0x0 ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
+ .debug_line    0x0000c8f0        0x0 ./device/adc/sysdepend/rza2m/adc_rza2m.o
+ .debug_line    0x0000c8f0      0x472 ./device/adc/sysdepend/rx65n/adc_rx65n.o
+ .debug_line    0x0000cd62        0x0 ./device/adc/sysdepend/rx231/adc_rx231.o
+ .debug_line    0x0000cd62      0x25f ./device/adc/adc.o
+ .debug_line    0x0000cfc1      0x1a9 ./app_program/app_main.o
+ .debug_line    0x0000d16a       0xef ./app_program/gesture.o
 
-.debug_str      0x00000000     0x3aab
+.debug_str      0x00000000     0x3e0a
  .debug_str     0x00000000      0x135 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
                                 0x169 (size before relaxing)
  .debug_str     0x00000135       0x2c ./lib/libtm/sysdepend/nucleo_h723/tm_com.o
@@ -1818,198 +1858,200 @@ OUTPUT(dev_bsp_b2_tbrx65n.elf elf32-rx-le)
                                 0x516 (size before relaxing)
  .debug_str     0x00000dcf      0x129 ./kernel/tkernel/cpuctl.o
                                 0x5d9 (size before relaxing)
- .debug_str     0x00000ef8      0x379 ./kernel/tkernel/device.o
+ .debug_str     0x00000ef8      0x373 ./kernel/tkernel/device.o
                                 0x886 (size before relaxing)
- .debug_str     0x00001271      0x208 ./kernel/tkernel/deviceio.o
+ .debug_str     0x0000126b      0x208 ./kernel/tkernel/deviceio.o
                                 0x98d (size before relaxing)
- .debug_str     0x00001479      0x175 ./kernel/tkernel/eventflag.o
+ .debug_str     0x00001473      0x175 ./kernel/tkernel/eventflag.o
                                 0x6e8 (size before relaxing)
- .debug_str     0x000015ee       0x36 ./kernel/tkernel/int.o
+ .debug_str     0x000015e8       0x36 ./kernel/tkernel/int.o
                                 0x50a (size before relaxing)
- .debug_str     0x00001624       0xb0 ./kernel/tkernel/klock.o
+ .debug_str     0x0000161e       0xb0 ./kernel/tkernel/klock.o
                                 0x5e5 (size before relaxing)
- .debug_str     0x000016d4      0x167 ./kernel/tkernel/mailbox.o
+ .debug_str     0x000016ce      0x167 ./kernel/tkernel/mailbox.o
                                 0x6fc (size before relaxing)
- .debug_str     0x0000183b       0xee ./kernel/tkernel/memory.o
+ .debug_str     0x00001835       0xee ./kernel/tkernel/memory.o
                                 0x5c7 (size before relaxing)
- .debug_str     0x00001929      0x19b ./kernel/tkernel/mempfix.o
+ .debug_str     0x00001923      0x19b ./kernel/tkernel/mempfix.o
                                 0x74c (size before relaxing)
- .debug_str     0x00001ac4      0x19a ./kernel/tkernel/mempool.o
+ .debug_str     0x00001abe      0x19a ./kernel/tkernel/mempool.o
                                 0x77d (size before relaxing)
- .debug_str     0x00001c5e      0x1e5 ./kernel/tkernel/messagebuf.o
+ .debug_str     0x00001c58      0x1e5 ./kernel/tkernel/messagebuf.o
                                 0x784 (size before relaxing)
- .debug_str     0x00001e43       0xa0 ./kernel/tkernel/misc_calls.o
+ .debug_str     0x00001e3d       0xa0 ./kernel/tkernel/misc_calls.o
                                 0x54d (size before relaxing)
- .debug_str     0x00001ee3      0x182 ./kernel/tkernel/mutex.o
+ .debug_str     0x00001edd      0x182 ./kernel/tkernel/mutex.o
                                 0x74f (size before relaxing)
- .debug_str     0x00002065       0x1c ./kernel/tkernel/objname.o
+ .debug_str     0x0000205f       0x1c ./kernel/tkernel/objname.o
                                 0x4ae (size before relaxing)
- .debug_str     0x00002081       0x1a ./kernel/tkernel/power.o
+ .debug_str     0x0000207b       0x1a ./kernel/tkernel/power.o
                                 0x4ac (size before relaxing)
- .debug_str     0x0000209b       0xc1 ./kernel/tkernel/rendezvous.o
+ .debug_str     0x00002095       0xc1 ./kernel/tkernel/rendezvous.o
                                 0x5b3 (size before relaxing)
- .debug_str     0x0000215c      0x115 ./kernel/tkernel/semaphore.o
+ .debug_str     0x00002156      0x115 ./kernel/tkernel/semaphore.o
                                 0x6c4 (size before relaxing)
- .debug_str     0x00002271      0x14a ./kernel/tkernel/task.o
+ .debug_str     0x0000226b      0x14a ./kernel/tkernel/task.o
                                 0x709 (size before relaxing)
- .debug_str     0x000023bb      0x153 ./kernel/tkernel/task_manage.o
+ .debug_str     0x000023b5      0x153 ./kernel/tkernel/task_manage.o
                                 0x6fa (size before relaxing)
- .debug_str     0x0000250e       0x96 ./kernel/tkernel/task_sync.o
+ .debug_str     0x00002508       0x96 ./kernel/tkernel/task_sync.o
                                 0x614 (size before relaxing)
- .debug_str     0x000025a4      0x363 ./kernel/tkernel/time_calls.o
+ .debug_str     0x0000259e      0x363 ./kernel/tkernel/time_calls.o
                                 0x8f6 (size before relaxing)
- .debug_str     0x00002907      0x112 ./kernel/tkernel/timer.o
+ .debug_str     0x00002901      0x112 ./kernel/tkernel/timer.o
                                 0x635 (size before relaxing)
- .debug_str     0x00002a19       0x2b ./kernel/tkernel/tkinit.o
+ .debug_str     0x00002a13       0x2b ./kernel/tkernel/tkinit.o
                                 0x4c2 (size before relaxing)
- .debug_str     0x00002a44      0x11a ./kernel/tkernel/wait.o
+ .debug_str     0x00002a3e      0x11a ./kernel/tkernel/wait.o
                                 0x6de (size before relaxing)
- .debug_str     0x00002b5e       0x2d ./kernel/sysinit/sysinit.o
+ .debug_str     0x00002b58       0x2d ./kernel/sysinit/sysinit.o
                                 0x4da (size before relaxing)
- .debug_str     0x00002b8b       0x76 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
+ .debug_str     0x00002b85       0x76 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
                                 0x1ff (size before relaxing)
- .debug_str     0x00002c01       0x5b ./kernel/sysdepend/rtb_rx65n/devinit.o
+ .debug_str     0x00002bfb       0x5b ./kernel/sysdepend/rtb_rx65n/devinit.o
                                 0x511 (size before relaxing)
- .debug_str     0x00002c5c       0x87 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+ .debug_str     0x00002c56       0x87 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
                                 0x563 (size before relaxing)
- .debug_str     0x00002ce3       0x3b ./kernel/sysdepend/rtb_rx65n/power_save.o
+ .debug_str     0x00002cdd       0x3b ./kernel/sysdepend/rtb_rx65n/power_save.o
                                 0x4f1 (size before relaxing)
- .debug_str     0x00002d1e       0x2a ./kernel/sysdepend/nucleo_l476/devinit.o
+ .debug_str     0x00002d18       0x2a ./kernel/sysdepend/nucleo_l476/devinit.o
                                  0xe3 (size before relaxing)
- .debug_str     0x00002d48       0x2d ./kernel/sysdepend/nucleo_l476/hw_setting.o
+ .debug_str     0x00002d42       0x2d ./kernel/sysdepend/nucleo_l476/hw_setting.o
                                  0xe6 (size before relaxing)
- .debug_str     0x00002d75       0x2d ./kernel/sysdepend/nucleo_l476/power_save.o
+ .debug_str     0x00002d6f       0x2d ./kernel/sysdepend/nucleo_l476/power_save.o
                                 0x4bf (size before relaxing)
- .debug_str     0x00002da2       0x2a ./kernel/sysdepend/nucleo_h723/devinit.o
+ .debug_str     0x00002d9c       0x2a ./kernel/sysdepend/nucleo_h723/devinit.o
                                  0xe3 (size before relaxing)
- .debug_str     0x00002dcc       0x2d ./kernel/sysdepend/nucleo_h723/hw_setting.o
+ .debug_str     0x00002dc6       0x2d ./kernel/sysdepend/nucleo_h723/hw_setting.o
                                  0xe6 (size before relaxing)
- .debug_str     0x00002df9       0x2d ./kernel/sysdepend/nucleo_h723/power_save.o
+ .debug_str     0x00002df3       0x2d ./kernel/sysdepend/nucleo_h723/power_save.o
                                 0x4bf (size before relaxing)
- .debug_str     0x00002e26       0x2b ./kernel/sysdepend/iote_stm32l4/devinit.o
+ .debug_str     0x00002e20       0x2b ./kernel/sysdepend/iote_stm32l4/devinit.o
                                  0xe4 (size before relaxing)
- .debug_str     0x00002e51       0x2e ./kernel/sysdepend/iote_stm32l4/hw_setting.o
+ .debug_str     0x00002e4b       0x2e ./kernel/sysdepend/iote_stm32l4/hw_setting.o
                                  0xe7 (size before relaxing)
- .debug_str     0x00002e7f       0x2e ./kernel/sysdepend/iote_stm32l4/power_save.o
+ .debug_str     0x00002e79       0x2e ./kernel/sysdepend/iote_stm32l4/power_save.o
                                  0xe7 (size before relaxing)
- .debug_str     0x00002ead       0x29 ./kernel/sysdepend/iote_rza2m/devinit.o
+ .debug_str     0x00002ea7       0x29 ./kernel/sysdepend/iote_rza2m/devinit.o
                                  0xe2 (size before relaxing)
- .debug_str     0x00002ed6       0x2c ./kernel/sysdepend/iote_rza2m/hw_setting.o
+ .debug_str     0x00002ed0       0x2c ./kernel/sysdepend/iote_rza2m/hw_setting.o
                                  0xe5 (size before relaxing)
- .debug_str     0x00002f02       0x2c ./kernel/sysdepend/iote_rza2m/power_save.o
+ .debug_str     0x00002efc       0x2c ./kernel/sysdepend/iote_rza2m/power_save.o
                                  0xe5 (size before relaxing)
- .debug_str     0x00002f2e       0x29 ./kernel/sysdepend/iote_rx231/devinit.o
+ .debug_str     0x00002f28       0x29 ./kernel/sysdepend/iote_rx231/devinit.o
                                  0xe2 (size before relaxing)
- .debug_str     0x00002f57       0x2c ./kernel/sysdepend/iote_rx231/hw_setting.o
+ .debug_str     0x00002f51       0x2c ./kernel/sysdepend/iote_rx231/hw_setting.o
                                  0xe5 (size before relaxing)
- .debug_str     0x00002f83       0x2c ./kernel/sysdepend/iote_rx231/power_save.o
+ .debug_str     0x00002f7d       0x2c ./kernel/sysdepend/iote_rx231/power_save.o
                                 0x4be (size before relaxing)
- .debug_str     0x00002faf       0x28 ./kernel/sysdepend/iote_m367/devinit.o
+ .debug_str     0x00002fa9       0x28 ./kernel/sysdepend/iote_m367/devinit.o
                                  0xe1 (size before relaxing)
- .debug_str     0x00002fd7       0x2b ./kernel/sysdepend/iote_m367/hw_setting.o
+ .debug_str     0x00002fd1       0x2b ./kernel/sysdepend/iote_m367/hw_setting.o
                                  0xe4 (size before relaxing)
- .debug_str     0x00003002       0x2b ./kernel/sysdepend/iote_m367/power_save.o
+ .debug_str     0x00002ffc       0x2b ./kernel/sysdepend/iote_m367/power_save.o
                                 0x4bd (size before relaxing)
- .debug_str     0x0000302d       0x2e ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
+ .debug_str     0x00003027       0x2e ./kernel/sysdepend/cpu/tx03_m367/cpu_clock.o
                                  0xe7 (size before relaxing)
- .debug_str     0x0000305b       0x2f ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
+ .debug_str     0x00003055       0x2f ./kernel/sysdepend/cpu/tx03_m367/vector_tbl.o
                                  0xe8 (size before relaxing)
- .debug_str     0x0000308a       0x2c ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
+ .debug_str     0x00003084       0x2c ./kernel/sysdepend/cpu/stm32l4/cpu_clock.o
                                  0xe5 (size before relaxing)
- .debug_str     0x000030b6       0x2d ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
+ .debug_str     0x000030b0       0x2d ./kernel/sysdepend/cpu/stm32l4/vector_tbl.o
                                  0xe6 (size before relaxing)
- .debug_str     0x000030e3       0x2c ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
+ .debug_str     0x000030dd       0x2c ./kernel/sysdepend/cpu/stm32h7/cpu_clock.o
                                  0xe5 (size before relaxing)
- .debug_str     0x0000310f       0x2d ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
+ .debug_str     0x00003109       0x2d ./kernel/sysdepend/cpu/stm32h7/vector_tbl.o
                                  0xe6 (size before relaxing)
- .debug_str     0x0000313c       0x2a ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
+ .debug_str     0x00003136       0x2a ./kernel/sysdepend/cpu/rza2m/cpu_clock.o
                                  0xe3 (size before relaxing)
- .debug_str     0x00003166       0x28 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
+ .debug_str     0x00003160       0x28 ./kernel/sysdepend/cpu/rza2m/ttb_ini.o
                                  0xe1 (size before relaxing)
- .debug_str     0x0000318e       0x2b ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
+ .debug_str     0x00003188       0x2b ./kernel/sysdepend/cpu/rx65n/hllint_tbl.o
                                 0x4e1 (size before relaxing)
- .debug_str     0x000031b9       0x2c ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
+ .debug_str     0x000031b3       0x2c ./kernel/sysdepend/cpu/rx65n/intvect_tbl.o
                                 0x4e2 (size before relaxing)
- .debug_str     0x000031e5       0x2a ./kernel/sysdepend/cpu/rx231/cpu_clock.o
+ .debug_str     0x000031df       0x2a ./kernel/sysdepend/cpu/rx231/cpu_clock.o
                                  0xe3 (size before relaxing)
- .debug_str     0x0000320f       0x2b ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
+ .debug_str     0x00003209       0x2b ./kernel/sysdepend/cpu/rx231/hllint_tbl.o
                                  0xe4 (size before relaxing)
- .debug_str     0x0000323a       0x2c ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
+ .debug_str     0x00003234       0x2c ./kernel/sysdepend/cpu/rx231/intvect_tbl.o
                                  0xe5 (size before relaxing)
- .debug_str     0x00003266       0x73 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+ .debug_str     0x00003260       0x73 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
                                 0x56f (size before relaxing)
- .debug_str     0x000032d9       0x9e ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+ .debug_str     0x000032d3       0x9e ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
                                 0x536 (size before relaxing)
- .debug_str     0x00003377       0x53 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+ .debug_str     0x00003371       0x53 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
                                 0x51d (size before relaxing)
- .debug_str     0x000033ca       0x7b ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+ .debug_str     0x000033c4       0x7b ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
                                 0x536 (size before relaxing)
- .debug_str     0x00003445       0x45 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
+ .debug_str     0x0000343f       0x45 ./kernel/sysdepend/cpu/core/rxv2/vector_tbl.o
                                 0x4fb (size before relaxing)
- .debug_str     0x0000348a       0x2f ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
+ .debug_str     0x00003484       0x2f ./kernel/sysdepend/cpu/core/armv7m/cpu_cntl.o
                                  0xe8 (size before relaxing)
- .debug_str     0x000034b9       0x2e ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
+ .debug_str     0x000034b3       0x2e ./kernel/sysdepend/cpu/core/armv7m/exc_hdr.o
                                  0xe7 (size before relaxing)
- .debug_str     0x000034e7       0x30 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
+ .debug_str     0x000034e1       0x30 ./kernel/sysdepend/cpu/core/armv7m/interrupt.o
                                  0xe9 (size before relaxing)
- .debug_str     0x00003517       0x30 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
+ .debug_str     0x00003511       0x30 ./kernel/sysdepend/cpu/core/armv7m/reset_hdl.o
                                  0xe9 (size before relaxing)
- .debug_str     0x00003547       0x2f ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
+ .debug_str     0x00003541       0x2f ./kernel/sysdepend/cpu/core/armv7a/cpu_cntl.o
                                  0xe8 (size before relaxing)
- .debug_str     0x00003576       0x2e ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
+ .debug_str     0x00003570       0x2e ./kernel/sysdepend/cpu/core/armv7a/exc_hdl.o
                                  0xe7 (size before relaxing)
- .debug_str     0x000035a4       0x30 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
+ .debug_str     0x0000359e       0x30 ./kernel/sysdepend/cpu/core/armv7a/interrupt.o
                                  0xe9 (size before relaxing)
- .debug_str     0x000035d4       0x31 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
+ .debug_str     0x000035ce       0x31 ./kernel/sysdepend/cpu/core/armv7a/reset_main.o
                                  0xea (size before relaxing)
- .debug_str     0x00003605       0x4a ./kernel/inittask/inittask.o
+ .debug_str     0x000035ff       0x4a ./kernel/inittask/inittask.o
                                 0x4e1 (size before relaxing)
- .debug_str     0x0000364f       0x2d ./device/ser/sysdepend/tx03_m367/ser_m367.o
+ .debug_str     0x00003649       0x2d ./device/ser/sysdepend/tx03_m367/ser_m367.o
                                  0xe6 (size before relaxing)
- .debug_str     0x0000367c       0x2e ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
+ .debug_str     0x00003676       0x2e ./device/ser/sysdepend/stm32l4/ser_stm32l4.o
                                  0xe7 (size before relaxing)
- .debug_str     0x000036aa       0x2e ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
+ .debug_str     0x000036a4       0x2e ./device/ser/sysdepend/stm32h7/ser_stm32h7.o
                                  0xe7 (size before relaxing)
- .debug_str     0x000036d8       0x2a ./device/ser/sysdepend/rza2m/ser_rza2m.o
+ .debug_str     0x000036d2       0x2a ./device/ser/sysdepend/rza2m/ser_rza2m.o
                                  0xe3 (size before relaxing)
- .debug_str     0x00003702       0x2a ./device/ser/sysdepend/rx65n/ser_rx65n.o
+ .debug_str     0x000036fc       0x2a ./device/ser/sysdepend/rx65n/ser_rx65n.o
                                  0xe3 (size before relaxing)
- .debug_str     0x0000372c       0x2a ./device/ser/sysdepend/rx231/ser_rx231.o
+ .debug_str     0x00003726       0x2a ./device/ser/sysdepend/rx231/ser_rx231.o
                                  0xe3 (size before relaxing)
- .debug_str     0x00003756       0x14 ./device/ser/ser.o
+ .debug_str     0x00003750       0x14 ./device/ser/ser.o
                                 0x156 (size before relaxing)
- .debug_str     0x0000376a       0x2d ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
+ .debug_str     0x00003764       0x2d ./device/i2c/sysdepend/tx03_m367/i2c_m367.o
                                  0xe6 (size before relaxing)
- .debug_str     0x00003797       0x2e ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
+ .debug_str     0x00003791       0x2e ./device/i2c/sysdepend/stm32l4/i2c_stm32l4.o
                                  0xe7 (size before relaxing)
- .debug_str     0x000037c5       0x2e ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
+ .debug_str     0x000037bf       0x2e ./device/i2c/sysdepend/stm32h7/i2c_stm32h7.o
                                  0xe7 (size before relaxing)
- .debug_str     0x000037f3       0x2a ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
+ .debug_str     0x000037ed       0x2a ./device/i2c/sysdepend/rza2m/i2c_rza2m.o
                                  0xe3 (size before relaxing)
- .debug_str     0x0000381d       0x2a ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
-                                0x16c (size before relaxing)
- .debug_str     0x00003847       0x2a ./device/i2c/sysdepend/rx231/i2c_rx231.o
+ .debug_str     0x00003817      0x1a3 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+                                0x351 (size before relaxing)
+ .debug_str     0x000039ba       0x2a ./device/i2c/sysdepend/rx231/i2c_rx231.o
                                  0xe3 (size before relaxing)
- .debug_str     0x00003871       0x14 ./device/i2c/i2c.o
-                                0x156 (size before relaxing)
- .debug_str     0x00003885       0xb8 ./device/common/drvif/msdrvif.o
+ .debug_str     0x000039e4      0x103 ./device/i2c/i2c.o
+                                0x3b9 (size before relaxing)
+ .debug_str     0x00003ae7       0x86 ./device/common/drvif/msdrvif.o
                                 0x31e (size before relaxing)
- .debug_str     0x0000393d       0x2d ./device/adc/sysdepend/tx03_m367/adc_m367.o
+ .debug_str     0x00003b6d       0x2d ./device/adc/sysdepend/tx03_m367/adc_m367.o
                                  0xe6 (size before relaxing)
- .debug_str     0x0000396a       0x2e ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
+ .debug_str     0x00003b9a       0x2e ./device/adc/sysdepend/stm32l4/adc_stm32l4.o
                                  0xe7 (size before relaxing)
- .debug_str     0x00003998       0x2e ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
+ .debug_str     0x00003bc8       0x2e ./device/adc/sysdepend/stm32h7/adc_stm32h7.o
                                  0xe7 (size before relaxing)
- .debug_str     0x000039c6       0x2a ./device/adc/sysdepend/rza2m/adc_rza2m.o
+ .debug_str     0x00003bf6       0x2a ./device/adc/sysdepend/rza2m/adc_rza2m.o
                                  0xe3 (size before relaxing)
- .debug_str     0x000039f0       0x2a ./device/adc/sysdepend/rx65n/adc_rx65n.o
-                                0x16c (size before relaxing)
- .debug_str     0x00003a1a       0x2a ./device/adc/sysdepend/rx231/adc_rx231.o
+ .debug_str     0x00003c20       0x9e ./device/adc/sysdepend/rx65n/adc_rx65n.o
+                                0x265 (size before relaxing)
+ .debug_str     0x00003cbe       0x2a ./device/adc/sysdepend/rx231/adc_rx231.o
                                  0xe3 (size before relaxing)
- .debug_str     0x00003a44       0x14 ./device/adc/adc.o
-                                0x156 (size before relaxing)
- .debug_str     0x00003a58       0x53 ./app_program/app_main.o
-                                0x1fd (size before relaxing)
+ .debug_str     0x00003ce8       0x7a ./device/adc/adc.o
+                                0x331 (size before relaxing)
+ .debug_str     0x00003d62       0x55 ./app_program/app_main.o
+                                0x204 (size before relaxing)
+ .debug_str     0x00003db7       0x53 ./app_program/gesture.o
+                                0x1ac (size before relaxing)
 
 .comment        0x00000000       0x36
  .comment       0x00000000       0x36 ./lib/libtm/sysdepend/nucleo_l476/tm_com.o
@@ -2144,8 +2186,9 @@ OUTPUT(dev_bsp_b2_tbrx65n.elf elf32-rx-le)
  .comment       0x00000000       0x37 ./device/adc/sysdepend/rx231/adc_rx231.o
  .comment       0x00000000       0x37 ./device/adc/adc.o
  .comment       0x00000000       0x37 ./app_program/app_main.o
+ .comment       0x00000000       0x37 ./app_program/gesture.o
 
-.debug_frame    0x00000000     0x4304
+.debug_frame    0x00000000     0x4a28
  .debug_frame   0x00000000       0x7c ./lib/libtm/sysdepend/no_device/tm_com.o
  .debug_frame   0x0000007c       0xc4 ./lib/libtm/libtm.o
  .debug_frame   0x00000140       0xf0 ./lib/libtm/libtm_printf.o
@@ -2180,13 +2223,18 @@ OUTPUT(dev_bsp_b2_tbrx65n.elf elf32-rx-le)
  .debug_frame   0x000037f0      0x29c ./kernel/tkernel/wait.o
  .debug_frame   0x00003a8c       0x58 ./kernel/sysinit/sysinit.o
  .debug_frame   0x00003ae4       0xe4 ./kernel/sysdepend/rtb_rx65n/cpu_clock.o
- .debug_frame   0x00003bc8       0x74 ./kernel/sysdepend/rtb_rx65n/devinit.o
- .debug_frame   0x00003c3c       0xe8 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
- .debug_frame   0x00003d24       0x54 ./kernel/sysdepend/rtb_rx65n/power_save.o
- .debug_frame   0x00003d78       0xa0 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
- .debug_frame   0x00003e18      0x16c ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
- .debug_frame   0x00003f84       0x58 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
- .debug_frame   0x00003fdc       0x5c ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
- .debug_frame   0x00004038       0x88 ./kernel/inittask/inittask.o
- .debug_frame   0x000040c0      0x134 ./device/common/drvif/msdrvif.o
- .debug_frame   0x000041f4      0x110 ./app_program/app_main.o
+ .debug_frame   0x00003bc8       0x78 ./kernel/sysdepend/rtb_rx65n/devinit.o
+ .debug_frame   0x00003c40       0xe8 ./kernel/sysdepend/rtb_rx65n/hw_setting.o
+ .debug_frame   0x00003d28       0x54 ./kernel/sysdepend/rtb_rx65n/power_save.o
+ .debug_frame   0x00003d7c       0xa0 ./kernel/sysdepend/cpu/core/rxv2/cpu_cntl.o
+ .debug_frame   0x00003e1c      0x16c ./kernel/sysdepend/cpu/core/rxv2/exc_hdr.o
+ .debug_frame   0x00003f88       0x58 ./kernel/sysdepend/cpu/core/rxv2/interrupt.o
+ .debug_frame   0x00003fe0       0x5c ./kernel/sysdepend/cpu/core/rxv2/reset_main.o
+ .debug_frame   0x0000403c       0x88 ./kernel/inittask/inittask.o
+ .debug_frame   0x000040c4      0x208 ./device/i2c/sysdepend/rx65n/i2c_rx65n.o
+ .debug_frame   0x000042cc      0x1fc ./device/i2c/i2c.o
+ .debug_frame   0x000044c8      0x134 ./device/common/drvif/msdrvif.o
+ .debug_frame   0x000045fc      0x140 ./device/adc/sysdepend/rx65n/adc_rx65n.o
+ .debug_frame   0x0000473c      0x170 ./device/adc/adc.o
+ .debug_frame   0x000048ac      0x120 ./app_program/app_main.o
+ .debug_frame   0x000049cc       0x5c ./app_program/gesture.o

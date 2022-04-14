@@ -54,8 +54,8 @@ LOCAL const T_SETUP_REG mstop_tbl[] = {
 	{ MSTPCRD, 0xFFFFFF00 },
 
 #else			// Use the sample device driver
-	{ MSTPCRA, 0x46FF7FCF },	/* Enable EXDMAC, DMAC/DTC, CMT0-1, TMR0-3 */
-	{ MSTPCRB, 0xFFFFFFFF },
+	{ MSTPCRA, 0x46FD7FCF },	/* Enable S12AD0, EXDMAC, DMAC/DTC, CMT0-1, TMR0-3 */
+	{ MSTPCRB, 0xFFDFFFFF },	/* Enable RIIC0 */
 	{ MSTPCRC, 0xFFFF0000 },
 	{ MSTPCRD, 0xFFFFFF00 },
 
@@ -69,7 +69,9 @@ LOCAL const T_SETUP_REG mstop_tbl[] = {
 LOCAL const T_SETUP_REG pinfnc_tbl[] = {
 
 #if USE_SDEV_DRV	// Use the sample device driver
-
+	{MPC_P1nPFS(2), 0x0F},		/* P12 = RIIC0 SCL0 */
+	{MPC_P1nPFS(3), 0x0F},		/* P13 = RIIC0 SDA0 */
+	{MPC_P4nPFS(0), 0x80},		/* P40 = AN000 */
 #endif /* USE_SDEV_DRV */
 	{0, 0}
 };
@@ -78,11 +80,18 @@ LOCAL const T_SETUP_REG pinfnc_tbl[] = {
  * Setup port mode Tadle
  */
 LOCAL const T_SETUP_REG portmode_tbl[] = {
-
-#if USE_SDEV_DRV	// Use the sample device driver
 	/* PD6-7 : LED0-1 */
 	{PORTD_PODR, 0xC0},	
 	{PORTD_PDR, 0xC0},
+
+#if USE_SDEV_DRV	// Use the sample device driver
+	/*  P12:RIIC0_SCL0 P13:RIIC0_SDA0 */
+	{PORT1_PMR, 0x0C},		/* P12&P13  peripheral function. */
+	{PORT1_PCR, 0x0C},		/* P12&P13 Pull-up */
+	/* P40:AN000 */
+	{PORT4_PMR, 0x00},		/* P40  AN000 */
+	{PORT4_PDR, 0x00},
+
 #endif /* USE_SDEV_DRV */
 
 	{0, 0}

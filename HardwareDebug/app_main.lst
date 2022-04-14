@@ -128,12 +128,13 @@
   70                             		.file 2 "../app_program/app_main.c"
    1:../app_program/app_main.c **** #include <tk/tkernel.h>
    2:../app_program/app_main.c **** #include <tm/tmonitor.h>
-   3:../app_program/app_main.c **** 
-   4:../app_program/app_main.c **** ID	flgid1;
-   5:../app_program/app_main.c **** 
-   6:../app_program/app_main.c **** void tsk1(INT stacd, void *exinf)
-   7:../app_program/app_main.c **** {
-  71                             		.loc 2 7 1
+   3:../app_program/app_main.c **** #include "gesture.h"
+   4:../app_program/app_main.c **** 
+   5:../app_program/app_main.c **** ID	flgid1;
+   6:../app_program/app_main.c **** 
+   7:../app_program/app_main.c **** void tsk1(INT stacd, void *exinf)
+   8:../app_program/app_main.c **** {
+  71                             		.loc 2 8 1
   72 003d 7E AA                   		push.l	r10
   73                             	.LCFI6:
   74 003f 71 0A F4                		add	#-12, r0, r10
@@ -141,245 +142,379 @@
   76 0042 EF A0                   		mov.L	r10, r0
   77 0044 E7 A1 01                		mov.L	r1, 4[r10]
   78 0047 E7 A2 02                		mov.L	r2, 8[r10]
-   8:../app_program/app_main.c **** 	UB	data, pdata;
-   9:../app_program/app_main.c **** 
-  10:../app_program/app_main.c **** 	pdata = in_w(PORTB_PIDR) & (1<<1);
-  79                             		.loc 2 10 10
+   9:../app_program/app_main.c **** 	UB	data, pdata;
+  10:../app_program/app_main.c **** 
+  11:../app_program/app_main.c **** 	pdata = in_w(PORTB_PIDR) & (1<<1);
+  79                             		.loc 2 11 10
   80 004a FB 1E 4B C0 08          		mov.L	#0x8c04b, r1
   81 004f 39 C8 FF                		bsr	_in_w
   82 0052 EF 15                   		mov.L	r1, r5
-  83                             		.loc 2 10 8
+  83                             		.loc 2 11 8
   84 0054 64 25                   		and	#2, r5
   85 0056 C3 A5                   		mov.B	r5, [r10]
   86                             	.L9:
-  11:../app_program/app_main.c **** 	while(1) {
-  12:../app_program/app_main.c **** 		data = in_w(PORTB_PIDR) & (1<<1);
-  87                             		.loc 2 12 10
+  12:../app_program/app_main.c **** 	while(1) {
+  13:../app_program/app_main.c **** 		data = in_w(PORTB_PIDR) & (1<<1);
+  87                             		.loc 2 13 10
   88 0058 FB 1E 4B C0 08          		mov.L	#0x8c04b, r1
   89 005d 39 BA FF                		bsr	_in_w
   90 0060 EF 15                   		mov.L	r1, r5
-  91                             		.loc 2 12 8
+  91                             		.loc 2 13 8
   92 0062 64 25                   		and	#2, r5
   93 0064 C7 A5 01                		mov.B	r5, 1[r10]
-  13:../app_program/app_main.c **** 		if(data != pdata) {
-  94                             		.loc 2 13 5
+  14:../app_program/app_main.c **** 		if(data != pdata) {
+  94                             		.loc 2 14 5
   95 0067 59 A4 01                		movu.B	1[r10], r4
   96 006a 58 A5                   		movu.B	[r10], r5
   97 006c 47 54                   		cmp	r5, r4
-  98 006e 20 12                   		beq	.L7
-  14:../app_program/app_main.c **** 			if(!data) {
-  99                             		.loc 2 14 6
+  98 006e 20 2B                   		beq	.L7
+  15:../app_program/app_main.c **** 			if(!data) {
+  99                             		.loc 2 15 6
  100 0070 59 A5 01                		movu.B	1[r10], r5
  101 0073 61 05                   		cmp	#0, r5
- 102 0075 1E                      		bne	.L8
-  15:../app_program/app_main.c **** 				pdata = data; // dummy
- 103                             		.loc 2 15 11
- 104 0076 CD A5 01                		mov.B	1[r10], r5
- 105 0079 C3 A5                   		mov.B	r5, [r10]
- 106                             	.L8:
-  16:../app_program/app_main.c **** 			}
-  17:../app_program/app_main.c **** 			pdata = data;
- 107                             		.loc 2 17 10
- 108 007b CD A5 01                		mov.B	1[r10], r5
- 109 007e C3 A5                   		mov.B	r5, [r10]
- 110                             	.L7:
-  18:../app_program/app_main.c **** 		}
-  19:../app_program/app_main.c **** 		tk_dly_tsk(100);
- 111                             		.loc 2 19 3
- 112 0080 75 41 64                		mov.L	#0x64, r1
- 113 0083 05 00 00 00             		bsr	_tk_dly_tsk
-  12:../app_program/app_main.c **** 		if(data != pdata) {
- 114                             		.loc 2 12 8
- 115 0087 2E D1                   		bra	.L9
- 116                             	.LFE6:
- 118                             		.global	_tsk2
- 120                             	_tsk2:
- 121                             	.LFB7:
-  20:../app_program/app_main.c **** 	}
-  21:../app_program/app_main.c **** }
-  22:../app_program/app_main.c **** 
-  23:../app_program/app_main.c **** 
-  24:../app_program/app_main.c **** void tsk2(INT stacd, void *exinf)
-  25:../app_program/app_main.c **** {
- 122                             		.loc 2 25 1
- 123 0089 7E AA                   		push.l	r10
- 124                             	.LCFI8:
- 125 008b 71 0A F8                		add	#-8, r0, r10
- 126                             	.LCFI9:
- 127 008e EF A0                   		mov.L	r10, r0
- 128 0090 E3 A1                   		mov.L	r1, [r10]
- 129 0092 E7 A2 01                		mov.L	r2, 4[r10]
- 130                             	.L11:
-  26:../app_program/app_main.c **** 	while(1) {
-  27:../app_program/app_main.c **** 		tk_dly_tsk(1000);
- 131                             		.loc 2 27 3 discriminator 1
- 132 0095 FB 1A E8 03             		mov.L	#0x3e8, r1
- 133 0099 05 00 00 00             		bsr	_tk_dly_tsk
-  28:../app_program/app_main.c **** 		out_b(PORTD_PODR, in_b(PORTD_PODR)^(1<<6));
- 134                             		.loc 2 28 21 discriminator 1
- 135 009d FB 1E 2D C0 08          		mov.L	#0x8c02d, r1
- 136 00a2 39 87 FF                		bsr	_in_b
- 137 00a5 EF 15                   		mov.L	r1, r5
- 138                             		.loc 2 28 3 discriminator 1
- 139 00a7 FD 74 D5 40             		xor	#0x40, r5
- 140 00ab CF 52                   		mov.B	r5, r2
- 141 00ad FB 1E 2D C0 08          		mov.L	#0x8c02d, r1
- 142 00b2 39 4E FF                		bsr	_out_b
-  27:../app_program/app_main.c **** 		out_b(PORTD_PODR, in_b(PORTD_PODR)^(1<<6));
- 143                             		.loc 2 27 3 discriminator 1
- 144 00b5 2E E0                   		bra	.L11
- 145                             	.LFE7:
- 147                             		.global	_tsk3
- 149                             	_tsk3:
- 150                             	.LFB8:
-  29:../app_program/app_main.c **** 	}
-  30:../app_program/app_main.c **** 
-  31:../app_program/app_main.c **** }
-  32:../app_program/app_main.c **** 
-  33:../app_program/app_main.c **** void tsk3(INT stacd, void *exinf)
-  34:../app_program/app_main.c **** {
- 151                             		.loc 2 34 1
- 152 00b7 7E AA                   		push.l	r10
- 153                             	.LCFI10:
- 154 00b9 71 0A F8                		add	#-8, r0, r10
- 155                             	.LCFI11:
- 156 00bc EF A0                   		mov.L	r10, r0
- 157 00be E3 A1                   		mov.L	r1, [r10]
- 158 00c0 E7 A2 01                		mov.L	r2, 4[r10]
- 159                             	.L13:
-  35:../app_program/app_main.c **** 	while(1) {
-  36:../app_program/app_main.c **** 		tk_dly_tsk(2000);
- 160                             		.loc 2 36 3 discriminator 1
- 161 00c3 FB 1A D0 07             		mov.L	#0x7d0, r1
- 162 00c7 05 00 00 00             		bsr	_tk_dly_tsk
-  37:../app_program/app_main.c **** 		out_b(PORTD_PODR, in_b(PORTD_PODR)^(1<<7));
- 163                             		.loc 2 37 21 discriminator 1
- 164 00cb FB 1E 2D C0 08          		mov.L	#0x8c02d, r1
- 165 00d0 39 59 FF                		bsr	_in_b
- 166 00d3 EF 15                   		mov.L	r1, r5
- 167                             		.loc 2 37 3 discriminator 1
- 168 00d5 FD 74 D5 80             		xor	#-128, r5
- 169 00d9 CF 52                   		mov.B	r5, r2
- 170 00db FB 1E 2D C0 08          		mov.L	#0x8c02d, r1
- 171 00e0 39 20 FF                		bsr	_out_b
-  36:../app_program/app_main.c **** 		out_b(PORTD_PODR, in_b(PORTD_PODR)^(1<<7));
- 172                             		.loc 2 36 3 discriminator 1
- 173 00e3 2E E0                   		bra	.L13
- 174                             	.LFE8:
- 176                             		.global	_ctsk1
- 177                             		.section C,"a",@progbits
- 178                             		.p2align 2
- 179                             		.balign 4
- 182                             	_ctsk1:
- 183 0000 00 00 00 00             		.zero	4
- 184 0004 01 03 00 00             		.long	0x301
- 185 0008 00 00 00 00             		.long	_tsk1
- 186 000c 0A 00 00 00             		.long	10
- 187 0010 00 04 00 00             		.long	0x400
- 188 0014 00 00 00 00             		.zero	4
- 189                             		.global	_ctsk2
- 190                             		.balign 4
- 193                             	_ctsk2:
- 194 0018 00 00 00 00             		.zero	4
- 195 001c 01 03 00 00             		.long	0x301
- 196 0020 00 00 00 00             		.long	_tsk2
- 197 0024 0A 00 00 00             		.long	10
- 198 0028 00 04 00 00             		.long	0x400
- 199 002c 00 00 00 00             		.zero	4
- 200                             		.global	_ctsk3
- 201                             		.balign 4
- 204                             	_ctsk3:
- 205 0030 00 00 00 00             		.zero	4
- 206 0034 01 03 00 00             		.long	0x301
- 207 0038 00 00 00 00             		.long	_tsk3
- 208 003c 0A 00 00 00             		.long	10
- 209 0040 00 04 00 00             		.long	0x400
- 210 0044 00 00 00 00             		.zero	4
- 211                             		.section P,"ax"
- 212                             		.global	_usermain
- 214                             	_usermain:
- 215                             	.LFB9:
-  38:../app_program/app_main.c **** 	}
-  39:../app_program/app_main.c **** 
-  40:../app_program/app_main.c **** }
-  41:../app_program/app_main.c **** 
-  42:../app_program/app_main.c **** const T_CTSK	ctsk1 = {
-  43:../app_program/app_main.c **** 	.tskatr		= TA_HLNG | TA_RNG3,
-  44:../app_program/app_main.c **** 	.itskpri	= 10,
-  45:../app_program/app_main.c **** 	.stksz		= 1024,
-  46:../app_program/app_main.c **** 	.task		= tsk1,
-  47:../app_program/app_main.c **** };
-  48:../app_program/app_main.c **** 
-  49:../app_program/app_main.c **** const T_CTSK	ctsk2 = {
-  50:../app_program/app_main.c **** 	.tskatr		= TA_HLNG | TA_RNG3,
-  51:../app_program/app_main.c **** 	.itskpri	= 10,
-  52:../app_program/app_main.c **** 	.stksz		= 1024,
-  53:../app_program/app_main.c **** 	.task		= tsk2,
-  54:../app_program/app_main.c **** };
-  55:../app_program/app_main.c **** 
-  56:../app_program/app_main.c **** const T_CTSK	ctsk3 = {
-  57:../app_program/app_main.c **** 	.tskatr		= TA_HLNG | TA_RNG3,
-  58:../app_program/app_main.c **** 	.itskpri	= 10,
-  59:../app_program/app_main.c **** 	.stksz		= 1024,
-  60:../app_program/app_main.c **** 	.task		= tsk3,
-  61:../app_program/app_main.c **** };
-  62:../app_program/app_main.c **** 
-  63:../app_program/app_main.c **** /* usermain関数 */
-  64:../app_program/app_main.c **** EXPORT INT usermain(void)
-  65:../app_program/app_main.c **** {
- 216                             		.loc 2 65 1
- 217 00e5 7E AA                   		push.l	r10
- 218                             	.LCFI12:
- 219 00e7 71 0A F4                		add	#-12, r0, r10
- 220                             	.LCFI13:
- 221 00ea EF A0                   		mov.L	r10, r0
-  66:../app_program/app_main.c **** 	ID	tskid1, tskid2, tskid3;
-  67:../app_program/app_main.c **** 
-  68:../app_program/app_main.c **** 	tskid1 = tk_cre_tsk(&ctsk1);
- 222                             		.loc 2 68 11
- 223 00ec FB 12 00 00 00 00       		mov.L	#_ctsk1, r1
- 224 00f2 05 00 00 00             		bsr	_tk_cre_tsk
- 225 00f6 E3 A1                   		mov.L	r1, [r10]
-  69:../app_program/app_main.c **** 	tk_sta_tsk(tskid1, 0);
- 226                             		.loc 2 69 2
- 227 00f8 66 02                   		mov.L	#0, r2
- 228 00fa EC A1                   		mov.L	[r10], r1
- 229 00fc 05 00 00 00             		bsr	_tk_sta_tsk
-  70:../app_program/app_main.c **** 
-  71:../app_program/app_main.c **** 	tskid2 = tk_cre_tsk(&ctsk2);
- 230                             		.loc 2 71 11
- 231 0100 FB 12 00 00 00 00       		mov.L	#_ctsk2, r1
- 232 0106 05 00 00 00             		bsr	_tk_cre_tsk
- 233 010a E7 A1 01                		mov.L	r1, 4[r10]
-  72:../app_program/app_main.c **** 	tk_sta_tsk(tskid2, 0);
- 234                             		.loc 2 72 2
- 235 010d 66 02                   		mov.L	#0, r2
- 236 010f ED A1 01                		mov.L	4[r10], r1
- 237 0112 05 00 00 00             		bsr	_tk_sta_tsk
-  73:../app_program/app_main.c **** 
-  74:../app_program/app_main.c **** 	tskid3 = tk_cre_tsk(&ctsk3);
- 238                             		.loc 2 74 11
- 239 0116 FB 12 00 00 00 00       		mov.L	#_ctsk3, r1
- 240 011c 05 00 00 00             		bsr	_tk_cre_tsk
- 241 0120 E7 A1 02                		mov.L	r1, 8[r10]
-  75:../app_program/app_main.c **** 	tk_sta_tsk(tskid3, 0);
- 242                             		.loc 2 75 2
- 243 0123 66 02                   		mov.L	#0, r2
- 244 0125 ED A1 02                		mov.L	8[r10], r1
- 245 0128 05 00 00 00             		bsr	_tk_sta_tsk
-  76:../app_program/app_main.c **** 
-  77:../app_program/app_main.c **** 	tk_slp_tsk(TMO_FEVR);
- 246                             		.loc 2 77 2
- 247 012c FB 16 FF                		mov.L	#-1, r1
- 248 012f 05 00 00 00             		bsr	_tk_slp_tsk
-  78:../app_program/app_main.c **** 	return 0;
- 249                             		.loc 2 78 9
- 250 0133 66 05                   		mov.L	#0, r5
-  79:../app_program/app_main.c **** }...
- 251                             		.loc 2 79 1
- 252 0135 EF 51                   		mov.L	r5, r1
- 253 0137 3F AA 04                		rtsd	#16, r10-r10
- 254                             	.LFE9:
- 407                             	.Letext0:
- 408                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
- 409                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
+ 102 0075 21 1F                   		bne	.L8
+  16:../app_program/app_main.c **** 				pdata = data; // dummy
+ 103                             		.loc 2 16 11
+ 104 0077 CD A5 01                		mov.B	1[r10], r5
+ 105 007a C3 A5                   		mov.B	r5, [r10]
+  17:../app_program/app_main.c **** 				out_b(PORTD_PODR, in_b(PORTD_PODR)^(1<<7));
+ 106                             		.loc 2 17 23
+ 107 007c FB 1E 2D C0 08          		mov.L	#0x8c02d, r1
+ 108 0081 39 A8 FF                		bsr	_in_b
+ 109 0084 EF 15                   		mov.L	r1, r5
+ 110                             		.loc 2 17 5
+ 111 0086 FD 74 D5 80             		xor	#-128, r5
+ 112 008a CF 52                   		mov.B	r5, r2
+ 113 008c FB 1E 2D C0 08          		mov.L	#0x8c02d, r1
+ 114 0091 39 6F FF                		bsr	_out_b
+ 115                             	.L8:
+  18:../app_program/app_main.c **** 			}
+  19:../app_program/app_main.c **** 			pdata = data;
+ 116                             		.loc 2 19 10
+ 117 0094 CD A5 01                		mov.B	1[r10], r5
+ 118 0097 C3 A5                   		mov.B	r5, [r10]
+ 119                             	.L7:
+  20:../app_program/app_main.c **** 		}
+  21:../app_program/app_main.c **** 		tk_dly_tsk(100);
+ 120                             		.loc 2 21 3
+ 121 0099 75 41 64                		mov.L	#0x64, r1
+ 122 009c 05 00 00 00             		bsr	_tk_dly_tsk
+  13:../app_program/app_main.c **** 		if(data != pdata) {
+ 123                             		.loc 2 13 8
+ 124 00a0 2E B8                   		bra	.L9
+ 125                             	.LFE6:
+ 127                             		.section C,"a",@progbits
+ 128                             		.p2align 2
+ 129                             	.LC0:
+ 130 0000 69 69 63 61 00          		.string	"iica"
+ 131                             	.LC1:
+ 132 0005 45 52 52 4F 52 0A 00    		.string	"ERROR\n"
+ 133                             	.LC2:
+ 134 000c 4F 4B 0A 00             		.string	"OK\n"
+ 135                             	.LC3:
+ 136 0010 53 65 6E 73 6F 72 20 52 		.string	"Sensor Read error %d\n"
+ 136      65 61 64 20 65 72 72 6F 
+ 136      72 20 25 64 0A 00 
+ 137                             	.LC4:
+ 138 0026 73 65 6E 73 65 20 25 78 		.string	"sense %x\n"
+ 138      0A 00 
+ 139                             		.section P,"ax"
+ 140                             		.global	_tsk2
+ 142                             	_tsk2:
+ 143                             	.LFB7:
+  22:../app_program/app_main.c **** 	}
+  23:../app_program/app_main.c **** }
+  24:../app_program/app_main.c **** 
+  25:../app_program/app_main.c **** 
+  26:../app_program/app_main.c **** void tsk2(INT stacd, void *exinf)
+  27:../app_program/app_main.c **** {
+ 144                             		.loc 2 27 1
+ 145 00a2 7E AA                   		push.l	r10
+ 146                             	.LCFI8:
+ 147 00a4 71 0A EC                		add	#-20, r0, r10
+ 148                             	.LCFI9:
+ 149 00a7 71 A0 F8                		add	#-8, r10, r0
+ 150                             	.LCFI10:
+ 151 00aa E7 A1 03                		mov.L	r1, 12[r10]
+ 152 00ad E7 A2 04                		mov.L	r2, 16[r10]
+  28:../app_program/app_main.c **** 	ID	dd_i2c;
+  29:../app_program/app_main.c **** 	UW	val;
+  30:../app_program/app_main.c **** 	ER	err;
+  31:../app_program/app_main.c **** 
+  32:../app_program/app_main.c **** 	dd_i2c = tk_opn_dev((UB*)"iica", TD_UPDATE);
+ 153                             		.loc 2 32 11
+ 154 00b0 66 32                   		mov.L	#3, r2
+ 155 00b2 FB 12 00 00 00 00       		mov.L	#.LC0, r1
+ 156 00b8 05 00 00 00             		bsr	_tk_opn_dev
+ 157 00bc E3 A1                   		mov.L	r1, [r10]
+  33:../app_program/app_main.c **** 
+  34:../app_program/app_main.c **** 	err = gesture_sensor_init(dd_i2c);
+ 158                             		.loc 2 34 8
+ 159 00be EC A1                   		mov.L	[r10], r1
+ 160 00c0 05 00 00 00             		bsr	_gesture_sensor_init
+ 161 00c4 E7 A1 01                		mov.L	r1, 4[r10]
+  35:../app_program/app_main.c **** 	if(err < E_OK) {
+ 162                             		.loc 2 35 4
+ 163 00c7 ED A5 01                		mov.L	4[r10], r5
+ 164 00ca 61 05                   		cmp	#0, r5
+ 165 00cc 28 0E                   		bge	.L11
+  36:../app_program/app_main.c **** 		tm_printf((UB*)"ERROR\n");
+ 166                             		.loc 2 36 3
+ 167 00ce F8 02 05 00 00 00       		mov.L	#.LC1, [r0]
+ 168 00d4 05 00 00 00             		bsr	_tm_printf
+ 169 00d8 2E 0C                   		bra	.L15
+ 170                             	.L11:
+  37:../app_program/app_main.c **** 	} else{
+  38:../app_program/app_main.c **** 		tm_printf((UB*)"OK\n");
+ 171                             		.loc 2 38 3
+ 172 00da F8 02 0C 00 00 00       		mov.L	#.LC2, [r0]
+ 173 00e0 05 00 00 00             		bsr	_tm_printf
+ 174                             	.L15:
+  39:../app_program/app_main.c **** 	}
+  40:../app_program/app_main.c **** 
+  41:../app_program/app_main.c **** #if 0
+  42:../app_program/app_main.c **** 	if(err < E_OK) {
+  43:../app_program/app_main.c **** 		err = gesture_sensor_init(dd_i2c);
+  44:../app_program/app_main.c **** 		if(err < E_OK) {
+  45:../app_program/app_main.c **** 			err = gesture_sensor_init(dd_i2c);
+  46:../app_program/app_main.c **** 		}
+  47:../app_program/app_main.c **** 	}
+  48:../app_program/app_main.c **** #endif
+  49:../app_program/app_main.c **** 
+  50:../app_program/app_main.c **** 	while(1) {
+  51:../app_program/app_main.c **** 		// Gesture sensor
+  52:../app_program/app_main.c **** 		err = gesture_sensor_get(dd_i2c, &val);
+ 175                             		.loc 2 52 9
+ 176 00e4 71 A5 08                		add	#8, r10, r5
+ 177 00e7 EF 52                   		mov.L	r5, r2
+ 178 00e9 EC A1                   		mov.L	[r10], r1
+ 179 00eb 05 00 00 00             		bsr	_gesture_sensor_get
+ 180 00ef E7 A1 01                		mov.L	r1, 4[r10]
+  53:../app_program/app_main.c **** 		if(err<E_OK) tm_printf((UB*)"Sensor Read error %d\n", err);
+ 181                             		.loc 2 53 5
+ 182 00f2 ED A5 01                		mov.L	4[r10], r5
+ 183 00f5 61 05                   		cmp	#0, r5
+ 184 00f7 28 11                   		bge	.L13
+ 185                             		.loc 2 53 16 discriminator 1
+ 186 00f9 ED A5 01                		mov.L	4[r10], r5
+ 187 00fc A0 0D                   		mov.L	r5, 4[r0]
+ 188 00fe F8 02 10 00 00 00       		mov.L	#.LC3, [r0]
+ 189 0104 05 00 00 00             		bsr	_tm_printf
+ 190                             	.L13:
+  54:../app_program/app_main.c **** 
+  55:../app_program/app_main.c **** 		if(val != 0) {
+ 191                             		.loc 2 55 10
+ 192 0108 ED A5 02                		mov.L	8[r10], r5
+ 193                             		.loc 2 55 5
+ 194 010b 61 05                   		cmp	#0, r5
+ 195 010d 20 11                   		beq	.L14
+  56:../app_program/app_main.c **** 			tm_printf((UB*)"sense %x\n", val);
+ 196                             		.loc 2 56 4
+ 197 010f ED A5 02                		mov.L	8[r10], r5
+ 198 0112 A0 0D                   		mov.L	r5, 4[r0]
+ 199 0114 F8 02 26 00 00 00       		mov.L	#.LC4, [r0]
+ 200 011a 05 00 00 00             		bsr	_tm_printf
+ 201                             	.L14:
+  57:../app_program/app_main.c **** 		}
+  58:../app_program/app_main.c **** #if 0
+  59:../app_program/app_main.c **** 		if(val & GES_RIGHT_FLAG ) {
+  60:../app_program/app_main.c **** 			tm_printf((UB*)"Right\n");
+  61:../app_program/app_main.c **** 		} else if(val & GES_LEFT_FLAG) {
+  62:../app_program/app_main.c **** 			tm_printf((UB*)"Left\n");
+  63:../app_program/app_main.c **** 		} else if(val & GES_UP_FLAG) {
+  64:../app_program/app_main.c **** 			tm_printf((UB*)"Up\n");
+  65:../app_program/app_main.c **** 		} else if(val & GES_DOWN_FLAG) {
+  66:../app_program/app_main.c **** 			tm_printf((UB*)"Down\n");
+  67:../app_program/app_main.c **** 		}
+  68:../app_program/app_main.c **** 
+  69:../app_program/app_main.c **** 		if(val & GES_FORWARD_FLAG) {
+  70:../app_program/app_main.c **** 			tm_printf((UB*)"Forward\n");
+  71:../app_program/app_main.c **** 		} else if(val & GES_BACKWARD_FLAG) {
+  72:../app_program/app_main.c **** 			tm_printf((UB*)"Balckward\n");
+  73:../app_program/app_main.c **** 		}
+  74:../app_program/app_main.c **** 		if(val & GES_CLOCKWISE_FLAG) {
+  75:../app_program/app_main.c **** 			tm_printf((UB*)"Clockwise\n");
+  76:../app_program/app_main.c **** 		} else if(val & GES_COUNT_CLOCKWISE_FLAG) {
+  77:../app_program/app_main.c **** 			tm_printf((UB*)"Anti-Cockwise\n");
+  78:../app_program/app_main.c **** 		}
+  79:../app_program/app_main.c **** #endif
+  80:../app_program/app_main.c **** 		tk_dly_tsk(500);
+ 202                             		.loc 2 80 3
+ 203 011e FB 1A F4 01             		mov.L	#0x1f4, r1
+ 204 0122 05 00 00 00             		bsr	_tk_dly_tsk
+  52:../app_program/app_main.c **** 		if(err<E_OK) tm_printf((UB*)"Sensor Read error %d\n", err);
+ 205                             		.loc 2 52 7
+ 206 0126 2E BE                   		bra	.L15
+ 207                             	.LFE7:
+ 209                             		.section C,"a",@progbits
+ 210                             		.p2align 2
+ 211                             	.LC5:
+ 212 0030 61 64 63 61 00          		.string	"adca"
+ 213                             		.section P,"ax"
+ 214                             		.global	_tsk3
+ 216                             	_tsk3:
+ 217                             	.LFB8:
+  81:../app_program/app_main.c **** 	}
+  82:../app_program/app_main.c **** }
+  83:../app_program/app_main.c **** 
+  84:../app_program/app_main.c **** void tsk3(INT stacd, void *exinf)
+  85:../app_program/app_main.c **** {
+ 218                             		.loc 2 85 1
+ 219 0128 7E AA                   		push.l	r10
+ 220                             	.LCFI11:
+ 221 012a 71 0A E8                		add	#-24, r0, r10
+ 222                             	.LCFI12:
+ 223 012d 71 A0 FC                		add	#-4, r10, r0
+ 224                             	.LCFI13:
+ 225 0130 E7 A1 04                		mov.L	r1, 16[r10]
+ 226 0133 E7 A2 05                		mov.L	r2, 20[r10]
+  86:../app_program/app_main.c **** 	ID	dd;
+  87:../app_program/app_main.c **** 	ER	err;
+  88:../app_program/app_main.c **** 	UW	data;
+  89:../app_program/app_main.c **** 	SZ	asz;
+  90:../app_program/app_main.c **** 
+  91:../app_program/app_main.c **** 	dd = tk_opn_dev((UB*)"adca", TD_UPDATE);
+ 227                             		.loc 2 91 7
+ 228 0136 66 32                   		mov.L	#3, r2
+ 229 0138 FB 12 30 00 00 00       		mov.L	#.LC5, r1
+ 230 013e 05 00 00 00             		bsr	_tk_opn_dev
+ 231 0142 E3 A1                   		mov.L	r1, [r10]
+ 232                             	.L17:
+  92:../app_program/app_main.c **** 	while(1) {
+  93:../app_program/app_main.c **** 		err = tk_srea_dev(dd, 0, &data, 1, &asz);
+ 233                             		.loc 2 93 9 discriminator 1
+ 234 0144 71 A5 08                		add	#8, r10, r5
+ 235 0147 71 A4 0C                		add	#12, r10, r4
+ 236 014a E3 04                   		mov.L	r4, [r0]
+ 237 014c 66 14                   		mov.L	#1, r4
+ 238 014e EF 53                   		mov.L	r5, r3
+ 239 0150 66 02                   		mov.L	#0, r2
+ 240 0152 EC A1                   		mov.L	[r10], r1
+ 241 0154 05 00 00 00             		bsr	_tk_srea_dev
+ 242 0158 E7 A1 01                		mov.L	r1, 4[r10]
+  94:../app_program/app_main.c **** 		tk_dly_tsk(500);
+ 243                             		.loc 2 94 3 discriminator 1
+ 244 015b FB 1A F4 01             		mov.L	#0x1f4, r1
+ 245 015f 05 00 00 00             		bsr	_tk_dly_tsk
+  93:../app_program/app_main.c **** 		tk_dly_tsk(500);
+ 246                             		.loc 2 93 7 discriminator 1
+ 247 0163 2E E1                   		bra	.L17
+ 248                             	.LFE8:
+ 250                             		.global	_ctsk1
+ 251                             		.section C,"a",@progbits
+ 252 0035 00 00 00                		.p2align 2
+ 253                             		.balign 4
+ 256                             	_ctsk1:
+ 257 0038 00 00 00 00             		.zero	4
+ 258 003c 01 03 00 00             		.long	0x301
+ 259 0040 00 00 00 00             		.long	_tsk1
+ 260 0044 0A 00 00 00             		.long	10
+ 261 0048 00 04 00 00             		.long	0x400
+ 262 004c 00 00 00 00             		.zero	4
+ 263                             		.global	_ctsk2
+ 264                             		.balign 4
+ 267                             	_ctsk2:
+ 268 0050 00 00 00 00             		.zero	4
+ 269 0054 01 03 00 00             		.long	0x301
+ 270 0058 00 00 00 00             		.long	_tsk2
+ 271 005c 0A 00 00 00             		.long	10
+ 272 0060 00 04 00 00             		.long	0x400
+ 273 0064 00 00 00 00             		.zero	4
+ 274                             		.global	_ctsk3
+ 275                             		.balign 4
+ 278                             	_ctsk3:
+ 279 0068 00 00 00 00             		.zero	4
+ 280 006c 01 03 00 00             		.long	0x301
+ 281 0070 00 00 00 00             		.long	_tsk3
+ 282 0074 0A 00 00 00             		.long	10
+ 283 0078 00 04 00 00             		.long	0x400
+ 284 007c 00 00 00 00             		.zero	4
+ 285                             		.section P,"ax"
+ 286                             		.global	_usermain
+ 288                             	_usermain:
+ 289                             	.LFB9:
+  95:../app_program/app_main.c **** 	}
+  96:../app_program/app_main.c **** 
+  97:../app_program/app_main.c **** 	tk_exd_tsk();	/* Exit task */
+  98:../app_program/app_main.c **** }
+  99:../app_program/app_main.c **** 
+ 100:../app_program/app_main.c **** const T_CTSK	ctsk1 = {
+ 101:../app_program/app_main.c **** 	.tskatr		= TA_HLNG | TA_RNG3,
+ 102:../app_program/app_main.c **** 	.itskpri	= 10,
+ 103:../app_program/app_main.c **** 	.stksz		= 1024,
+ 104:../app_program/app_main.c **** 	.task		= tsk1,
+ 105:../app_program/app_main.c **** };
+ 106:../app_program/app_main.c **** 
+ 107:../app_program/app_main.c **** const T_CTSK	ctsk2 = {
+ 108:../app_program/app_main.c **** 	.tskatr		= TA_HLNG | TA_RNG3,
+ 109:../app_program/app_main.c **** 	.itskpri	= 10,
+ 110:../app_program/app_main.c **** 	.stksz		= 1024,
+ 111:../app_program/app_main.c **** 	.task		= tsk2,
+ 112:../app_program/app_main.c **** };
+ 113:../app_program/app_main.c **** 
+ 114:../app_program/app_main.c **** const T_CTSK	ctsk3 = {
+ 115:../app_program/app_main.c **** 	.tskatr		= TA_HLNG | TA_RNG3,
+ 116:../app_program/app_main.c **** 	.itskpri	= 10,
+ 117:../app_program/app_main.c **** 	.stksz		= 1024,
+ 118:../app_program/app_main.c **** 	.task		= tsk3,
+ 119:../app_program/app_main.c **** };
+ 120:../app_program/app_main.c **** 
+ 121:../app_program/app_main.c **** /* usermain関数 */
+ 122:../app_program/app_main.c **** EXPORT INT usermain(void)
+ 123:../app_program/app_main.c **** {
+ 290                             		.loc 2 123 1
+ 291 0165 7E AA                   		push.l	r10
+ 292                             	.LCFI14:
+ 293 0167 71 0A F4                		add	#-12, r0, r10
+ 294                             	.LCFI15:
+ 295 016a EF A0                   		mov.L	r10, r0
+ 124:../app_program/app_main.c **** 	ID	tskid1, tskid2, tskid3;
+ 125:../app_program/app_main.c **** 
+ 126:../app_program/app_main.c **** 	tskid1 = tk_cre_tsk(&ctsk1);
+ 296                             		.loc 2 126 11
+ 297 016c FB 12 00 00 00 00       		mov.L	#_ctsk1, r1
+ 298 0172 05 00 00 00             		bsr	_tk_cre_tsk
+ 299 0176 E3 A1                   		mov.L	r1, [r10]
+ 127:../app_program/app_main.c **** 	tk_sta_tsk(tskid1, 0);
+ 300                             		.loc 2 127 2
+ 301 0178 66 02                   		mov.L	#0, r2
+ 302 017a EC A1                   		mov.L	[r10], r1
+ 303 017c 05 00 00 00             		bsr	_tk_sta_tsk
+ 128:../app_program/app_main.c **** 
+ 129:../app_program/app_main.c **** 	tskid2 = tk_cre_tsk(&ctsk2);
+ 304                             		.loc 2 129 11
+ 305 0180 FB 12 00 00 00 00       		mov.L	#_ctsk2, r1
+ 306 0186 05 00 00 00             		bsr	_tk_cre_tsk
+ 307 018a E7 A1 01                		mov.L	r1, 4[r10]
+ 130:../app_program/app_main.c **** 	tk_sta_tsk(tskid2, 0);
+ 308                             		.loc 2 130 2
+ 309 018d 66 02                   		mov.L	#0, r2
+ 310 018f ED A1 01                		mov.L	4[r10], r1
+ 311 0192 05 00 00 00             		bsr	_tk_sta_tsk
+ 131:../app_program/app_main.c **** 
+ 132:../app_program/app_main.c **** 	tskid3 = tk_cre_tsk(&ctsk3);
+ 312                             		.loc 2 132 11
+ 313 0196 FB 12 00 00 00 00       		mov.L	#_ctsk3, r1
+ 314 019c 05 00 00 00             		bsr	_tk_cre_tsk
+ 315 01a0 E7 A1 02                		mov.L	r1, 8[r10]
+ 133:../app_program/app_main.c **** 	tk_sta_tsk(tskid3, 0);
+ 316                             		.loc 2 133 2
+ 317 01a3 66 02                   		mov.L	#0, r2
+ 318 01a5 ED A1 02                		mov.L	8[r10], r1
+ 319 01a8 05 00 00 00             		bsr	_tk_sta_tsk
+ 134:../app_program/app_main.c **** 
+ 135:../app_program/app_main.c **** 	tk_slp_tsk(TMO_FEVR);
+ 320                             		.loc 2 135 2
+ 321 01ac FB 16 FF                		mov.L	#-1, r1
+ 322 01af 05 00 00 00             		bsr	_tk_slp_tsk
+ 136:../app_program/app_main.c **** 	return 0;
+ 323                             		.loc 2 136 9
+ 324 01b3 66 05                   		mov.L	#0, r5
+ 137:../app_program/app_main.c **** }...
+ 325                             		.loc 2 137 1
+ 326 01b5 EF 51                   		mov.L	r5, r1
+ 327 01b7 3F AA 04                		rtsd	#16, r10-r10
+ 328                             	.LFE9:
+ 491                             	.Letext0:
+ 492                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 493                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
