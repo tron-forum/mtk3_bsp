@@ -50,4 +50,4 @@
   18 0008 3F AA 01                		rtsd	#4, r10-r10
   19                             	.LFE6:
   57                             	.Letext0:
-  58                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+  58                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"

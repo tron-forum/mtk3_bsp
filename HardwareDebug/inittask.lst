@@ -280,12 +280,12 @@
  139 009a 3F AA 06                		rtsd	#24, r10-r10
  140                             	.LFE21:
  222                             	.Letext0:
- 223                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
- 224                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
- 225                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
- 226                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
- 227                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
- 228                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
- 229                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
- 230                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysdep
- 231                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
+ 223                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
+ 224                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"
+ 225                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/sys/queue.h"
+ 226                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\knlinc/kernel.h"
+ 227                             		.file 6 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\timer.h"
+ 228                             		.file 7 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\winfo.h"
+ 229                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\mutex.h"
+ 230                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysde
+ 231                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_

@@ -639,7 +639,7 @@
  456 02c4 3F AA 03                		rtsd	#12, r10-r10
  457                             	.LFE13:
  629                             	.Letext0:
- 630                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
- 631                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
- 632                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syslib.h"
+ 630                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
+ 631                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"
+ 632                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syslib.h"
  633                             		.file 5 "../device/common/drvif/msdrvif.h"

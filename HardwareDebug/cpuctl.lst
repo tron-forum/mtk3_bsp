@@ -3,84 +3,84 @@
    3                             	.Ltext0:
    5                             	_knl_isTaskIndependent:
    6                             	.LFB16:
-   7                             		.file 1 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_st
-   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
-   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    micro T-Kernel 3.00.03
-   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
-   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
-   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    This software is distributed under the T-License 2.2.
-   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
-   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
-   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
-  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
-  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
-  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	cpu_status.h (RXv2)
-  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	CPU-Dependent Status Definition
-  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #ifndef _SYSDEPEND_CPU_CORE_STATUS_
-  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define _SYSDEPEND_CPU_CORE_STATUS_
-  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <tk/syslib.h>
-  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <sys/sysdef.h>
-  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include "sysdepend.h"
-  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End critical section
-  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_CRITICAL_SECTION	{ UINT _sr_ = disint();
-  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_CRITICAL_SECTION	if ( !isDI(_sr_)			\
-  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && knl_ctxtsk != knl_schedtsk		\
-  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_isTaskIndependent()		\
-  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_dispatch_disabled ) {		\
-  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 					knl_dispatch();			\
-  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				}					\
-  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				setint(_sr_); }
-  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End interrupt disable section
-  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_DISABLE_INTERRUPT	{ UINT _sr_ = disint();
-  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_DISABLE_INTERRUPT	setint(_sr_); }
-  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Interrupt enable/disable
-  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT	{ setint(0); }
-  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define DISABLE_INTERRUPT	{ disint(); }
-  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Enable interrupt nesting
-  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	Enable the interrupt that has a higher priority than 'level.'
-  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT_UPTO(level)	{ setint(level); }
-  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *  Task-independent control
-  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** IMPORT	W	knl_taskindp;		/* Task independent status */
-  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * If it is the task-independent part, TRUE
-  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** Inline BOOL knl_isTaskIndependent( void )
-  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** {
+   7                             		.file 1 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    micro T-Kernel 3.00.03
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	cpu_status.h (RXv2)
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	CPU-Dependent Status Definition
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #ifndef _SYSDEPEND_CPU_CORE_STATUS_
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define _SYSDEPEND_CPU_CORE_STATUS_
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <tk/syslib.h>
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <sys/sysdef.h>
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include "sysdepend.h"
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End critical section
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_CRITICAL_SECTION	{ UINT _sr_ = disint();
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_CRITICAL_SECTION	if ( !isDI(_sr_)			\
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && knl_ctxtsk != knl_schedtsk		\
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_isTaskIndependent()		\
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_dispatch_disabled ) {		\
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 					knl_dispatch();			\
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				}					\
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				setint(_sr_); }
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End interrupt disable section
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_DISABLE_INTERRUPT	{ UINT _sr_ = disint();
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_DISABLE_INTERRUPT	setint(_sr_); }
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Interrupt enable/disable
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT	{ setint(0); }
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define DISABLE_INTERRUPT	{ disint(); }
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Enable interrupt nesting
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	Enable the interrupt that has a higher priority than 'level.'
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT_UPTO(level)	{ setint(level); }
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *  Task-independent control
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** IMPORT	W	knl_taskindp;		/* Task independent status */
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * If it is the task-independent part, TRUE
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** Inline BOOL knl_isTaskIndependent( void )
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** {
    8                             		.loc 1 64 1
    9 0000 7E AA                   		push.l	r10
   10                             	.LCFI0:
   11 0002 EF 0A                   		mov.L	r0, r10
   12                             	.LCFI1:
-  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 	return ( knl_taskindp > 0 )? TRUE: FALSE;
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 	return ( knl_taskindp > 0 )? TRUE: FALSE;
   13                             		.loc 1 65 35
   14 0004 FB 52 00 00 00 00       		mov.L	#_knl_taskindp, r5
   15 000a EC 55                   		mov.L	[r5], r5
   16 000c 61 05                   		cmp	#0, r5
   17 000e FC DB 5A                		scgt.L	r5
   18 0011 5B 55                   		movu.B	r5, r5
-  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** }
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** }
   19                             		.loc 1 66 1
   20 0013 EF 51                   		mov.L	r5, r1
   21 0015 3F AA 01                		rtsd	#4, r10-r10
@@ -583,14 +583,14 @@
  413 02ae 3F AA 08                		rtsd	#32, r10-r10
  414                             	.LFE33:
  526                             	.Letext0:
- 527                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
- 528                             		.file 4 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include\\tk\\sysdepend\\cpu\\core\\rxv2\\c
- 529                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
- 530                             		.file 6 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
- 531                             		.file 7 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
- 532                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
- 533                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
- 534                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
- 535                             		.file 11 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysde
+ 527                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
+ 528                             		.file 4 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include\\tk\\sysdepend\\cpu\\core\\rxv2\\
+ 529                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"
+ 530                             		.file 6 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/sys/queue.h"
+ 531                             		.file 7 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\knlinc/kernel.h"
+ 532                             		.file 8 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\timer.h"
+ 533                             		.file 9 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\winfo.h"
+ 534                             		.file 10 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\mutex.h"
+ 535                             		.file 11 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysd
  536                             		.file 12 "../kernel/tkernel/task.h"
  537                             		.file 13 "../kernel/tkernel/ready_queue.h"

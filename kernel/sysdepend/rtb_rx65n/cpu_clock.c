@@ -15,7 +15,7 @@
 #ifdef RTB_RX65N
 
 /*
- *	cpu_clock.c (RX65N)
+ *	cpu_clock.c (Renesas Target Board for RX65N)
  *	Clock Setting
  */
 

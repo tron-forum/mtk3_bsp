@@ -796,8 +796,8 @@
  555 0340 3F AA 14                		rtsd	#80, r10-r10
  556                             	.LFE14:
  762                             	.Letext0:
- 763                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
- 764                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
- 765                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syslib.h"
+ 763                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
+ 764                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"
+ 765                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syslib.h"
  766                             		.file 5 "../device/adc/../common/drvif/msdrvif.h"
  767                             		.file 6 "../device/adc/adc.h"

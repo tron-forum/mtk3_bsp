@@ -58,6 +58,12 @@
 #define Csym(sym) _##sym
 #endif
 
+#ifdef _RSK_RX65N_
+#include "sysdepend/rsk_rx65n/machine.h"
+#define Csym(sym) _##sym
+#endif
+
+
 /* ===== C compiler dependencies definitions ============================= */
 
 #ifdef __GNUC__

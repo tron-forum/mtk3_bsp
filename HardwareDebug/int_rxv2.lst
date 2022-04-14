@@ -657,4 +657,4 @@
  469 02b1 3F 7A 08                		rtsd	#32, r7-r10
  470                             	.LFE15:
  698                             	.Letext0:
- 699                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 699                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
