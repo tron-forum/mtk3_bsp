@@ -3,60 +3,60 @@
    3                             	.Ltext0:
    5                             	_out_h:
    6                             	.LFB1:
-   7                             		.file 1 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include\\tk\\sysdepend\\cpu\\rx65n\\syslib
-   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
-   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
-   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    micro T-Kernel 3.00.06.B0
-   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
-   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Copyright (C) 2022 by Ken Sakamura.
-   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    This software is distributed under the T-License 2.2.
-   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
-   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
-   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
-  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
-  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
-  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
-  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
-  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	syslib.h
-  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
-  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	micro T-Kernel System Library  (RX65N depended)
-  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
-  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #ifndef __TK_SYSLIB_CPU_DEPEND_H__
-  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define __TK_SYSLIB_CPU_DEPEND_H__
-  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #include "../core/rxv2/syslib.h"
-  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*----------------------------------------------------------------------*/
-  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
-  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Interrupt controller Control
-  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
-  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
-  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LEVEL	0x0004		/* Level trigger */
-  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_EDGE		0x0000		/* Edge trigger */
-  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_HI		0x0000		/* H level/Interrupt at rising edge */
-  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LOW		0x0001		/* L level/Interrupt at falling edge */
-  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_BOTH		0x0003		/* L level/Interrupt at both edge */
-  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* 
-  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Set Software Configurable Interrupt (PERIA & PERIB)
-  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
-  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** IMPORT ER SetPERI(UINT intno, UINT fctno);
-  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* ------------------------------------------------------------------------ */
-  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
-  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * I/O port access
-  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	for memory mapped I/O
-  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
-  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_w( UW port, UW data )
-  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
-  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UW*)port = data;
-  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
-  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_h( UW port, UH data )
-  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+   7                             		.file 1 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include\\tk\\sysdepend\\cpu\\rx65n\\sysli
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    micro T-Kernel 3.00.06.B0
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Copyright (C) 2022 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	syslib.h
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	micro T-Kernel System Library  (RX65N depended)
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #ifndef __TK_SYSLIB_CPU_DEPEND_H__
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define __TK_SYSLIB_CPU_DEPEND_H__
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #include "../core/rxv2/syslib.h"
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*----------------------------------------------------------------------*/
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Interrupt controller Control
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LEVEL	0x0004		/* Level trigger */
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_EDGE		0x0000		/* Edge trigger */
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_HI		0x0000		/* H level/Interrupt at rising edge */
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LOW		0x0001		/* L level/Interrupt at falling edge */
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_BOTH		0x0003		/* L level/Interrupt at both edge */
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* 
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Set Software Configurable Interrupt (PERIA & PERIB)
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** IMPORT ER SetPERI(UINT intno, UINT fctno);
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* ------------------------------------------------------------------------ */
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * I/O port access
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	for memory mapped I/O
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_w( UW port, UW data )
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UW*)port = data;
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_h( UW port, UH data )
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
    8                             		.loc 1 53 1
    9 0000 7E AA                   		push.l	r10
   10                             	.LCFI0:
@@ -65,21 +65,21 @@
   13 0005 EF A0                   		mov.L	r10, r0
   14 0007 E3 A1                   		mov.L	r1, [r10]
   15 0009 D7 A2 02                		mov.W	r2, 4[r10]
-  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UH*)port = data;
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UH*)port = data;
   16                             		.loc 1 54 3
   17 000c EC A5                   		mov.L	[r10], r5
   18                             		.loc 1 54 14
   19 000e DD A4 02                		mov.W	4[r10], r4
   20 0011 D3 54                   		mov.W	r4, [r5]
-  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
   21                             		.loc 1 55 1
   22 0013 03                      		nop
   23 0014 3F AA 03                		rtsd	#12, r10-r10
   24                             	.LFE1:
   27                             	_out_b:
   28                             	.LFB2:
-  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_b( UW port, UB data )
-  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_b( UW port, UB data )
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
   29                             		.loc 1 57 1
   30 0017 7E AA                   		push.l	r10
   31                             	.LCFI2:
@@ -88,26 +88,26 @@
   34 001c EF A0                   		mov.L	r10, r0
   35 001e E3 A1                   		mov.L	r1, [r10]
   36 0020 C7 A2 04                		mov.B	r2, 4[r10]
-  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UB*)port = data;
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UB*)port = data;
   37                             		.loc 1 58 3
   38 0023 EC A5                   		mov.L	[r10], r5
   39                             		.loc 1 58 14
   40 0025 CD A4 04                		mov.B	4[r10], r4
   41 0028 C3 54                   		mov.B	r4, [r5]
-  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
   42                             		.loc 1 59 1
   43 002a 03                      		nop
   44 002b 3F AA 03                		rtsd	#12, r10-r10
   45                             	.LFE2:
   48                             	_in_h:
   49                             	.LFB4:
-  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
-  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UW in_w( UW port )
-  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
-  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UW*)port;
-  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
-  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UH in_h( UW port )
-  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UW in_w( UW port )
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UW*)port;
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UH in_h( UW port )
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
   50                             		.loc 1 66 1
   51 002e 7E AA                   		push.l	r10
   52                             	.LCFI4:
@@ -115,13 +115,13 @@
   54                             	.LCFI5:
   55 0033 EF A0                   		mov.L	r10, r0
   56 0035 E3 A1                   		mov.L	r1, [r10]
-  67:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UH*)port;
+  67:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UH*)port;
   57                             		.loc 1 67 10
   58 0037 EC A5                   		mov.L	[r10], r5
   59                             		.loc 1 67 9
   60 0039 DC 55                   		mov.W	[r5], r5
   61 003b 5F 55                   		movu.W	r5, r5
-  68:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  68:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
   62                             		.loc 1 68 1
   63 003d EF 51                   		mov.L	r5, r1
   64 003f 3F AA 02                		rtsd	#8, r10-r10
@@ -928,6 +928,6 @@
  669 038a 3F AA 05                		rtsd	#20, r10-r10
  670                             	.LFE13:
  899                             	.Letext0:
- 900                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
- 901                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
- 902                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syslib.h"
+ 900                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
+ 901                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"
+ 902                             		.file 5 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syslib.h"

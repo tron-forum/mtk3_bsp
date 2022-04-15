@@ -37,25 +37,24 @@
 #define ADC1_BASE	(0x00089100UL)
 
 /* Register offset */
-#define	ADCSR		(0x00)		/* A/DC control reg. */
+#define	ADCx_ADCSR	(0x00)		/* A/DC control reg. */
 #define	ADCSR_ADST	(1<<15)
 #define	ADCSR_ADIE	(1<<12)
 
-#define	ADANSA0		(0x04)		/* A/DC chanel select reg. A0*/
-#define	ADANSA1		(0x06)		/* A/DC chanel select reg. A1*/
-#define	ADCER		(0x0E)		/* A/DC Control extension reg. */
-#define	ADANSB0		(0x14)		/* A/DC chanel select reg. B0*/
-#define	ADANSB1		(0x16)		/* A/DC chanel select reg. B1*/
+#define	ADCx_ADANSA0	(0x04)		/* A/DC chanel select reg. A0*/
+#define	ADCx_ADANSA1	(0x06)		/* A/DC chanel select reg. A1*/
+#define	ADCx_ADCER	(0x0E)		/* A/DC Control extension reg. */
+#define	ADCx_ADANSB0	(0x14)		/* A/DC chanel select reg. B0*/
+#define	ADCx_ADANSB1	(0x16)		/* A/DC chanel select reg. B1*/
 
-#define	ADDR(c)		(0x20+(2*c))	/* A/DC Data reg. */
+#define	ADCx_ADDR(c)	(0x20+(2*c))	/* A/DC Data reg. */
 
 #define	ADCER_INI	(1<<5)		/* register initial value */
 
-/* A/D Sampling state reg. */
-#define	ADSSTR(c)	(0xE0+c)
-#define	ADSSTRL		(0x000891DDUL)
-#define	ADSSTRT		(0x000891DEUL)
-#define	ADSSTRO		(0x000891DFUL)
+#define	ADCx_ADSSTR(c)	(0xE0+c)	/* A/D Sampling state reg. */
+#define	ADC_ADSSTRL	(0x000891DDUL)
+#define	ADC_ADSSTRT	(0x000891DEUL)
+#define	ADC_ADSSTRO	(0x000891DFUL)
 
 /*
  * A/D converter interrupt factor number

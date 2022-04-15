@@ -3,66 +3,66 @@
    3                             	.Ltext0:
    5                             	_QueInsert:
    6                             	.LFB8:
-   7                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/sys/queue.h"
-   1:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
-   2:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
-   3:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    micro T-Kernel 3.00.00
-   4:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
-   5:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
-   6:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    This software is distributed under the T-License 2.1.
-   7:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
-   8:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
-   9:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
-  10:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
-  11:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
-  12:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
-  13:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  14:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
-  15:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	queue.h
-  16:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *
-  17:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Queuing operation
-  18:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
-  19:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  20:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifndef	__SYS_QUEUE_H__
-  21:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #define __SYS_QUEUE_H__
-  22:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  23:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #include <tk/tkernel.h>
-  24:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  25:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #ifdef __cplusplus
-  26:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** extern "C" {
-  27:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** #endif
-  28:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  29:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
-  30:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Double-link queue (ring)
-  31:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
-  32:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** typedef struct queue {
-  33:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*next;
-  34:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	struct queue	*prev;
-  35:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** } QUEUE;
-  36:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  37:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
-  38:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Queue initialization 
-  39:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
-  40:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInit( QUEUE *que )
-  41:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
-  42:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue *)que;
-  43:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = (struct queue *)que;
-  44:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
-  45:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  46:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
-  47:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * TRUE if the queue is empty 
-  48:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
-  49:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline BOOL isQueEmpty( QUEUE *que )
-  50:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
-  51:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return ( que->next == que )? TRUE: FALSE;
-  52:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
-  53:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  54:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
-  55:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Insert in queue 
-  56:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Inserts entry directly prior to que 
-  57:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
-  58:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueInsert( QUEUE *entry, QUEUE *que )
-  59:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+   7                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/sys/queue.h"
+   1:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** /*
+   2:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   3:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *    micro T-Kernel 3.00.00
+   4:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *
+   5:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *    This software is distributed under the T-License 2.1.
+   7:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+   8:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *
+   9:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *
+  11:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *----------------------------------------------------------------------
+  12:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  */
+  13:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  14:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** /*
+  15:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *	queue.h
+  16:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *
+  17:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *	Queuing operation
+  18:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  */
+  19:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  20:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** #ifndef	__SYS_QUEUE_H__
+  21:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** #define __SYS_QUEUE_H__
+  22:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  23:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** #include <tk/tkernel.h>
+  24:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  25:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** #ifdef __cplusplus
+  26:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** extern "C" {
+  27:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** #endif
+  28:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  29:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** /*
+  30:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  * Double-link queue (ring)
+  31:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  */
+  32:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** typedef struct queue {
+  33:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	struct queue	*next;
+  34:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	struct queue	*prev;
+  35:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** } QUEUE;
+  36:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  37:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** /*
+  38:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  * Queue initialization 
+  39:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  */
+  40:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** Inline void QueInit( QUEUE *que )
+  41:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** {
+  42:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	que->next = (struct queue *)que;
+  43:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	que->prev = (struct queue *)que;
+  44:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** }
+  45:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  46:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** /*
+  47:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  * TRUE if the queue is empty 
+  48:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  */
+  49:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** Inline BOOL isQueEmpty( QUEUE *que )
+  50:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** {
+  51:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	return ( que->next == que )? TRUE: FALSE;
+  52:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** }
+  53:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  54:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** /*
+  55:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  * Insert in queue 
+  56:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *	Inserts entry directly prior to que 
+  57:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  */
+  58:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** Inline void QueInsert( QUEUE *entry, QUEUE *que )
+  59:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** {
    8                             		.loc 1 59 1
    9 0000 7E AA                   		push.l	r10
   10                             	.LCFI0:
@@ -71,45 +71,45 @@
   13 0005 EF A0                   		mov.L	r10, r0
   14 0007 E3 A1                   		mov.L	r1, [r10]
   15 0009 E7 A2 01                		mov.L	r2, 4[r10]
-  60:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->prev = (struct queue*) que->prev;
+  60:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	entry->prev = (struct queue*) que->prev;
   16                             		.loc 1 60 16
   17 000c ED A5 01                		mov.L	4[r10], r5
   18 000f A8 5C                   		mov.L	4[r5], r4
   19                             		.loc 1 60 14
   20 0011 EC A5                   		mov.L	[r10], r5
   21 0013 A0 5C                   		mov.L	r4, 4[r5]
-  61:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next = que;
+  61:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	entry->next = que;
   22                             		.loc 1 61 14
   23 0015 EC A5                   		mov.L	[r10], r5
   24 0017 ED A4 01                		mov.L	4[r10], r4
   25 001a E3 54                   		mov.L	r4, [r5]
-  62:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev->next = entry;
+  62:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	que->prev->next = entry;
   26                             		.loc 1 62 5
   27 001c ED A5 01                		mov.L	4[r10], r5
   28 001f A8 5D                   		mov.L	4[r5], r5
   29                             		.loc 1 62 18
   30 0021 EC A4                   		mov.L	[r10], r4
   31 0023 E3 54                   		mov.L	r4, [r5]
-  63:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->prev = entry;
+  63:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	que->prev = entry;
   32                             		.loc 1 63 12
   33 0025 ED A5 01                		mov.L	4[r10], r5
   34 0028 EC A4                   		mov.L	[r10], r4
   35 002a A0 5C                   		mov.L	r4, 4[r5]
-  64:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  64:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** }
   36                             		.loc 1 64 1
   37 002c 03                      		nop
   38 002d 3F AA 03                		rtsd	#12, r10-r10
   39                             	.LFE8:
   42                             	_QueRemove:
   43                             	.LFB9:
-  65:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  66:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
-  67:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Delete from queue 
-  68:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes entry from queue 
-  69:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	No action is performed if entry is empty. 
-  70:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
-  71:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline void QueRemove( QUEUE *entry )
-  72:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  65:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  66:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** /*
+  67:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  * Delete from queue 
+  68:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *	Deletes entry from queue 
+  69:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *	No action is performed if entry is empty. 
+  70:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  */
+  71:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** Inline void QueRemove( QUEUE *entry )
+  72:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** {
   44                             		.loc 1 72 1
   45 0030 7E AA                   		push.l	r10
   46                             	.LCFI2:
@@ -117,7 +117,7 @@
   48                             	.LCFI3:
   49 0035 EF A0                   		mov.L	r10, r0
   50 0037 E3 A1                   		mov.L	r1, [r10]
-  73:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( entry->next != entry ) {
+  73:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	if ( entry->next != entry ) {
   51                             		.loc 1 73 12
   52 0039 EC A5                   		mov.L	[r10], r5
   53 003b EC 55                   		mov.L	[r5], r5
@@ -125,7 +125,7 @@
   55 003d EC A4                   		mov.L	[r10], r4
   56 003f 47 54                   		cmp	r5, r4
   57 0041 20 16                   		beq	.L4
-  74:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->prev->next = (struct queue*) entry->next;
+  74:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 		entry->prev->next = (struct queue*) entry->next;
   58                             		.loc 1 74 8
   59 0043 EC A5                   		mov.L	[r10], r5
   60 0045 A8 5D                   		mov.L	4[r5], r5
@@ -134,7 +134,7 @@
   63 0049 EC 44                   		mov.L	[r4], r4
   64                             		.loc 1 74 21
   65 004b E3 54                   		mov.L	r4, [r5]
-  75:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		entry->next->prev = (struct queue*) entry->prev;
+  75:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 		entry->next->prev = (struct queue*) entry->prev;
   66                             		.loc 1 75 8
   67 004d EC A5                   		mov.L	[r10], r5
   68 004f EC 55                   		mov.L	[r5], r5
@@ -144,23 +144,23 @@
   72                             		.loc 1 75 21
   73 0055 A0 5C                   		mov.L	r4, 4[r5]
   74                             	.L4:
-  76:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
-  77:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  76:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	}
+  77:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** }
   75                             		.loc 1 77 1
   76 0057 03                      		nop
   77 0058 3F AA 02                		rtsd	#8, r10-r10
   78                             	.LFE9:
   81                             	_QueRemoveNext:
   82                             	.LFB10:
-  78:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  79:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** /*
-  80:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  * Remove top entry 
-  81:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Deletes the entry directly after que from the queue,
-  82:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	and returns the deleted entry.
-  83:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  *	Returns NULL if que is empty.
-  84:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h ****  */
-  85:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** Inline QUEUE* QueRemoveNext( QUEUE *que )
-  86:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** {
+  78:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  79:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** /*
+  80:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  * Remove top entry 
+  81:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *	Deletes the entry directly after que from the queue,
+  82:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *	and returns the deleted entry.
+  83:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  *	Returns NULL if que is empty.
+  84:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h ****  */
+  85:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** Inline QUEUE* QueRemoveNext( QUEUE *que )
+  86:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** {
   83                             		.loc 1 86 1
   84 005b 7E AA                   		push.l	r10
   85                             	.LCFI4:
@@ -168,9 +168,9 @@
   87                             	.LCFI5:
   88 0060 EF A0                   		mov.L	r10, r0
   89 0062 E7 A1 01                		mov.L	r1, 4[r10]
-  87:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	QUEUE	*entry;
-  88:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  89:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	if ( que->next == que ) {
+  87:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	QUEUE	*entry;
+  88:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  89:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	if ( que->next == que ) {
   90                             		.loc 1 89 10
   91 0065 ED A5 01                		mov.L	4[r10], r5
   92 0068 EC 55                   		mov.L	[r5], r5
@@ -178,138 +178,138 @@
   94 006a ED A4 01                		mov.L	4[r10], r4
   95 006d 47 54                   		cmp	r5, r4
   96 006f 1D                      		bne	.L6
-  90:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 		return NULL;
+  90:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 		return NULL;
   97                             		.loc 1 90 10
   98 0070 66 05                   		mov.L	#0, r5
   99 0072 2E 1D                   		bra	.L7
  100                             	.L6:
-  91:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	}
-  92:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  93:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry = que->next;
+  91:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	}
+  92:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  93:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	entry = que->next;
  101                             		.loc 1 93 8
  102 0074 ED A5 01                		mov.L	4[r10], r5
  103 0077 EC 55                   		mov.L	[r5], r5
  104 0079 E3 A5                   		mov.L	r5, [r10]
-  94:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	que->next = (struct queue*)entry->next;
+  94:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	que->next = (struct queue*)entry->next;
  105                             		.loc 1 94 14
  106 007b EC A5                   		mov.L	[r10], r5
  107 007d EC 54                   		mov.L	[r5], r4
  108                             		.loc 1 94 12
  109 007f ED A5 01                		mov.L	4[r10], r5
  110 0082 E3 54                   		mov.L	r4, [r5]
-  95:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	entry->next->prev = que;
+  95:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	entry->next->prev = que;
  111                             		.loc 1 95 7
  112 0084 EC A5                   		mov.L	[r10], r5
  113 0086 EC 55                   		mov.L	[r5], r5
  114                             		.loc 1 95 20
  115 0088 ED A4 01                		mov.L	4[r10], r4
  116 008b A0 5C                   		mov.L	r4, 4[r5]
-  96:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 
-  97:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** 	return entry;
+  96:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 
+  97:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** 	return entry;
  117                             		.loc 1 97 9
  118 008d EC A5                   		mov.L	[r10], r5
  119                             	.L7:
-  98:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\include/sys\queue.h **** }
+  98:D:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include/sys\queue.h **** }
  120                             		.loc 1 98 1
  121 008f EF 51                   		mov.L	r5, r1
  122 0091 3F AA 03                		rtsd	#12, r10-r10
  123                             	.LFE10:
  126                             	_knl_timer_delete:
  127                             	.LFB14:
- 128                             		.file 2 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\timer.h"
-   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *----------------------------------------------------------------------
-   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *    micro T-Kernel 3.00.00
-   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *
-   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
-   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *    This software is distributed under the T-License 2.1.
-   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *----------------------------------------------------------------------
-   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *
-   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
-  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *
-  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *----------------------------------------------------------------------
-  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *	timer.h
-  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  *	System Timer Module Definition
-  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** #ifndef _TIMER_
-  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** #define _TIMER_
-  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** #include "longlong.h"
-  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  * SYSTIM internal expression and conversion
-  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** typedef	D	LSYSTIM;	/* SYSTIM int. expression */
-  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** Inline LSYSTIM knl_toLSYSTIM( CONST SYSTIM *time )
-  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** {
-  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	LSYSTIM		ltime;
-  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	hilo_ll(ltime, time->hi, time->lo);
-  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	return ltime;
-  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** }
-  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** Inline SYSTIM knl_toSYSTIM( LSYSTIM ltime )
-  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** {
-  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	SYSTIM		time;
-  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	ll_hilo(time.hi, time.lo, ltime);
-  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	return time;
-  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** }
-  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  * Absolute time (can be considered the lower 32bit of SYSTIM)
-  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** typedef	UW	ABSTIM;
-  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** #define ABSTIM_DIFF_MIN  (0x7FFFFFFF)
-  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** Inline BOOL knl_abstim_reached( ABSTIM curtim, ABSTIM evttim )
-  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** {
-  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	return (ABSTIM)(curtim - evttim) <= (ABSTIM)ABSTIM_DIFF_MIN;
-  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** }
-  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  * Definition of timer event block 
-  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** typedef void	(*CBACK)(void *);	/* Type of callback function */
-  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** typedef struct timer_event_block {
-  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	QUEUE	queue;		/* Timer event queue */
-  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	ABSTIM	time;		/* Event time */
-  67:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	CBACK	callback;	/* Callback function */
-  68:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	void	*arg;		/* Argument to be sent to callback function */
-  69:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** } TMEB;
-  70:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  71:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-  72:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  * Current time (Software clock)
-  73:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  74:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** IMPORT LSYSTIM	knl_current_time;	/* System operation time */
-  75:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** IMPORT LSYSTIM	knl_real_time_ofs;	/* Difference from actual time */
-  76:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  77:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-  78:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  * Time-event queue
-  79:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  80:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** IMPORT QUEUE	knl_timer_queue;
-  81:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  82:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-  83:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  * Register time-event onto timer queue
-  84:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  85:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** IMPORT void knl_timer_insert( TMEB *evt, TMO tmout, CBACK cback, void *arg );
-  86:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** IMPORT void knl_timer_insert_reltim( TMEB *event, RELTIM tmout, CBACK callback, void *arg );
-  87:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** IMPORT void knl_timer_insert_abs( TMEB *evt, ABSTIM time, CBACK cback, void *arg );
-  88:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 
-  89:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** /*
-  90:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  * Delete from time-event queue
-  91:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h ****  */
-  92:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** Inline void knl_timer_delete( TMEB *event )
-  93:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** {
+ 128                             		.file 2 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\timer.h"
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *    micro T-Kernel 3.00.00
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *    Copyright (C) 2006-2019 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *    This software is distributed under the T-License 2.1.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *    Released by TRON Forum(http://www.tron.org) at 2019/12/11.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *	timer.h
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  *	System Timer Module Definition
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** #ifndef _TIMER_
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** #define _TIMER_
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** #include "longlong.h"
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  * SYSTIM internal expression and conversion
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** typedef	D	LSYSTIM;	/* SYSTIM int. expression */
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** Inline LSYSTIM knl_toLSYSTIM( CONST SYSTIM *time )
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** {
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	LSYSTIM		ltime;
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	hilo_ll(ltime, time->hi, time->lo);
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	return ltime;
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** }
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** Inline SYSTIM knl_toSYSTIM( LSYSTIM ltime )
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** {
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	SYSTIM		time;
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	ll_hilo(time.hi, time.lo, ltime);
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	return time;
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** }
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  * Absolute time (can be considered the lower 32bit of SYSTIM)
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** typedef	UW	ABSTIM;
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** #define ABSTIM_DIFF_MIN  (0x7FFFFFFF)
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** Inline BOOL knl_abstim_reached( ABSTIM curtim, ABSTIM evttim )
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** {
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	return (ABSTIM)(curtim - evttim) <= (ABSTIM)ABSTIM_DIFF_MIN;
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** }
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  * Definition of timer event block 
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** typedef void	(*CBACK)(void *);	/* Type of callback function */
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** typedef struct timer_event_block {
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	QUEUE	queue;		/* Timer event queue */
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	ABSTIM	time;		/* Event time */
+  67:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	CBACK	callback;	/* Callback function */
+  68:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	void	*arg;		/* Argument to be sent to callback function */
+  69:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** } TMEB;
+  70:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  71:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+  72:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  * Current time (Software clock)
+  73:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  74:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** IMPORT LSYSTIM	knl_current_time;	/* System operation time */
+  75:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** IMPORT LSYSTIM	knl_real_time_ofs;	/* Difference from actual time */
+  76:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  77:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+  78:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  * Time-event queue
+  79:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  80:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** IMPORT QUEUE	knl_timer_queue;
+  81:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  82:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+  83:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  * Register time-event onto timer queue
+  84:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  85:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** IMPORT void knl_timer_insert( TMEB *evt, TMO tmout, CBACK cback, void *arg );
+  86:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** IMPORT void knl_timer_insert_reltim( TMEB *event, RELTIM tmout, CBACK callback, void *arg );
+  87:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** IMPORT void knl_timer_insert_abs( TMEB *evt, ABSTIM time, CBACK cback, void *arg );
+  88:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 
+  89:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** /*
+  90:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  * Delete from time-event queue
+  91:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h ****  */
+  92:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** Inline void knl_timer_delete( TMEB *event )
+  93:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** {
  129                             		.loc 2 93 1
  130 0094 7E AA                   		push.l	r10
  131                             	.LCFI6:
@@ -317,96 +317,96 @@
  133                             	.LCFI7:
  134 0099 EF A0                   		mov.L	r10, r0
  135 009b E3 A1                   		mov.L	r1, [r10]
-  94:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** 	QueRemove(&event->queue);
+  94:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** 	QueRemove(&event->queue);
  136                             		.loc 2 94 2
  137 009d EC A5                   		mov.L	[r10], r5
  138 009f EF 51                   		mov.L	r5, r1
  139 00a1 39 8F FF                		bsr	_QueRemove
-  95:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\tkernel\timer.h **** }
+  95:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\tkernel\timer.h **** }
  140                             		.loc 2 95 1
  141 00a4 03                      		nop
  142 00a5 3F AA 02                		rtsd	#8, r10-r10
  143                             	.LFE14:
  146                             	_knl_isTaskIndependent:
  147                             	.LFB16:
- 148                             		.file 3 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_st
-   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
-   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    micro T-Kernel 3.00.03
-   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
-   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
-   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    This software is distributed under the T-License 2.2.
-   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
-   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
-   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
-  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
-  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
-  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	cpu_status.h (RXv2)
-  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	CPU-Dependent Status Definition
-  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #ifndef _SYSDEPEND_CPU_CORE_STATUS_
-  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define _SYSDEPEND_CPU_CORE_STATUS_
-  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <tk/syslib.h>
-  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <sys/sysdef.h>
-  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include "sysdepend.h"
-  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End critical section
-  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_CRITICAL_SECTION	{ UINT _sr_ = disint();
-  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_CRITICAL_SECTION	if ( !isDI(_sr_)			\
-  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && knl_ctxtsk != knl_schedtsk		\
-  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_isTaskIndependent()		\
-  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_dispatch_disabled ) {		\
-  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 					knl_dispatch();			\
-  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				}					\
-  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				setint(_sr_); }
-  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End interrupt disable section
-  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_DISABLE_INTERRUPT	{ UINT _sr_ = disint();
-  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_DISABLE_INTERRUPT	setint(_sr_); }
-  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Interrupt enable/disable
-  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT	{ setint(0); }
-  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define DISABLE_INTERRUPT	{ disint(); }
-  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Enable interrupt nesting
-  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	Enable the interrupt that has a higher priority than 'level.'
-  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT_UPTO(level)	{ setint(level); }
-  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *  Task-independent control
-  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** IMPORT	W	knl_taskindp;		/* Task independent status */
-  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
-  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
-  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * If it is the task-independent part, TRUE
-  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
-  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** Inline BOOL knl_isTaskIndependent( void )
-  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** {
+ 148                             		.file 3 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\cpu_s
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    micro T-Kernel 3.00.03
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Copyright (C) 2006-2021 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	cpu_status.h (RXv2)
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	CPU-Dependent Status Definition
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #ifndef _SYSDEPEND_CPU_CORE_STATUS_
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define _SYSDEPEND_CPU_CORE_STATUS_
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <tk/syslib.h>
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include <sys/sysdef.h>
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #include "sysdepend.h"
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End critical section
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_CRITICAL_SECTION	{ UINT _sr_ = disint();
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_CRITICAL_SECTION	if ( !isDI(_sr_)			\
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && knl_ctxtsk != knl_schedtsk		\
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_isTaskIndependent()		\
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				  && !knl_dispatch_disabled ) {		\
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 					knl_dispatch();			\
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				}					\
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 				setint(_sr_); }
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Start/End interrupt disable section
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define BEGIN_DISABLE_INTERRUPT	{ UINT _sr_ = disint();
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define END_DISABLE_INTERRUPT	setint(_sr_); }
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Interrupt enable/disable
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT	{ setint(0); }
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define DISABLE_INTERRUPT	{ disint(); }
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * Enable interrupt nesting
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *	Enable the interrupt that has a higher priority than 'level.'
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** #define ENABLE_INTERRUPT_UPTO(level)	{ setint(level); }
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  *  Task-independent control
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** IMPORT	W	knl_taskindp;		/* Task independent status */
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** /*
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  * If it is the task-independent part, TRUE
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h ****  */
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** Inline BOOL knl_isTaskIndependent( void )
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** {
  149                             		.loc 3 64 1
  150 00a8 7E AA                   		push.l	r10
  151                             	.LCFI8:
  152 00aa EF 0A                   		mov.L	r0, r10
  153                             	.LCFI9:
-  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 	return ( knl_taskindp > 0 )? TRUE: FALSE;
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** 	return ( knl_taskindp > 0 )? TRUE: FALSE;
  154                             		.loc 3 65 35
  155 00ac FB 52 00 00 00 00       		mov.L	#_knl_taskindp, r5
  156 00b2 EC 55                   		mov.L	[r5], r5
  157 00b4 61 05                   		cmp	#0, r5
  158 00b6 FC DB 5A                		scgt.L	r5
  159 00b9 5B 55                   		movu.B	r5, r5
-  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_tbrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** }
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\kernel\sysdepend\cpu\core\rxv2\cpu_status.h **** }
  160                             		.loc 3 66 1
  161 00bb EF 51                   		mov.L	r5, r1
  162 00bd 3F AA 01                		rtsd	#4, r10-r10
@@ -553,92 +553,92 @@
  211                             	.LFE30:
  214                             	_knl_setup_stacd:
  215                             	.LFB35:
- 216                             		.file 6 "../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h"
-   1:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
-   2:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *----------------------------------------------------------------------
-   3:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *    micro T-Kernel 3.00.01
-   4:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *
-   5:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *    Copyright (C) 2006-2020 by Ken Sakamura.
-   6:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *    This software is distributed under the T-License 2.2.
-   7:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *----------------------------------------------------------------------
-   8:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *
-   9:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *    Released by TRON Forum(http://www.tron.org) at 2020/05/29.
-  10:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *
-  11:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *----------------------------------------------------------------------
-  12:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
-  13:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  14:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
-  15:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *	cpu_task.h (RXv2)
-  16:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *	CPU-Dependent Task Start Processing
-  17:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
-  18:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  19:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #ifndef _SYSDEPEND_CPU_CORE_CPUTASK_
-  20:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define _SYSDEPEND_CPU_CORE_CPUTASK_
-  21:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  22:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
-  23:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * System stack configuration at task startup
-  24:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
-  25:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** typedef struct {
-  26:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #if	USE_DSP
-  27:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	UW	acc0lo;
-  28:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	UW	acc0hi;
-  29:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	acc0gu;	/* Saved ACC0 */
-  30:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	UW	acc1lo;
-  31:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	UW	acc1hi;
-  32:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	acc1gu;	/* Saved ACC1 */
-  33:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #endif
-  34:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #if	USE_FPU
-  35:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	fpsw;	/* Saved FPSW */
-  36:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #endif
-  37:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	r[15];	/* R1-R15 */
-  38:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	void	*spc;	/* Saved return PC */
-  39:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	spsw;	/* Saved PSW */
-  40:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** } SStackFrame;
-  41:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  42:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
-  43:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * Size of system stack area destroyed by 'make_dormant()'
-  44:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * In other words, the size of area required to write by 'setup_context().'
-  45:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
-  46:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #if	USE_FPU && USE_DSP
-  47:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define DORMANT_STACK_SIZE	( sizeof(VW) * 24 )	/* To 'spsw', 'spc', 'acc0', 'acc1', 'fpsw' position
-  48:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #elif USE_DSP
-  49:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define DORMANT_STACK_SIZE	( sizeof(VW) * 23 )	/* To 'spsw', 'spc', 'acc0', 'acc1' position */
-  50:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #elif USE_FPU
-  51:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define DORMANT_STACK_SIZE	( sizeof(VW) * 18 )	/* To 'spsw', 'spc', 'fpsw' position */
-  52:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #else
-  53:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define DORMANT_STACK_SIZE	( sizeof(VW) * 2 )	/* To 'spsw' and 'spc' position */
-  54:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #endif
-  55:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  56:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
-  57:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * Create stack frame for task startup
-  58:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *	Call from 'make_dormant()'
-  59:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
-  60:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** Inline void knl_setup_context( TCB *tcb )
-  61:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** {
-  62:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	SStackFrame	*ssp;
-  63:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	void		*pc;
-  64:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW		psw;
-  65:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  66:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp = (SStackFrame*)((UB*)(tcb->isstack) - (UB*)(sizeof(SStackFrame)));
-  67:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  68:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	psw = 0x00010000UL;
-  69:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	pc = (void*)tcb->task;
-  70:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  71:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	/* CPU context initialization */
-  72:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->spsw	= psw;	/* Initial PSW */ 
-  73:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->spc	= pc;	/* Task startup address */
-  74:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #if	USE_FPU
-  75:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->fpsw	= FPSW_VAL;
-  76:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #endif
-  77:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	tcb->tskctxb.ssp = ssp;			/* System stack */
-  78:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** }
-  79:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  80:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
-  81:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * Set task startup code
-  82:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *	Called by 'tk_sta_tsk()' processing.
-  83:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
-  84:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** Inline void knl_setup_stacd( TCB *tcb, INT stacd )
-  85:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** {
+ 216                             		.file 6 "../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h"
+   1:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
+   2:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *----------------------------------------------------------------------
+   3:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *    micro T-Kernel 3.00.01
+   4:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *
+   5:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *    Copyright (C) 2006-2020 by Ken Sakamura.
+   6:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *    This software is distributed under the T-License 2.2.
+   7:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *----------------------------------------------------------------------
+   8:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *
+   9:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *    Released by TRON Forum(http://www.tron.org) at 2020/05/29.
+  10:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *
+  11:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *----------------------------------------------------------------------
+  12:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
+  13:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  14:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
+  15:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *	cpu_task.h (RXv2)
+  16:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *	CPU-Dependent Task Start Processing
+  17:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
+  18:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  19:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #ifndef _SYSDEPEND_CPU_CORE_CPUTASK_
+  20:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define _SYSDEPEND_CPU_CORE_CPUTASK_
+  21:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  22:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
+  23:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * System stack configuration at task startup
+  24:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
+  25:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** typedef struct {
+  26:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #if	USE_DSP
+  27:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	UW	acc0lo;
+  28:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	UW	acc0hi;
+  29:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	acc0gu;	/* Saved ACC0 */
+  30:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	UW	acc1lo;
+  31:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	UW	acc1hi;
+  32:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	acc1gu;	/* Saved ACC1 */
+  33:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #endif
+  34:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #if	USE_FPU
+  35:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	fpsw;	/* Saved FPSW */
+  36:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #endif
+  37:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	r[15];	/* R1-R15 */
+  38:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	void	*spc;	/* Saved return PC */
+  39:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW	spsw;	/* Saved PSW */
+  40:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** } SStackFrame;
+  41:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  42:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
+  43:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * Size of system stack area destroyed by 'make_dormant()'
+  44:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * In other words, the size of area required to write by 'setup_context().'
+  45:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
+  46:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #if	USE_FPU && USE_DSP
+  47:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define DORMANT_STACK_SIZE	( sizeof(VW) * 24 )	/* To 'spsw', 'spc', 'acc0', 'acc1', 'fpsw' position
+  48:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #elif USE_DSP
+  49:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define DORMANT_STACK_SIZE	( sizeof(VW) * 23 )	/* To 'spsw', 'spc', 'acc0', 'acc1' position */
+  50:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #elif USE_FPU
+  51:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define DORMANT_STACK_SIZE	( sizeof(VW) * 18 )	/* To 'spsw', 'spc', 'fpsw' position */
+  52:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #else
+  53:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #define DORMANT_STACK_SIZE	( sizeof(VW) * 2 )	/* To 'spsw' and 'spc' position */
+  54:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #endif
+  55:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  56:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
+  57:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * Create stack frame for task startup
+  58:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *	Call from 'make_dormant()'
+  59:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
+  60:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** Inline void knl_setup_context( TCB *tcb )
+  61:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** {
+  62:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	SStackFrame	*ssp;
+  63:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	void		*pc;
+  64:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	VW		psw;
+  65:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  66:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp = (SStackFrame*)((UB*)(tcb->isstack) - (UB*)(sizeof(SStackFrame)));
+  67:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  68:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	psw = 0x00010000UL;
+  69:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	pc = (void*)tcb->task;
+  70:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  71:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	/* CPU context initialization */
+  72:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->spsw	= psw;	/* Initial PSW */ 
+  73:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->spc	= pc;	/* Task startup address */
+  74:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #if	USE_FPU
+  75:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->fpsw	= FPSW_VAL;
+  76:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** #endif
+  77:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	tcb->tskctxb.ssp = ssp;			/* System stack */
+  78:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** }
+  79:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  80:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
+  81:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * Set task startup code
+  82:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  *	Called by 'tk_sta_tsk()' processing.
+  83:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
+  84:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** Inline void knl_setup_stacd( TCB *tcb, INT stacd )
+  85:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** {
  217                             		.loc 6 85 1
  218 00f7 7E AA                   		push.l	r10
  219                             	.LCFI14:
@@ -647,18 +647,18 @@
  222 00fc EF A0                   		mov.L	r10, r0
  223 00fe E7 A1 01                		mov.L	r1, 4[r10]
  224 0101 E7 A2 02                		mov.L	r2, 8[r10]
-  86:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	SStackFrame	*ssp = tcb->tskctxb.ssp;
+  86:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	SStackFrame	*ssp = tcb->tskctxb.ssp;
  225                             		.loc 6 86 15
  226 0104 ED A5 01                		mov.L	4[r10], r5
  227 0107 A9 D5                   		mov.L	24[r5], r5
  228 0109 E3 A5                   		mov.L	r5, [r10]
-  87:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  88:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->r[0] = stacd;		/* R1 */
+  87:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  88:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->r[0] = stacd;		/* R1 */
  229                             		.loc 6 88 12
  230 010b EC A5                   		mov.L	[r10], r5
  231 010d ED A4 02                		mov.L	8[r10], r4
  232 0110 E3 54                   		mov.L	r4, [r5]
-  89:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->r[1] = (VW)tcb->exinf;	/* R2 */
+  89:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 	ssp->r[1] = (VW)tcb->exinf;	/* R2 */
  233                             		.loc 6 89 21
  234 0112 ED A5 01                		mov.L	4[r10], r5
  235 0115 A8 DD                   		mov.L	12[r5], r5
@@ -667,19 +667,19 @@
  238                             		.loc 6 89 12
  239 0119 EC A5                   		mov.L	[r10], r5
  240 011b A0 5C                   		mov.L	r4, 4[r5]
-  90:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** }
+  90:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** }
  241                             		.loc 6 90 1
  242 011d 03                      		nop
  243 011e 3F AA 04                		rtsd	#16, r10-r10
  244                             	.LFE35:
  247                             	_knl_cleanup_context:
  248                             	.LFB36:
-  91:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
-  92:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
-  93:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * Delete task contexts
-  94:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
-  95:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** Inline void knl_cleanup_context( TCB *tcb )
-  96:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** {
+  91:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** 
+  92:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** /*
+  93:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  * Delete task contexts
+  94:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h ****  */
+  95:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** Inline void knl_cleanup_context( TCB *tcb )
+  96:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** {
  249                             		.loc 6 96 1
  250 0121 7E AA                   		push.l	r10
  251                             	.LCFI16:
@@ -687,7 +687,7 @@
  253                             	.LCFI17:
  254 0126 EF A0                   		mov.L	r10, r0
  255 0128 E3 A1                   		mov.L	r1, [r10]
-  97:../kernel/tkernel/../sysdepend/rtb_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** }
+  97:../kernel/tkernel/../sysdepend/rsk_rx65n/../cpu/rx65n/../core/rxv2/cpu_task.h **** }
  256                             		.loc 6 97 1
  257 012a 03                      		nop
  258 012b 3F AA 02                		rtsd	#8, r10-r10
@@ -2740,10 +2740,10 @@
  1833 0b3e 3F AA 06                		rtsd	#24, r10-r10
  1834                             	.LFE49:
  2269                             	.Letext0:
- 2270                             		.file 8 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
- 2271                             		.file 9 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/syscall.h"
- 2272                             		.file 10 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\knlinc/kernel.h"
- 2273                             		.file 11 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\winfo.h"
- 2274                             		.file 12 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\tkernel\\mutex.h"
- 2275                             		.file 13 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysde
+ 2270                             		.file 8 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
+ 2271                             		.file 9 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"
+ 2272                             		.file 10 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\knlinc/kernel.h"
+ 2273                             		.file 11 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\winfo.h"
+ 2274                             		.file 12 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\tkernel\\mutex.h"
+ 2275                             		.file 13 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\kernel\\sysdepend\\cpu\\core\\rxv2\\sysd
  2276                             		.file 14 "../kernel/tkernel/ready_queue.h"

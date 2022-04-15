@@ -10,6 +10,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include lib/libtm/sysdepend/rsk_rz65n/subdir.mk
 -include lib/libtm/sysdepend/nucleo_l476/subdir.mk
 -include lib/libtm/sysdepend/nucleo_h723/subdir.mk
 -include lib/libtm/sysdepend/no_device/subdir.mk
@@ -33,6 +34,7 @@ RM := rm -rf
 -include kernel/tkernel/subdir.mk
 -include kernel/sysinit/subdir.mk
 -include kernel/sysdepend/rtb_rx65n/subdir.mk
+-include kernel/sysdepend/rsk_rx65n/subdir.mk
 -include kernel/sysdepend/nucleo_l476/subdir.mk
 -include kernel/sysdepend/nucleo_h723/subdir.mk
 -include kernel/sysdepend/iote_stm32l4/subdir.mk
@@ -49,7 +51,7 @@ RM := rm -rf
 -include kernel/sysdepend/cpu/core/armv7m/subdir.mk
 -include kernel/sysdepend/cpu/core/armv7a/subdir.mk
 -include kernel/inittask/subdir.mk
--include etc/linker/rtb_rx65n/subdir.mk
+-include etc/linker/rsk_rx65n/subdir.mk
 -include etc/linker/nucleo_l476/subdir.mk
 -include etc/linker/nucleo_h723/subdir.mk
 -include etc/linker/iote_stm32l4/subdir.mk
@@ -146,27 +148,27 @@ endif
 LIBRARY_GENERATOR_OUTPUTTYPE_OUTPUTS += \
 
 OBJCOPY += \
-dev_bsp_b2_tbrx65n.mot \
+dev_bsp_b2_rskrx65n.mot \
 
 PRINT_SIZE += \
-dev_bsp_b2_tbrx65n.siz \
+dev_bsp_b2_rskrx65n.siz \
 
 
 # All Target
-all: dev_bsp_b2_tbrx65n.elf secondary-outputs
+all: dev_bsp_b2_rskrx65n.elf secondary-outputs
 
 # Tool invocations
-dev_bsp_b2_tbrx65n.elf: $(OBJS) $(USER_OBJS) $(LIBRARY_GENERATOR_OUTPUTTYPE_OUTPUTS) $(LINKER_SCRIPT)
-	@	$(file > dev_bsp_b2_tbrx65n.elf.in,-O0 -fdiagnostics-parseable-fixits -Wall -Wstack-usage=100 -g2 -mcpu=rx64m -misa=v2 -mlittle-endian-data -o "dev_bsp_b2_tbrx65n.elf" $(OBJS) $(USER_OBJS) $(LIBS) -T "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\etc\\linker\\rtb_rx65n\\tkernel_map.ld" -Wl,--start-group -lm -lc -lgcc -Wl,--end-group -nostartfiles -Wl,-e_Reset_Handler -nostdlib -Wl,-M=dev_bsp_b2_tbrx65n.map)
-	@echo 'rx-elf-gcc -O0 -fdiagnostics-parseable-fixits -Wall -Wstack-usage=100 -g2 -mcpu=rx64m -misa=v2 -mlittle-endian-data -o "dev_bsp_b2_tbrx65n.elf" $(OBJS) $(USER_OBJS) $(LIBS) -T "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\etc\\linker\\rtb_rx65n\\tkernel_map.ld" -Wl,--start-group -lm -lc -lgcc -Wl,--end-group -nostartfiles -Wl,-e_Reset_Handler -nostdlib -Wl,-M=dev_bsp_b2_tbrx65n.map'
+dev_bsp_b2_rskrx65n.elf: $(OBJS) $(USER_OBJS) $(LIBRARY_GENERATOR_OUTPUTTYPE_OUTPUTS) $(LINKER_SCRIPT)
+	@	$(file > dev_bsp_b2_rskrx65n.elf.in,-O0 -fdiagnostics-parseable-fixits -Wall -Wstack-usage=100 -g2 -mcpu=rx64m -misa=v2 -mlittle-endian-data -o "dev_bsp_b2_rskrx65n.elf" $(OBJS) $(USER_OBJS) $(LIBS) -T "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\etc\\linker\\rsk_rx65n\\tkernel_map.ld" -Wl,--start-group -lm -lc -lgcc -Wl,--end-group -nostartfiles -Wl,-e_Reset_Handler -nostdlib -Wl,-M=dev_bsp_b2_rskrx65n.map)
+	@echo 'rx-elf-gcc -O0 -fdiagnostics-parseable-fixits -Wall -Wstack-usage=100 -g2 -mcpu=rx64m -misa=v2 -mlittle-endian-data -o "dev_bsp_b2_rskrx65n.elf" $(OBJS) $(USER_OBJS) $(LIBS) -T "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\etc\\linker\\rsk_rx65n\\tkernel_map.ld" -Wl,--start-group -lm -lc -lgcc -Wl,--end-group -nostartfiles -Wl,-e_Reset_Handler -nostdlib -Wl,-M=dev_bsp_b2_rskrx65n.map'
 
-	rx-elf-gcc @"dev_bsp_b2_tbrx65n.elf.in"
+	rx-elf-gcc @"dev_bsp_b2_rskrx65n.elf.in"
 : 
 	rx-elf-libgen  --header-files=all --select-lib=newlib --compiler-options=-O0,-mcpu=rx64m,-misa=v2,-mlittle-endian-data --assembler-options=-mlittle-endian-data -o
-dev_bsp_b2_tbrx65n.mot: dev_bsp_b2_tbrx65n.elf
-	rx-elf-objcopy "dev_bsp_b2_tbrx65n.elf" -O srec -I elf32-rx-be-ns  "dev_bsp_b2_tbrx65n.mot"
-dev_bsp_b2_tbrx65n.siz: dev_bsp_b2_tbrx65n.elf
-	rx-elf-size --format=berkeley "dev_bsp_b2_tbrx65n.elf"
+dev_bsp_b2_rskrx65n.mot: dev_bsp_b2_rskrx65n.elf
+	rx-elf-objcopy "dev_bsp_b2_rskrx65n.elf" -O srec -I elf32-rx-be-ns  "dev_bsp_b2_rskrx65n.mot"
+dev_bsp_b2_rskrx65n.siz: dev_bsp_b2_rskrx65n.elf
+	rx-elf-size --format=berkeley "dev_bsp_b2_rskrx65n.elf"
 # Other Targets
 clean:
 ifneq ($(strip $(PRINT_SIZE)),)
@@ -299,7 +301,7 @@ ifneq ($(strip $(S_UPPER_DEPS)),)
 	-@ xargs -s 6000 -t -a clean_S_UPPER_DEPS.tmp $(RM)
 	-@$(RM) clean_S_UPPER_DEPS.tmp
 endif
-	-$(RM)  dev_bsp_b2_tbrx65n.elf
+	-$(RM)  dev_bsp_b2_rskrx65n.elf
 	-@echo ' '
 
 secondary-outputs: $(OBJCOPY) $(PRINT_SIZE)

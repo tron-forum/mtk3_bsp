@@ -248,5 +248,5 @@
  250 01de FF 00                   		.short	0xff
  251                             		.section P,"ax"
  252                             	.Letext0:
- 253                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 253                             		.file 1 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
  254                             		.file 2 "../lib/libtk/sysdepend/cpu/rx65n/ipr_rx65n.c"

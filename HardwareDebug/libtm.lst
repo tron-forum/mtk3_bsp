@@ -146,7 +146,7 @@
   65:../lib/libtm/libtm.c **** 			tm_snd_dat((const UB*)&LF, 1);
   87                             		.loc 1 65 4
   88 006d 66 12                   		mov.L	#1, r2
-  89 006f FB 12 00 00 00 00       		mov.L	#_LF.2214, r1
+  89 006f FB 12 00 00 00 00       		mov.L	#_LF.2070, r1
   90 0075 05 00 00 00             		bsr	_tm_snd_dat
   66:../lib/libtm/libtm.c **** 			break;
   91                             		.loc 1 66 4
@@ -240,7 +240,7 @@
   91:../lib/libtm/libtm.c **** 		tm_snd_dat((const UB*)&CR, 1);
  156                             		.loc 1 91 3
  157 00d1 66 12                   		mov.L	#1, r2
- 158 00d3 FB 12 01 00 00 00       		mov.L	#_CR.2221, r1
+ 158 00d3 FB 12 01 00 00 00       		mov.L	#_CR.2077, r1
  159 00d9 05 00 00 00             		bsr	_tm_snd_dat
  160                             	.L11:
   92:../lib/libtm/libtm.c **** 	}
@@ -334,9 +334,9 @@
  225                             	.LFE10:
  227                             		.section C,"a",@progbits
  228                             		.p2align 2
- 231                             	_LF.2214:
+ 231                             	_LF.2070:
  232 0000 0A                      		.byte	10
- 235                             	_CR.2221:
+ 235                             	_CR.2077:
  236 0001 0D                      		.byte	13
  349                             	.Letext0:
- 350                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_tbrx65n\\include/tk/typedef.h"
+ 350                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
