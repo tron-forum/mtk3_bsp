@@ -95,6 +95,13 @@
  * Interrupt Control
  */
 
+/* 
+ * RX231 does not have software configurable interrupt and group interrupt functions.
+ * Both values ​​must be FALSE.
+ */
+#define USE_SFTCNF_INT		(FALSE)		/* Software Configurable Interrupt */
+#define USE_GROUP_INT		(FALSE)		/* Group Interrupt */
+
 /*
  * ICU (Interrupt Controller) register
  */

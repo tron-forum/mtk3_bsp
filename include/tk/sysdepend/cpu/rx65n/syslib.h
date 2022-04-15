@@ -33,12 +33,25 @@
 #define IM_LOW		0x0001		/* L level/Interrupt at falling edge */
 #define IM_BOTH		0x0003		/* L level/Interrupt at both edge */
 
+/* 
+ * Software Configurable Interrupt (PERIA & PERIB) Control
+ */
+#if USE_SFTCNF_INT
+
+IMPORT ER SetPERI(UINT intno, UINT fctno);	/* Set Software Configurable Interrupt */
+
+#endif /* USE_SFTCNF_INT */
 
 /* 
- * Set Software Configurable Interrupt (PERIA & PERIB)
+ * Group Interrupt Control (Internal API. Do not call from the user program!)
  */
-IMPORT ER SetPERI(UINT intno, UINT fctno);
+#if USE_GROUP_INT
 
+IMPORT void knl_enable_gint( UINT intno);
+IMPORT void knl_disable_gint( UINT intno);
+IMPORT void knl_clear_gint( UINT intno);
+
+#endif /* USE_GROUP_INT */
 
 /* ------------------------------------------------------------------------ */
 /*

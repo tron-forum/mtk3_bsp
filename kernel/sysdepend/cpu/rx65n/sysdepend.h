@@ -21,18 +21,27 @@
 
 #include "../core/rxv2/sysdepend.h"
 
-/*
- *    Interrupt Vector Table (ROM) (intvect_tbl.c)
- */
-IMPORT void (* const knl_int_vect_rom[])();
-
 /* ------------------------------------------------------------------------ */
 /*
- * HLL Interrupt Handler Table (ROM) (hllint_tbl.c)
- * 
+ *    Interrupt control
  */
+
+/* Interrupt Vector Table (ROM) (intvect_tbl.c) */
+IMPORT void (* const knl_int_vect_rom[])();
+
+/* HLL Interrupt Handler Table (ROM) (hllint_tbl.c) */
 IMPORT void (* const knl_hll_inthdr_rom[])();
 
+#if USE_GROUP_INT
+/* Set Group int. handler table */
+IMPORT ER knl_define_gint( INT intno, FP inthdr);
+
+/* Common Group interrupt handler */
+IMPORT void knl_group_inthdr(UW intno);
+
+#endif /* USE_GROUP_INT */
+
+/* ------------------------------------------------------------------------ */
 /*
  *    Clock Setting (cpu_clock.c)
  */

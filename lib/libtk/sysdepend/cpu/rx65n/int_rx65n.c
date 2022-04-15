@@ -22,6 +22,13 @@
 #include <tk/tkernel.h>
 #include <tk/syslib.h>
 
+/*----------------------------------------------------------------------*/
+/* 
+ * Software Configurable Interrupt Control
+ *
+ */
+
+#if USE_SFTCNF_INT
 /* 
  * Set Software Configurable Interrupt (PERIA & PERIB)
  *	intno: Interrupt number  128~207(PERIB), 208~255(PERIA)
@@ -47,5 +54,106 @@ EXPORT ER SetPERI(UINT intno, UINT fctno)
 
 	return E_OK;
 }
+#endif /* USE_SFTCNF_INT */
+ 
 
+/*----------------------------------------------------------------------*/
+/* 
+ * Group Interrupt Control
+ *	These APIs are internal APIs.. Do not call from the user program!
+ */
+
+#if USE_GROUP_INT
+/* 
+ *  Enable group interrupts
+ */
+EXPORT void knl_enable_gint( UINT intno)
+{
+	UW	gen;
+	UW	fctno;
+	UINT	imask;
+
+	if( intno < INTNO_GROUP_TOP + 32) {
+		gen = ICU_GENBE0;
+		fctno = intno - INTNO_GROUP_TOP;
+	} else if( intno < INTNO_GROUP_TOP + 64) {
+		gen = ICU_GENBL0;
+		fctno = intno - (INTNO_GROUP_TOP + 32);
+	} else if( intno < INTNO_GROUP_TOP + 96) {
+		gen = ICU_GENBL1;
+		fctno = intno - (INTNO_GROUP_TOP + 64);
+	} else if( intno < INTNO_GROUP_TOP + 128) {
+		gen = ICU_GENBL2;
+		fctno = intno - (INTNO_GROUP_TOP + 96);
+	} else if( intno < INTNO_GROUP_TOP + 160) {
+		gen = ICU_GENAL0;
+		fctno = intno - (INTNO_GROUP_TOP + 128);
+	} else if( intno < INTNO_GROUP_TOP + 192) {
+		gen = ICU_GENAL1;
+		fctno = intno - (INTNO_GROUP_TOP + 160);
+	} else {
+		return;
+	}
+
+	DI(imask);
+	out_w( gen, in_w(gen)|(1<<fctno));
+	EI(imask);
+}
+
+/* 
+ *  Disable group interrupts
+ */
+EXPORT void knl_disable_gint( UINT intno)
+{
+	UW	gen;
+	UW	fctno;
+	UINT	imask;
+
+	if( intno < INTNO_GROUP_TOP + 32) {
+		gen = ICU_GENBE0;
+		fctno = intno - INTNO_GROUP_TOP;
+	} else if( intno < INTNO_GROUP_TOP + 64) {
+		gen = ICU_GENBL0;
+		fctno = intno - (INTNO_GROUP_TOP + 32);
+	} else if( intno < INTNO_GROUP_TOP + 96) {
+		gen = ICU_GENBL1;
+		fctno = intno - (INTNO_GROUP_TOP + 64);
+	} else if( intno < INTNO_GROUP_TOP + 128) {
+		gen = ICU_GENBL2;
+		fctno = intno - (INTNO_GROUP_TOP + 96);
+	} else if( intno < INTNO_GROUP_TOP + 160) {
+		gen = ICU_GENAL0;
+		fctno = intno - (INTNO_GROUP_TOP + 128);
+	} else if( intno < INTNO_GROUP_TOP + 192) {
+		gen = ICU_GENAL1;
+		fctno = intno - (INTNO_GROUP_TOP + 160);
+	} else {
+		return;
+	}
+
+	DI(imask);
+	out_w( gen, in_w(gen)& ~(1<<fctno));
+	EI(imask);
+}
+/*
+ *  Clear group interrupts
+ */
+EXPORT void knl_clear_gint( UINT intno)
+{
+	UW	gcr;
+	UW	fctno;
+	UINT	imask;
+
+	if( intno < INTNO_GROUP_TOP + 32) {
+		gcr = ICU_GCRBE0;
+		fctno = intno - INTNO_GROUP_TOP;
+	} else {
+		return;
+	}
+
+	DI(imask);
+	out_w( gcr, in_w(gcr)| (1<<fctno));
+	EI(imask);
+}
+#endif /* USE_GROUP_INT */
 #endif /* CPU_RX65N */

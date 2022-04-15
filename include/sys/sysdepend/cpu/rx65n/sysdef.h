@@ -111,6 +111,18 @@
  * Interrupt Control
  */
 
+/* 
+ * Choosing to enable software configurable interrupt processing
+ *	If "FALSE" is selected, the OS does not process software configurable interrupts.
+ */
+#define USE_SFTCNF_INT		(TRUE)
+
+/*
+ * Choosing to enable group interrupt processing
+ *	If "FALSE" is selected, the OS does not process group interrupts.
+ */
+#define USE_GROUP_INT		(TRUE)
+
 /*
  * ICU (Interrupt Controller) register
  */
@@ -154,6 +166,8 @@
 #define ICU_GENAL0		(0x00087870UL)
 #define ICU_GENAL1		(0x00087874UL)
 
+#define	ICU_GCRBE0		(0x00087680UL)
+
 #define INTNO_GROUPBE0		106
 #define INTNO_GROUPBL0		110
 #define INTNO_GROUPBL1		111
@@ -161,11 +175,35 @@
 #define INTNO_GROUPAL0		112
 #define INTNO_GROUPAL1		113
 
+#define INTPRI_GROUPBE0		5
+#define INTPRI_GROUPBL0		5
+#define INTPRI_GROUPBL1		5
+#define INTPRI_GROUPBL2		5
+#define INTPRI_GROUPAL0		5
+#define INTPRI_GROUPAL1		5
+
 /*
  * Number of Interrupt vectors
  */
-#define N_INTVEC		256	/* Number of Interrupt vectors */
+#define	N_INTVEC0	256
 
+#if USE_GROUP_INT
+	#define N_GROUP_INT		(32*6)	/* Number of factors for group interrupts */
+
+	#define N_INTVEC		(N_INTVEC0 + N_GROUP_INT)
+	
+	#define INTNO_GROUP_TOP		(N_INTVEC0)
+	#define	INTNO_GROUP_BE0		(INTNO_GROUP_TOP)
+	#define	INTNO_GROUP_BL0		(INTNO_GROUP_TOP + 32)
+	#define	INTNO_GROUP_BL1		(INTNO_GROUP_TOP + 64)
+	#define	INTNO_GROUP_BL2		(INTNO_GROUP_TOP + 96)
+	#define	INTNO_GROUP_BA0		(INTNO_GROUP_TOP + 128)
+	#define	INTNO_GROUP_BA1		(INTNO_GROUP_TOP + 160)
+
+#else
+	#define N_INTVEC		(N_INTVEC0)
+
+#endif /* USE_GROUP_INT */
 /*
  * Interrupt Priority Levels
  */

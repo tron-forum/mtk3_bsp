@@ -54,24 +54,32 @@ const LOCAL UW ba[DEV_I2C_UNITNM] = { RIIC0_BASE, RIIC1_BASE, RIIC2_BASE };
 const LOCAL struct {
 	UINT	intno_rxi;	// Interrupt number (RXI)
 	UINT	intno_txi;	// Interrupt number (TXI)
+	UINT	intno_tei;	// Interrupt number (TEI)
+	UINT	intno_eei;	// Interrupt number (EEI)
 	PRI	intpri;		// Interrupt priority
 	TMO	timout;		// I2C timeout time
 } ll_devdat[DEV_I2C_UNITNM] = {
 	{
 		.intno_rxi	= INTNO_RIIC0_RXI,
 		.intno_txi	= INTNO_RIIC0_TXI,
+		.intno_tei	= INTNO_RIIC0_TEI,
+		.intno_eei	= INTNO_RIIC0_EEI,
 		.intpri		= DEVCNF_I2C0_INTPRI,
 		.timout		= DEVCNF_I2C0_TMO,
 	},
 	{
 		.intno_rxi	= INTNO_RIIC1_RXI,
 		.intno_txi	= INTNO_RIIC1_TXI,
+		.intno_tei	= INTNO_RIIC1_TEI,
+		.intno_eei	= INTNO_RIIC1_EEI,
 		.intpri		= DEVCNF_I2C1_INTPRI,
 		.timout		= DEVCNF_I2C1_TMO,
 	},
 	{
 		.intno_rxi	= INTNO_RIIC2_RXI,
 		.intno_txi	= INTNO_RIIC2_TXI,
+		.intno_tei	= INTNO_RIIC2_TEI,
+		.intno_eei	= INTNO_RIIC2_EEI,
 		.intpri		= DEVCNF_I2C2_INTPRI,
 		.timout		= DEVCNF_I2C2_TMO,
 	},
@@ -203,9 +211,22 @@ LOCAL void i2c_rxi_inthdr( UINT intno )
 /*
  * TEI: Transmission end interrupt
  */
-LOCAL void i2c_tei_inthdr( UINT unit )
+LOCAL void i2c_tei_inthdr( UINT intno )
 {
-	UB	reg;
+	T_I2C_LLDCB	*p_cb;
+	INT		unit;
+	UB		reg;
+
+	for ( unit = 0; unit < DEV_I2C_UNITNM; unit++ ) {
+		if ( ll_devdat[unit].intno_tei == intno ) {
+			p_cb = &ll_devcb[unit];
+			break;
+		}
+	}
+	if(unit >= DEV_I2C_UNITNM) {
+		ClearInt(intno);	// Clear interrupt
+		return;
+	}
 
 	switch(ll_devcb[unit].state) {
 	case I2C_STS_STOP:
@@ -217,54 +238,46 @@ LOCAL void i2c_tei_inthdr( UINT unit )
 	case I2C_STS_RESTART:
 		out_b( RIIC_ICIER(unit) , RIIC_ICIER_TIE | RIIC_ICIER_NAKIE);	/* Enable TXI & NAKI */
 		*(UB*)RIIC_ICCR2(unit) |= RIIC_IICR2_RS;	// Rester condition
-		ll_devcb[unit].state = I2C_STS_START;
+		p_cb->state = I2C_STS_START;
 		break;
 	}
 }
 
-LOCAL void i2c_eei_inthdr( UINT unit )
+LOCAL void i2c_eei_inthdr( UINT intno )
 {
-	UB	reg;
+	T_I2C_LLDCB	*p_cb;
+	INT		unit;
+	UB		reg;
+
+	for ( unit = 0; unit < DEV_I2C_UNITNM; unit++ ) {
+		if ( ll_devdat[unit].intno_eei == intno ) {
+			p_cb = &ll_devcb[unit];
+			break;
+		}
+	}
+	if(unit >= DEV_I2C_UNITNM) {
+		ClearInt(intno);	// Clear interrupt
+		return;
+	}
 
 	reg = in_b(RIIC_ICSR2(unit));
 
 	if(reg & RIIC_ICSR2_STOP) {		/* Detects stop condition */
-		if (ll_devcb[unit].state != I2C_STS_STOP) {
-			ll_devcb[unit].ioerr = E_IO;
+		if (p_cb->state != I2C_STS_STOP) {
+			p_cb->ioerr = E_IO;
 		}
 		out_b( RIIC_ICIER(unit), 0);
 		if(ll_devcb[unit].wait_tskid) {
 			tk_wup_tsk(ll_devcb[unit].wait_tskid);
-			ll_devcb[unit].wait_tskid = 0;
+			p_cb->wait_tskid = 0;
 		}
 	} else {
-		ll_devcb[unit].ioerr = E_IO;
-		ll_devcb[unit].state = I2C_STS_STOP;
+		p_cb->ioerr = E_IO;
+		p_cb->state = I2C_STS_STOP;
 		*(UB*)RIIC_ICSR2(unit) &= ~RIIC_ICSR2_STOP;
 		out_b( RIIC_ICIER(unit), RIIC_ICIER_SPIE);
 		*(UB*)RIIC_ICCR2(unit) |= RIIC_IICR2_SP;	/* Stop condition */
 	}
-}
-
-LOCAL void i2c_xei_inthdr( UINT intno )
-{
-	UW	reg;
-
-	reg = in_w(ICU_GRPBL1);
-	if(reg & (1<<13)) {
-		i2c_tei_inthdr(DEV_I2C_UNIT0);
-	} else if(reg & (1<<14)) {
-		i2c_eei_inthdr(DEV_I2C_UNIT0);
-	} else if(reg & (1<<28)) {
-		i2c_tei_inthdr(DEV_I2C_UNIT1);
-	} else if(reg & (1<<29)) {
-		i2c_eei_inthdr(DEV_I2C_UNIT1);
-	} else if(reg & (1<<15)) {
-		i2c_tei_inthdr(DEV_I2C_UNIT2);
-	} else if(reg & (1<<16)) {
-		i2c_eei_inthdr(DEV_I2C_UNIT2);
-	}
-	ClearInt(intno);
 }
 
 /*----------------------------------------------------------------------
@@ -338,7 +351,8 @@ EXPORT W dev_i2c_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
 		out_b( RIIC_ICSR2(unit), 0);
 		EnableInt( ll_devdat[unit].intno_rxi, ll_devdat[unit].intpri);
 		EnableInt( ll_devdat[unit].intno_txi, ll_devdat[unit].intpri);
-		EnableInt( INTNO_GROUPBL1, ll_devdat[unit].intpri);
+		EnableInt( ll_devdat[unit].intno_tei, 0);
+		EnableInt( ll_devdat[unit].intno_eei, 0);
 
 		/* Release reset */
 		out_b( RIIC_ICCR1(unit),  RIIC_ICCR1_ICE | RIIC_ICCR1_SOWP);
@@ -348,7 +362,8 @@ EXPORT W dev_i2c_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
 		/* Disable I2C interrupt */
 		DisableInt(ll_devdat[unit].intno_rxi);
 		DisableInt(ll_devdat[unit].intno_txi);
-		DisableInt(INTNO_GROUPBL1);
+		DisableInt(ll_devdat[unit].intno_tei);
+		DisableInt(ll_devdat[unit].intno_eei);
 		break;
 
 	case LLD_I2C_READ:
@@ -424,26 +439,11 @@ EXPORT ER dev_i2c_llinit( T_I2C_DCB *p_dcb)
 	dint.inthdr	= i2c_txi_inthdr;
 	err = tk_def_int(ll_devdat[unit].intno_txi, &dint);
 
-	dint.inthdr	= i2c_xei_inthdr;
-	err = tk_def_int(INTNO_GROUPBL1, &dint);	// GROUPBL1
+	dint.inthdr	= i2c_tei_inthdr;
+	err = tk_def_int(ll_devdat[unit].intno_tei, &dint);
 
-#if DEVCONF_I2C_INIT_GRPI
-	UW	reg;
-
-	reg = in_w(ICU_GENBL1);
-	switch(unit) {
-	case DEV_I2C_UNIT0:
-		reg |= (1<<13)|(1<<14);
-		break;
-	case DEV_I2C_UNIT1:
-		reg |= (1<<28)|(1<<29);
-		break;
-	case DEV_I2C_UNIT2:
-		reg |= (1<<15)|(1<<16);
-		break;
-	}
-	out_w(ICU_GENBL1, reg);
-#endif
+	dint.inthdr	= i2c_eei_inthdr;
+	err = tk_def_int(ll_devdat[unit].intno_eei, &dint);
 
 	return err;
 }

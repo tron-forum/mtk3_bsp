@@ -200,25 +200,29 @@ LOCAL void test_i2c(ID dd_i2c)
 		err = gesture_sensor_get(dd_i2c, &val);
 		if(err<E_OK) tm_printf((UB*)"Sensor Read error %d\n", err);
 
-		if(val & GES_RIGHT_FLAG ) {
-			tm_printf((UB*)"Right\n");
-		} else if(val & GES_LEFT_FLAG) {
-			tm_printf((UB*)"Left\n");
-		} else if(val & GES_UP_FLAG) {
-			tm_printf((UB*)"Up\n");
-		} else if(val & GES_DOWN_FLAG) {
-			tm_printf((UB*)"Down\n");
-		}
+		if(val) {
+			tm_printf((UB*)"val = %d\n", val);
 
-		if(val & GES_FORWARD_FLAG) {
-			tm_printf((UB*)"Forward\n");
-		} else if(val & GES_BACKWARD_FLAG) {
-			tm_printf((UB*)"Balckward\n");
-		}
-		if(val & GES_CLOCKWISE_FLAG) {
-			tm_printf((UB*)"Clockwise\n");
-		} else if(val & GES_COUNT_CLOCKWISE_FLAG) {
-			tm_printf((UB*)"Anti-Cockwise\n");
+			if(val & GES_RIGHT_FLAG ) {
+				tm_printf((UB*)"Right\n");
+			} else if(val & GES_LEFT_FLAG) {
+				tm_printf((UB*)"Left\n");
+			} else if(val & GES_UP_FLAG) {
+				tm_printf((UB*)"Up\n");
+			} else if(val & GES_DOWN_FLAG) {
+				tm_printf((UB*)"Down\n");
+			}
+
+			if(val & GES_FORWARD_FLAG) {
+				tm_printf((UB*)"Forward\n");
+			} else if(val & GES_BACKWARD_FLAG) {
+				tm_printf((UB*)"Balckward\n");
+			}
+			if(val & GES_CLOCKWISE_FLAG) {
+				tm_printf((UB*)"Clockwise\n");
+			} else if(val & GES_COUNT_CLOCKWISE_FLAG) {
+				tm_printf((UB*)"Anti-Cockwise\n");
+			}
 		}
 		tk_dly_tsk(500);
 	}
@@ -231,7 +235,7 @@ void tsk2(INT stacd, void *exinf)
 	dd_i2c = tk_opn_dev((UB*)"iica", TD_UPDATE);
 	if(dd_i2c<E_OK) tm_printf((UB*)"Open Error %d\n", dd_i2c);
 
-	test_eeprom(dd_i2c);
+//	test_eeprom(dd_i2c);
 	test_i2c(dd_i2c);
 
 	tk_exd_tsk();	/* Exit Task */
@@ -288,10 +292,10 @@ EXPORT INT usermain( void )
 #endif
 
 	id1 = tk_cre_tsk(&ctsk1);
-	tk_sta_tsk(id1, 0);
+//	tk_sta_tsk(id1, 0);
 
 	id2 = tk_cre_tsk(&ctsk2);
-//	tk_sta_tsk(id2, 0);
+	tk_sta_tsk(id2, 0);
 
 	id3 = tk_cre_tsk(&ctsk3);
 //	tk_sta_tsk(id3, 0);

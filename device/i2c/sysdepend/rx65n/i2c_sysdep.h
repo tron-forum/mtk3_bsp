@@ -97,15 +97,20 @@
 
 /* 
  * I2C interrupt number
-	*/
+*/
 #define	INTNO_RIIC0_RXI		52
 #define	INTNO_RIIC0_TXI		53
+#define	INTNO_RIIC0_TEI		(INTNO_GROUP_BL1+13)	//  Group interrupts (GROUPBL1 - 13)
+#define	INTNO_RIIC0_EEI		(INTNO_GROUP_BL1+14)	//  Group interrupts (GROUPBL1 - 14)
+
 #define	INTNO_RIIC1_RXI		50
 #define	INTNO_RIIC1_TXI		51
+#define	INTNO_RIIC1_TEI		(INTNO_GROUP_BL1+28)	//  Group interrupts (GROUPBL1 - 28)
+#define	INTNO_RIIC1_EEI		(INTNO_GROUP_BL1+29)	//  Group interrupts (GROUPBL1 - 29)
+
 #define	INTNO_RIIC2_RXI		54
 #define	INTNO_RIIC2_TXI		55
-
-#define	INTNO_RIIC_EEI		INTNO_GROUPBL1	// Group interrupts
-#define	INTNO_RIIC_TEI		INTNO_GROUPBL1	// Group interrupts
+#define	INTNO_RIIC2_TEI		(INTNO_GROUP_BL1+15)	//  Group interrupts (GROUPBL1 - 15)
+#define	INTNO_RIIC2_EEI		(INTNO_GROUP_BL1+16)	//  Group interrupts (GROUPBL1 - 16)
 
 #endif		/* __DEV_I2C_RX65N_H__ */
