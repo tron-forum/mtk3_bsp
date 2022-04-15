@@ -151,78 +151,74 @@
   29:../device/adc/sysdepend/rx65n/adc_rx65n.c **** */
   30:../device/adc/sysdepend/rx65n/adc_rx65n.c **** const LOCAL UW ba[DEV_ADC_UNITNM] = { ADC0_BASE, ADC1_BASE };
   31:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  32:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADCSR(x)	(ba[x] + ADCSR)		// A/DC control reg
-  33:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADANSA0(x)	(ba[x] + ADANSA0)	// A/DC chanel select reg. A0
-  34:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADANSA1(x)	(ba[x] + ADANSA1)	// A/DC chanel select reg. A1
-  35:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADCER(x)	(ba[x] + ADCER)		// A/DC Control extension reg
-  36:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADANSB0(x)	(ba[x] + ADANSB0)	// A/DC chanel select reg. B0
-  37:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADANSB1(x)	(ba[x] + ADANSB1)	// A/DC chanel select reg. B1
+  32:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADCSR(x)	(ba[x] + ADCx_ADCSR)		// A/DC control reg
+  33:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADANSA0(x)	(ba[x] + ADCx_ADANSA0)		// A/DC chanel select reg. A0
+  34:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADANSA1(x)	(ba[x] + ADCx_ADANSA1)		// A/DC chanel select reg. A1
+  35:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADCER(x)	(ba[x] + ADCx_ADCER)		// A/DC Control extension reg
+  36:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADANSB0(x)	(ba[x] + ADCx_ADANSB0)		// A/DC chanel select reg. B0
+  37:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADANSB1(x)	(ba[x] + ADCx_ADANSB1)		// A/DC chanel select reg. B1
   38:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  39:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADDR(x,c)	(ba[x] + ADDR(c))	//A/DC Data reg
-  40:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  41:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADSSTR(x,c)	(ba[x] + ADSSTR(c))	//A/DC Sampling state reg
-  42:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADSSTRL	(ADSSTRL)
-  43:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADSSTRT	(ADSSTRT)
-  44:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADSSTRO	(ADSSTRO)
-  45:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  46:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
-  47:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * Device control data
-  48:../device/adc/sysdepend/rx65n/adc_rx65n.c **** */
-  49:../device/adc/sysdepend/rx65n/adc_rx65n.c **** LOCAL struct {
-  50:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ID	wait_tskid;
-  51:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UINT	intno;
-  52:../device/adc/sysdepend/rx65n/adc_rx65n.c **** } ll_devcb[DEV_ADC_UNITNM];
-  53:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  54:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  55:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
-  56:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * Interrupt handler
-  57:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  */
-  58:../device/adc/sysdepend/rx65n/adc_rx65n.c **** void adc_inthdr( UINT intno)
-  59:../device/adc/sysdepend/rx65n/adc_rx65n.c **** {
-  62                             		.loc 2 59 1
+  39:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADDR(x,c)	(ba[x] + ADCx_ADDR(c))		//A/DC Data reg
+  40:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #define	ADC_ADSSTR(x,c)	(ba[x] + ADCx_ADSSTR(c))	//A/DC Sampling state reg
+  41:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  42:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
+  43:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * Device control data
+  44:../device/adc/sysdepend/rx65n/adc_rx65n.c **** */
+  45:../device/adc/sysdepend/rx65n/adc_rx65n.c **** LOCAL struct {
+  46:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ID	wait_tskid;
+  47:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UINT	intno;
+  48:../device/adc/sysdepend/rx65n/adc_rx65n.c **** } ll_devcb[DEV_ADC_UNITNM];
+  49:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  50:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  51:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
+  52:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * Interrupt handler
+  53:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  */
+  54:../device/adc/sysdepend/rx65n/adc_rx65n.c **** void adc_inthdr( UINT intno)
+  55:../device/adc/sysdepend/rx65n/adc_rx65n.c **** {
+  62                             		.loc 2 55 1
   63 002b 7E AA                   		push.l	r10
   64                             	.LCFI4:
   65 002d 71 0A F8                		add	#-8, r0, r10
   66                             	.LCFI5:
   67 0030 EF A0                   		mov.L	r10, r0
   68 0032 E7 A1 01                		mov.L	r1, 4[r10]
-  60:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UW	unit;
-  61:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  62:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ClearInt(intno);
-  69                             		.loc 2 62 2
+  56:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UW	unit;
+  57:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  58:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ClearInt(intno);
+  69                             		.loc 2 58 2
   70 0035 ED A1 01                		mov.L	4[r10], r1
   71 0038 05 00 00 00             		bsr	_ClearInt
-  63:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(intno == INTNO_S12ADI0) unit = 0;
-  72                             		.loc 2 63 4
+  59:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(intno == INTNO_S12ADI0) unit = 0;
+  72                             		.loc 2 59 4
   73 003c ED A5 01                		mov.L	4[r10], r5
   74 003f 75 55 82                		cmp	#0x82, r5
   75 0042 1E                      		bne	.L5
-  76                             		.loc 2 63 34 discriminator 1
+  76                             		.loc 2 59 34 discriminator 1
   77 0043 F8 A6 00                		mov.L	#0, [r10]
   78 0046 2E 0D                   		bra	.L6
   79                             	.L5:
-  64:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	else if(intno == INTNO_S12ADI1) unit = 1;
-  80                             		.loc 2 64 9
+  60:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	else if(intno == INTNO_S12ADI1) unit = 1;
+  80                             		.loc 2 60 9
   81 0048 ED A5 01                		mov.L	4[r10], r5
   82 004b 75 55 83                		cmp	#0x83, r5
   83 004e 21 2D                   		bne	.L9
-  84                             		.loc 2 64 39 discriminator 1
+  84                             		.loc 2 60 39 discriminator 1
   85 0050 F8 A6 01                		mov.L	#1, [r10]
   86                             	.L6:
-  65:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	else return ;
-  66:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  67:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(ll_devcb[unit].wait_tskid) {
-  87                             		.loc 2 67 19
+  61:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	else return ;
+  62:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  63:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(ll_devcb[unit].wait_tskid) {
+  87                             		.loc 2 63 19
   88 0053 FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
   89 0059 EC A5                   		mov.L	[r10], r5
   90 005b 6C 35                   		shll	#3, r5
   91 005d 4B 45                   		add	r4, r5
   92 005f EC 55                   		mov.L	[r5], r5
-  93                             		.loc 2 67 4
+  93                             		.loc 2 63 4
   94 0061 61 05                   		cmp	#0, r5
   95 0063 20 19                   		beq	.L4
-  68:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		tk_wup_tsk(ll_devcb[unit].wait_tskid);
-  96                             		.loc 2 68 3
+  64:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		tk_wup_tsk(ll_devcb[unit].wait_tskid);
+  96                             		.loc 2 64 3
   97 0065 FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
   98 006b EC A5                   		mov.L	[r10], r5
   99 006d 6C 35                   		shll	#3, r5
@@ -232,24 +228,24 @@
  103 0075 05 00 00 00             		bsr	_tk_wup_tsk
  104 0079 2E 03                   		bra	.L4
  105                             	.L9:
-  65:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	else return ;
- 106                             		.loc 2 65 7
+  61:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	else return ;
+ 106                             		.loc 2 61 7
  107 007b 03                      		nop
  108                             	.L4:
-  69:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
-  70:../device/adc/sysdepend/rx65n/adc_rx65n.c **** }
- 109                             		.loc 2 70 1
+  65:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
+  66:../device/adc/sysdepend/rx65n/adc_rx65n.c **** }
+ 109                             		.loc 2 66 1
  110 007c 3F AA 03                		rtsd	#12, r10-r10
  111                             	.LFE6:
  114                             	_adc_convert:
  115                             	.LFB7:
-  71:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  72:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
-  73:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * A/D convert
-  74:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  */
-  75:../device/adc/sysdepend/rx65n/adc_rx65n.c **** LOCAL UW adc_convert( UW unit, INT start, INT size, UW *buf )
-  76:../device/adc/sysdepend/rx65n/adc_rx65n.c **** {
- 116                             		.loc 2 76 1
+  67:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  68:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
+  69:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * A/D convert
+  70:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  */
+  71:../device/adc/sysdepend/rx65n/adc_rx65n.c **** LOCAL UW adc_convert( UW unit, INT start, INT size, UW *buf )
+  72:../device/adc/sysdepend/rx65n/adc_rx65n.c **** {
+ 116                             		.loc 2 72 1
  117 007f 6E 7A                   		pushm	r7-r10
  118                             	.LCFI6:
  119 0081 71 0A E4                		add	#-28, r0, r10
@@ -259,290 +255,290 @@
  123 0089 E7 A2 04                		mov.L	r2, 16[r10]
  124 008c E7 A3 05                		mov.L	r3, 20[r10]
  125 008f E7 A4 06                		mov.L	r4, 24[r10]
-  77:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	INT	ch, end;
-  78:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ER	err;
-  79:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  80:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ll_devcb[unit].wait_tskid = tk_get_tid();
- 126                             		.loc 2 80 30
+  73:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	INT	ch, end;
+  74:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ER	err;
+  75:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  76:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ll_devcb[unit].wait_tskid = tk_get_tid();
+ 126                             		.loc 2 76 30
  127 0092 05 00 00 00             		bsr	_tk_get_tid
  128 0096 EF 13                   		mov.L	r1, r3
- 129                             		.loc 2 80 28
+ 129                             		.loc 2 76 28
  130 0098 FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
  131 009e ED A5 03                		mov.L	12[r10], r5
  132 00a1 6C 35                   		shll	#3, r5
  133 00a3 4B 45                   		add	r4, r5
  134 00a5 E3 53                   		mov.L	r3, [r5]
-  81:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	tk_can_wup(TSK_SELF);
- 135                             		.loc 2 81 2
+  77:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	tk_can_wup(TSK_SELF);
+ 135                             		.loc 2 77 2
  136 00a7 66 01                   		mov.L	#0, r1
  137 00a9 05 00 00 00             		bsr	_tk_can_wup
-  82:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  83:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(unit == 0) {		// S12AD
- 138                             		.loc 2 83 4
+  78:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  79:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(unit == 0) {		// S12AD
+ 138                             		.loc 2 79 4
  139 00ad ED A5 03                		mov.L	12[r10], r5
  140 00b0 61 05                   		cmp	#0, r5
  141 00b2 21 64                   		bne	.L11
-  84:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(start >= ADC_CH_NUM0) return (UW)E_PAR;
- 142                             		.loc 2 84 5
+  80:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(start >= ADC_CH_NUM0) return (UW)E_PAR;
+ 142                             		.loc 2 80 5
  143 00b4 ED A5 04                		mov.L	16[r10], r5
  144 00b7 61 75                   		cmp	#7, r5
  145 00b9 2B 08                   		ble	.L12
- 146                             		.loc 2 84 35 discriminator 1
+ 146                             		.loc 2 80 35 discriminator 1
  147 00bb FB 56 EF                		mov.L	#-17, r5
  148 00be 38 55 01                		bra	.L13
  149                             	.L12:
-  85:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		end = start + size -1;
- 150                             		.loc 2 85 15
+  81:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		end = start + size -1;
+ 150                             		.loc 2 81 15
  151 00c1 ED A5 04                		mov.L	16[r10], r5
  152 00c4 06 89 A5 05             		add	20[r10].L, r5
- 153                             		.loc 2 85 7
+ 153                             		.loc 2 81 7
  154 00c8 60 15                   		sub	#1, r5
  155 00ca E7 A5 01                		mov.L	r5, 4[r10]
-  86:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(end >= ADC_CH_NUM0) return (UW)E_PAR;
- 156                             		.loc 2 86 5
+  82:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(end >= ADC_CH_NUM0) return (UW)E_PAR;
+ 156                             		.loc 2 82 5
  157 00cd ED A5 01                		mov.L	4[r10], r5
  158 00d0 61 75                   		cmp	#7, r5
  159 00d2 2B 08                   		ble	.L14
- 160                             		.loc 2 86 33 discriminator 1
+ 160                             		.loc 2 82 33 discriminator 1
  161 00d4 FB 56 EF                		mov.L	#-17, r5
  162 00d7 38 3C 01                		bra	.L13
  163                             	.L14:
-  87:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  88:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		for(ch = start; ch <= end; ch++) {
- 164                             		.loc 2 88 10
+  83:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  84:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		for(ch = start; ch <= end; ch++) {
+ 164                             		.loc 2 84 10
  165 00da ED A5 04                		mov.L	16[r10], r5
  166 00dd E3 A5                   		mov.L	r5, [r10]
- 167                             		.loc 2 88 3
+ 167                             		.loc 2 84 3
  168 00df 2E 2B                   		bra	.L15
  169                             	.L16:
-  89:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			*(UH*)(ADC_ADANSA0(0)) |= (1<<ch);
- 170                             		.loc 2 89 11 discriminator 3
+  85:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			*(UH*)(ADC_ADANSA0(0)) |= (1<<ch);
+ 170                             		.loc 2 85 11 discriminator 3
  171 00e1 FB 5E 00 90 08          		mov.L	#0x89000, r5
  172 00e6 62 45                   		add	#4, r5
- 173                             		.loc 2 89 27 discriminator 3
+ 173                             		.loc 2 85 27 discriminator 3
  174 00e8 DC 55                   		mov.W	[r5], r5
  175 00ea DF 54                   		mov.W	r5, r4
- 176                             		.loc 2 89 32 discriminator 3
+ 176                             		.loc 2 85 32 discriminator 3
  177 00ec 66 13                   		mov.L	#1, r3
  178 00ee EC A5                   		mov.L	[r10], r5
  179 00f0 EF 37                   		mov.L	r3, r7
  180 00f2 FD 62 57                		shll	r5, r7
  181 00f5 EF 75                   		mov.L	r7, r5
- 182                             		.loc 2 89 27 discriminator 3
+ 182                             		.loc 2 85 27 discriminator 3
  183 00f7 57 45                   		or	r4, r5
  184 00f9 DF 54                   		mov.W	r5, r4
- 185                             		.loc 2 89 11 discriminator 3
+ 185                             		.loc 2 85 11 discriminator 3
  186 00fb FB 5E 00 90 08          		mov.L	#0x89000, r5
  187 0100 62 45                   		add	#4, r5
- 188                             		.loc 2 89 27 discriminator 3
+ 188                             		.loc 2 85 27 discriminator 3
  189 0102 D3 54                   		mov.W	r4, [r5]
-  88:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			*(UH*)(ADC_ADANSA0(0)) |= (1<<ch);
- 190                             		.loc 2 88 32 discriminator 3
+  84:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			*(UH*)(ADC_ADANSA0(0)) |= (1<<ch);
+ 190                             		.loc 2 84 32 discriminator 3
  191 0104 EC A5                   		mov.L	[r10], r5
  192 0106 62 15                   		add	#1, r5
  193 0108 E3 A5                   		mov.L	r5, [r10]
  194                             	.L15:
-  88:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			*(UH*)(ADC_ADANSA0(0)) |= (1<<ch);
- 195                             		.loc 2 88 3 discriminator 1
+  84:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			*(UH*)(ADC_ADANSA0(0)) |= (1<<ch);
+ 195                             		.loc 2 84 3 discriminator 1
  196 010a EC A4                   		mov.L	[r10], r4
  197 010c ED A5 01                		mov.L	4[r10], r5
  198 010f 47 54                   		cmp	r5, r4
  199 0111 2B D0                   		ble	.L16
  200 0113 38 91 00                		bra	.L17
  201                             	.L11:
-  90:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		}
-  91:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	} else {		// S12AD1
-  92:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(start >= ADC_CH_NUM1) return (UW)E_PAR;
- 202                             		.loc 2 92 5
+  86:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		}
+  87:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	} else {		// S12AD1
+  88:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(start >= ADC_CH_NUM1) return (UW)E_PAR;
+ 202                             		.loc 2 88 5
  203 0116 ED A5 04                		mov.L	16[r10], r5
  204 0119 75 55 14                		cmp	#20, r5
  205 011c 2B 08                   		ble	.L18
- 206                             		.loc 2 92 35 discriminator 1
+ 206                             		.loc 2 88 35 discriminator 1
  207 011e FB 56 EF                		mov.L	#-17, r5
  208 0121 38 F2 00                		bra	.L13
  209                             	.L18:
-  93:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		end = start + size -1;
- 210                             		.loc 2 93 15
+  89:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		end = start + size -1;
+ 210                             		.loc 2 89 15
  211 0124 ED A5 04                		mov.L	16[r10], r5
  212 0127 06 89 A5 05             		add	20[r10].L, r5
- 213                             		.loc 2 93 7
+ 213                             		.loc 2 89 7
  214 012b 60 15                   		sub	#1, r5
  215 012d E7 A5 01                		mov.L	r5, 4[r10]
-  94:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(end >= ADC_CH_NUM1) return (UW)E_PAR;
- 216                             		.loc 2 94 5
+  90:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(end >= ADC_CH_NUM1) return (UW)E_PAR;
+ 216                             		.loc 2 90 5
  217 0130 ED A5 01                		mov.L	4[r10], r5
  218 0133 75 55 14                		cmp	#20, r5
  219 0136 2B 08                   		ble	.L19
- 220                             		.loc 2 94 33 discriminator 1
+ 220                             		.loc 2 90 33 discriminator 1
  221 0138 FB 56 EF                		mov.L	#-17, r5
  222 013b 38 D8 00                		bra	.L13
  223                             	.L19:
-  95:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
-  96:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		for(ch = start; ch <= end; ch++) {
- 224                             		.loc 2 96 10
+  91:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+  92:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		for(ch = start; ch <= end; ch++) {
+ 224                             		.loc 2 92 10
  225 013e ED A5 04                		mov.L	16[r10], r5
  226 0141 E3 A5                   		mov.L	r5, [r10]
- 227                             		.loc 2 96 3
+ 227                             		.loc 2 92 3
  228 0143 2E 58                   		bra	.L20
  229                             	.L23:
-  97:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			if(ch <= 7) {
- 230                             		.loc 2 97 6
+  93:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			if(ch <= 7) {
+ 230                             		.loc 2 93 6
  231 0145 EC A5                   		mov.L	[r10], r5
  232 0147 61 75                   		cmp	#7, r5
  233 0149 2A 27                   		bgt	.L21
-  98:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 				*(UH*)(ADC_ADANSA0(1)) |= (1<<ch);
- 234                             		.loc 2 98 12
+  94:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 				*(UH*)(ADC_ADANSA0(1)) |= (1<<ch);
+ 234                             		.loc 2 94 12
  235 014b FB 5E 00 91 08          		mov.L	#0x89100, r5
  236 0150 62 45                   		add	#4, r5
- 237                             		.loc 2 98 28
+ 237                             		.loc 2 94 28
  238 0152 DC 55                   		mov.W	[r5], r5
  239 0154 DF 54                   		mov.W	r5, r4
- 240                             		.loc 2 98 33
+ 240                             		.loc 2 94 33
  241 0156 66 13                   		mov.L	#1, r3
  242 0158 EC A5                   		mov.L	[r10], r5
  243 015a EF 37                   		mov.L	r3, r7
  244 015c FD 62 57                		shll	r5, r7
  245 015f EF 75                   		mov.L	r7, r5
- 246                             		.loc 2 98 28
+ 246                             		.loc 2 94 28
  247 0161 57 45                   		or	r4, r5
  248 0163 DF 54                   		mov.W	r5, r4
- 249                             		.loc 2 98 12
+ 249                             		.loc 2 94 12
  250 0165 FB 5E 00 91 08          		mov.L	#0x89100, r5
  251 016a 62 45                   		add	#4, r5
- 252                             		.loc 2 98 28
+ 252                             		.loc 2 94 28
  253 016c D3 54                   		mov.W	r4, [r5]
  254 016e 2E 27                   		bra	.L22
  255                             	.L21:
-  99:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			} else {
- 100:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 				*(UH*)(ADC_ADANSA1(1)) |= (1<<(ch-8));
- 256                             		.loc 2 100 12
+  95:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			} else {
+  96:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 				*(UH*)(ADC_ADANSA1(1)) |= (1<<(ch-8));
+ 256                             		.loc 2 96 12
  257 0170 FB 5E 00 91 08          		mov.L	#0x89100, r5
  258 0175 62 65                   		add	#6, r5
- 259                             		.loc 2 100 28
+ 259                             		.loc 2 96 28
  260 0177 DC 55                   		mov.W	[r5], r5
  261 0179 DF 54                   		mov.W	r5, r4
- 262                             		.loc 2 100 38
+ 262                             		.loc 2 96 38
  263 017b EC A5                   		mov.L	[r10], r5
  264 017d 60 85                   		sub	#8, r5
- 265                             		.loc 2 100 33
+ 265                             		.loc 2 96 33
  266 017f 66 13                   		mov.L	#1, r3
  267 0181 EF 37                   		mov.L	r3, r7
  268 0183 FD 62 57                		shll	r5, r7
  269 0186 EF 75                   		mov.L	r7, r5
- 270                             		.loc 2 100 28
+ 270                             		.loc 2 96 28
  271 0188 57 45                   		or	r4, r5
  272 018a DF 54                   		mov.W	r5, r4
- 273                             		.loc 2 100 12
+ 273                             		.loc 2 96 12
  274 018c FB 5E 00 91 08          		mov.L	#0x89100, r5
  275 0191 62 65                   		add	#6, r5
- 276                             		.loc 2 100 28
+ 276                             		.loc 2 96 28
  277 0193 D3 54                   		mov.W	r4, [r5]
  278                             	.L22:
-  96:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			if(ch <= 7) {
- 279                             		.loc 2 96 32 discriminator 2
+  92:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			if(ch <= 7) {
+ 279                             		.loc 2 92 32 discriminator 2
  280 0195 EC A5                   		mov.L	[r10], r5
  281 0197 62 15                   		add	#1, r5
  282 0199 E3 A5                   		mov.L	r5, [r10]
  283                             	.L20:
-  96:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			if(ch <= 7) {
- 284                             		.loc 2 96 3 discriminator 1
+  92:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			if(ch <= 7) {
+ 284                             		.loc 2 92 3 discriminator 1
  285 019b EC A4                   		mov.L	[r10], r4
  286 019d ED A5 01                		mov.L	4[r10], r5
  287 01a0 47 54                   		cmp	r5, r4
  288 01a2 2B A3                   		ble	.L23
  289                             	.L17:
- 101:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			}
- 102:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		}
- 103:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
- 104:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 105:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	out_h(ADC_ADCSR(unit), ADCSR_ADST | ADCSR_ADIE);	// Start Covert
- 290                             		.loc 2 105 8
+  97:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			}
+  98:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		}
+  99:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
+ 100:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 101:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	out_h(ADC_ADCSR(unit), ADCSR_ADST | ADCSR_ADIE);	// Start Covert
+ 290                             		.loc 2 101 8
  291 01a4 FB 52 00 00 00 00       		mov.L	#_ba, r5
  292 01aa ED A4 03                		mov.L	12[r10], r4
  293 01ad FE 64 55                		mov.L	[r4,r5], r5
- 294                             		.loc 2 105 2
+ 294                             		.loc 2 101 2
  295 01b0 FB 2A 00 90             		mov	#-28672, r2
  296 01b4 EF 51                   		mov.L	r5, r1
  297 01b6 39 4A FE                		bsr	_out_h
- 106:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 107:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	err = tk_slp_tsk(DEVCNF_ADC_TMOSCAN);
- 298                             		.loc 2 107 8
+ 102:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 103:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	err = tk_slp_tsk(DEVCNF_ADC_TMOSCAN);
+ 298                             		.loc 2 103 8
  299 01b9 FB 1A E8 03             		mov.L	#0x3e8, r1
  300 01bd 05 00 00 00             		bsr	_tk_slp_tsk
  301 01c1 E7 A1 02                		mov.L	r1, 8[r10]
- 108:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(err != E_OK) return (UW)err;
- 302                             		.loc 2 108 4
+ 104:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(err != E_OK) return (UW)err;
+ 302                             		.loc 2 104 4
  303 01c4 ED A5 02                		mov.L	8[r10], r5
  304 01c7 61 05                   		cmp	#0, r5
  305 01c9 16                      		beq	.L24
- 306                             		.loc 2 108 25 discriminator 1
+ 306                             		.loc 2 104 25 discriminator 1
  307 01ca ED A5 02                		mov.L	8[r10], r5
  308 01cd 2E 46                   		bra	.L13
  309                             	.L24:
- 109:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 110:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	for(ch = start; ch <= end; ch++) {	/* Read data */
- 310                             		.loc 2 110 9
+ 105:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 106:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	for(ch = start; ch <= end; ch++) {	/* Read data */
+ 310                             		.loc 2 106 9
  311 01cf ED A5 04                		mov.L	16[r10], r5
  312 01d2 E3 A5                   		mov.L	r5, [r10]
- 313                             		.loc 2 110 2
+ 313                             		.loc 2 106 2
  314 01d4 2E 33                   		bra	.L25
  315                             	.L26:
- 111:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		*buf++ = (UW)in_h(ADC_ADDR(unit, ch));
- 316                             		.loc 2 111 21 discriminator 3
+ 107:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		*buf++ = (UW)in_h(ADC_ADDR(unit, ch));
+ 316                             		.loc 2 107 21 discriminator 3
  317 01d6 FB 52 00 00 00 00       		mov.L	#_ba, r5
  318 01dc ED A4 03                		mov.L	12[r10], r4
  319 01df FE 64 54                		mov.L	[r4,r5], r4
  320 01e2 EC A5                   		mov.L	[r10], r5
  321 01e4 71 55 10                		add	#16, r5
  322 01e7 4B 55                   		add	r5, r5
- 323                             		.loc 2 111 16 discriminator 3
+ 323                             		.loc 2 107 16 discriminator 3
  324 01e9 4B 45                   		add	r4, r5
  325 01eb EF 51                   		mov.L	r5, r1
  326 01ed 39 2A FE                		bsr	_in_h
  327 01f0 EF 15                   		mov.L	r1, r5
  328 01f2 DF 53                   		mov.W	r5, r3
- 329                             		.loc 2 111 7 discriminator 3
+ 329                             		.loc 2 107 7 discriminator 3
  330 01f4 ED A5 06                		mov.L	24[r10], r5
  331 01f7 71 54 04                		add	#4, r5, r4
  332 01fa E7 A4 06                		mov.L	r4, 24[r10]
- 333                             		.loc 2 111 12 discriminator 3
+ 333                             		.loc 2 107 12 discriminator 3
  334 01fd 5F 34                   		movu.W	r3, r4
- 335                             		.loc 2 111 10 discriminator 3
+ 335                             		.loc 2 107 10 discriminator 3
  336 01ff E3 54                   		mov.L	r4, [r5]
- 110:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		*buf++ = (UW)in_h(ADC_ADDR(unit, ch));
- 337                             		.loc 2 110 31 discriminator 3
+ 106:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		*buf++ = (UW)in_h(ADC_ADDR(unit, ch));
+ 337                             		.loc 2 106 31 discriminator 3
  338 0201 EC A5                   		mov.L	[r10], r5
  339 0203 62 15                   		add	#1, r5
  340 0205 E3 A5                   		mov.L	r5, [r10]
  341                             	.L25:
- 110:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		*buf++ = (UW)in_h(ADC_ADDR(unit, ch));
- 342                             		.loc 2 110 2 discriminator 1
+ 106:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		*buf++ = (UW)in_h(ADC_ADDR(unit, ch));
+ 342                             		.loc 2 106 2 discriminator 1
  343 0207 EC A4                   		mov.L	[r10], r4
  344 0209 ED A5 01                		mov.L	4[r10], r5
  345 020c 47 54                   		cmp	r5, r4
  346 020e 2B C8                   		ble	.L26
- 112:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
- 113:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	return (UW)size;
- 347                             		.loc 2 113 9
+ 108:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
+ 109:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	return (UW)size;
+ 347                             		.loc 2 109 9
  348 0210 ED A5 05                		mov.L	20[r10], r5
  349                             		.balign 8,3,1
  350                             	.L13:
- 114:../device/adc/sysdepend/rx65n/adc_rx65n.c **** }
- 351                             		.loc 2 114 1
+ 110:../device/adc/sysdepend/rx65n/adc_rx65n.c **** }
+ 351                             		.loc 2 110 1
  352 0213 EF 51                   		mov.L	r5, r1
  353 0215 3F 7A 0B                		rtsd	#44, r7-r10
  354                             	.LFE7:
  356                             		.global	_dev_adc_llctl
  358                             	_dev_adc_llctl:
  359                             	.LFB8:
- 115:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 116:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 117:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
- 118:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * Low level device control
- 119:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  */
- 120:../device/adc/sysdepend/rx65n/adc_rx65n.c **** EXPORT W dev_adc_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
- 121:../device/adc/sysdepend/rx65n/adc_rx65n.c **** {
- 360                             		.loc 2 121 1
+ 111:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 112:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 113:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
+ 114:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * Low level device control
+ 115:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  */
+ 116:../device/adc/sysdepend/rx65n/adc_rx65n.c **** EXPORT W dev_adc_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
+ 117:../device/adc/sysdepend/rx65n/adc_rx65n.c **** {
+ 360                             		.loc 2 117 1
  361 0218 7E AA                   		push.l	r10
  362                             	.LCFI8:
  363 021a 71 0A E8                		add	#-24, r0, r10
@@ -554,12 +550,12 @@
  369 0227 E7 A2 02                		mov.L	r2, 8[r10]
  370 022a E7 A3 03                		mov.L	r3, 12[r10]
  371 022d E7 A4 04                		mov.L	r4, 16[r10]
- 122:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UW	rtn = (UW)E_OK;
- 372                             		.loc 2 122 5
+ 118:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UW	rtn = (UW)E_OK;
+ 372                             		.loc 2 118 5
  373 0230 F8 A6 00                		mov.L	#0, [r10]
- 123:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 124:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	switch(cmd) {
- 374                             		.loc 2 124 2
+ 119:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 120:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	switch(cmd) {
+ 374                             		.loc 2 120 2
  375 0233 ED A4 02                		mov.L	8[r10], r4
  376 0236 61 14                   		cmp	#1, r4
  377 0238 20 70                   		beq	.L28
@@ -579,36 +575,36 @@
  391 0257 20 7C                   		beq	.L33
  392 0259 38 B7 00                		bra	.L31
  393                             	.L30:
- 125:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	case LLD_ADC_OPEN:	/* Open A/DC */
- 126:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADANSA0(unit), 0);
- 394                             		.loc 2 126 9
+ 121:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	case LLD_ADC_OPEN:	/* Open A/DC */
+ 122:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADANSA0(unit), 0);
+ 394                             		.loc 2 122 9
  395 025c FB 52 00 00 00 00       		mov.L	#_ba, r5
  396 0262 ED A4 01                		mov.L	4[r10], r4
  397 0265 FE 64 55                		mov.L	[r4,r5], r5
- 398                             		.loc 2 126 3
+ 398                             		.loc 2 122 3
  399 0268 62 45                   		add	#4, r5
  400 026a 66 02                   		mov	#0, r2
  401 026c EF 51                   		mov.L	r5, r1
  402 026e 39 92 FD                		bsr	_out_h
- 127:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(unit == 1) {
- 403                             		.loc 2 127 5
+ 123:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(unit == 1) {
+ 403                             		.loc 2 123 5
  404 0271 ED A5 01                		mov.L	4[r10], r5
  405 0274 61 15                   		cmp	#1, r5
  406 0276 21 17                   		bne	.L34
- 128:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			out_h(ADC_ADANSA1(unit), 0);
- 407                             		.loc 2 128 10
+ 124:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 			out_h(ADC_ADANSA1(unit), 0);
+ 407                             		.loc 2 124 10
  408 0278 FB 52 00 00 00 00       		mov.L	#_ba, r5
  409 027e ED A4 01                		mov.L	4[r10], r4
  410 0281 FE 64 55                		mov.L	[r4,r5], r5
- 411                             		.loc 2 128 4
+ 411                             		.loc 2 124 4
  412 0284 62 65                   		add	#6, r5
  413 0286 66 02                   		mov	#0, r2
  414 0288 EF 51                   		mov.L	r5, r1
  415 028a 39 76 FD                		bsr	_out_h
  416                             	.L34:
- 129:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		}
- 130:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		EnableInt(ll_devcb[unit].intno, unit?DEVCNF_ADC1_INTPRI:DEVCNF_ADC0_INTPRI);
- 417                             		.loc 2 130 3
+ 125:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		}
+ 126:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		EnableInt(ll_devcb[unit].intno, unit?DEVCNF_ADC1_INTPRI:DEVCNF_ADC0_INTPRI);
+ 417                             		.loc 2 126 3
  418 028d FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
  419 0293 ED A5 01                		mov.L	4[r10], r5
  420 0296 6C 35                   		shll	#3, r5
@@ -618,14 +614,14 @@
  424 029e 66 52                   		mov.L	#5, r2
  425 02a0 EF 51                   		mov.L	r5, r1
  426 02a2 05 00 00 00             		bsr	_EnableInt
- 131:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		break;
- 427                             		.loc 2 131 3
+ 127:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		break;
+ 427                             		.loc 2 127 3
  428 02a6 2E 6A                   		bra	.L31
  429                             	.L28:
- 132:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 133:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	case LLD_ADC_CLOSE:	/* Close　A/DC */
- 134:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		DisableInt(ll_devcb[unit].intno);
- 430                             		.loc 2 134 3
+ 128:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 129:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	case LLD_ADC_CLOSE:	/* Close　A/DC */
+ 130:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		DisableInt(ll_devcb[unit].intno);
+ 430                             		.loc 2 130 3
  431 02a8 FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
  432 02ae ED A5 01                		mov.L	4[r10], r5
  433 02b1 6C 35                   		shll	#3, r5
@@ -634,383 +630,383 @@
  436 02b7 EC 55                   		mov.L	[r5], r5
  437 02b9 EF 51                   		mov.L	r5, r1
  438 02bb 05 00 00 00             		bsr	_DisableInt
- 135:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		break;
- 439                             		.loc 2 135 3
+ 131:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		break;
+ 439                             		.loc 2 131 3
  440 02bf 2E 51                   		bra	.L31
  441                             	.L32:
- 136:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	
- 137:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	case LLD_ADC_READ:	/* Read A/DC data */
- 138:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		rtn = adc_convert(unit, p1, p2, pp);
- 442                             		.loc 2 138 9
+ 132:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	
+ 133:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	case LLD_ADC_READ:	/* Read A/DC data */
+ 134:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		rtn = adc_convert(unit, p1, p2, pp);
+ 442                             		.loc 2 134 9
  443 02c1 ED A2 03                		mov.L	12[r10], r2
  444 02c4 ED A3 04                		mov.L	16[r10], r3
  445 02c7 EC 54                   		mov.L	[r5], r4
  446 02c9 ED A1 01                		mov.L	4[r10], r1
  447 02cc 39 B3 FD                		bsr	_adc_convert
  448 02cf E3 A1                   		mov.L	r1, [r10]
- 139:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		break;
- 449                             		.loc 2 139 3
+ 135:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		break;
+ 449                             		.loc 2 135 3
  450 02d1 2E 3F                   		bra	.L31
  451                             	.L33:
- 140:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	
- 141:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	case LLD_ADC_RSIZE:	/* Get read data size */
- 142:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if((p1 > 7 && p1 <16) || p1 > 31) return (UW)E_PAR;
- 452                             		.loc 2 142 5
+ 136:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	
+ 137:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	case LLD_ADC_RSIZE:	/* Get read data size */
+ 138:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if((p1 > 7 && p1 <16) || p1 > 31) return (UW)E_PAR;
+ 452                             		.loc 2 138 5
  453 02d3 ED A5 03                		mov.L	12[r10], r5
  454 02d6 61 75                   		cmp	#7, r5
  455 02d8 25 09                   		bleu	.L35
- 456                             		.loc 2 142 14 discriminator 1
+ 456                             		.loc 2 138 14 discriminator 1
  457 02da ED A5 03                		mov.L	12[r10], r5
  458 02dd 61 F5                   		cmp	#15, r5
  459 02df 25 0A                   		bleu	.L36
  460                             	.L35:
- 461                             		.loc 2 142 25 discriminator 4
+ 461                             		.loc 2 138 25 discriminator 4
  462 02e1 ED A5 03                		mov.L	12[r10], r5
  463 02e4 75 55 1F                		cmp	#31, r5
  464 02e7 25 07                   		bleu	.L37
  465                             	.L36:
- 466                             		.loc 2 142 44 discriminator 5
+ 466                             		.loc 2 138 44 discriminator 5
  467 02e9 FB 56 EF                		mov.L	#-17, r5
  468 02ec 2E 26                   		bra	.L38
  469                             	.L37:
- 143:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		rtn = (unit?ADC_CH_NUM1:ADC_CH_NUM0) - (p1<=7?p1:p1-8);
- 470                             		.loc 2 143 26
+ 139:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		rtn = (unit?ADC_CH_NUM1:ADC_CH_NUM0) - (p1<=7?p1:p1-8);
+ 470                             		.loc 2 139 26
  471 02ee ED A5 01                		mov.L	4[r10], r5
  472 02f1 61 05                   		cmp	#0, r5
  473 02f3 15                      		beq	.L39
- 474                             		.loc 2 143 26 is_stmt 0 discriminator 1
+ 474                             		.loc 2 139 26 is_stmt 0 discriminator 1
  475 02f4 75 44 15                		mov.L	#21, r4
  476 02f7 0B                      		bra	.L40
  477                             	.L39:
- 478                             		.loc 2 143 26 discriminator 2
+ 478                             		.loc 2 139 26 discriminator 2
  479 02f8 66 84                   		mov.L	#8, r4
  480                             	.L40:
- 481                             		.loc 2 143 51 is_stmt 1 discriminator 4
+ 481                             		.loc 2 139 51 is_stmt 1 discriminator 4
  482 02fa ED A5 03                		mov.L	12[r10], r5
  483 02fd 61 75                   		cmp	#7, r5
  484 02ff 25 08                   		bleu	.L41
- 485                             		.loc 2 143 51 is_stmt 0 discriminator 5
+ 485                             		.loc 2 139 51 is_stmt 0 discriminator 5
  486 0301 ED A5 03                		mov.L	12[r10], r5
  487 0304 60 85                   		sub	#8, r5
  488 0306 0C                      		bra	.L42
  489                             	.L41:
- 490                             		.loc 2 143 51 discriminator 6
+ 490                             		.loc 2 139 51 discriminator 6
  491 0307 ED A5 03                		mov.L	12[r10], r5
  492                             	.L42:
- 493                             		.loc 2 143 7 is_stmt 1 discriminator 8
+ 493                             		.loc 2 139 7 is_stmt 1 discriminator 8
  494 030a FF 05 54                		sub	r5, r4, r5
  495 030d E3 A5                   		mov.L	r5, [r10]
- 144:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(rtn < 0 ) rtn = 0;
- 145:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		break;
- 496                             		.loc 2 145 3 discriminator 8
+ 140:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		if(rtn < 0 ) rtn = 0;
+ 141:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		break;
+ 496                             		.loc 2 141 3 discriminator 8
  497 030f 03                      		nop
  498                             		.balign 8,3,1
  499                             	.L31:
- 146:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 147:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
- 148:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	
- 149:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	return rtn;
- 500                             		.loc 2 149 9
+ 142:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 143:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
+ 144:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	
+ 145:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	return rtn;
+ 500                             		.loc 2 145 9
  501 0310 EC A5                   		mov.L	[r10], r5
  502                             	.L38:
- 150:../device/adc/sysdepend/rx65n/adc_rx65n.c **** }
- 503                             		.loc 2 150 1
+ 146:../device/adc/sysdepend/rx65n/adc_rx65n.c **** }
+ 503                             		.loc 2 146 1
  504 0312 EF 51                   		mov.L	r5, r1
  505 0314 3F AA 07                		rtsd	#28, r10-r10
  506                             	.LFE8:
  508                             		.global	_dev_adc_llinit
  510                             	_dev_adc_llinit:
  511                             	.LFB9:
- 151:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 152:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
- 153:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * Device initialization
- 154:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  */
- 155:../device/adc/sysdepend/rx65n/adc_rx65n.c **** EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
- 156:../device/adc/sysdepend/rx65n/adc_rx65n.c **** {
- 512                             		.loc 2 156 1
+ 147:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 148:../device/adc/sysdepend/rx65n/adc_rx65n.c **** /*----------------------------------------------------------------------
+ 149:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  * Device initialization
+ 150:../device/adc/sysdepend/rx65n/adc_rx65n.c ****  */
+ 151:../device/adc/sysdepend/rx65n/adc_rx65n.c **** EXPORT ER dev_adc_llinit( T_ADC_DCB *p_dcb)
+ 152:../device/adc/sysdepend/rx65n/adc_rx65n.c **** {
+ 512                             		.loc 2 152 1
  513 0317 7E AA                   		push.l	r10
  514                             	.LCFI10:
  515 0319 71 0A E8                		add	#-24, r0, r10
  516                             	.LCFI11:
  517 031c EF A0                   		mov.L	r10, r0
  518 031e E7 A1 05                		mov.L	r1, 20[r10]
- 157:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	const T_DINT	dint = {
- 519                             		.loc 2 157 15
+ 153:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	const T_DINT	dint = {
+ 519                             		.loc 2 153 15
  520 0321 F9 A6 03 01             		mov.L	#1, 12[r10]
  521 0325 F9 A2 04 00 00 00 00    		mov.L	#_adc_inthdr, 16[r10]
- 158:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		.intatr	= TA_HLNG,
- 159:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		.inthdr	= adc_inthdr,
- 160:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	};
- 161:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UW	unit;
- 162:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UINT	intno;
- 163:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ER	err;
- 164:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 165:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	unit = p_dcb->unit;
- 522                             		.loc 2 165 7
+ 154:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		.intatr	= TA_HLNG,
+ 155:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		.inthdr	= adc_inthdr,
+ 156:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	};
+ 157:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UW	unit;
+ 158:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UINT	intno;
+ 159:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ER	err;
+ 160:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 161:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	unit = p_dcb->unit;
+ 522                             		.loc 2 161 7
  523 032c ED A5 05                		mov.L	20[r10], r5
  524 032f EC 55                   		mov.L	[r5], r5
  525 0331 E3 A5                   		mov.L	r5, [r10]
+ 162:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 163:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #if DEVCONF_ADC_INIT_MSTP		// Initialize module stop
+ 164:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UINT	sts;
+ 165:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UW	mstpa;
  166:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 167:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #if DEVCONF_ADC_INIT_MSTP		// Initialize module stop
- 168:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UINT	sts;
- 169:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	UW	mstpa;
- 170:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 171:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	mstpa = (1<<19) | (1<<((unit)?16:17));
- 172:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	DI(sts);
- 173:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	out_h(SYSTEM_PRCR, 0xA502);	/* Disable Register Protect */
- 174:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	*(UW*)(MSTPCRA) &= ~mstpa;	/* Release module stop */
- 175:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	out_h(SYSTEM_PRCR, 0xA500);	/* Enable Register protect */
- 176:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	EI(sts);
- 177:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #endif	/* DEVCONF_ADC_INIT_MSTP */
- 178:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 179:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	/* ADC device initialize */
- 180:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	out_h(ADC_ADCER(unit), ADCER_INI);
- 526                             		.loc 2 180 8
+ 167:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	mstpa = (1<<19) | (1<<((unit)?16:17));
+ 168:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	DI(sts);
+ 169:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	out_h(SYSTEM_PRCR, 0xA502);	/* Disable Register Protect */
+ 170:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	*(UW*)(MSTPCRA) &= ~mstpa;	/* Release module stop */
+ 171:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	out_h(SYSTEM_PRCR, 0xA500);	/* Enable Register protect */
+ 172:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	EI(sts);
+ 173:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #endif	/* DEVCONF_ADC_INIT_MSTP */
+ 174:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 175:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	/* ADC device initialize */
+ 176:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	out_h(ADC_ADCER(unit), ADCER_INI);
+ 526                             		.loc 2 176 8
  527 0333 FB 52 00 00 00 00       		mov.L	#_ba, r5
  528 0339 EC A4                   		mov.L	[r10], r4
  529 033b FE 64 55                		mov.L	[r4,r5], r5
- 530                             		.loc 2 180 2
+ 530                             		.loc 2 176 2
  531 033e 62 E5                   		add	#14, r5
  532 0340 75 42 20                		mov	#32, r2
  533 0343 EF 51                   		mov.L	r5, r1
  534 0345 39 BB FC                		bsr	_out_h
- 181:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 182:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 183:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	/* Set sampling rate */
- 184:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(unit == 0) {
- 535                             		.loc 2 184 4
+ 177:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 178:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 179:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	/* Set sampling rate */
+ 180:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(unit == 0) {
+ 535                             		.loc 2 180 4
  536 0348 EC A5                   		mov.L	[r10], r5
  537 034a 61 05                   		cmp	#0, r5
  538 034c 3B 86 00                		bne	.L44
- 185:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,0), DEVCNF_ADC0_ADSSTR0_INI);
- 539                             		.loc 2 185 9
+ 181:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,0), DEVCNF_ADC0_ADSSTR0_INI);
+ 539                             		.loc 2 181 9
  540 034f FB 5E 00 90 08          		mov.L	#0x89000, r5
- 541                             		.loc 2 185 3
+ 541                             		.loc 2 181 3
  542 0354 72 55 E0 00             		add	#0xe0, r5
  543 0358 66 B2                   		mov	#11, r2
  544 035a EF 51                   		mov.L	r5, r1
  545 035c 39 A4 FC                		bsr	_out_h
- 186:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,1), DEVCNF_ADC0_ADSSTR1_INI);
- 546                             		.loc 2 186 9
+ 182:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,1), DEVCNF_ADC0_ADSSTR1_INI);
+ 546                             		.loc 2 182 9
  547 035f FB 5E 00 90 08          		mov.L	#0x89000, r5
- 548                             		.loc 2 186 3
+ 548                             		.loc 2 182 3
  549 0364 72 55 E1 00             		add	#0xe1, r5
  550 0368 66 B2                   		mov	#11, r2
  551 036a EF 51                   		mov.L	r5, r1
  552 036c 39 94 FC                		bsr	_out_h
- 187:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,2), DEVCNF_ADC0_ADSSTR2_INI);
- 553                             		.loc 2 187 9
+ 183:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,2), DEVCNF_ADC0_ADSSTR2_INI);
+ 553                             		.loc 2 183 9
  554 036f FB 5E 00 90 08          		mov.L	#0x89000, r5
- 555                             		.loc 2 187 3
+ 555                             		.loc 2 183 3
  556 0374 72 55 E2 00             		add	#0xe2, r5
  557 0378 66 B2                   		mov	#11, r2
  558 037a EF 51                   		mov.L	r5, r1
  559 037c 39 84 FC                		bsr	_out_h
- 188:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,3), DEVCNF_ADC0_ADSSTR3_INI);
- 560                             		.loc 2 188 9
+ 184:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,3), DEVCNF_ADC0_ADSSTR3_INI);
+ 560                             		.loc 2 184 9
  561 037f FB 5E 00 90 08          		mov.L	#0x89000, r5
- 562                             		.loc 2 188 3
+ 562                             		.loc 2 184 3
  563 0384 72 55 E3 00             		add	#0xe3, r5
  564 0388 66 B2                   		mov	#11, r2
  565 038a EF 51                   		mov.L	r5, r1
  566 038c 39 74 FC                		bsr	_out_h
- 189:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,4), DEVCNF_ADC0_ADSSTR4_INI);
- 567                             		.loc 2 189 9
+ 185:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,4), DEVCNF_ADC0_ADSSTR4_INI);
+ 567                             		.loc 2 185 9
  568 038f FB 5E 00 90 08          		mov.L	#0x89000, r5
- 569                             		.loc 2 189 3
+ 569                             		.loc 2 185 3
  570 0394 72 55 E4 00             		add	#0xe4, r5
  571 0398 66 B2                   		mov	#11, r2
  572 039a EF 51                   		mov.L	r5, r1
  573 039c 39 64 FC                		bsr	_out_h
- 190:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,5), DEVCNF_ADC0_ADSSTR5_INI);
- 574                             		.loc 2 190 9
+ 186:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,5), DEVCNF_ADC0_ADSSTR5_INI);
+ 574                             		.loc 2 186 9
  575 039f FB 5E 00 90 08          		mov.L	#0x89000, r5
- 576                             		.loc 2 190 3
+ 576                             		.loc 2 186 3
  577 03a4 72 55 E5 00             		add	#0xe5, r5
  578 03a8 66 B2                   		mov	#11, r2
  579 03aa EF 51                   		mov.L	r5, r1
  580 03ac 39 54 FC                		bsr	_out_h
- 191:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,6), DEVCNF_ADC0_ADSSTR6_INI);
- 581                             		.loc 2 191 9
+ 187:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,6), DEVCNF_ADC0_ADSSTR6_INI);
+ 581                             		.loc 2 187 9
  582 03af FB 5E 00 90 08          		mov.L	#0x89000, r5
- 583                             		.loc 2 191 3
+ 583                             		.loc 2 187 3
  584 03b4 72 55 E6 00             		add	#0xe6, r5
  585 03b8 66 B2                   		mov	#11, r2
  586 03ba EF 51                   		mov.L	r5, r1
  587 03bc 39 44 FC                		bsr	_out_h
- 192:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,7), DEVCNF_ADC0_ADSSTR7_INI);
- 588                             		.loc 2 192 9
+ 188:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(0,7), DEVCNF_ADC0_ADSSTR7_INI);
+ 588                             		.loc 2 188 9
  589 03bf FB 5E 00 90 08          		mov.L	#0x89000, r5
- 590                             		.loc 2 192 3
+ 590                             		.loc 2 188 3
  591 03c4 72 55 E7 00             		add	#0xe7, r5
  592 03c8 66 B2                   		mov	#11, r2
  593 03ca EF 51                   		mov.L	r5, r1
  594 03cc 39 34 FC                		bsr	_out_h
  595 03cf 38 21 01                		bra	.L45
  596                             	.L44:
- 193:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	} else {
- 194:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,0), DEVCNF_ADC1_ADSSTR0_INI);
- 597                             		.loc 2 194 9
+ 189:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	} else {
+ 190:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,0), DEVCNF_ADC1_ADSSTR0_INI);
+ 597                             		.loc 2 190 9
  598 03d2 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 599                             		.loc 2 194 3
+ 599                             		.loc 2 190 3
  600 03d7 72 55 E0 00             		add	#0xe0, r5
  601 03db 66 B2                   		mov	#11, r2
  602 03dd EF 51                   		mov.L	r5, r1
  603 03df 39 21 FC                		bsr	_out_h
- 195:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,1), DEVCNF_ADC1_ADSSTR1_INI);
- 604                             		.loc 2 195 9
+ 191:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,1), DEVCNF_ADC1_ADSSTR1_INI);
+ 604                             		.loc 2 191 9
  605 03e2 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 606                             		.loc 2 195 3
+ 606                             		.loc 2 191 3
  607 03e7 72 55 E1 00             		add	#0xe1, r5
  608 03eb 66 B2                   		mov	#11, r2
  609 03ed EF 51                   		mov.L	r5, r1
  610 03ef 39 11 FC                		bsr	_out_h
- 196:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,2), DEVCNF_ADC1_ADSSTR2_INI);
- 611                             		.loc 2 196 9
+ 192:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,2), DEVCNF_ADC1_ADSSTR2_INI);
+ 611                             		.loc 2 192 9
  612 03f2 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 613                             		.loc 2 196 3
+ 613                             		.loc 2 192 3
  614 03f7 72 55 E2 00             		add	#0xe2, r5
  615 03fb 66 B2                   		mov	#11, r2
  616 03fd EF 51                   		mov.L	r5, r1
  617 03ff 39 01 FC                		bsr	_out_h
- 197:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,3), DEVCNF_ADC1_ADSSTR3_INI);
- 618                             		.loc 2 197 9
+ 193:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,3), DEVCNF_ADC1_ADSSTR3_INI);
+ 618                             		.loc 2 193 9
  619 0402 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 620                             		.loc 2 197 3
+ 620                             		.loc 2 193 3
  621 0407 72 55 E3 00             		add	#0xe3, r5
  622 040b 66 B2                   		mov	#11, r2
  623 040d EF 51                   		mov.L	r5, r1
  624 040f 39 F1 FB                		bsr	_out_h
- 198:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,4), DEVCNF_ADC1_ADSSTR4_INI);
- 625                             		.loc 2 198 9
+ 194:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,4), DEVCNF_ADC1_ADSSTR4_INI);
+ 625                             		.loc 2 194 9
  626 0412 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 627                             		.loc 2 198 3
+ 627                             		.loc 2 194 3
  628 0417 72 55 E4 00             		add	#0xe4, r5
  629 041b 66 B2                   		mov	#11, r2
  630 041d EF 51                   		mov.L	r5, r1
  631 041f 39 E1 FB                		bsr	_out_h
- 199:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,5), DEVCNF_ADC1_ADSSTR5_INI);
- 632                             		.loc 2 199 9
+ 195:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,5), DEVCNF_ADC1_ADSSTR5_INI);
+ 632                             		.loc 2 195 9
  633 0422 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 634                             		.loc 2 199 3
+ 634                             		.loc 2 195 3
  635 0427 72 55 E5 00             		add	#0xe5, r5
  636 042b 66 B2                   		mov	#11, r2
  637 042d EF 51                   		mov.L	r5, r1
  638 042f 39 D1 FB                		bsr	_out_h
- 200:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,6), DEVCNF_ADC1_ADSSTR6_INI);
- 639                             		.loc 2 200 9
+ 196:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,6), DEVCNF_ADC1_ADSSTR6_INI);
+ 639                             		.loc 2 196 9
  640 0432 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 641                             		.loc 2 200 3
+ 641                             		.loc 2 196 3
  642 0437 72 55 E6 00             		add	#0xe6, r5
  643 043b 66 B2                   		mov	#11, r2
  644 043d EF 51                   		mov.L	r5, r1
  645 043f 39 C1 FB                		bsr	_out_h
- 201:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,7), DEVCNF_ADC1_ADSSTR7_INI);
- 646                             		.loc 2 201 9
+ 197:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,7), DEVCNF_ADC1_ADSSTR7_INI);
+ 646                             		.loc 2 197 9
  647 0442 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 648                             		.loc 2 201 3
+ 648                             		.loc 2 197 3
  649 0447 72 55 E7 00             		add	#0xe7, r5
  650 044b 66 B2                   		mov	#11, r2
  651 044d EF 51                   		mov.L	r5, r1
  652 044f 39 B1 FB                		bsr	_out_h
- 202:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,8), DEVCNF_ADC1_ADSSTR0_INI);
- 653                             		.loc 2 202 9
+ 198:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,8), DEVCNF_ADC1_ADSSTR0_INI);
+ 653                             		.loc 2 198 9
  654 0452 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 655                             		.loc 2 202 3
+ 655                             		.loc 2 198 3
  656 0457 72 55 E8 00             		add	#0xe8, r5
  657 045b 66 B2                   		mov	#11, r2
  658 045d EF 51                   		mov.L	r5, r1
  659 045f 39 A1 FB                		bsr	_out_h
- 203:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,9), DEVCNF_ADC1_ADSSTR1_INI);
- 660                             		.loc 2 203 9
+ 199:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,9), DEVCNF_ADC1_ADSSTR1_INI);
+ 660                             		.loc 2 199 9
  661 0462 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 662                             		.loc 2 203 3
+ 662                             		.loc 2 199 3
  663 0467 72 55 E9 00             		add	#0xe9, r5
  664 046b 66 B2                   		mov	#11, r2
  665 046d EF 51                   		mov.L	r5, r1
  666 046f 39 91 FB                		bsr	_out_h
- 204:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,10), DEVCNF_ADC1_ADSSTR2_INI);
- 667                             		.loc 2 204 9
+ 200:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,10), DEVCNF_ADC1_ADSSTR2_INI);
+ 667                             		.loc 2 200 9
  668 0472 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 669                             		.loc 2 204 3
+ 669                             		.loc 2 200 3
  670 0477 72 55 EA 00             		add	#0xea, r5
  671 047b 66 B2                   		mov	#11, r2
  672 047d EF 51                   		mov.L	r5, r1
  673 047f 39 81 FB                		bsr	_out_h
- 205:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,11), DEVCNF_ADC1_ADSSTR3_INI);
- 674                             		.loc 2 205 9
+ 201:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,11), DEVCNF_ADC1_ADSSTR3_INI);
+ 674                             		.loc 2 201 9
  675 0482 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 676                             		.loc 2 205 3
+ 676                             		.loc 2 201 3
  677 0487 72 55 EB 00             		add	#0xeb, r5
  678 048b 66 B2                   		mov	#11, r2
  679 048d EF 51                   		mov.L	r5, r1
  680 048f 39 71 FB                		bsr	_out_h
- 206:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,12), DEVCNF_ADC1_ADSSTR4_INI);
- 681                             		.loc 2 206 9
+ 202:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,12), DEVCNF_ADC1_ADSSTR4_INI);
+ 681                             		.loc 2 202 9
  682 0492 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 683                             		.loc 2 206 3
+ 683                             		.loc 2 202 3
  684 0497 72 55 EC 00             		add	#0xec, r5
  685 049b 66 B2                   		mov	#11, r2
  686 049d EF 51                   		mov.L	r5, r1
  687 049f 39 61 FB                		bsr	_out_h
- 207:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,13), DEVCNF_ADC1_ADSSTR5_INI);
- 688                             		.loc 2 207 9
+ 203:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,13), DEVCNF_ADC1_ADSSTR5_INI);
+ 688                             		.loc 2 203 9
  689 04a2 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 690                             		.loc 2 207 3
+ 690                             		.loc 2 203 3
  691 04a7 72 55 ED 00             		add	#0xed, r5
  692 04ab 66 B2                   		mov	#11, r2
  693 04ad EF 51                   		mov.L	r5, r1
  694 04af 39 51 FB                		bsr	_out_h
- 208:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,14), DEVCNF_ADC1_ADSSTR6_INI);
- 695                             		.loc 2 208 9
+ 204:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,14), DEVCNF_ADC1_ADSSTR6_INI);
+ 695                             		.loc 2 204 9
  696 04b2 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 697                             		.loc 2 208 3
+ 697                             		.loc 2 204 3
  698 04b7 72 55 EE 00             		add	#0xee, r5
  699 04bb 66 B2                   		mov	#11, r2
  700 04bd EF 51                   		mov.L	r5, r1
  701 04bf 39 41 FB                		bsr	_out_h
- 209:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,15), DEVCNF_ADC1_ADSSTR7_INI);
- 702                             		.loc 2 209 9
+ 205:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTR(1,15), DEVCNF_ADC1_ADSSTR7_INI);
+ 702                             		.loc 2 205 9
  703 04c2 FB 5E 00 91 08          		mov.L	#0x89100, r5
- 704                             		.loc 2 209 3
+ 704                             		.loc 2 205 3
  705 04c7 72 55 EF 00             		add	#0xef, r5
  706 04cb 66 B2                   		mov	#11, r2
  707 04cd EF 51                   		mov.L	r5, r1
  708 04cf 39 31 FB                		bsr	_out_h
- 210:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTRL, DEVCNF_ADC1_ADSSTRL_INI);
- 709                             		.loc 2 210 3
+ 206:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTRL, DEVCNF_ADC1_ADSSTRL_INI);
+ 709                             		.loc 2 206 3
  710 04d2 66 B2                   		mov	#11, r2
  711 04d4 FB 1E DD 91 08          		mov.L	#0x891dd, r1
  712 04d9 39 27 FB                		bsr	_out_h
- 211:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTRT, DEVCNF_ADC1_ADSSTRT_INI);
- 713                             		.loc 2 211 3
+ 207:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTRT, DEVCNF_ADC1_ADSSTRT_INI);
+ 713                             		.loc 2 207 3
  714 04dc 66 B2                   		mov	#11, r2
  715 04de FB 1E DE 91 08          		mov.L	#0x891de, r1
  716 04e3 39 1D FB                		bsr	_out_h
- 212:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTRO, DEVCNF_ADC1_ADSSTRO_INI);
- 717                             		.loc 2 212 3
+ 208:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 		out_h(ADC_ADSSTRO, DEVCNF_ADC1_ADSSTRO_INI);
+ 717                             		.loc 2 208 3
  718 04e6 66 B2                   		mov	#11, r2
  719 04e8 FB 1E DF 91 08          		mov.L	#0x891df, r1
  720 04ed 39 13 FB                		bsr	_out_h
  721                             	.L45:
- 213:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
- 214:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 215:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	intno = unit?INTNO_S12ADI1:INTNO_S12ADI0;
- 722                             		.loc 2 215 28
+ 209:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	}
+ 210:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 211:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	intno = unit?INTNO_S12ADI1:INTNO_S12ADI0;
+ 722                             		.loc 2 211 28
  723 04f0 EC A5                   		mov.L	[r10], r5
  724 04f2 61 05                   		cmp	#0, r5
  725 04f4 15                      		beq	.L46
- 726                             		.loc 2 215 28 is_stmt 0 discriminator 1
+ 726                             		.loc 2 211 28 is_stmt 0 discriminator 1
  727 04f5 75 45 83                		mov.L	#0x83, r5
  728 04f8 0C                      		bra	.L47
  729                             	.L46:
- 730                             		.loc 2 215 28 discriminator 2
+ 730                             		.loc 2 211 28 discriminator 2
  731 04f9 75 45 82                		mov.L	#0x82, r5
  732                             	.L47:
- 733                             		.loc 2 215 8 is_stmt 1 discriminator 4
+ 733                             		.loc 2 211 8 is_stmt 1 discriminator 4
  734 04fc E7 A5 01                		mov.L	r5, 4[r10]
- 216:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ll_devcb[unit].intno = intno;
- 735                             		.loc 2 216 23 discriminator 4
+ 212:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	ll_devcb[unit].intno = intno;
+ 735                             		.loc 2 212 23 discriminator 4
  736 04ff FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
  737 0505 EC A5                   		mov.L	[r10], r5
  738 0507 6C 35                   		shll	#3, r5
@@ -1018,52 +1014,52 @@
  740 050b 62 45                   		add	#4, r5
  741 050d ED A4 01                		mov.L	4[r10], r4
  742 0510 E3 54                   		mov.L	r4, [r5]
- 217:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 218:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #if DEVCONF_ADC_SET_PERI	// Set Software Configurable Interrupt
- 219:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	err = SetPERI(intno, unit?INTFN_S12ADI1:INTFN_S12ADI0);
- 743                             		.loc 2 219 8 discriminator 4
+ 213:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 214:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #if DEVCONF_ADC_SET_PERI	// Set Software Configurable Interrupt
+ 215:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	err = SetPERI(intno, unit?INTFN_S12ADI1:INTFN_S12ADI0);
+ 743                             		.loc 2 215 8 discriminator 4
  744 0512 EC A5                   		mov.L	[r10], r5
  745 0514 61 05                   		cmp	#0, r5
  746 0516 15                      		beq	.L48
- 747                             		.loc 2 219 8 is_stmt 0 discriminator 1
+ 747                             		.loc 2 215 8 is_stmt 0 discriminator 1
  748 0517 75 45 44                		mov.L	#0x44, r5
  749 051a 0C                      		bra	.L49
  750                             	.L48:
- 751                             		.loc 2 219 8 discriminator 2
+ 751                             		.loc 2 215 8 discriminator 2
  752 051b 75 45 40                		mov.L	#0x40, r5
  753                             	.L49:
- 754                             		.loc 2 219 8 discriminator 4
+ 754                             		.loc 2 215 8 discriminator 4
  755 051e EF 52                   		mov.L	r5, r2
  756 0520 ED A1 01                		mov.L	4[r10], r1
  757 0523 05 00 00 00             		bsr	_SetPERI
  758 0527 E7 A1 02                		mov.L	r1, 8[r10]
- 220:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(err < E_OK) return E_SYS;
- 759                             		.loc 2 220 4 is_stmt 1 discriminator 4
+ 216:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	if(err < E_OK) return E_SYS;
+ 759                             		.loc 2 216 4 is_stmt 1 discriminator 4
  760 052a ED A5 02                		mov.L	8[r10], r5
  761 052d 61 05                   		cmp	#0, r5
  762 052f 28 07                   		bge	.L50
- 763                             		.loc 2 220 24 discriminator 1
+ 763                             		.loc 2 216 24 discriminator 1
  764 0531 FB 56 FB                		mov.L	#-5, r5
  765 0534 2E 14                   		bra	.L52
  766                             	.L50:
- 221:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #endif /* DEVCONF_ADC_SET_PERI */
- 222:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 223:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 224:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	/* Interrupt handler definition */
- 225:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	err = tk_def_int(intno, &dint);
- 767                             		.loc 2 225 8
+ 217:../device/adc/sysdepend/rx65n/adc_rx65n.c **** #endif /* DEVCONF_ADC_SET_PERI */
+ 218:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 219:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 220:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	/* Interrupt handler definition */
+ 221:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	err = tk_def_int(intno, &dint);
+ 767                             		.loc 2 221 8
  768 0536 71 A5 0C                		add	#12, r10, r5
  769 0539 EF 52                   		mov.L	r5, r2
  770 053b ED A1 01                		mov.L	4[r10], r1
  771 053e 05 00 00 00             		bsr	_tk_def_int
  772 0542 E7 A1 02                		mov.L	r1, 8[r10]
- 226:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
- 227:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	return err;
- 773                             		.loc 2 227 9
+ 222:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 
+ 223:../device/adc/sysdepend/rx65n/adc_rx65n.c **** 	return err;
+ 773                             		.loc 2 223 9
  774 0545 ED A5 02                		mov.L	8[r10], r5
  775                             	.L52:
- 228:../device/adc/sysdepend/rx65n/adc_rx65n.c **** }
- 776                             		.loc 2 228 1 discriminator 1
+ 224:../device/adc/sysdepend/rx65n/adc_rx65n.c **** }
+ 776                             		.loc 2 224 1 discriminator 1
  777 0548 EF 51                   		mov.L	r5, r1
  778 054a 3F AA 07                		rtsd	#28, r10-r10
  779                             	.LFE9:

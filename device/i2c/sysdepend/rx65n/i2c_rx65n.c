@@ -29,24 +29,24 @@
 */
 const LOCAL UW ba[DEV_I2C_UNITNM] = { RIIC0_BASE, RIIC1_BASE, RIIC2_BASE };
 
-#define	RIIC_ICCR1(x)		(ba[x] + ICCR1)		/* I2C bus cintrol reg. 1 */
-#define	RIIC_ICCR2(x)		(ba[x] + ICCR2)		/* I2C bus cintrol reg. 2 */
-#define RIIC_ICMR1(x)		(ba[x] + ICMR1)		/* I2C bus mode reg. 1 */
-#define RIIC_ICMR2(x)		(ba[x] + ICMR2)		/* I2C bus mode reg. 2 */
-#define RIIC_ICMR3(x)		(ba[x] + ICMR3)		/* I2C bus mode reg. 3 */
-#define	RIIC_ICFER(x)		(ba[x] + ICFER)		/* I2C bus function enable reg */
-#define	RIIC_ICSER(x)		(ba[x] + ICSER)		/* I2C bus Status enable reg. */
-#define	RIIC_ICIER(x)		(ba[x] + ICIER)		/* I2C bus Interrupt enable reg. */
-#define	RIIC_ICSR1(x)		(ba[x] + ICSR1)		/* I2C bus Status reg. 1 */
-#define	RIIC_ICSR2(x)		(ba[x] + ICSR2)		/* I2C bus Status reg. 2 */
+#define	RIIC_ICCR1(x)		(ba[x] + RIICx_ICCR1)	/* I2C bus cintrol reg. 1 */
+#define	RIIC_ICCR2(x)		(ba[x] + RIICx_ICCR2)	/* I2C bus cintrol reg. 2 */
+#define RIIC_ICMR1(x)		(ba[x] + RIICx_ICMR1)	/* I2C bus mode reg. 1 */
+#define RIIC_ICMR2(x)		(ba[x] + RIICx_ICMR2)	/* I2C bus mode reg. 2 */
+#define RIIC_ICMR3(x)		(ba[x] + RIICx_ICMR3)	/* I2C bus mode reg. 3 */
+#define	RIIC_ICFER(x)		(ba[x] + RIICx_ICFER)	/* I2C bus function enable reg */
+#define	RIIC_ICSER(x)		(ba[x] + RIICx_ICSER)	/* I2C bus Status enable reg. */
+#define	RIIC_ICIER(x)		(ba[x] + RIICx_ICIER)	/* I2C bus Interrupt enable reg. */
+#define	RIIC_ICSR1(x)		(ba[x] + RIICx_ICSR1)	/* I2C bus Status reg. 1 */
+#define	RIIC_ICSR2(x)		(ba[x] + RIICx_ICSR2)	/* I2C bus Status reg. 2 */
 
-#define	RIIC_SARL(x,y)		(ba[x] + SARL(y))	/* Slave address reg. L0~2 */
-#define	RIIC_SARU(x,y)		(ba[x] + SARU(y))	/* Slave address reg. U0~2 */
+#define	RIIC_SARL(x,y)		(ba[x] + RIICx_SARL(y))	/* Slave address reg. L0~2 */
+#define	RIIC_SARU(x,y)		(ba[x] + RIICx_SARU(y))	/* Slave address reg. U0~2 */
 
-#define	RIIC_ICBRL(x)		(ba[x] + ICBRL)		/* I2C bus bit rate Low reg. */
-#define	RIIC_ICBRH(x)		(ba[x] + ICBRH)		/* I2C bus bit rate High reg. */
-#define	RIIC_ICDRT(x)		(ba[x] + ICDRT)		/* I2C bus transmit data reg. */
-#define	RIIC_ICDRR(x)		(ba[x] + ICDRR)		/* I2C bus receive data reg. */
+#define	RIIC_ICBRL(x)		(ba[x] + RIICx_ICBRL)	/* I2C bus bit rate Low reg. */
+#define	RIIC_ICBRH(x)		(ba[x] + RIICx_ICBRH)	/* I2C bus bit rate High reg. */
+#define	RIIC_ICDRT(x)		(ba[x] + RIICx_ICDRT)	/* I2C bus transmit data reg. */
+#define	RIIC_ICDRR(x)		(ba[x] + RIICx_ICDRR)	/* I2C bus receive data reg. */
 
 /*----------------------------------------------------------------------
  * Device data

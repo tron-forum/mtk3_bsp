@@ -37,28 +37,28 @@
 /*----------------------------------------------------------------------
  * RIIC registers
  */
-#define	RIIC0_BASE	(0x00088300UL)
-#define	RIIC1_BASE	(0x00088320UL)
-#define	RIIC2_BASE	(0x00088340UL)
+#define	RIIC0_BASE		(0x00088300UL)
+#define	RIIC1_BASE		(0x00088320UL)
+#define	RIIC2_BASE		(0x00088340UL)
 
-#define	ICCR1		(0x00)	/* I2C bus cintrol reg. 1 */
-#define	ICCR2		(0x01)	/* I2C bus cintrol reg. 2 */
-#define ICMR1		(0x02)	/* I2C bus mode reg. 1 */
-#define ICMR2		(0x03)	/* I2C bus mode reg. 2 */
-#define ICMR3		(0x04)	/* I2C bus mode reg. 3 */
-#define	ICFER		(0x05)	/* I2C bus function enable reg */
-#define	ICSER		(0x06)	/* I2C bus Status enable reg. */
-#define	ICIER		(0x07)	/* I2C bus Interrupt enable reg. */
-#define	ICSR1		(0x08)	/* I2C bus Status reg. 1 */
-#define	ICSR2		(0x09)	/* I2C bus Status reg. 2 */
+#define	RIICx_ICCR1		(0x00)	/* I2C bus cintrol reg. 1 */
+#define	RIICx_ICCR2		(0x01)	/* I2C bus cintrol reg. 2 */
+#define RIICx_ICMR1		(0x02)	/* I2C bus mode reg. 1 */
+#define RIICx_ICMR2		(0x03)	/* I2C bus mode reg. 2 */
+#define RIICx_ICMR3		(0x04)	/* I2C bus mode reg. 3 */
+#define	RIICx_ICFER		(0x05)	/* I2C bus function enable reg */
+#define	RIICx_ICSER		(0x06)	/* I2C bus Status enable reg. */
+#define	RIICx_ICIER		(0x07)	/* I2C bus Interrupt enable reg. */
+#define	RIICx_ICSR1		(0x08)	/* I2C bus Status reg. 1 */
+#define	RIICx_ICSR2		(0x09)	/* I2C bus Status reg. 2 */
 
-#define	SARL(y)		(0x0A+(y<<1))	/* Slave address reg. L0~2 */
-#define	SARU(y)		(0x0B+(y<<1))	/* Slave address reg. U0~2 */
+#define	RIICx_SARL(y)		(0x0A+(y<<1))	/* Slave address reg. L0~2 */
+#define	RIICx_SARU(y)		(0x0B+(y<<1))	/* Slave address reg. U0~2 */
 
-#define	ICBRL		(0x10)	/* I2C bus bit rate Low reg. */
-#define	ICBRH		(0x11)	/* I2C bus bit rate High reg. */
-#define	ICDRT		(0x12)	/* I2C bus transmit data reg. */
-#define	ICDRR		(0x13)	/* I2C bus receive data reg. */
+#define	RIICx_ICBRL		(0x10)	/* I2C bus bit rate Low reg. */
+#define	RIICx_ICBRH		(0x11)	/* I2C bus bit rate High reg. */
+#define	RIICx_ICDRT		(0x12)	/* I2C bus transmit data reg. */
+#define	RIICx_ICDRR		(0x13)	/* I2C bus receive data reg. */
 
 #define	RIIC_ICCR1_ICE		(1<<7)	
 #define	RIIC_ICCR1_IICRST	(1<<6)
@@ -97,7 +97,7 @@
 
 /* 
  * I2C interrupt number
-  */
+	*/
 #define	INTNO_RIIC0_RXI		52
 #define	INTNO_RIIC0_TXI		53
 #define	INTNO_RIIC1_RXI		50

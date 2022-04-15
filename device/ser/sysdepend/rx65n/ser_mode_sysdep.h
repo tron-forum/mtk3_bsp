@@ -6,7 +6,7 @@
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/02.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/04.
  *
  *----------------------------------------------------------------------
  */
@@ -15,11 +15,11 @@
 /*
  *	ser_mode_sysdep.h
  *	Serial communication device driver
- *	Communication mode definition for RX231
+ *	Communication mode definition for RX65N
  */
 
-#ifndef	__DEV_SER_MODE_RX231_H__
-#define	__DEV_SER_MODE_RX231_H__
+#ifndef	__DEV_SER_MODE_RX65N_H__
+#define	__DEV_SER_MODE_RX65N_H__
 
 #define	DEV_SER_MODE_7BIT	(0x00000040)	/* Word length 7bit */
 #define	DEV_SER_MODE_8BIT	(0x00000000)	/* Word length 8bit */
@@ -40,4 +40,4 @@
 #define	DEV_SER_ERR_OE		(1<<5)	/* Overrun Error */
 
 
-#endif /* __DEV_SER_MODE_RX231_H__ */
+#endif /* __DEV_SER_MODE_RX65N_H__ */

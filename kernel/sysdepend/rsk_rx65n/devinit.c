@@ -55,7 +55,7 @@ EXPORT ER knl_start_device( void )
 
 	/* SCI6 "serd" */
 	#if DEVCNF_USE_SER
-		err = dev_init_ser(3);
+		err = dev_init_ser(8);
 		if(err < E_OK) return err;
 	#endif
 

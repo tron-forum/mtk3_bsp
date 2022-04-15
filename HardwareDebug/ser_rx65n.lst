@@ -1,4 +1,1224 @@
    1                             		.file	"ser_rx65n.c"
    2                             		.section P,"ax"
    3                             	.Ltext0:
-   4                             	.Letext0:
+   5                             	_out_b:
+   6                             	.LFB2:
+   7                             		.file 1 "d:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include\\tk\\sysdepend\\cpu\\rx65n\\sysli
+   1:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+   2:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+   3:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    micro T-Kernel 3.00.06.B0
+   4:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+   5:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Copyright (C) 2022 by Ken Sakamura.
+   6:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    This software is distributed under the T-License 2.2.
+   7:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+   8:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+   9:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *    Released by TRON Forum(http://www.tron.org) at 2022/04.
+  10:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  11:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *----------------------------------------------------------------------
+  12:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  13:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  14:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	syslib.h
+  15:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  16:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	micro T-Kernel System Library  (RX65N depended)
+  17:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  18:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  19:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #ifndef __TK_SYSLIB_CPU_DEPEND_H__
+  20:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define __TK_SYSLIB_CPU_DEPEND_H__
+  21:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  22:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #include "../core/rxv2/syslib.h"
+  23:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  24:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*----------------------------------------------------------------------*/
+  25:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  26:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Interrupt controller Control
+  27:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *
+  28:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  29:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LEVEL	0x0004		/* Level trigger */
+  30:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_EDGE		0x0000		/* Edge trigger */
+  31:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  32:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_HI		0x0000		/* H level/Interrupt at rising edge */
+  33:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_LOW		0x0001		/* L level/Interrupt at falling edge */
+  34:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** #define IM_BOTH		0x0003		/* L level/Interrupt at both edge */
+  35:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  36:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  37:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* 
+  38:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * Set Software Configurable Interrupt (PERIA & PERIB)
+  39:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  40:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** IMPORT ER SetPERI(UINT intno, UINT fctno);
+  41:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  42:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  43:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /* ------------------------------------------------------------------------ */
+  44:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** /*
+  45:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  * I/O port access
+  46:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  *	for memory mapped I/O
+  47:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h ****  */
+  48:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_w( UW port, UW data )
+  49:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  50:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UW*)port = data;
+  51:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  52:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_h( UW port, UH data )
+  53:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  54:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UH*)port = data;
+  55:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  56:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline void out_b( UW port, UB data )
+  57:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+   8                             		.loc 1 57 1
+   9 0000 7E AA                   		push.l	r10
+  10                             	.LCFI0:
+  11 0002 71 0A F8                		add	#-8, r0, r10
+  12                             	.LCFI1:
+  13 0005 EF A0                   		mov.L	r10, r0
+  14 0007 E3 A1                   		mov.L	r1, [r10]
+  15 0009 C7 A2 04                		mov.B	r2, 4[r10]
+  58:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	*(_UB*)port = data;
+  16                             		.loc 1 58 3
+  17 000c EC A5                   		mov.L	[r10], r5
+  18                             		.loc 1 58 14
+  19 000e CD A4 04                		mov.B	4[r10], r4
+  20 0011 C3 54                   		mov.B	r4, [r5]
+  59:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  21                             		.loc 1 59 1
+  22 0013 03                      		nop
+  23 0014 3F AA 03                		rtsd	#12, r10-r10
+  24                             	.LFE2:
+  27                             	_in_b:
+  28                             	.LFB5:
+  60:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 
+  61:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UW in_w( UW port )
+  62:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  63:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UW*)port;
+  64:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  65:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UH in_h( UW port )
+  66:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  67:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UH*)port;
+  68:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  69:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** Inline UB in_b( UW port )
+  70:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** {
+  29                             		.loc 1 70 1
+  30 0017 7E AA                   		push.l	r10
+  31                             	.LCFI2:
+  32 0019 71 0A FC                		add	#-4, r0, r10
+  33                             	.LCFI3:
+  34 001c EF A0                   		mov.L	r10, r0
+  35 001e E3 A1                   		mov.L	r1, [r10]
+  71:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** 	return *(_UB*)port;
+  36                             		.loc 1 71 10
+  37 0020 EC A5                   		mov.L	[r10], r5
+  38                             		.loc 1 71 9
+  39 0022 CC 55                   		mov.B	[r5], r5
+  40 0024 5B 55                   		movu.B	r5, r5
+  72:d:\tkernel_dev\mtk3_bsp\dev_bsp_b2_rskrx65n\include\tk\sysdepend\cpu\rx65n\syslib.h **** }
+  41                             		.loc 1 72 1
+  42 0026 EF 51                   		mov.L	r5, r1
+  43 0028 3F AA 02                		rtsd	#8, r10-r10
+  44                             	.LFE5:
+  46                             		.section C,"a",@progbits
+  47                             		.p2align 2
+  48                             		.balign 4
+  51                             	_ba:
+  52 0000 00 A0 08 00             		.long	0x8a000
+  53 0004 20 A0 08 00             		.long	0x8a020
+  54 0008 40 A0 08 00             		.long	0x8a040
+  55 000c 60 A0 08 00             		.long	0x8a060
+  56 0010 80 A0 08 00             		.long	0x8a080
+  57 0014 A0 A0 08 00             		.long	0x8a0a0
+  58 0018 C0 A0 08 00             		.long	0x8a0c0
+  59 001c E0 A0 08 00             		.long	0x8a0e0
+  60 0020 00 A1 08 00             		.long	0x8a100
+  61 0024 20 A1 08 00             		.long	0x8a120
+  62 0028 40 00 0D 00             		.long	0xd0040
+  63 002c 60 00 0D 00             		.long	0xd0060
+  64 0030 00 B3 08 00             		.long	0x8b300
+  65                             		.balign 4
+  68                             	_inotbl:
+  69 0034 3A 00 00 00             		.long	58
+  70 0038 3C 00 00 00             		.long	60
+  71 003c 3E 00 00 00             		.long	62
+  72 0040 3A 00 00 00             		.long	58
+  73 0044 52 00 00 00             		.long	0x52
+  74 0048 54 00 00 00             		.long	0x54
+  75 004c 56 00 00 00             		.long	0x56
+  76 0050 62 00 00 00             		.long	0x62
+  77 0054 64 00 00 00             		.long	0x64
+  78 0058 66 00 00 00             		.long	0x66
+  79 005c 68 00 00 00             		.long	0x68
+  80 0060 72 00 00 00             		.long	0x72
+  81 0064 74 00 00 00             		.long	0x74
+  82                             		.balign 4
+  85                             	_pritbl:
+  86 0068 05 00 00 00             		.long	5
+  87 006c 05 00 00 00             		.long	5
+  88 0070 05 00 00 00             		.long	5
+  89 0074 05 00 00 00             		.long	5
+  90 0078 05 00 00 00             		.long	5
+  91 007c 05 00 00 00             		.long	5
+  92 0080 05 00 00 00             		.long	5
+  93 0084 05 00 00 00             		.long	5
+  94 0088 05 00 00 00             		.long	5
+  95 008c 05 00 00 00             		.long	5
+  96 0090 05 00 00 00             		.long	5
+  97 0094 05 00 00 00             		.long	5
+  98 0098 05 00 00 00             		.long	5
+  99                             		.local	_ll_devcb
+ 100                             		.comm	_ll_devcb,104,4
+ 101                             		.section P,"ax"
+ 102                             		.global	_sci_txi_inthdr
+ 104                             	_sci_txi_inthdr:
+ 105                             	.LFB7:
+ 106                             		.file 2 "../device/ser/sysdepend/rx65n/ser_rx65n.c"
+   1:../device/ser/sysdepend/rx65n/ser_rx65n.c **** ﻿/*
+   2:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *----------------------------------------------------------------------
+   3:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *    Device Driver for μT-Kernel 3.0
+   4:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *
+   5:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *    Copyright (C) 2020-2022 by Ken Sakamura.
+   6:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *    This software is distributed under the T-License 2.2.
+   7:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *----------------------------------------------------------------------
+   8:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *
+   9:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *    Released by TRON Forum(http://www.tron.org) at 2022/02.
+  10:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *
+  11:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *----------------------------------------------------------------------
+  12:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+  13:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  14:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #include <sys/machine.h>
+  15:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #ifdef CPU_RX65N
+  16:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  17:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #include <tk/tkernel.h>
+  18:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #include <tm/tmonitor.h>
+  19:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #include "../../ser.h"
+  20:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #include "../../../include/dev_def.h"
+  21:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #if DEV_SER_ENABLE
+  22:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*
+  23:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *	ser_rx65n.c
+  24:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *	Serial communication device driver
+  25:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  *	System dependent processing for RX65N
+  26:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+  27:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  28:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+  29:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Device register base address
+  30:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+  31:../device/ser/sysdepend/rx65n/ser_rx65n.c **** const LOCAL UW ba[DEV_SER_UNITNM] = {
+  32:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	SCI0_BASE, SCI1_BASE, SCI2_BASE, SCI3_BASE, SCI4_BASE, SCI5_BASE, SCI6_BASE, 
+  33:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	SCI7_BASE, SCI8_BASE, SCI9_BASE, SCI10_BASE, SCI11_BASE, SCI12_BASE
+  34:../device/ser/sysdepend/rx65n/ser_rx65n.c **** };
+  35:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  36:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_SMR(x)	(ba[x] + SCIx_SMR)	// Serial mode register
+  37:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_BRR(x)	(ba[x] + SCIx_BRR)	// Bit rate register
+  38:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_SCR(x)	(ba[x] + SCIx_SCR)	// Serial control register
+  39:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_SSR(x)	(ba[x] + SCIx_SSR)	// Serial status register
+  40:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_TDR(x)	(ba[x] + SCIx_TDR)	// Transmit data register
+  41:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_RDR(x)	(ba[x] + SCIx_RDR)	// Receive data register
+  42:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_SCMR(x)	(ba[x] + SCIx_SCMR)	// Smart card mode register
+  43:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_SEMR(x)	(ba[x] + SCIx_SEMR)	// Serial extended mode register
+  44:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define	SCI_SPMR(x)	(ba[x] + SCIx_SPMR)	// SPI mode register
+  45:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  46:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+  47:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Interrupt number Table
+  48:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+  49:../device/ser/sysdepend/rx65n/ser_rx65n.c **** const LOCAL UINT inotbl[DEV_SER_UNITNM] = {
+  50:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	INTNO_SCI0_RXI, INTNO_SCI1_RXI, INTNO_SCI2_RXI, INTNO_SCI3_RXI, INTNO_SCI4_RXI,
+  51:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	INTNO_SCI5_RXI, INTNO_SCI6_RXI, INTNO_SCI7_RXI, INTNO_SCI8_RXI, INTNO_SCI9_RXI,
+  52:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	INTNO_SCI10_RXI, INTNO_SCI11_RXI, INTNO_SCI12_RXI
+  53:../device/ser/sysdepend/rx65n/ser_rx65n.c **** };
+  54:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define INTNO_RXI(n)	(inotbl[n])
+  55:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define INTNO_TXI(n)	(inotbl[n]+1)
+  56:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  57:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+  58:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Interrupt priority Table
+  59:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+  60:../device/ser/sysdepend/rx65n/ser_rx65n.c **** const LOCAL INT pritbl[DEV_SER_UNITNM] = {
+  61:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	DEVCNF_SCI0_INTPRI, DEVCNF_SCI1_INTPRI, DEVCNF_SCI2_INTPRI, DEVCNF_SCI3_INTPRI, DEVCNF_SCI4_INTPRI
+  62:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	DEVCNF_SCI5_INTPRI, DEVCNF_SCI6_INTPRI, DEVCNF_SCI7_INTPRI, DEVCNF_SCI8_INTPRI, DEVCNF_SCI9_INTPRI
+  63:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	DEVCNF_SCI10_INTPRI, DEVCNF_SCI11_INTPRI, DEVCNF_SCI12_INTPRI
+  64:../device/ser/sysdepend/rx65n/ser_rx65n.c **** };
+  65:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #define INTPRI(n)	(pritbl[n])
+  66:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  67:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+  68:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Device control data
+  69:../device/ser/sysdepend/rx65n/ser_rx65n.c **** */
+  70:../device/ser/sysdepend/rx65n/ser_rx65n.c **** typedef struct {
+  71:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UW	mode;		// Serial mode
+  72:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UW	speed;		// Spped (bit rate)
+  73:../device/ser/sysdepend/rx65n/ser_rx65n.c **** } T_DEV_SER_LLDEVCB;
+  74:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  75:../device/ser/sysdepend/rx65n/ser_rx65n.c **** LOCAL T_DEV_SER_LLDEVCB		ll_devcb[DEV_SER_UNITNM];
+  76:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  77:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+  78:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Interrupt handler
+  79:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+  80:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  81:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*
+  82:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * TXI: Transmit data empty interrupt
+  83:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+  84:../device/ser/sysdepend/rx65n/ser_rx65n.c **** void sci_txi_inthdr( UINT intno)
+  85:../device/ser/sysdepend/rx65n/ser_rx65n.c **** {
+ 107                             		.loc 2 85 1
+ 108 002b 7E AA                   		push.l	r10
+ 109                             	.LCFI4:
+ 110 002d 71 0A F4                		add	#-12, r0, r10
+ 111                             	.LCFI5:
+ 112 0030 EF A0                   		mov.L	r10, r0
+ 113 0032 E7 A1 02                		mov.L	r1, 8[r10]
+  86:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UW	unit, data;
+  87:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  88:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	ClearInt(intno);
+ 114                             		.loc 2 88 2
+ 115 0035 ED A1 02                		mov.L	8[r10], r1
+ 116 0038 05 00 00 00             		bsr	_ClearInt
+  89:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	for( unit = 0; unit < DEV_SER_UNITNM; unit++) {
+ 117                             		.loc 2 89 12
+ 118 003c F8 A6 00                		mov.L	#0, [r10]
+ 119                             		.loc 2 89 2
+ 120 003f 2E 1C                   		bra	.L5
+ 121                             	.L8:
+  90:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		if(INTNO_TXI(unit) == intno) break;
+ 122                             		.loc 2 90 6
+ 123 0041 FB 52 34 00 00 00       		mov.L	#_inotbl, r5
+ 124 0047 EC A4                   		mov.L	[r10], r4
+ 125 0049 FE 64 55                		mov.L	[r4,r5], r5
+ 126 004c 62 15                   		add	#1, r5
+ 127                             		.loc 2 90 5
+ 128 004e ED A4 02                		mov.L	8[r10], r4
+ 129 0051 47 54                   		cmp	r5, r4
+ 130 0053 20 10                   		beq	.L12
+  89:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	for( unit = 0; unit < DEV_SER_UNITNM; unit++) {
+ 131                             		.loc 2 89 44 discriminator 2
+ 132 0055 EC A5                   		mov.L	[r10], r5
+ 133 0057 62 15                   		add	#1, r5
+ 134 0059 E3 A5                   		mov.L	r5, [r10]
+ 135                             	.L5:
+  89:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	for( unit = 0; unit < DEV_SER_UNITNM; unit++) {
+ 136                             		.loc 2 89 2 discriminator 1
+ 137 005b EC A5                   		mov.L	[r10], r5
+ 138 005d 61 C5                   		cmp	#12, r5
+ 139 005f 25 E2                   		bleu	.L8
+ 140 0061 2E 03                   		bra	.L7
+ 141                             	.L12:
+ 142                             		.loc 2 90 3
+ 143 0063 03                      		nop
+ 144                             	.L7:
+  91:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+  92:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	if(unit >= DEV_SER_UNITNM ) return;
+ 145                             		.loc 2 92 4
+ 146 0064 EC A5                   		mov.L	[r10], r5
+ 147 0066 61 C5                   		cmp	#12, r5
+ 148 0068 24 2C                   		bgtu	.L13
+  93:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  94:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	if( dev_ser_get_snddat(unit, &data)) {
+ 149                             		.loc 2 94 6
+ 150 006a 71 A5 04                		add	#4, r10, r5
+ 151 006d EF 52                   		mov.L	r5, r2
+ 152 006f EC A1                   		mov.L	[r10], r1
+ 153 0071 05 00 00 00             		bsr	_dev_ser_get_snddat
+ 154 0075 EF 15                   		mov.L	r1, r5
+ 155                             		.loc 2 94 4
+ 156 0077 61 05                   		cmp	#0, r5
+ 157 0079 20 1C                   		beq	.L4
+  95:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		out_b(SCI_TDR(unit), (UB)data);
+ 158                             		.loc 2 95 9
+ 159 007b FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 160 0081 EC A4                   		mov.L	[r10], r4
+ 161 0083 FE 64 55                		mov.L	[r4,r5], r5
+ 162                             		.loc 2 95 3
+ 163 0086 62 35                   		add	#3, r5
+ 164 0088 ED A4 01                		mov.L	4[r10], r4
+ 165 008b CF 42                   		mov.B	r4, r2
+ 166 008d EF 51                   		mov.L	r5, r1
+ 167 008f 39 71 FF                		bsr	_out_b
+ 168 0092 2E 03                   		bra	.L4
+ 169                             	.L13:
+  92:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 170                             		.loc 2 92 30
+ 171 0094 03                      		nop
+ 172                             	.L4:
+  96:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+  97:../device/ser/sysdepend/rx65n/ser_rx65n.c **** }
+ 173                             		.loc 2 97 1
+ 174 0095 3F AA 04                		rtsd	#16, r10-r10
+ 175                             	.LFE7:
+ 177                             		.global	_sci_rxi_inthdr
+ 179                             	_sci_rxi_inthdr:
+ 180                             	.LFB8:
+  98:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+  99:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*
+ 100:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * RXI: Receive data full interrupt
+ 101:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+ 102:../device/ser/sysdepend/rx65n/ser_rx65n.c **** void sci_rxi_inthdr( UINT intno)
+ 103:../device/ser/sysdepend/rx65n/ser_rx65n.c **** {
+ 181                             		.loc 2 103 1
+ 182 0098 7E AA                   		push.l	r10
+ 183                             	.LCFI6:
+ 184 009a 71 0A F4                		add	#-12, r0, r10
+ 185                             	.LCFI7:
+ 186 009d EF A0                   		mov.L	r10, r0
+ 187 009f E7 A1 02                		mov.L	r1, 8[r10]
+ 104:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UW	unit, data;
+ 105:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 106:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	ClearInt(intno);
+ 188                             		.loc 2 106 2
+ 189 00a2 ED A1 02                		mov.L	8[r10], r1
+ 190 00a5 05 00 00 00             		bsr	_ClearInt
+ 107:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	for( unit = 0; unit < DEV_SER_UNITNM; unit++) {
+ 191                             		.loc 2 107 12
+ 192 00a9 F8 A6 00                		mov.L	#0, [r10]
+ 193                             		.loc 2 107 2
+ 194 00ac 2E 1A                   		bra	.L15
+ 195                             	.L18:
+ 108:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		if(INTNO_RXI(unit) == intno) break;
+ 196                             		.loc 2 108 6
+ 197 00ae FB 52 34 00 00 00       		mov.L	#_inotbl, r5
+ 198 00b4 EC A4                   		mov.L	[r10], r4
+ 199 00b6 FE 64 55                		mov.L	[r4,r5], r5
+ 200                             		.loc 2 108 5
+ 201 00b9 ED A4 02                		mov.L	8[r10], r4
+ 202 00bc 47 54                   		cmp	r5, r4
+ 203 00be 20 10                   		beq	.L21
+ 107:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	for( unit = 0; unit < DEV_SER_UNITNM; unit++) {
+ 204                             		.loc 2 107 44 discriminator 2
+ 205 00c0 EC A5                   		mov.L	[r10], r5
+ 206 00c2 62 15                   		add	#1, r5
+ 207 00c4 E3 A5                   		mov.L	r5, [r10]
+ 208                             	.L15:
+ 107:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	for( unit = 0; unit < DEV_SER_UNITNM; unit++) {
+ 209                             		.loc 2 107 2 discriminator 1
+ 210 00c6 EC A5                   		mov.L	[r10], r5
+ 211 00c8 61 C5                   		cmp	#12, r5
+ 212 00ca 25 E4                   		bleu	.L18
+ 213 00cc 2E 03                   		bra	.L17
+ 214                             	.L21:
+ 215                             		.loc 2 108 3
+ 216 00ce 03                      		nop
+ 217                             	.L17:
+ 109:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+ 110:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	if(unit >= DEV_SER_UNITNM ) return;
+ 218                             		.loc 2 110 4
+ 219 00cf EC A5                   		mov.L	[r10], r5
+ 220 00d1 61 C5                   		cmp	#12, r5
+ 221 00d3 24 26                   		bgtu	.L22
+ 111:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 112:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	data = in_b(SCI_RDR(unit));
+ 222                             		.loc 2 112 14
+ 223 00d5 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 224 00db EC A4                   		mov.L	[r10], r4
+ 225 00dd FE 64 55                		mov.L	[r4,r5], r5
+ 226                             		.loc 2 112 9
+ 227 00e0 62 55                   		add	#5, r5
+ 228 00e2 EF 51                   		mov.L	r5, r1
+ 229 00e4 39 33 FF                		bsr	_in_b
+ 230 00e7 EF 15                   		mov.L	r1, r5
+ 231                             		.loc 2 112 7
+ 232 00e9 5B 55                   		movu.B	r5, r5
+ 233 00eb E7 A5 01                		mov.L	r5, 4[r10]
+ 113:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	dev_ser_notify_rcv(unit, data);	/* Notify the main process of data reception. */
+ 234                             		.loc 2 113 2
+ 235 00ee ED A2 01                		mov.L	4[r10], r2
+ 236 00f1 EC A1                   		mov.L	[r10], r1
+ 237 00f3 05 00 00 00             		bsr	_dev_ser_notify_rcv
+ 238 00f7 2E 03                   		bra	.L14
+ 239                             	.L22:
+ 110:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 240                             		.loc 2 110 30
+ 241 00f9 03                      		nop
+ 242                             	.L14:
+ 114:../device/ser/sysdepend/rx65n/ser_rx65n.c **** }
+ 243                             		.loc 2 114 1
+ 244 00fa 3F AA 04                		rtsd	#16, r10-r10
+ 245                             	.LFE8:
+ 248                             	_start_com:
+ 249                             	.LFB9:
+ 115:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 116:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 117:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+ 118:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Set mode & Start communication
+ 119:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+ 120:../device/ser/sysdepend/rx65n/ser_rx65n.c **** LOCAL void start_com(UW unit, UW mode, UW speed)
+ 121:../device/ser/sysdepend/rx65n/ser_rx65n.c **** {
+ 250                             		.loc 2 121 1
+ 251 00fd 7E AA                   		push.l	r10
+ 252                             	.LCFI8:
+ 253 00ff 71 0A F0                		add	#-16, r0, r10
+ 254                             	.LCFI9:
+ 255 0102 EF A0                   		mov.L	r10, r0
+ 256 0104 E7 A1 01                		mov.L	r1, 4[r10]
+ 257 0107 E7 A2 02                		mov.L	r2, 8[r10]
+ 258 010a E7 A3 03                		mov.L	r3, 12[r10]
+ 122:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UB	data;
+ 123:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 124:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	/* Set communication mode & Speed */
+ 125:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	out_b( SCI_SMR(unit), (UB)((mode & 0x00000078)|(speed>>8 & 0x00000003)));
+ 259                             		.loc 2 125 9
+ 260 010d FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 261 0113 ED A4 01                		mov.L	4[r10], r4
+ 262 0116 FE 64 53                		mov.L	[r4,r5], r3
+ 263                             		.loc 2 125 35
+ 264 0119 ED A5 02                		mov.L	8[r10], r5
+ 265 011c 75 25 78                		and	#0x78, r5
+ 266 011f CF 54                   		mov.B	r5, r4
+ 267                             		.loc 2 125 55
+ 268 0121 ED A5 03                		mov.L	12[r10], r5
+ 269 0124 68 85                   		shlr	#8, r5
+ 270                             		.loc 2 125 59
+ 271 0126 64 35                   		and	#3, r5
+ 272                             		.loc 2 125 2
+ 273 0128 57 45                   		or	r4, r5
+ 274 012a CF 52                   		mov.B	r5, r2
+ 275 012c EF 31                   		mov.L	r3, r1
+ 276 012e 39 D2 FE                		bsr	_out_b
+ 126:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	out_b( SCI_SCMR(unit), 0xF2);
+ 277                             		.loc 2 126 9
+ 278 0131 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 279 0137 ED A4 01                		mov.L	4[r10], r4
+ 280 013a FE 64 55                		mov.L	[r4,r5], r5
+ 281                             		.loc 2 126 2
+ 282 013d 62 65                   		add	#6, r5
+ 283 013f FB 26 F2                		mov	#-14, r2
+ 284 0142 EF 51                   		mov.L	r5, r1
+ 285 0144 39 BC FE                		bsr	_out_b
+ 127:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	data = in_b( SCI_SEMR(unit));
+ 286                             		.loc 2 127 15
+ 287 0147 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 288 014d ED A4 01                		mov.L	4[r10], r4
+ 289 0150 FE 64 55                		mov.L	[r4,r5], r5
+ 290                             		.loc 2 127 9
+ 291 0153 62 75                   		add	#7, r5
+ 292 0155 EF 51                   		mov.L	r5, r1
+ 293 0157 39 C0 FE                		bsr	_in_b
+ 294 015a EF 15                   		mov.L	r1, r5
+ 295 015c C3 A5                   		mov.B	r5, [r10]
+ 128:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	out_b( SCI_SEMR(unit), (data & ~SCI_SEMR_ABCS) | (speed & SCI_SEMR_ABCS));
+ 296                             		.loc 2 128 9
+ 297 015e FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 298 0164 ED A4 01                		mov.L	4[r10], r4
+ 299 0167 FE 64 55                		mov.L	[r4,r5], r5
+ 300                             		.loc 2 128 2
+ 301 016a 71 53 07                		add	#7, r5, r3
+ 302                             		.loc 2 128 31
+ 303 016d CC A5                   		mov.B	[r10], r5
+ 304 016f 75 25 EF                		and	#-17, r5
+ 305 0172 CF 54                   		mov.B	r5, r4
+ 306                             		.loc 2 128 58
+ 307 0174 ED A5 03                		mov.L	12[r10], r5
+ 308 0177 75 25 10                		and	#16, r5
+ 309                             		.loc 2 128 2
+ 310 017a 57 45                   		or	r4, r5
+ 311 017c CF 52                   		mov.B	r5, r2
+ 312 017e EF 31                   		mov.L	r3, r1
+ 313 0180 39 80 FE                		bsr	_out_b
+ 129:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	out_b( SCI_BRR(unit), speed >>16);
+ 314                             		.loc 2 129 9
+ 315 0183 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 316 0189 ED A4 01                		mov.L	4[r10], r4
+ 317 018c FE 64 55                		mov.L	[r4,r5], r5
+ 318                             		.loc 2 129 2
+ 319 018f 71 54 01                		add	#1, r5, r4
+ 320                             		.loc 2 129 30
+ 321 0192 ED A5 03                		mov.L	12[r10], r5
+ 322 0195 69 05                   		shlr	#16, r5
+ 323                             		.loc 2 129 2
+ 324 0197 CF 52                   		mov.B	r5, r2
+ 325 0199 EF 41                   		mov.L	r4, r1
+ 326 019b 39 65 FE                		bsr	_out_b
+ 130:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 131:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	/* SCR.TE,RE,TIE,RIE <- 1 */
+ 132:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	out_b( SCI_SCR(unit), (SCI_SCR_RE | SCI_SCR_TE | SCI_SCR_RIE | SCI_SCR_TIE | SCI_SCR_INI));
+ 327                             		.loc 2 132 9
+ 328 019e FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 329 01a4 ED A4 01                		mov.L	4[r10], r4
+ 330 01a7 FE 64 55                		mov.L	[r4,r5], r5
+ 331                             		.loc 2 132 2
+ 332 01aa 62 25                   		add	#2, r5
+ 333 01ac FB 26 F0                		mov	#-16, r2
+ 334 01af EF 51                   		mov.L	r5, r1
+ 335 01b1 39 4F FE                		bsr	_out_b
+ 133:../device/ser/sysdepend/rx65n/ser_rx65n.c **** }
+ 336                             		.loc 2 133 1
+ 337 01b4 03                      		nop
+ 338 01b5 3F AA 05                		rtsd	#20, r10-r10
+ 339                             	.LFE9:
+ 342                             	_stop_com:
+ 343                             	.LFB10:
+ 134:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 135:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+ 136:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Stop communication
+ 137:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+ 138:../device/ser/sysdepend/rx65n/ser_rx65n.c **** LOCAL void stop_com(UW unit)
+ 139:../device/ser/sysdepend/rx65n/ser_rx65n.c **** {
+ 344                             		.loc 2 139 1
+ 345 01b8 7E AA                   		push.l	r10
+ 346                             	.LCFI10:
+ 347 01ba 71 0A FC                		add	#-4, r0, r10
+ 348                             	.LCFI11:
+ 349 01bd EF A0                   		mov.L	r10, r0
+ 350 01bf E3 A1                   		mov.L	r1, [r10]
+ 140:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	if(unit != DEVCNF_SER_DBGUN) {
+ 351                             		.loc 2 140 4
+ 352 01c1 EC A5                   		mov.L	[r10], r5
+ 353 01c3 61 85                   		cmp	#8, r5
+ 354 01c5 20 18                   		beq	.L25
+ 141:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		out_b(SCI_SCR(unit), SCI_SCR_INI);		/* SCR.TIE,RIE,TE,RE,TEIE <- 0 & Set SCR.CKE */
+ 355                             		.loc 2 141 9
+ 356 01c7 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 357 01cd EC A4                   		mov.L	[r10], r4
+ 358 01cf FE 64 55                		mov.L	[r4,r5], r5
+ 359                             		.loc 2 141 3
+ 360 01d2 62 25                   		add	#2, r5
+ 361 01d4 66 02                   		mov	#0, r2
+ 362 01d6 EF 51                   		mov.L	r5, r1
+ 363 01d8 39 28 FE                		bsr	_out_b
+ 142:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else {	/* Used by T-Monitor */
+ 143:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		out_b(SCI_SCR(unit), SCI_SCR_DEBUG);
+ 144:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+ 145:../device/ser/sysdepend/rx65n/ser_rx65n.c **** }
+ 364                             		.loc 2 145 1
+ 365 01db 2E 17                   		bra	.L27
+ 366                             	.L25:
+ 143:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+ 367                             		.loc 2 143 9
+ 368 01dd FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 369 01e3 EC A4                   		mov.L	[r10], r4
+ 370 01e5 FE 64 55                		mov.L	[r4,r5], r5
+ 143:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+ 371                             		.loc 2 143 3
+ 372 01e8 62 25                   		add	#2, r5
+ 373 01ea 75 42 32                		mov	#50, r2
+ 374 01ed EF 51                   		mov.L	r5, r1
+ 375 01ef 39 11 FE                		bsr	_out_b
+ 376                             	.L27:
+ 377                             		.loc 2 145 1
+ 378 01f2 03                      		nop
+ 379 01f3 3F AA 02                		rtsd	#8, r10-r10
+ 380                             	.LFE10:
+ 383                             	_calc_brr:
+ 384                             	.LFB11:
+ 146:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 147:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+ 148:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Calculate baud rate
+ 149:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+ 150:../device/ser/sysdepend/rx65n/ser_rx65n.c **** LOCAL UW calc_brr(UW baud)
+ 151:../device/ser/sysdepend/rx65n/ser_rx65n.c **** {
+ 385                             		.loc 2 151 1
+ 386 01f6 6E 7A                   		pushm	r7-r10
+ 387                             	.LCFI12:
+ 388 01f8 71 0A EC                		add	#-20, r0, r10
+ 389                             	.LCFI13:
+ 390 01fb EF A0                   		mov.L	r10, r0
+ 391 01fd E7 A1 04                		mov.L	r1, 16[r10]
+ 152:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UW	abcs, brr, cks;
+ 153:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	W	work;
+ 154:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 155:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	work = SYSCLK_PCLKB / (baud * 256);
+ 392                             		.loc 2 155 30
+ 393 0200 ED A5 04                		mov.L	16[r10], r5
+ 394 0203 6C 85                   		shll	#8, r5
+ 395                             		.loc 2 155 22
+ 396 0205 FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 397 020b EF 47                   		mov.L	r4, r7
+ 398 020d FC 27 57                		divu	r5, r7
+ 399 0210 EF 75                   		mov.L	r7, r5
+ 400                             		.loc 2 155 7
+ 401 0212 E7 A5 03                		mov.L	r5, 12[r10]
+ 156:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	if(work < 16) {
+ 402                             		.loc 2 156 4
+ 403 0215 ED A5 03                		mov.L	12[r10], r5
+ 404 0218 61 F5                   		cmp	#15, r5
+ 405 021a 2A 23                   		bgt	.L29
+ 157:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		abcs	= SCI_SEMR_ABCS;
+ 406                             		.loc 2 157 8
+ 407 021c F8 A6 10                		mov.L	#16, [r10]
+ 158:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		cks	= 0;
+ 408                             		.loc 2 158 7
+ 409 021f F9 A6 02 00             		mov.L	#0, 8[r10]
+ 159:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		brr = SYSCLK_PCLKB / (baud * 16) - 1;
+ 410                             		.loc 2 159 30
+ 411 0223 ED A5 04                		mov.L	16[r10], r5
+ 412 0226 6C 45                   		shll	#4, r5
+ 413                             		.loc 2 159 22
+ 414 0228 FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 415 022e EF 47                   		mov.L	r4, r7
+ 416 0230 FC 27 57                		divu	r5, r7
+ 417 0233 EF 75                   		mov.L	r7, r5
+ 418                             		.loc 2 159 7
+ 419 0235 60 15                   		sub	#1, r5
+ 420 0237 E7 A5 01                		mov.L	r5, 4[r10]
+ 421 023a 38 25 01                		bra	.L30
+ 422                             	.L29:
+ 160:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else if(work < 32) {
+ 423                             		.loc 2 160 11
+ 424 023d ED A5 03                		mov.L	12[r10], r5
+ 425 0240 75 55 1F                		cmp	#31, r5
+ 426 0243 2A 23                   		bgt	.L31
+ 161:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		abcs	= 0;
+ 427                             		.loc 2 161 8
+ 428 0245 F8 A6 00                		mov.L	#0, [r10]
+ 162:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		cks	= 0;
+ 429                             		.loc 2 162 7
+ 430 0248 F9 A6 02 00             		mov.L	#0, 8[r10]
+ 163:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		brr = SYSCLK_PCLKB / (baud * 32) - 1;
+ 431                             		.loc 2 163 30
+ 432 024c ED A5 04                		mov.L	16[r10], r5
+ 433 024f 6C 55                   		shll	#5, r5
+ 434                             		.loc 2 163 22
+ 435 0251 FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 436 0257 EF 47                   		mov.L	r4, r7
+ 437 0259 FC 27 57                		divu	r5, r7
+ 438 025c EF 75                   		mov.L	r7, r5
+ 439                             		.loc 2 163 7
+ 440 025e 60 15                   		sub	#1, r5
+ 441 0260 E7 A5 01                		mov.L	r5, 4[r10]
+ 442 0263 38 FC 00                		bra	.L30
+ 443                             	.L31:
+ 164:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else if(work < 64) {
+ 444                             		.loc 2 164 11
+ 445 0266 ED A5 03                		mov.L	12[r10], r5
+ 446 0269 75 55 3F                		cmp	#63, r5
+ 447 026c 2A 23                   		bgt	.L32
+ 165:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		abcs	= SCI_SEMR_ABCS;
+ 448                             		.loc 2 165 8
+ 449 026e F8 A6 10                		mov.L	#16, [r10]
+ 166:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		cks	= 1;
+ 450                             		.loc 2 166 7
+ 451 0271 F9 A6 02 01             		mov.L	#1, 8[r10]
+ 167:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		brr = SYSCLK_PCLKB / (baud * 64) - 1;
+ 452                             		.loc 2 167 30
+ 453 0275 ED A5 04                		mov.L	16[r10], r5
+ 454 0278 6C 65                   		shll	#6, r5
+ 455                             		.loc 2 167 22
+ 456 027a FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 457 0280 EF 47                   		mov.L	r4, r7
+ 458 0282 FC 27 57                		divu	r5, r7
+ 459 0285 EF 75                   		mov.L	r7, r5
+ 460                             		.loc 2 167 7
+ 461 0287 60 15                   		sub	#1, r5
+ 462 0289 E7 A5 01                		mov.L	r5, 4[r10]
+ 463 028c 38 D3 00                		bra	.L30
+ 464                             	.L32:
+ 168:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else if(work < 128) {
+ 465                             		.loc 2 168 11
+ 466 028f ED A5 03                		mov.L	12[r10], r5
+ 467 0292 75 55 7F                		cmp	#0x7f, r5
+ 468 0295 2A 23                   		bgt	.L33
+ 169:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		abcs	= 0;
+ 469                             		.loc 2 169 8
+ 470 0297 F8 A6 00                		mov.L	#0, [r10]
+ 170:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		cks	= 1;
+ 471                             		.loc 2 170 7
+ 472 029a F9 A6 02 01             		mov.L	#1, 8[r10]
+ 171:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		brr = SYSCLK_PCLKB / (baud * 128) - 1;
+ 473                             		.loc 2 171 30
+ 474 029e ED A5 04                		mov.L	16[r10], r5
+ 475 02a1 6C 75                   		shll	#7, r5
+ 476                             		.loc 2 171 22
+ 477 02a3 FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 478 02a9 EF 47                   		mov.L	r4, r7
+ 479 02ab FC 27 57                		divu	r5, r7
+ 480 02ae EF 75                   		mov.L	r7, r5
+ 481                             		.loc 2 171 7
+ 482 02b0 60 15                   		sub	#1, r5
+ 483 02b2 E7 A5 01                		mov.L	r5, 4[r10]
+ 484 02b5 38 AA 00                		bra	.L30
+ 485                             	.L33:
+ 172:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else if(work < 256) {
+ 486                             		.loc 2 172 11
+ 487 02b8 ED A5 03                		mov.L	12[r10], r5
+ 488 02bb 75 55 FF                		cmp	#0xff, r5
+ 489 02be 2A 23                   		bgt	.L34
+ 173:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		abcs	= SCI_SEMR_ABCS;
+ 490                             		.loc 2 173 8
+ 491 02c0 F8 A6 10                		mov.L	#16, [r10]
+ 174:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		cks	= 2;
+ 492                             		.loc 2 174 7
+ 493 02c3 F9 A6 02 02             		mov.L	#2, 8[r10]
+ 175:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		brr = SYSCLK_PCLKB / (baud * 256) - 1;
+ 494                             		.loc 2 175 30
+ 495 02c7 ED A5 04                		mov.L	16[r10], r5
+ 496 02ca 6C 85                   		shll	#8, r5
+ 497                             		.loc 2 175 22
+ 498 02cc FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 499 02d2 EF 47                   		mov.L	r4, r7
+ 500 02d4 FC 27 57                		divu	r5, r7
+ 501 02d7 EF 75                   		mov.L	r7, r5
+ 502                             		.loc 2 175 7
+ 503 02d9 60 15                   		sub	#1, r5
+ 504 02db E7 A5 01                		mov.L	r5, 4[r10]
+ 505 02de 38 81 00                		bra	.L30
+ 506                             	.L34:
+ 176:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else if(work < 512) {
+ 507                             		.loc 2 176 11
+ 508 02e1 ED A5 03                		mov.L	12[r10], r5
+ 509 02e4 76 05 FF 01             		cmp	#0x1ff, r5
+ 510 02e8 2A 22                   		bgt	.L35
+ 177:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		abcs	= 0;
+ 511                             		.loc 2 177 8
+ 512 02ea F8 A6 00                		mov.L	#0, [r10]
+ 178:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		cks	= 2;
+ 513                             		.loc 2 178 7
+ 514 02ed F9 A6 02 02             		mov.L	#2, 8[r10]
+ 179:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		brr = SYSCLK_PCLKB / (baud * 512) - 1;
+ 515                             		.loc 2 179 30
+ 516 02f1 ED A5 04                		mov.L	16[r10], r5
+ 517 02f4 6C 95                   		shll	#9, r5
+ 518                             		.loc 2 179 22
+ 519 02f6 FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 520 02fc EF 47                   		mov.L	r4, r7
+ 521 02fe FC 27 57                		divu	r5, r7
+ 522 0301 EF 75                   		mov.L	r7, r5
+ 523                             		.loc 2 179 7
+ 524 0303 60 15                   		sub	#1, r5
+ 525 0305 E7 A5 01                		mov.L	r5, 4[r10]
+ 526 0308 2E 57                   		bra	.L30
+ 527                             	.L35:
+ 180:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else if(work < 1024) {
+ 528                             		.loc 2 180 11
+ 529 030a ED A5 03                		mov.L	12[r10], r5
+ 530 030d 76 05 FF 03             		cmp	#0x3ff, r5
+ 531 0311 2A 22                   		bgt	.L36
+ 181:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		abcs	= SCI_SEMR_ABCS;
+ 532                             		.loc 2 181 8
+ 533 0313 F8 A6 10                		mov.L	#16, [r10]
+ 182:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		cks	= 3;
+ 534                             		.loc 2 182 7
+ 535 0316 F9 A6 02 03             		mov.L	#3, 8[r10]
+ 183:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		brr = SYSCLK_PCLKB / (baud * 1024) - 1;
+ 536                             		.loc 2 183 30
+ 537 031a ED A5 04                		mov.L	16[r10], r5
+ 538 031d 6C A5                   		shll	#10, r5
+ 539                             		.loc 2 183 22
+ 540 031f FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 541 0325 EF 47                   		mov.L	r4, r7
+ 542 0327 FC 27 57                		divu	r5, r7
+ 543 032a EF 75                   		mov.L	r7, r5
+ 544                             		.loc 2 183 7
+ 545 032c 60 15                   		sub	#1, r5
+ 546 032e E7 A5 01                		mov.L	r5, 4[r10]
+ 547 0331 2E 2E                   		bra	.L30
+ 548                             	.L36:
+ 184:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else if(work < 2048) {
+ 549                             		.loc 2 184 11
+ 550 0333 ED A5 03                		mov.L	12[r10], r5
+ 551 0336 76 05 FF 07             		cmp	#0x7ff, r5
+ 552 033a 2A 21                   		bgt	.L37
+ 185:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		abcs	= 0;
+ 553                             		.loc 2 185 8
+ 554 033c F8 A6 00                		mov.L	#0, [r10]
+ 186:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		cks	= 3;
+ 555                             		.loc 2 186 7
+ 556 033f F9 A6 02 03             		mov.L	#3, 8[r10]
+ 187:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		brr = SYSCLK_PCLKB / (baud * 2048) - 1;
+ 557                             		.loc 2 187 30
+ 558 0343 ED A5 04                		mov.L	16[r10], r5
+ 559 0346 6C B5                   		shll	#11, r5
+ 560                             		.loc 2 187 22
+ 561 0348 FB 42 00 87 93 03       		mov.L	#0x3938700, r4
+ 562 034e EF 47                   		mov.L	r4, r7
+ 563 0350 FC 27 57                		divu	r5, r7
+ 564 0353 EF 75                   		mov.L	r7, r5
+ 565                             		.loc 2 187 7
+ 566 0355 60 15                   		sub	#1, r5
+ 567 0357 E7 A5 01                		mov.L	r5, 4[r10]
+ 568 035a 0D                      		bra	.L30
+ 569                             	.L37:
+ 188:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else {
+ 189:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		return 0;
+ 570                             		.loc 2 189 10
+ 571 035b 66 05                   		mov.L	#0, r5
+ 572 035d 2E 13                   		bra	.L38
+ 573                             	.L30:
+ 190:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+ 191:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 192:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	return (brr<<16 | cks << 8 | abcs);
+ 574                             		.loc 2 192 13
+ 575 035f ED A5 01                		mov.L	4[r10], r5
+ 576 0362 FD D0 54                		shll	#16, r5, r4
+ 577                             		.loc 2 192 24
+ 578 0365 ED A5 02                		mov.L	8[r10], r5
+ 579 0368 6C 85                   		shll	#8, r5
+ 580                             		.loc 2 192 18
+ 581 036a 57 45                   		or	r4, r5
+ 582                             		.loc 2 192 29
+ 583 036c EC A4                   		mov.L	[r10], r4
+ 584 036e 57 45                   		or	r4, r5
+ 585                             	.L38:
+ 193:../device/ser/sysdepend/rx65n/ser_rx65n.c **** }
+ 586                             		.loc 2 193 1
+ 587 0370 EF 51                   		mov.L	r5, r1
+ 588 0372 3F 7A 09                		rtsd	#36, r7-r10
+ 589                             	.LFE11:
+ 591                             		.global	_dev_ser_llctl
+ 593                             	_dev_ser_llctl:
+ 594                             	.LFB12:
+ 194:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 195:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+ 196:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Low level device control
+ 197:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+ 198:../device/ser/sysdepend/rx65n/ser_rx65n.c **** EXPORT ER dev_ser_llctl( UW unit, INT cmd, UW parm)
+ 199:../device/ser/sysdepend/rx65n/ser_rx65n.c **** {
+ 595                             		.loc 2 199 1
+ 596 0375 7E AA                   		push.l	r10
+ 597                             	.LCFI14:
+ 598 0377 71 0A EC                		add	#-20, r0, r10
+ 599                             	.LCFI15:
+ 600 037a EF A0                   		mov.L	r10, r0
+ 601 037c E7 A1 02                		mov.L	r1, 8[r10]
+ 602 037f E7 A2 03                		mov.L	r2, 12[r10]
+ 603 0382 E7 A3 04                		mov.L	r3, 16[r10]
+ 200:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UW	data;
+ 201:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	ER	err	= E_OK;
+ 604                             		.loc 2 201 5
+ 605 0385 F8 A6 00                		mov.L	#0, [r10]
+ 202:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 203:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	switch(cmd) {
+ 606                             		.loc 2 203 2
+ 607 0388 ED A5 03                		mov.L	12[r10], r5
+ 608 038b 61 25                   		cmp	#2, r5
+ 609 038d 20 79                   		beq	.L40
+ 610 038f ED A5 03                		mov.L	12[r10], r5
+ 611 0392 61 25                   		cmp	#2, r5
+ 612 0394 2A 13                   		bgt	.L41
+ 613 0396 ED A5 03                		mov.L	12[r10], r5
+ 614 0399 61 05                   		cmp	#0, r5
+ 615 039b 20 29                   		beq	.L42
+ 616 039d ED A5 03                		mov.L	12[r10], r5
+ 617 03a0 61 15                   		cmp	#1, r5
+ 618 03a2 20 37                   		beq	.L43
+ 619 03a4 38 65 01                		bra	.L44
+ 620                             	.L41:
+ 621 03a7 ED A5 03                		mov.L	12[r10], r5
+ 622 03aa 61 45                   		cmp	#4, r5
+ 623 03ac 3A 1E 01                		beq	.L45
+ 624 03af ED A5 03                		mov.L	12[r10], r5
+ 625 03b2 61 45                   		cmp	#4, r5
+ 626 03b4 28 05 38 E6 00          		blt	.L46
+ 627 03b9 ED A5 03                		mov.L	12[r10], r5
+ 628 03bc 61 55                   		cmp	#5, r5
+ 629 03be 3A 47 01                		beq	.L47
+ 630 03c1 38 48 01                		bra	.L44
+ 631                             	.L42:
+ 204:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	case LLD_SER_MODE:	/* Set Communication mode */
+ 205:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		ll_devcb[unit].mode = parm;
+ 632                             		.loc 2 205 23
+ 633 03c4 FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
+ 634 03ca ED A5 02                		mov.L	8[r10], r5
+ 635 03cd 6C 35                   		shll	#3, r5
+ 636 03cf 4B 45                   		add	r4, r5
+ 637 03d1 ED A4 04                		mov.L	16[r10], r4
+ 638 03d4 E3 54                   		mov.L	r4, [r5]
+ 206:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		break;
+ 639                             		.loc 2 206 3
+ 640 03d6 38 33 01                		bra	.L44
+ 641                             	.L43:
+ 207:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	
+ 208:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	case LLD_SER_SPEED:	/* Set Communication Speed */
+ 209:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		data = calc_brr(parm);
+ 642                             		.loc 2 209 10
+ 643 03d9 ED A1 04                		mov.L	16[r10], r1
+ 644 03dc 39 1A FE                		bsr	_calc_brr
+ 645 03df E7 A1 01                		mov.L	r1, 4[r10]
+ 210:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		if(data != 0) {
+ 646                             		.loc 2 210 5
+ 647 03e2 ED A5 01                		mov.L	4[r10], r5
+ 648 03e5 61 05                   		cmp	#0, r5
+ 649 03e7 20 19                   		beq	.L48
+ 211:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 			ll_devcb[unit].speed = data;
+ 650                             		.loc 2 211 25
+ 651 03e9 FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
+ 652 03ef ED A5 02                		mov.L	8[r10], r5
+ 653 03f2 6C 35                   		shll	#3, r5
+ 654 03f4 4B 45                   		add	r4, r5
+ 655 03f6 62 45                   		add	#4, r5
+ 656 03f8 ED A4 01                		mov.L	4[r10], r4
+ 657 03fb E3 54                   		mov.L	r4, [r5]
+ 212:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		} else {
+ 213:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 			err = E_PAR;
+ 214:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		}
+ 215:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		break;
+ 658                             		.loc 2 215 3
+ 659 03fd 38 0C 01                		bra	.L44
+ 660                             	.L48:
+ 213:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		}
+ 661                             		.loc 2 213 8
+ 662 0400 F8 A6 EF                		mov.L	#-17, [r10]
+ 663                             		.loc 2 215 3
+ 664 0403 38 06 01                		bra	.L44
+ 665                             	.L40:
+ 216:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	
+ 217:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	case LLD_SER_START:	/* Start communication */
+ 218:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		/* Clear Interrupt */
+ 219:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		in_b(SCI_SSR(unit));
+ 666                             		.loc 2 219 8
+ 667 0406 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 668 040c ED A4 02                		mov.L	8[r10], r4
+ 669 040f FE 64 55                		mov.L	[r4,r5], r5
+ 670                             		.loc 2 219 3
+ 671 0412 62 45                   		add	#4, r5
+ 672 0414 EF 51                   		mov.L	r5, r1
+ 673 0416 39 01 FC                		bsr	_in_b
+ 220:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		out_b(SCI_SSR(unit), 0xC0);
+ 674                             		.loc 2 220 9
+ 675 0419 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 676 041f ED A4 02                		mov.L	8[r10], r4
+ 677 0422 FE 64 55                		mov.L	[r4,r5], r5
+ 678                             		.loc 2 220 3
+ 679 0425 62 45                   		add	#4, r5
+ 680 0427 FB 26 C0                		mov	#-64, r2
+ 681 042a EF 51                   		mov.L	r5, r1
+ 682 042c 39 D4 FB                		bsr	_out_b
+ 221:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		/* Enable Interrupt */
+ 222:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		EnableInt( INTNO_RXI(unit), INTPRI(unit));
+ 683                             		.loc 2 222 3
+ 684 042f FB 52 34 00 00 00       		mov.L	#_inotbl, r5
+ 685 0435 ED A4 02                		mov.L	8[r10], r4
+ 686 0438 FE 64 53                		mov.L	[r4,r5], r3
+ 687 043b FB 52 68 00 00 00       		mov.L	#_pritbl, r5
+ 688 0441 ED A4 02                		mov.L	8[r10], r4
+ 689 0444 FE 64 55                		mov.L	[r4,r5], r5
+ 690 0447 EF 52                   		mov.L	r5, r2
+ 691 0449 EF 31                   		mov.L	r3, r1
+ 692 044b 05 00 00 00             		bsr	_EnableInt
+ 223:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		EnableInt( INTNO_TXI(unit), INTPRI(unit));
+ 693                             		.loc 2 223 14
+ 694 044f FB 52 34 00 00 00       		mov.L	#_inotbl, r5
+ 695 0455 ED A4 02                		mov.L	8[r10], r4
+ 696 0458 FE 64 55                		mov.L	[r4,r5], r5
+ 697                             		.loc 2 223 3
+ 698 045b 71 53 01                		add	#1, r5, r3
+ 699 045e FB 52 68 00 00 00       		mov.L	#_pritbl, r5
+ 700 0464 ED A4 02                		mov.L	8[r10], r4
+ 701 0467 FE 64 55                		mov.L	[r4,r5], r5
+ 702 046a EF 52                   		mov.L	r5, r2
+ 703 046c EF 31                   		mov.L	r3, r1
+ 704 046e 05 00 00 00             		bsr	_EnableInt
+ 224:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		/* Set mode & Start communication */
+ 225:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		start_com( unit, ll_devcb[unit].mode, ll_devcb[unit].speed);
+ 705                             		.loc 2 225 3
+ 706 0472 FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
+ 707 0478 ED A5 02                		mov.L	8[r10], r5
+ 708 047b 6C 35                   		shll	#3, r5
+ 709 047d 4B 45                   		add	r4, r5
+ 710 047f EC 52                   		mov.L	[r5], r2
+ 711 0481 FB 42 00 00 00 00       		mov.L	#_ll_devcb, r4
+ 712 0487 ED A5 02                		mov.L	8[r10], r5
+ 713 048a 6C 35                   		shll	#3, r5
+ 714 048c 4B 45                   		add	r4, r5
+ 715 048e 62 45                   		add	#4, r5
+ 716 0490 EC 55                   		mov.L	[r5], r5
+ 717 0492 EF 53                   		mov.L	r5, r3
+ 718 0494 ED A1 02                		mov.L	8[r10], r1
+ 719 0497 39 66 FC                		bsr	_start_com
+ 226:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		break;
+ 720                             		.loc 2 226 3
+ 721 049a 2E 6F                   		bra	.L44
+ 722                             	.L46:
+ 227:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	
+ 228:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	case LLD_SER_STOP:
+ 229:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		/* Disable Interrupt */
+ 230:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		DisableInt( INTNO_RXI(unit));
+ 723                             		.loc 2 230 3
+ 724 049c FB 52 34 00 00 00       		mov.L	#_inotbl, r5
+ 725 04a2 ED A4 02                		mov.L	8[r10], r4
+ 726 04a5 FE 64 55                		mov.L	[r4,r5], r5
+ 727 04a8 EF 51                   		mov.L	r5, r1
+ 728 04aa 05 00 00 00             		bsr	_DisableInt
+ 231:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		DisableInt( INTNO_TXI(unit));
+ 729                             		.loc 2 231 15
+ 730 04ae FB 52 34 00 00 00       		mov.L	#_inotbl, r5
+ 731 04b4 ED A4 02                		mov.L	8[r10], r4
+ 732 04b7 FE 64 55                		mov.L	[r4,r5], r5
+ 733                             		.loc 2 231 3
+ 734 04ba 62 15                   		add	#1, r5
+ 735 04bc EF 51                   		mov.L	r5, r1
+ 736 04be 05 00 00 00             		bsr	_DisableInt
+ 232:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		stop_com(unit);			// Stop communication
+ 737                             		.loc 2 232 3
+ 738 04c2 ED A1 02                		mov.L	8[r10], r1
+ 739 04c5 39 F3 FC                		bsr	_stop_com
+ 233:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		break;
+ 740                             		.loc 2 233 3
+ 741 04c8 2E 41                   		bra	.L44
+ 742                             	.L45:
+ 234:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 235:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	case LLD_SER_SEND:
+ 236:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		if((in_b( SCI_SSR(unit)) & SCI_SSR_TDRF) != 0) {
+ 743                             		.loc 2 236 13
+ 744 04ca FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 745 04d0 ED A4 02                		mov.L	8[r10], r4
+ 746 04d3 FE 64 55                		mov.L	[r4,r5], r5
+ 747                             		.loc 2 236 7
+ 748 04d6 62 45                   		add	#4, r5
+ 749 04d8 EF 51                   		mov.L	r5, r1
+ 750 04da 39 3D FB                		bsr	_in_b
+ 751 04dd EF 15                   		mov.L	r1, r5
+ 752                             		.loc 2 236 5
+ 753 04df CF 55                   		mov.B	r5, r5
+ 754 04e1 61 05                   		cmp	#0, r5
+ 755 04e3 28 1E                   		bge	.L50
+ 237:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 			out_b(SCI_TDR(unit), (UB)parm);
+ 756                             		.loc 2 237 10
+ 757 04e5 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 758 04eb ED A4 02                		mov.L	8[r10], r4
+ 759 04ee FE 64 55                		mov.L	[r4,r5], r5
+ 760                             		.loc 2 237 4
+ 761 04f1 62 35                   		add	#3, r5
+ 762 04f3 ED A4 04                		mov.L	16[r10], r4
+ 763 04f6 CF 42                   		mov.B	r4, r2
+ 764 04f8 EF 51                   		mov.L	r5, r1
+ 765 04fa 39 06 FB                		bsr	_out_b
+ 238:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 			err = E_OK;
+ 766                             		.loc 2 238 8
+ 767 04fd F8 A6 00                		mov.L	#0, [r10]
+ 239:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		} else {
+ 240:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 			err = E_BUSY;
+ 241:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		}
+ 242:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		break;
+ 768                             		.loc 2 242 3
+ 769 0500 09                      		bra	.L44
+ 770                             	.L50:
+ 240:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		}
+ 771                             		.loc 2 240 8
+ 772 0501 F8 A6 BF                		mov.L	#-65, [r10]
+ 773                             		.loc 2 242 3
+ 774 0504 0D                      		bra	.L44
+ 775                             	.L47:
+ 243:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 244:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	case LLD_SER_BREAK:	/* Send Break */
+ 245:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		err = E_NOSPT;
+ 776                             		.loc 2 245 7
+ 777 0505 F8 A6 F7                		mov.L	#-9, [r10]
+ 246:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		break;
+ 778                             		.loc 2 246 3
+ 779 0508 03                      		nop
+ 780                             		.balign 8,3,1
+ 781                             	.L44:
+ 247:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+ 248:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 249:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	return err;
+ 782                             		.loc 2 249 9
+ 783 0509 EC A5                   		mov.L	[r10], r5
+ 250:../device/ser/sysdepend/rx65n/ser_rx65n.c **** }
+ 784                             		.loc 2 250 1
+ 785 050b EF 51                   		mov.L	r5, r1
+ 786 050d 3F AA 06                		rtsd	#24, r10-r10
+ 787                             	.LFE12:
+ 789                             		.global	_dev_ser_llinit
+ 791                             	_dev_ser_llinit:
+ 792                             	.LFB13:
+ 251:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 252:../device/ser/sysdepend/rx65n/ser_rx65n.c **** /*----------------------------------------------------------------------
+ 253:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  * Device initialization
+ 254:../device/ser/sysdepend/rx65n/ser_rx65n.c ****  */
+ 255:../device/ser/sysdepend/rx65n/ser_rx65n.c **** EXPORT ER dev_ser_llinit( T_SER_DCB *p_dcb)
+ 256:../device/ser/sysdepend/rx65n/ser_rx65n.c **** {
+ 793                             		.loc 2 256 1
+ 794 0510 7E AA                   		push.l	r10
+ 795                             	.LCFI16:
+ 796 0512 71 0A EC                		add	#-20, r0, r10
+ 797                             	.LCFI17:
+ 798 0515 EF A0                   		mov.L	r10, r0
+ 799 0517 E7 A1 04                		mov.L	r1, 16[r10]
+ 257:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	T_DINT		dint;
+ 258:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UW		unit;
+ 259:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	ER		err;
+ 260:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 261:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	unit = p_dcb->unit;
+ 800                             		.loc 2 261 7
+ 801 051a ED A5 04                		mov.L	16[r10], r5
+ 802 051d EC 55                   		mov.L	[r5], r5
+ 803 051f E3 A5                   		mov.L	r5, [r10]
+ 262:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 263:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #if DEVCONF_SER_INIT_MSTP		// Initialize module stop
+ 264:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	const UINT	mstp_bit[] = { 31, 30, 29, 28, 27, 26, 25, 24, 27, 26, 25, 24, 4};
+ 265:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UINT		sts;
+ 266:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	UW		*mstp;
+ 267:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 268:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	if(unit >= 8 && unit <= 11) {	// SCI8-11
+ 269:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		mstp = (UB*)MSTPCRC;
+ 270:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	} else { 			// SCI0-7, 12
+ 271:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		mstp = (UB*)MSTPCRB;
+ 272:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+ 273:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 274:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	if(in_w(mstp) & (1<<mstp_bit[unit])) {
+ 275:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		DI(sts);
+ 276:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		out_h(SYSTEM_PRCR, 0xA502);	/* Disable Register Protect */
+ 277:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		*mstp &= ~(1<<mstp_bit[unit]);	/* Release module stop */
+ 278:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		out_h(SYSTEM_PRCR, 0xA500);	/* Enable Register protect */
+ 279:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 		EI(sts);
+ 280:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	}
+ 281:../device/ser/sysdepend/rx65n/ser_rx65n.c **** #endif		/* DEVCONF_SER_INIT_MSTP */
+ 282:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 283:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	stop_com(unit);					/* Stop communication */
+ 804                             		.loc 2 283 2
+ 805 0521 EC A1                   		mov.L	[r10], r1
+ 806 0523 39 95 FC                		bsr	_stop_com
+ 284:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	out_b(SCI_SPMR(unit), SCI_SPMR_INI);	/* Set Hard flow control */
+ 807                             		.loc 2 284 8
+ 808 0526 FB 52 00 00 00 00       		mov.L	#_ba, r5
+ 809 052c EC A4                   		mov.L	[r10], r4
+ 810 052e FE 64 55                		mov.L	[r4,r5], r5
+ 811                             		.loc 2 284 2
+ 812 0531 62 D5                   		add	#13, r5
+ 813 0533 66 02                   		mov	#0, r2
+ 814 0535 EF 51                   		mov.L	r5, r1
+ 815 0537 39 C9 FA                		bsr	_out_b
+ 285:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 286:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	/* Device Control block Initizlize */
+ 287:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	p_dcb->intno_rcv = INTNO_SCI0_RXI + (unit<<2);
+ 816                             		.loc 2 287 43
+ 817 053a EC A5                   		mov.L	[r10], r5
+ 818 053c 6C 25                   		shll	#2, r5
+ 819                             		.loc 2 287 36
+ 820 053e 71 54 3A                		add	#58, r5, r4
+ 821                             		.loc 2 287 19
+ 822 0541 ED A5 04                		mov.L	16[r10], r5
+ 823 0544 A2 54                   		mov.L	r4, 32[r5]
+ 288:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	p_dcb->intno_snd = INTNO_SCI0_TXI + (unit<<2);
+ 824                             		.loc 2 288 43
+ 825 0546 EC A5                   		mov.L	[r10], r5
+ 826 0548 6C 25                   		shll	#2, r5
+ 827                             		.loc 2 288 36
+ 828 054a 71 54 3B                		add	#59, r5, r4
+ 829                             		.loc 2 288 19
+ 830 054d ED A5 04                		mov.L	16[r10], r5
+ 831 0550 A2 5C                   		mov.L	r4, 36[r5]
+ 289:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 290:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	/* Interrupt handler definition */
+ 291:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	dint.intatr	= TA_HLNG;
+ 832                             		.loc 2 291 14
+ 833 0552 F9 A6 02 01             		mov.L	#1, 8[r10]
+ 292:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	dint.inthdr	= sci_rxi_inthdr;
+ 834                             		.loc 2 292 14
+ 835 0556 F9 A2 03 00 00 00 00    		mov.L	#_sci_rxi_inthdr, 12[r10]
+ 293:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	err = tk_def_int(INTNO_RXI(unit), &dint);	
+ 836                             		.loc 2 293 8
+ 837 055d FB 52 34 00 00 00       		mov.L	#_inotbl, r5
+ 838 0563 EC A4                   		mov.L	[r10], r4
+ 839 0565 FE 64 54                		mov.L	[r4,r5], r4
+ 840 0568 71 A5 08                		add	#8, r10, r5
+ 841 056b EF 52                   		mov.L	r5, r2
+ 842 056d EF 41                   		mov.L	r4, r1
+ 843 056f 05 00 00 00             		bsr	_tk_def_int
+ 844 0573 E7 A1 01                		mov.L	r1, 4[r10]
+ 294:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	dint.inthdr	= sci_txi_inthdr;
+ 845                             		.loc 2 294 14
+ 846 0576 F9 A2 03 00 00 00 00    		mov.L	#_sci_txi_inthdr, 12[r10]
+ 295:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	err = tk_def_int(INTNO_TXI(unit), &dint);
+ 847                             		.loc 2 295 19
+ 848 057d FB 52 34 00 00 00       		mov.L	#_inotbl, r5
+ 849 0583 EC A4                   		mov.L	[r10], r4
+ 850 0585 FE 64 55                		mov.L	[r4,r5], r5
+ 851                             		.loc 2 295 8
+ 852 0588 62 15                   		add	#1, r5
+ 853 058a 71 A4 08                		add	#8, r10, r4
+ 854 058d EF 42                   		mov.L	r4, r2
+ 855 058f EF 51                   		mov.L	r5, r1
+ 856 0591 05 00 00 00             		bsr	_tk_def_int
+ 857 0595 E7 A1 01                		mov.L	r1, 4[r10]
+ 296:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 
+ 297:../device/ser/sysdepend/rx65n/ser_rx65n.c **** 	return err;
+ 858                             		.loc 2 297 9
+ 859 0598 ED A5 01                		mov.L	4[r10], r5
+ 298:../device/ser/sysdepend/rx65n/ser_rx65n.c **** }
+ 860                             		.loc 2 298 1
+ 861 059b EF 51                   		mov.L	r5, r1
+ 862 059d 3F AA 06                		rtsd	#24, r10-r10
+ 863                             	.LFE13:
+ 1060                             	.Letext0:
+ 1061                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
+ 1062                             		.file 4 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"
+ 1063                             		.file 5 "../device/ser/sysdepend/rx65n/../../ser.h"

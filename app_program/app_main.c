@@ -237,8 +237,34 @@ void tsk2(INT stacd, void *exinf)
 	tk_exd_tsk();	/* Exit Task */
 }
 
+
+void tsk3(INT stacd, void *exinf)
+{
+	static UB buf[] = {'T', 'E', 'S', 'T', '\n'};;
+	UB	rdata;
+	ID	dd;
+	SZ	asz;
+	ER	err;
+
+	TM_PUTSTRING((UB*)"Start Task-3\n");
+
+	dd = tk_opn_dev((UB*)"seri", TD_UPDATE);
+	if(dd<E_OK) tm_printf((UB*)"Open Error %d\n", dd);
+
+	err = tk_swri_dev( dd, 0, buf, sizeof(buf), &asz);
+	if(err<E_OK) tm_printf((UB*)"Send Error %d\n", err);
+
+	for(INT i = 0; i<10; i++) {
+		tk_srea_dev( dd, 0, &rdata, 1, &asz);
+		tk_swri_dev( dd, 0, &rdata, 1, &asz);
+	}
+
+	tk_exd_tsk();	/* Exit Task */
+}
+
 const T_CTSK	ctsk1	= {0, (TA_HLNG | TA_RNG3), &tsk1, 10, 1024, 0};
 const T_CTSK	ctsk2	= {0, (TA_HLNG | TA_RNG3), &tsk2, 11, 1024, 0};
+const T_CTSK	ctsk3	= {0, (TA_HLNG | TA_RNG3), &tsk3, 11, 1024, 0};
 
 /* ----------------------------------------------------------
  *
@@ -249,7 +275,7 @@ const T_CTSK	ctsk2	= {0, (TA_HLNG | TA_RNG3), &tsk2, 11, 1024, 0};
 EXPORT INT usermain( void )
 {
 	T_RVER	rver;
-	ID	id1, id2;
+	ID	id1, id2, id3;
 
 	TM_PUTSTRING((UB*)"Start User-main program.\n");
 
@@ -262,10 +288,13 @@ EXPORT INT usermain( void )
 #endif
 
 	id1 = tk_cre_tsk(&ctsk1);
-//	tk_sta_tsk(id1, 0);
+	tk_sta_tsk(id1, 0);
 
 	id2 = tk_cre_tsk(&ctsk2);
-	tk_sta_tsk(id2, 0);
+//	tk_sta_tsk(id2, 0);
+
+	id3 = tk_cre_tsk(&ctsk3);
+//	tk_sta_tsk(id3, 0);
 
 	tk_slp_tsk(TMO_FEVR);
 

@@ -216,14 +216,14 @@
  121                             		.loc 1 97 10
  122 00b0 ED A5 03                		mov.L	12[r10], r5
  123 00b3 CF 54                   		mov.B	r5, r4
- 124 00b5 FB 52 00 00 00 00       		mov.L	#_data.2093, r5
+ 124 00b5 FB 52 00 00 00 00       		mov.L	#_data.2103, r5
  125 00bb C3 54                   		mov.B	r4, [r5]
   98:../app_program/app_main.c **** 	err = tk_swri_dev(dd_eeprom, EEPROM_ADDR, data, 1, &asz);
  126                             		.loc 1 98 8
  127 00bd 71 A5 04                		add	#4, r10, r5
  128 00c0 E3 05                   		mov.L	r5, [r0]
  129 00c2 66 14                   		mov.L	#1, r4
- 130 00c4 FB 32 00 00 00 00       		mov.L	#_data.2093, r3
+ 130 00c4 FB 32 00 00 00 00       		mov.L	#_data.2103, r3
  131 00ca 75 42 53                		mov.L	#0x53, r2
  132 00cd ED A1 02                		mov.L	8[r10], r1
  133 00d0 05 00 00 00             		bsr	_tk_swri_dev
@@ -257,7 +257,7 @@
  155 00f1 71 A5 04                		add	#4, r10, r5
  156 00f4 E3 05                   		mov.L	r5, [r0]
  157 00f6 75 44 10                		mov.L	#16, r4
- 158 00f9 FB 32 00 00 00 00       		mov.L	#_data.2093, r3
+ 158 00f9 FB 32 00 00 00 00       		mov.L	#_data.2103, r3
  159 00ff 75 42 53                		mov.L	#0x53, r2
  160 0102 ED A1 02                		mov.L	8[r10], r1
  161 0105 05 00 00 00             		bsr	_tk_srea_dev
@@ -274,7 +274,7 @@
  106:../app_program/app_main.c **** 			knl_memcpy(buf, data, EEPROM_PAGE_SIZE);
  171                             		.loc 1 106 4
  172 0114 75 43 10                		mov.L	#16, r3
- 173 0117 FB 22 00 00 00 00       		mov.L	#_data.2093, r2
+ 173 0117 FB 22 00 00 00 00       		mov.L	#_data.2103, r2
  174 011d ED A1 04                		mov.L	16[r10], r1
  175 0120 05 00 00 00             		bsr	_knl_memcpy
  107:../app_program/app_main.c **** 			size -= EEPROM_PAGE_SIZE; buf += EEPROM_PAGE_SIZE; addr += EEPROM_PAGE_SIZE;
@@ -300,7 +300,7 @@
  193 0141 71 A5 04                		add	#4, r10, r5
  194 0144 E3 05                   		mov.L	r5, [r0]
  195 0146 ED A4 05                		mov.L	20[r10], r4
- 196 0149 FB 32 00 00 00 00       		mov.L	#_data.2093, r3
+ 196 0149 FB 32 00 00 00 00       		mov.L	#_data.2103, r3
  197 014f 75 42 53                		mov.L	#0x53, r2
  198 0152 ED A1 02                		mov.L	8[r10], r1
  199 0155 05 00 00 00             		bsr	_tk_srea_dev
@@ -317,7 +317,7 @@
  111:../app_program/app_main.c **** 			knl_memcpy(buf, data, size);
  209                             		.loc 1 111 4
  210 0164 ED A3 05                		mov.L	20[r10], r3
- 211 0167 FB 22 00 00 00 00       		mov.L	#_data.2093, r2
+ 211 0167 FB 22 00 00 00 00       		mov.L	#_data.2103, r2
  212 016d ED A1 04                		mov.L	16[r10], r1
  213 0170 05 00 00 00             		bsr	_knl_memcpy
  112:../app_program/app_main.c **** 			size = 0;
@@ -400,7 +400,7 @@
  273                             		.loc 1 130 11
  274 01ce ED A5 03                		mov.L	12[r10], r5
  275 01d1 CF 54                   		mov.B	r5, r4
- 276 01d3 FB 52 00 01 00 00       		mov.L	#_data.2108, r5
+ 276 01d3 FB 52 00 01 00 00       		mov.L	#_data.2118, r5
  277 01d9 C3 54                   		mov.B	r4, [r5]
  131:../app_program/app_main.c **** 		if(size > EEPROM_PAGE_SIZE) {
  278                             		.loc 1 131 5
@@ -412,14 +412,14 @@
  283                             		.loc 1 132 4
  284 01e3 75 43 10                		mov.L	#16, r3
  285 01e6 ED A2 04                		mov.L	16[r10], r2
- 286 01e9 FB 12 01 01 00 00       		mov.L	#_data.2108+1, r1
+ 286 01e9 FB 12 01 01 00 00       		mov.L	#_data.2118+1, r1
  287 01ef 05 00 00 00             		bsr	_knl_memcpy
  133:../app_program/app_main.c **** 			err = tk_swri_dev(dd_eeprom, EEPROM_ADDR, data, EEPROM_PAGE_SIZE+1, &asz);
  288                             		.loc 1 133 10
  289 01f3 71 A5 04                		add	#4, r10, r5
  290 01f6 E3 05                   		mov.L	r5, [r0]
  291 01f8 75 44 11                		mov.L	#17, r4
- 292 01fb FB 32 00 01 00 00       		mov.L	#_data.2108, r3
+ 292 01fb FB 32 00 01 00 00       		mov.L	#_data.2118, r3
  293 0201 75 42 53                		mov.L	#0x53, r2
  294 0204 ED A1 02                		mov.L	8[r10], r1
  295 0207 05 00 00 00             		bsr	_tk_swri_dev
@@ -455,7 +455,7 @@
  321                             		.loc 1 137 4
  322 0233 ED A3 05                		mov.L	20[r10], r3
  323 0236 ED A2 04                		mov.L	16[r10], r2
- 324 0239 FB 12 01 01 00 00       		mov.L	#_data.2108+1, r1
+ 324 0239 FB 12 01 01 00 00       		mov.L	#_data.2118+1, r1
  325 023f 05 00 00 00             		bsr	_knl_memcpy
  138:../app_program/app_main.c **** 			err = tk_swri_dev(dd_eeprom, EEPROM_ADDR, data, size+1, &asz);
  326                             		.loc 1 138 10
@@ -464,7 +464,7 @@
  329 0248 71 A4 04                		add	#4, r10, r4
  330 024b E3 04                   		mov.L	r4, [r0]
  331 024d EF 54                   		mov.L	r5, r4
- 332 024f FB 32 00 01 00 00       		mov.L	#_data.2108, r3
+ 332 024f FB 32 00 01 00 00       		mov.L	#_data.2118, r3
  333 0255 75 42 53                		mov.L	#0x53, r2
  334 0258 ED A1 02                		mov.L	8[r10], r1
  335 025b 05 00 00 00             		bsr	_tk_swri_dev
@@ -1050,165 +1050,317 @@
  798 055c 03                      		nop
  799 055d 3F AA 05                		rtsd	#20, r10-r10
  800                             	.LFE12:
- 802                             		.global	_ctsk1
- 803                             		.section C,"a",@progbits
- 804 00d2 00 00                   		.p2align 2
- 805                             		.balign 4
- 808                             	_ctsk1:
- 809 00d4 00 00 00 00             		.long	0
- 810 00d8 01 03 00 00             		.long	0x301
- 811 00dc 00 00 00 00             		.long	_tsk1
- 812 00e0 0A 00 00 00             		.long	10
- 813 00e4 00 04 00 00             		.long	0x400
- 814 00e8 00 00 00 00             		.long	0
- 815                             		.global	_ctsk2
- 816                             		.balign 4
- 819                             	_ctsk2:
- 820 00ec 00 00 00 00             		.long	0
- 821 00f0 01 03 00 00             		.long	0x301
- 822 00f4 00 00 00 00             		.long	_tsk2
- 823 00f8 0B 00 00 00             		.long	11
- 824 00fc 00 04 00 00             		.long	0x400
- 825 0100 00 00 00 00             		.long	0
- 826                             	.LC20:
- 827 0104 53 74 61 72 74 20 55 73 		.string	"Start User-main program.\n"
- 827      65 72 2D 6D 61 69 6E 20 
- 827      70 72 6F 67 72 61 6D 2E 
- 827      0A 00 
- 828                             	.LC21:
- 829 011e 4D 61 6B 65 20 43 6F 64 		.string	"Make Code: %04x  Product ID: %04x\n"
- 829      65 3A 20 25 30 34 78 20 
- 829      20 50 72 6F 64 75 63 74 
- 829      20 49 44 3A 20 25 30 34 
- 829      78 0A 00 
- 830                             	.LC22:
- 831 0141 50 72 6F 64 75 63 74 20 		.string	"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n"
- 831      56 65 72 2E 20 25 30 34 
- 831      78 0A 50 72 6F 64 75 63 
- 831      74 20 4E 75 6D 2E 20 25 
- 831      30 34 78 20 25 30 34 78 
- 832 0175 00 00 00                		.section P,"ax"
- 833                             		.global	_usermain
- 835                             	_usermain:
- 836                             	.LFB13:
+ 802                             		.section C,"a",@progbits
+ 803 00d2 00 00                   		.p2align 2
+ 804                             	.LC20:
+ 805 00d4 53 74 61 72 74 20 54 61 		.string	"Start Task-3\n"
+ 805      73 6B 2D 33 0A 00 
+ 806                             	.LC21:
+ 807 00e2 73 65 72 69 00          		.string	"seri"
+ 808                             	.LC22:
+ 809 00e7 53 65 6E 64 20 45 72 72 		.string	"Send Error %d\n"
+ 809      6F 72 20 25 64 0A 00 
+ 810                             		.section P,"ax"
+ 811                             		.global	_tsk3
+ 813                             	_tsk3:
+ 814                             	.LFB13:
  239:../app_program/app_main.c **** 
- 240:../app_program/app_main.c **** const T_CTSK	ctsk1	= {0, (TA_HLNG | TA_RNG3), &tsk1, 10, 1024, 0};
- 241:../app_program/app_main.c **** const T_CTSK	ctsk2	= {0, (TA_HLNG | TA_RNG3), &tsk2, 11, 1024, 0};
- 242:../app_program/app_main.c **** 
- 243:../app_program/app_main.c **** /* ----------------------------------------------------------
- 244:../app_program/app_main.c ****  *
- 245:../app_program/app_main.c ****  * User-Main Definition (Run on initial task)
- 246:../app_program/app_main.c ****  *
- 247:../app_program/app_main.c ****  */
+ 240:../app_program/app_main.c **** 
+ 241:../app_program/app_main.c **** void tsk3(INT stacd, void *exinf)
+ 242:../app_program/app_main.c **** {
+ 815                             		.loc 1 242 1
+ 816 0560 7E AA                   		push.l	r10
+ 817                             	.LCFI21:
+ 818 0562 71 0A E4                		add	#-28, r0, r10
+ 819                             	.LCFI22:
+ 820 0565 71 A0 F8                		add	#-8, r10, r0
+ 821                             	.LCFI23:
+ 822 0568 E7 A1 05                		mov.L	r1, 20[r10]
+ 823 056b E7 A2 06                		mov.L	r2, 24[r10]
+ 243:../app_program/app_main.c **** 	static UB buf[] = {'T', 'E', 'S', 'T', '\n'};;
+ 244:../app_program/app_main.c **** 	UB	rdata;
+ 245:../app_program/app_main.c **** 	ID	dd;
+ 246:../app_program/app_main.c **** 	SZ	asz;
+ 247:../app_program/app_main.c **** 	ER	err;
  248:../app_program/app_main.c **** 
- 249:../app_program/app_main.c **** EXPORT INT usermain( void )
- 250:../app_program/app_main.c **** {
- 837                             		.loc 1 250 1
- 838 0560 7E AA                   		push.l	r10
- 839                             	.LCFI21:
- 840 0562 71 0A E8                		add	#-24, r0, r10
- 841                             	.LCFI22:
- 842 0565 71 A0 E8                		add	#-24, r10, r0
- 843                             	.LCFI23:
- 251:../app_program/app_main.c **** 	T_RVER	rver;
- 252:../app_program/app_main.c **** 	ID	id1, id2;
+ 249:../app_program/app_main.c **** 	TM_PUTSTRING((UB*)"Start Task-3\n");
+ 824                             		.loc 1 249 2
+ 825 056e FB 12 D4 00 00 00       		mov.L	#.LC20, r1
+ 826 0574 05 00 00 00             		bsr	_tm_putstring
+ 250:../app_program/app_main.c **** 
+ 251:../app_program/app_main.c **** 	dd = tk_opn_dev((UB*)"seri", TD_UPDATE);
+ 827                             		.loc 1 251 7
+ 828 0578 66 32                   		mov.L	#3, r2
+ 829 057a FB 12 E2 00 00 00       		mov.L	#.LC21, r1
+ 830 0580 05 00 00 00             		bsr	_tk_opn_dev
+ 831 0584 E7 A1 01                		mov.L	r1, 4[r10]
+ 252:../app_program/app_main.c **** 	if(dd<E_OK) tm_printf((UB*)"Open Error %d\n", dd);
+ 832                             		.loc 1 252 4
+ 833 0587 ED A5 01                		mov.L	4[r10], r5
+ 834 058a 61 05                   		cmp	#0, r5
+ 835 058c 28 11                   		bge	.L56
+ 836                             		.loc 1 252 14 discriminator 1
+ 837 058e ED A5 01                		mov.L	4[r10], r5
+ 838 0591 A0 0D                   		mov.L	r5, 4[r0]
+ 839 0593 F8 02 C3 00 00 00       		mov.L	#.LC19, [r0]
+ 840 0599 05 00 00 00             		bsr	_tm_printf
+ 841                             	.L56:
  253:../app_program/app_main.c **** 
- 254:../app_program/app_main.c **** 	TM_PUTSTRING((UB*)"Start User-main program.\n");
- 844                             		.loc 1 254 2
- 845 0568 FB 12 04 01 00 00       		mov.L	#.LC20, r1
- 846 056e 05 00 00 00             		bsr	_tm_putstring
- 255:../app_program/app_main.c **** 
- 256:../app_program/app_main.c **** 	tk_ref_ver(&rver);		/* Get the OS Version. */
- 847                             		.loc 1 256 2
- 848 0572 71 A5 08                		add	#8, r10, r5
- 849 0575 EF 51                   		mov.L	r5, r1
- 850 0577 05 00 00 00             		bsr	_tk_ref_ver
- 257:../app_program/app_main.c **** 
- 258:../app_program/app_main.c **** #if USE_TMONITOR
- 259:../app_program/app_main.c **** 	tm_printf((UB*)"Make Code: %04x  Product ID: %04x\n", rver.maker, rver.prid);
- 851                             		.loc 1 259 60
- 852 057b DD A5 04                		mov.W	8[r10], r5
- 853                             		.loc 1 259 2
- 854 057e 5F 55                   		movu.W	r5, r5
- 855                             		.loc 1 259 72
- 856 0580 DD A4 05                		mov.W	10[r10], r4
- 857                             		.loc 1 259 2
- 858 0583 5F 44                   		movu.W	r4, r4
- 859 0585 A0 84                   		mov.L	r4, 8[r0]
- 860 0587 A0 0D                   		mov.L	r5, 4[r0]
- 861 0589 F8 02 1E 01 00 00       		mov.L	#.LC21, [r0]
- 862 058f 05 00 00 00             		bsr	_tm_printf
- 260:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
- 261:../app_program/app_main.c **** 			rver.prver, rver.prno[0],rver.prno[1],rver.prno[2],rver.prno[3]);
- 863                             		.loc 1 261 8
- 864 0593 DD A5 07                		mov.W	14[r10], r5
- 260:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
- 865                             		.loc 1 260 2
- 866 0596 5F 55                   		movu.W	r5, r5
- 867                             		.loc 1 261 25
- 868 0598 DD A4 08                		mov.W	16[r10], r4
- 260:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
- 869                             		.loc 1 260 2
- 870 059b 5F 44                   		movu.W	r4, r4
- 871                             		.loc 1 261 38
- 872 059d DD A3 09                		mov.W	18[r10], r3
- 260:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
- 873                             		.loc 1 260 2
- 874 05a0 5F 33                   		movu.W	r3, r3
- 875                             		.loc 1 261 51
- 876 05a2 DD A2 0A                		mov.W	20[r10], r2
- 260:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
- 877                             		.loc 1 260 2
- 878 05a5 5F 22                   		movu.W	r2, r2
- 879                             		.loc 1 261 64
- 880 05a7 DD A1 0B                		mov.W	22[r10], r1
- 260:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
- 881                             		.loc 1 260 2
- 882 05aa 5F 11                   		movu.W	r1, r1
- 883 05ac A1 09                   		mov.L	r1, 20[r0]
- 884 05ae A1 02                   		mov.L	r2, 16[r0]
- 885 05b0 A0 8B                   		mov.L	r3, 12[r0]
- 886 05b2 A0 84                   		mov.L	r4, 8[r0]
- 887 05b4 A0 0D                   		mov.L	r5, 4[r0]
- 888 05b6 F8 02 41 01 00 00       		mov.L	#.LC22, [r0]
- 889 05bc 05 00 00 00             		bsr	_tm_printf
- 262:../app_program/app_main.c **** #endif
- 263:../app_program/app_main.c **** 
- 264:../app_program/app_main.c **** 	id1 = tk_cre_tsk(&ctsk1);
- 890                             		.loc 1 264 8
- 891 05c0 FB 12 00 00 00 00       		mov.L	#_ctsk1, r1
- 892 05c6 05 00 00 00             		bsr	_tk_cre_tsk
- 893 05ca E3 A1                   		mov.L	r1, [r10]
- 265:../app_program/app_main.c **** //	tk_sta_tsk(id1, 0);
- 266:../app_program/app_main.c **** 
- 267:../app_program/app_main.c **** 	id2 = tk_cre_tsk(&ctsk2);
- 894                             		.loc 1 267 8
- 895 05cc FB 12 00 00 00 00       		mov.L	#_ctsk2, r1
- 896 05d2 05 00 00 00             		bsr	_tk_cre_tsk
- 897 05d6 E7 A1 01                		mov.L	r1, 4[r10]
- 268:../app_program/app_main.c **** 	tk_sta_tsk(id2, 0);
- 898                             		.loc 1 268 2
- 899 05d9 66 02                   		mov.L	#0, r2
- 900 05db ED A1 01                		mov.L	4[r10], r1
- 901 05de 05 00 00 00             		bsr	_tk_sta_tsk
- 269:../app_program/app_main.c **** 
- 270:../app_program/app_main.c **** 	tk_slp_tsk(TMO_FEVR);
- 902                             		.loc 1 270 2
- 903 05e2 FB 16 FF                		mov.L	#-1, r1
- 904 05e5 05 00 00 00             		bsr	_tk_slp_tsk
- 271:../app_program/app_main.c **** 
- 272:../app_program/app_main.c **** 	return 0;
- 905                             		.loc 1 272 9
- 906 05e9 66 05                   		mov.L	#0, r5
- 273:../app_program/app_main.c **** }
- 907                             		.loc 1 273 1
- 908 05eb EF 51                   		mov.L	r5, r1
- 909 05ed 3F AA 0D                		rtsd	#52, r10-r10
- 910                             	.LFE13:
- 912                             		.local	_data.2093
- 913                             		.comm	_data.2093,256,1
- 914                             		.local	_data.2108
- 915                             		.comm	_data.2108,256,1
- 1126                             	.Letext0:
- 1127                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
- 1128                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"
+ 254:../app_program/app_main.c **** 	err = tk_swri_dev( dd, 0, buf, sizeof(buf), &asz);
+ 842                             		.loc 1 254 8
+ 843 059d 71 A5 10                		add	#16, r10, r5
+ 844 05a0 E3 05                   		mov.L	r5, [r0]
+ 845 05a2 66 54                   		mov.L	#5, r4
+ 846 05a4 FB 32 00 00 00 00       		mov.L	#_buf.2175, r3
+ 847 05aa 66 02                   		mov.L	#0, r2
+ 848 05ac ED A1 01                		mov.L	4[r10], r1
+ 849 05af 05 00 00 00             		bsr	_tk_swri_dev
+ 850 05b3 E7 A1 02                		mov.L	r1, 8[r10]
+ 255:../app_program/app_main.c **** 	if(err<E_OK) tm_printf((UB*)"Send Error %d\n", err);
+ 851                             		.loc 1 255 4
+ 852 05b6 ED A5 02                		mov.L	8[r10], r5
+ 853 05b9 61 05                   		cmp	#0, r5
+ 854 05bb 28 11                   		bge	.L57
+ 855                             		.loc 1 255 15 discriminator 1
+ 856 05bd ED A5 02                		mov.L	8[r10], r5
+ 857 05c0 A0 0D                   		mov.L	r5, 4[r0]
+ 858 05c2 F8 02 E7 00 00 00       		mov.L	#.LC22, [r0]
+ 859 05c8 05 00 00 00             		bsr	_tm_printf
+ 860                             	.L57:
+ 861                             	.LBB11:
+ 256:../app_program/app_main.c **** 
+ 257:../app_program/app_main.c **** 	for(INT i = 0; i<10; i++) {
+ 862                             		.loc 1 257 10
+ 863 05cc F8 A6 00                		mov.L	#0, [r10]
+ 864                             		.loc 1 257 2
+ 865 05cf 2E 32                   		bra	.L58
+ 866                             	.L59:
+ 258:../app_program/app_main.c **** 		tk_srea_dev( dd, 0, &rdata, 1, &asz);
+ 867                             		.loc 1 258 3 discriminator 3
+ 868 05d1 71 A5 0C                		add	#12, r10, r5
+ 869 05d4 71 A4 10                		add	#16, r10, r4
+ 870 05d7 E3 04                   		mov.L	r4, [r0]
+ 871 05d9 66 14                   		mov.L	#1, r4
+ 872 05db EF 53                   		mov.L	r5, r3
+ 873 05dd 66 02                   		mov.L	#0, r2
+ 874 05df ED A1 01                		mov.L	4[r10], r1
+ 875 05e2 05 00 00 00             		bsr	_tk_srea_dev
+ 259:../app_program/app_main.c **** 		tk_swri_dev( dd, 0, &rdata, 1, &asz);
+ 876                             		.loc 1 259 3 discriminator 3
+ 877 05e6 71 A5 0C                		add	#12, r10, r5
+ 878 05e9 71 A4 10                		add	#16, r10, r4
+ 879 05ec E3 04                   		mov.L	r4, [r0]
+ 880 05ee 66 14                   		mov.L	#1, r4
+ 881 05f0 EF 53                   		mov.L	r5, r3
+ 882 05f2 66 02                   		mov.L	#0, r2
+ 883 05f4 ED A1 01                		mov.L	4[r10], r1
+ 884 05f7 05 00 00 00             		bsr	_tk_swri_dev
+ 257:../app_program/app_main.c **** 		tk_srea_dev( dd, 0, &rdata, 1, &asz);
+ 885                             		.loc 1 257 24 discriminator 3
+ 886 05fb EC A5                   		mov.L	[r10], r5
+ 887 05fd 62 15                   		add	#1, r5
+ 888 05ff E3 A5                   		mov.L	r5, [r10]
+ 889                             	.L58:
+ 257:../app_program/app_main.c **** 		tk_srea_dev( dd, 0, &rdata, 1, &asz);
+ 890                             		.loc 1 257 2 discriminator 1
+ 891 0601 EC A5                   		mov.L	[r10], r5
+ 892 0603 61 95                   		cmp	#9, r5
+ 893 0605 2B CC                   		ble	.L59
+ 894                             	.LBE11:
+ 260:../app_program/app_main.c **** 	}
+ 261:../app_program/app_main.c **** 
+ 262:../app_program/app_main.c **** 	tk_exd_tsk();	/* Exit Task */
+ 895                             		.loc 1 262 2
+ 896 0607 05 00 00 00             		bsr	_tk_exd_tsk
+ 263:../app_program/app_main.c **** }
+ 897                             		.loc 1 263 1
+ 898 060b 03                      		nop
+ 899 060c 3F AA 0A                		rtsd	#40, r10-r10
+ 900                             	.LFE13:
+ 902                             		.global	_ctsk1
+ 903                             		.section C,"a",@progbits
+ 904 00f6 00 00                   		.p2align 2
+ 905                             		.balign 4
+ 908                             	_ctsk1:
+ 909 00f8 00 00 00 00             		.long	0
+ 910 00fc 01 03 00 00             		.long	0x301
+ 911 0100 00 00 00 00             		.long	_tsk1
+ 912 0104 0A 00 00 00             		.long	10
+ 913 0108 00 04 00 00             		.long	0x400
+ 914 010c 00 00 00 00             		.long	0
+ 915                             		.global	_ctsk2
+ 916                             		.balign 4
+ 919                             	_ctsk2:
+ 920 0110 00 00 00 00             		.long	0
+ 921 0114 01 03 00 00             		.long	0x301
+ 922 0118 00 00 00 00             		.long	_tsk2
+ 923 011c 0B 00 00 00             		.long	11
+ 924 0120 00 04 00 00             		.long	0x400
+ 925 0124 00 00 00 00             		.long	0
+ 926                             		.global	_ctsk3
+ 927                             		.balign 4
+ 930                             	_ctsk3:
+ 931 0128 00 00 00 00             		.long	0
+ 932 012c 01 03 00 00             		.long	0x301
+ 933 0130 00 00 00 00             		.long	_tsk3
+ 934 0134 0B 00 00 00             		.long	11
+ 935 0138 00 04 00 00             		.long	0x400
+ 936 013c 00 00 00 00             		.long	0
+ 937                             	.LC23:
+ 938 0140 53 74 61 72 74 20 55 73 		.string	"Start User-main program.\n"
+ 938      65 72 2D 6D 61 69 6E 20 
+ 938      70 72 6F 67 72 61 6D 2E 
+ 938      0A 00 
+ 939                             	.LC24:
+ 940 015a 4D 61 6B 65 20 43 6F 64 		.string	"Make Code: %04x  Product ID: %04x\n"
+ 940      65 3A 20 25 30 34 78 20 
+ 940      20 50 72 6F 64 75 63 74 
+ 940      20 49 44 3A 20 25 30 34 
+ 940      78 0A 00 
+ 941                             	.LC25:
+ 942 017d 50 72 6F 64 75 63 74 20 		.string	"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n"
+ 942      56 65 72 2E 20 25 30 34 
+ 942      78 0A 50 72 6F 64 75 63 
+ 942      74 20 4E 75 6D 2E 20 25 
+ 942      30 34 78 20 25 30 34 78 
+ 943 01b1 00 00 00                		.section P,"ax"
+ 944                             		.global	_usermain
+ 946                             	_usermain:
+ 947                             	.LFB14:
+ 264:../app_program/app_main.c **** 
+ 265:../app_program/app_main.c **** const T_CTSK	ctsk1	= {0, (TA_HLNG | TA_RNG3), &tsk1, 10, 1024, 0};
+ 266:../app_program/app_main.c **** const T_CTSK	ctsk2	= {0, (TA_HLNG | TA_RNG3), &tsk2, 11, 1024, 0};
+ 267:../app_program/app_main.c **** const T_CTSK	ctsk3	= {0, (TA_HLNG | TA_RNG3), &tsk3, 11, 1024, 0};
+ 268:../app_program/app_main.c **** 
+ 269:../app_program/app_main.c **** /* ----------------------------------------------------------
+ 270:../app_program/app_main.c ****  *
+ 271:../app_program/app_main.c ****  * User-Main Definition (Run on initial task)
+ 272:../app_program/app_main.c ****  *
+ 273:../app_program/app_main.c ****  */
+ 274:../app_program/app_main.c **** 
+ 275:../app_program/app_main.c **** EXPORT INT usermain( void )
+ 276:../app_program/app_main.c **** {
+ 948                             		.loc 1 276 1
+ 949 060f 7E AA                   		push.l	r10
+ 950                             	.LCFI24:
+ 951 0611 71 0A E4                		add	#-28, r0, r10
+ 952                             	.LCFI25:
+ 953 0614 71 A0 E8                		add	#-24, r10, r0
+ 954                             	.LCFI26:
+ 277:../app_program/app_main.c **** 	T_RVER	rver;
+ 278:../app_program/app_main.c **** 	ID	id1, id2, id3;
+ 279:../app_program/app_main.c **** 
+ 280:../app_program/app_main.c **** 	TM_PUTSTRING((UB*)"Start User-main program.\n");
+ 955                             		.loc 1 280 2
+ 956 0617 FB 12 40 01 00 00       		mov.L	#.LC23, r1
+ 957 061d 05 00 00 00             		bsr	_tm_putstring
+ 281:../app_program/app_main.c **** 
+ 282:../app_program/app_main.c **** 	tk_ref_ver(&rver);		/* Get the OS Version. */
+ 958                             		.loc 1 282 2
+ 959 0621 71 A5 0C                		add	#12, r10, r5
+ 960 0624 EF 51                   		mov.L	r5, r1
+ 961 0626 05 00 00 00             		bsr	_tk_ref_ver
+ 283:../app_program/app_main.c **** 
+ 284:../app_program/app_main.c **** #if USE_TMONITOR
+ 285:../app_program/app_main.c **** 	tm_printf((UB*)"Make Code: %04x  Product ID: %04x\n", rver.maker, rver.prid);
+ 962                             		.loc 1 285 60
+ 963 062a DD A5 06                		mov.W	12[r10], r5
+ 964                             		.loc 1 285 2
+ 965 062d 5F 55                   		movu.W	r5, r5
+ 966                             		.loc 1 285 72
+ 967 062f DD A4 07                		mov.W	14[r10], r4
+ 968                             		.loc 1 285 2
+ 969 0632 5F 44                   		movu.W	r4, r4
+ 970 0634 A0 84                   		mov.L	r4, 8[r0]
+ 971 0636 A0 0D                   		mov.L	r5, 4[r0]
+ 972 0638 F8 02 5A 01 00 00       		mov.L	#.LC24, [r0]
+ 973 063e 05 00 00 00             		bsr	_tm_printf
+ 286:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
+ 287:../app_program/app_main.c **** 			rver.prver, rver.prno[0],rver.prno[1],rver.prno[2],rver.prno[3]);
+ 974                             		.loc 1 287 8
+ 975 0642 DD A5 09                		mov.W	18[r10], r5
+ 286:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
+ 976                             		.loc 1 286 2
+ 977 0645 5F 55                   		movu.W	r5, r5
+ 978                             		.loc 1 287 25
+ 979 0647 DD A4 0A                		mov.W	20[r10], r4
+ 286:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
+ 980                             		.loc 1 286 2
+ 981 064a 5F 44                   		movu.W	r4, r4
+ 982                             		.loc 1 287 38
+ 983 064c DD A3 0B                		mov.W	22[r10], r3
+ 286:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
+ 984                             		.loc 1 286 2
+ 985 064f 5F 33                   		movu.W	r3, r3
+ 986                             		.loc 1 287 51
+ 987 0651 DD A2 0C                		mov.W	24[r10], r2
+ 286:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
+ 988                             		.loc 1 286 2
+ 989 0654 5F 22                   		movu.W	r2, r2
+ 990                             		.loc 1 287 64
+ 991 0656 DD A1 0D                		mov.W	26[r10], r1
+ 286:../app_program/app_main.c **** 	tm_printf((UB*)"Product Ver. %04x\nProduct Num. %04x %04x %04x %04x\n", 
+ 992                             		.loc 1 286 2
+ 993 0659 5F 11                   		movu.W	r1, r1
+ 994 065b A1 09                   		mov.L	r1, 20[r0]
+ 995 065d A1 02                   		mov.L	r2, 16[r0]
+ 996 065f A0 8B                   		mov.L	r3, 12[r0]
+ 997 0661 A0 84                   		mov.L	r4, 8[r0]
+ 998 0663 A0 0D                   		mov.L	r5, 4[r0]
+ 999 0665 F8 02 7D 01 00 00       		mov.L	#.LC25, [r0]
+ 1000 066b 05 00 00 00             		bsr	_tm_printf
+ 288:../app_program/app_main.c **** #endif
+ 289:../app_program/app_main.c **** 
+ 290:../app_program/app_main.c **** 	id1 = tk_cre_tsk(&ctsk1);
+ 1001                             		.loc 1 290 8
+ 1002 066f FB 12 00 00 00 00       		mov.L	#_ctsk1, r1
+ 1003 0675 05 00 00 00             		bsr	_tk_cre_tsk
+ 1004 0679 E3 A1                   		mov.L	r1, [r10]
+ 291:../app_program/app_main.c **** 	tk_sta_tsk(id1, 0);
+ 1005                             		.loc 1 291 2
+ 1006 067b 66 02                   		mov.L	#0, r2
+ 1007 067d EC A1                   		mov.L	[r10], r1
+ 1008 067f 05 00 00 00             		bsr	_tk_sta_tsk
+ 292:../app_program/app_main.c **** 
+ 293:../app_program/app_main.c **** 	id2 = tk_cre_tsk(&ctsk2);
+ 1009                             		.loc 1 293 8
+ 1010 0683 FB 12 00 00 00 00       		mov.L	#_ctsk2, r1
+ 1011 0689 05 00 00 00             		bsr	_tk_cre_tsk
+ 1012 068d E7 A1 01                		mov.L	r1, 4[r10]
+ 294:../app_program/app_main.c **** //	tk_sta_tsk(id2, 0);
+ 295:../app_program/app_main.c **** 
+ 296:../app_program/app_main.c **** 	id3 = tk_cre_tsk(&ctsk3);
+ 1013                             		.loc 1 296 8
+ 1014 0690 FB 12 00 00 00 00       		mov.L	#_ctsk3, r1
+ 1015 0696 05 00 00 00             		bsr	_tk_cre_tsk
+ 1016 069a E7 A1 02                		mov.L	r1, 8[r10]
+ 297:../app_program/app_main.c **** //	tk_sta_tsk(id3, 0);
+ 298:../app_program/app_main.c **** 
+ 299:../app_program/app_main.c **** 	tk_slp_tsk(TMO_FEVR);
+ 1017                             		.loc 1 299 2
+ 1018 069d FB 16 FF                		mov.L	#-1, r1
+ 1019 06a0 05 00 00 00             		bsr	_tk_slp_tsk
+ 300:../app_program/app_main.c **** 
+ 301:../app_program/app_main.c **** 	return 0;
+ 1020                             		.loc 1 301 9
+ 1021 06a4 66 05                   		mov.L	#0, r5
+ 302:../app_program/app_main.c **** }
+ 1022                             		.loc 1 302 1
+ 1023 06a6 EF 51                   		mov.L	r5, r1
+ 1024 06a8 3F AA 0E                		rtsd	#56, r10-r10
+ 1025                             	.LFE14:
+ 1027                             		.local	_data.2103
+ 1028                             		.comm	_data.2103,256,1
+ 1029                             		.local	_data.2118
+ 1030                             		.comm	_data.2118,256,1
+ 1031                             		.section D,"aw",@progbits
+ 1032                             		.p2align 2
+ 1035                             	_buf.2175:
+ 1036 0000 54                      		.byte	0x54
+ 1037 0001 45                      		.byte	0x45
+ 1038 0002 53                      		.byte	0x53
+ 1039 0003 54                      		.byte	0x54
+ 1040 0004 0A                      		.byte	10
+ 1275                             	.Letext0:
+ 1276                             		.file 2 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/typedef.h"
+ 1277                             		.file 3 "D:\\tkernel_dev\\mtk3_bsp\\dev_bsp_b2_rskrx65n\\include/tk/syscall.h"

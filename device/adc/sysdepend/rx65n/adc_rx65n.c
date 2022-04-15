@@ -29,19 +29,15 @@
 */
 const LOCAL UW ba[DEV_ADC_UNITNM] = { ADC0_BASE, ADC1_BASE };
 
-#define	ADC_ADCSR(x)	(ba[x] + ADCSR)		// A/DC control reg
-#define	ADC_ADANSA0(x)	(ba[x] + ADANSA0)	// A/DC chanel select reg. A0
-#define	ADC_ADANSA1(x)	(ba[x] + ADANSA1)	// A/DC chanel select reg. A1
-#define	ADC_ADCER(x)	(ba[x] + ADCER)		// A/DC Control extension reg
-#define	ADC_ADANSB0(x)	(ba[x] + ADANSB0)	// A/DC chanel select reg. B0
-#define	ADC_ADANSB1(x)	(ba[x] + ADANSB1)	// A/DC chanel select reg. B1
+#define	ADC_ADCSR(x)	(ba[x] + ADCx_ADCSR)		// A/DC control reg
+#define	ADC_ADANSA0(x)	(ba[x] + ADCx_ADANSA0)		// A/DC chanel select reg. A0
+#define	ADC_ADANSA1(x)	(ba[x] + ADCx_ADANSA1)		// A/DC chanel select reg. A1
+#define	ADC_ADCER(x)	(ba[x] + ADCx_ADCER)		// A/DC Control extension reg
+#define	ADC_ADANSB0(x)	(ba[x] + ADCx_ADANSB0)		// A/DC chanel select reg. B0
+#define	ADC_ADANSB1(x)	(ba[x] + ADCx_ADANSB1)		// A/DC chanel select reg. B1
 
-#define	ADC_ADDR(x,c)	(ba[x] + ADDR(c))	//A/DC Data reg
-
-#define	ADC_ADSSTR(x,c)	(ba[x] + ADSSTR(c))	//A/DC Sampling state reg
-#define	ADC_ADSSTRL	(ADSSTRL)
-#define	ADC_ADSSTRT	(ADSSTRT)
-#define	ADC_ADSSTRO	(ADSSTRO)
+#define	ADC_ADDR(x,c)	(ba[x] + ADCx_ADDR(c))		//A/DC Data reg
+#define	ADC_ADSSTR(x,c)	(ba[x] + ADCx_ADSSTR(c))	//A/DC Sampling state reg
 
 /*----------------------------------------------------------------------
  * Device control data
