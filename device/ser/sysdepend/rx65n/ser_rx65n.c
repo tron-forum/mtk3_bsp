@@ -54,6 +54,13 @@ const LOCAL UINT inotbl[DEV_SER_UNITNM] = {
 #define INTNO_RXI(n)	(inotbl[n])
 #define INTNO_TXI(n)	(inotbl[n]+1)
 
+const LOCAL UINT eritbl[DEV_SER_UNITNM] = {
+	INTNO_SCI0_ERI, INTNO_SCI1_ERI, INTNO_SCI2_ERI, INTNO_SCI3_ERI, INTNO_SCI4_ERI,
+	INTNO_SCI5_ERI, INTNO_SCI6_ERI, INTNO_SCI7_ERI, INTNO_SCI8_ERI, INTNO_SCI9_ERI,
+	INTNO_SCI10_ERI, INTNO_SCI11_ERI, INTNO_SCI12_ERI
+};
+#define INTNO_ERI(n)	(eritbl[n])
+
 /*----------------------------------------------------------------------
  * Interrupt priority Table
  */
@@ -103,7 +110,6 @@ void sci_rxi_inthdr( UINT intno)
 {
 	UW	unit, data;
 
-	ClearInt(intno);
 	for( unit = 0; unit < DEV_SER_UNITNM; unit++) {
 		if(INTNO_RXI(unit) == intno) break;
 	}
@@ -113,6 +119,24 @@ void sci_rxi_inthdr( UINT intno)
 	dev_ser_notify_rcv(unit, data);	/* Notify the main process of data reception. */
 }
 
+/*
+ * ERI: Receive error interrupt
+ */
+void sci_eri_inthdr( UINT intno)
+{
+	UW	unit, ssr;
+
+	for( unit = 0; unit < DEV_SER_UNITNM; unit++) {
+		if(INTNO_ERI(unit) == intno) break;
+	}
+	if(unit >= DEV_SER_UNITNM ) return;
+
+	ssr = in_b(SCI_SSR(unit));
+	out_b(SCI_SSR(unit), 0);		/* Clear error */
+
+	ssr &= (SCI_SSR_ORER | SCI_SSR_PER | SCI_SSR_FER);
+	dev_ser_notify_err(unit, ssr);	/* Notify error to main process */
+}
 
 /*----------------------------------------------------------------------
  * Set mode & Start communication
@@ -221,6 +245,7 @@ EXPORT ER dev_ser_llctl( UW unit, INT cmd, UW parm)
 		/* Enable Interrupt */
 		EnableInt( INTNO_RXI(unit), INTPRI(unit));
 		EnableInt( INTNO_TXI(unit), INTPRI(unit));
+		EnableInt( INTNO_ERI(unit), 0);
 		/* Set mode & Start communication */
 		start_com( unit, ll_devcb[unit].mode, ll_devcb[unit].speed);
 		break;
@@ -229,6 +254,7 @@ EXPORT ER dev_ser_llctl( UW unit, INT cmd, UW parm)
 		/* Disable Interrupt */
 		DisableInt( INTNO_RXI(unit));
 		DisableInt( INTNO_TXI(unit));
+		DisableInt( INTNO_ERI(unit));
 		stop_com(unit);			// Stop communication
 		break;
 
@@ -289,6 +315,8 @@ EXPORT ER dev_ser_llinit( T_SER_DCB *p_dcb)
 
 	/* Interrupt handler definition */
 	dint.intatr	= TA_HLNG;
+	dint.inthdr	= sci_eri_inthdr;
+	err = tk_def_int(INTNO_ERI(unit), &dint);
 	dint.inthdr	= sci_rxi_inthdr;
 	err = tk_def_int(INTNO_RXI(unit), &dint);	
 	dint.inthdr	= sci_txi_inthdr;

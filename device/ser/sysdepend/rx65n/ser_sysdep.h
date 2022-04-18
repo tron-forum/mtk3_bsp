@@ -88,29 +88,56 @@
  */
 #define	INTNO_SCI0_RXI		58		// Receive data full interrupt
 #define	INTNO_SCI0_TXI		59		// Transmit data empty interrupt
+
 #define	INTNO_SCI1_RXI		60		// Receive data full interrupt
 #define	INTNO_SCI1_TXI		61		// Transmit data empty interrupt
+
 #define	INTNO_SCI2_RXI		62		// Receive data full interrupt
 #define	INTNO_SCI2_TXI		63		// Transmit data empty interrupt
+
 #define	INTNO_SCI3_RXI		58		// Receive data full interrupt
 #define	INTNO_SCI3_TXI		59		// Transmit data empty interrupt
+
 #define	INTNO_SCI4_RXI		82		// Receive data full interrupt
 #define	INTNO_SCI4_TXI		83		// Transmit data empty interrupt
+
 #define	INTNO_SCI5_RXI		84		// Receive data full interrupt
 #define	INTNO_SCI5_TXI		85		// Transmit data empty interrupt
+
 #define	INTNO_SCI6_RXI		86		// Receive data full interrupt
 #define	INTNO_SCI6_TXI		87		// Transmit data empty interrupt
+
 #define	INTNO_SCI7_RXI		98		// Receive data full interrupt
 #define	INTNO_SCI7_TXI		99		// Transmit data empty interrupt
+
 #define	INTNO_SCI8_RXI		100		// Receive data full interrupt
 #define	INTNO_SCI8_TXI		101		// Transmit data empty interrupt
+
 #define	INTNO_SCI9_RXI		102		// Receive data full interrupt
 #define	INTNO_SCI9_TXI		103		// Transmit data empty interrupt
+
 #define	INTNO_SCI10_RXI		104		// Receive data full interrupt
 #define	INTNO_SCI10_TXI		105		// Transmit data empty interrupt
+
 #define	INTNO_SCI11_RXI		114		// Receive data full interrupt
 #define	INTNO_SCI11_TXI		115		// Transmit data empty interrupt
+
 #define	INTNO_SCI12_RXI		116		// Receive data full interrupt
 #define	INTNO_SCI12_TXI		117		// Transmit data empty interrupt
+
+/* Receive error interrupt (Group Interrupt) */
+#define INTNO_SCI0_ERI		(INTNO_GROUP_BL0+1)
+#define INTNO_SCI1_ERI		(INTNO_GROUP_BL0+3)
+#define INTNO_SCI2_ERI		(INTNO_GROUP_BL0+5)
+#define INTNO_SCI3_ERI		(INTNO_GROUP_BL0+7)
+#define INTNO_SCI4_ERI		(INTNO_GROUP_BL0+9)
+#define INTNO_SCI5_ERI		(INTNO_GROUP_BL0+11)
+#define INTNO_SCI6_ERI		(INTNO_GROUP_BL0+13)
+#define INTNO_SCI7_ERI		(INTNO_GROUP_BL0+15)
+#define INTNO_SCI8_ERI		(INTNO_GROUP_BL1+25)
+#define INTNO_SCI9_ERI		(INTNO_GROUP_BL1+27)
+#define INTNO_SCI10_ERI		(INTNO_GROUP_AL0+9)
+#define INTNO_SCI11_ERI		(INTNO_GROUP_AL0+13)
+#define INTNO_SCI12_ERI		(INTNO_GROUP_BL0+17)
 
 #endif		/* __DEV_SER_RX65N_H__ */

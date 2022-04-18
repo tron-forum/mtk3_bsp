@@ -295,10 +295,10 @@ EXPORT INT usermain( void )
 //	tk_sta_tsk(id1, 0);
 
 	id2 = tk_cre_tsk(&ctsk2);
-	tk_sta_tsk(id2, 0);
+//	tk_sta_tsk(id2, 0);
 
 	id3 = tk_cre_tsk(&ctsk3);
-//	tk_sta_tsk(id3, 0);
+	tk_sta_tsk(id3, 0);
 
 	tk_slp_tsk(TMO_FEVR);
 
