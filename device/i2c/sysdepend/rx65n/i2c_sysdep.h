@@ -69,6 +69,8 @@
 #define	RIIC_IICR2_RS		(1<<2)
 #define	RIIC_IICR2_SP		(1<<3)
 
+#define	RIIC_ICMR1_MTWP		(1<<7)
+
 #define RIIC_ICMR3_WAIT		(1<<6)
 #define RIIC_ICMR3_ACKWP	(1<<4)
 #define RIIC_ICMR3_ACKBT	(1<<3)
@@ -90,10 +92,6 @@
 #define RIIC_ICSR2_START	(1<<2)
 #define RIIC_ICSR2_AL		(1<<1)
 #define RIIC_ICSR2_TMOF		(1<<0)
-
-/* Register initial value */
-#define	RIIC_ICBRH_INI		(0xF6)
-#define	RIIC_ICBRL_INI		(0xF6)
 
 /* 
  * I2C interrupt number

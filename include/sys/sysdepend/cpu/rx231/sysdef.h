@@ -75,8 +75,8 @@
 #define EXTAL_CLOCK	(UW)(54*MHz)
 
 #define PCLK_DIV	(2)		/* PCLK Devistion = PCLKB of SCKCR */
-#define CMCR_DIV	(8)		/* PCLK/CMCR_DIV */
-#define CMCR_CKS_PLCK8	(0x0000)	/* CMCR.CKS PCLK/8 */
+#define CMCR_DIV	(8)		/* CMT Clock = PCLK/CMCR_DIV */
+#define CMCR_CKS_PLCK	(0x0000)	/* CMCR.CKS = PCLK/8 */
 
 #define	SYSCLK_ICLK	(UW)(54*MHz)
 #define	SYSCLK_PCLKA	(UW)(54*MHz)

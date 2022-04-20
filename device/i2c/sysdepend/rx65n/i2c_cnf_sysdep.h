@@ -21,10 +21,11 @@
 
 /* Device initialization */
 #define DEVCONF_I2C_INIT_MSTP	FALSE		// Initialize module stop
-#define	DEVCONF_I2C_INIT_GRPI	TRUE		// Initialize group interrupt
 
-/* Frequency selection (0-7)  ICMR1.CKS */
-#define	DEVCNF_I2C_CKS		7		// PCLK/128 clock
+/* Communication bit rate setting */
+#define	DEVCNF_I2C_CKS		5		// Frequency selection (0-7)  ICMR1.CKS
+#define	DEVCNF_ICBRH_INI	(0xEE)
+#define	DEVCNF_ICBRL_INI	(0xF1)
 
 /* Interrupt priority */
 #define	DEVCNF_I2C0_INTPRI	5

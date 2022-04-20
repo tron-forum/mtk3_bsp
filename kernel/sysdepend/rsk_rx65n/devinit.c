@@ -44,6 +44,15 @@ EXPORT ER knl_init_device( void )
  */
 EXPORT ER knl_start_device( void )
 {
+#if USE_GROUP_INT	// Use group interrupt
+	EnableInt(INTNO_GROUPBE0, INTPRI_GROUPBE0);
+	EnableInt(INTNO_GROUPBL0, INTPRI_GROUPBL0);
+	EnableInt(INTNO_GROUPBL1, INTPRI_GROUPBL1);
+	EnableInt(INTNO_GROUPBL2, INTPRI_GROUPBL2);
+	EnableInt(INTNO_GROUPAL0, INTPRI_GROUPAL0);
+	EnableInt(INTNO_GROUPAL1, INTPRI_GROUPAL1);
+#endif /* USE_GROUP_INT */
+
 #if USE_SDEV_DRV	// Use sample driver
 	ER	err;
 

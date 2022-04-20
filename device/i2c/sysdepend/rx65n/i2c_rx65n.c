@@ -342,9 +342,9 @@ EXPORT W dev_i2c_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
 
 		/* I2C Initial setting */
 		out_b( RIIC_ICSER(unit), 0);
-		out_b( RIIC_ICMR1(unit), DEVCNF_I2C_CKS<<4 );
-		out_b( RIIC_ICBRH(unit), RIIC_ICBRH_INI);
-		out_b( RIIC_ICBRL(unit), RIIC_ICBRL_INI);
+		out_b( RIIC_ICMR1(unit), DEVCNF_I2C_CKS<<4);
+		out_b( RIIC_ICBRH(unit), DEVCNF_ICBRH_INI);
+		out_b( RIIC_ICBRL(unit), DEVCNF_ICBRL_INI);
 
 		/* Interrupt initialize */
 		out_b( RIIC_ICIER(unit), 0);

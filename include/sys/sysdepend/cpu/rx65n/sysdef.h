@@ -55,24 +55,6 @@
 
 /* ------------------------------------------------------------------------ */
 /*
- * System Clock Control 
- *
- */
-
-#define	MHz		(UW)(1000000UL)
-
-#define PCLK_DIV	(2)		/* PCLK Devistion = PCLKB of SCKCR */
-#define CMCR_DIV	(32)		/* PCLK/CMCR_DIV */
-#define CMCR_CKS_PLCK8	(0x0001)	/* CMCR.CKS PCLK/32 */
-
-#define	SYSCLK_ICLK	(UW)(120*MHz)
-#define	SYSCLK_PCLKA	(UW)(120*MHz)
-#define	SYSCLK_PCLKB	(UW)(60*MHz)
-#define	SYSCLK_PCLKC	(UW)(60*MHz)
-#define	SYSCLK_PCLKD	(UW)(60*MHz)
-
-/* ------------------------------------------------------------------------ */
-/*
  * RTC control 
  *
  */

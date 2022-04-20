@@ -30,7 +30,7 @@ Inline void knl_start_hw_timer( void )
 	out_h(CMT0_COR, SYSCLK_ICLK/PCLK_DIV/1000*TIMER_PERIOD/CMCR_DIV - 1);
 
 	/* Interrupt is Enable, Set Frequency Dividing */
-	out_h(CMT0_CR, CMT0_CR_CMIE | CMCR_CKS_PLCK8);
+	out_h(CMT0_CR, CMT0_CR_CMIE | CMCR_CKS_PLCK);
 
 	/* CMI0 Interrupt Enable, Interrupt Level is 15. */
 	EnableInt( INTNO_SYS_TICK , INTLEVEL_SYS_TICK);

@@ -150,17 +150,21 @@ LOCAL void test_eeprom(ID dd_i2c)
 	ER	err;
 
 	err = read_eeprom(dd_i2c, 0, rd, 5);
-	for(INT i = 0; i < 5; i++) {
+	if(err != E_OK) tm_printf((UB*)"error %d\n ", err);
+	else for(INT i = 0; i < 5; i++) {
 		tm_printf((UB*)"%x ", rd[i]);
 	}
 	tm_putchar('\n');
+	tk_dly_tsk(10);
 
 	for(INT i = 0; i < 5; i++) {
 		wd[i] = 'a'+i;
 	}
 	err = write_eeprom(dd_i2c, 0, wd, 5);
+	if(err != E_OK) tm_printf((UB*)"error %d\n ", err);
 	err = read_eeprom(dd_i2c, 0, rd, 5);
-	for(INT i = 0; i < 5; i++) {
+	if(err != E_OK) tm_printf((UB*)"error %d\n ", err);
+	else for(INT i = 0; i < 5; i++) {
 		tm_printf((UB*)"%c ", rd[i]);
 	}
 	tm_putchar('\n');
@@ -295,10 +299,10 @@ EXPORT INT usermain( void )
 //	tk_sta_tsk(id1, 0);
 
 	id2 = tk_cre_tsk(&ctsk2);
-//	tk_sta_tsk(id2, 0);
+	tk_sta_tsk(id2, 0);
 
 	id3 = tk_cre_tsk(&ctsk3);
-	tk_sta_tsk(id3, 0);
+//	tk_sta_tsk(id3, 0);
 
 	tk_slp_tsk(TMO_FEVR);
 
