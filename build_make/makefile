@@ -1,5 +1,5 @@
 ################################################################################
-# micro T-Kernel 3.00.05  makefile
+# micro T-Kernel 3.0 BSP  makefile
 ################################################################################
 
 # Specify the name of the executable file to be built (Do not include the extension)
@@ -10,6 +10,7 @@ EXE_FILE := mtkernel_3
 #TARGET := _IOTE_RX231_
 #TARGET := _IOTE_STM32L4_
 #TARGET := _IOTE_RZA2M_
+TARGET := _NUCLEO_H723_
 
 RM := rm -rf
 
@@ -39,8 +40,11 @@ endif
 ifeq ($(TARGET), _IOTE_RZA2M_)
 include iote_rza2m.mk
 endif
+ifeq ($(TARGET), _NUCLEO_H723_)
+include nucleo_h723.mk
+endif
 
--include mtkernel_3/app_sample/subdir.mk
+-include mtkernel_3/app_program/subdir.mk
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(ASM_DEPS)),)

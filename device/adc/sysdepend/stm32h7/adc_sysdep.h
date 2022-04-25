@@ -1,6 +1,6 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.0
+ *    Device Driver for μT-Kernel 3.0
  *
  *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -12,7 +12,7 @@
  */
 
 /*
- *	dev_adc_stm32h7.h
+ *	dev_adc_sysdep.h
  *	A/D converter device driver
  *	System-dependent definition for STM32H7
  */

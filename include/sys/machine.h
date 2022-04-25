@@ -6,7 +6,7 @@
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/02.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/04.
  *
  *----------------------------------------------------------------------
  */
@@ -52,6 +52,17 @@
 #include "sysdepend/nucleo_h723/machine.h"
 #define Csym(sym) sym
 #endif
+
+#ifdef _RTB_RX65N_
+#include "sysdepend/rtb_rx65n/machine.h"
+#define Csym(sym) _##sym
+#endif
+
+#ifdef _RSK_RX65N_
+#include "sysdepend/rsk_rx65n/machine.h"
+#define Csym(sym) _##sym
+#endif
+
 
 /* ===== C compiler dependencies definitions ============================= */
 
