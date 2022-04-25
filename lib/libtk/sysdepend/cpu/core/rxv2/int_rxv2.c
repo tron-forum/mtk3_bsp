@@ -1,12 +1,12 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.01
+ *    micro T-Kernel 3.00.06.B0
  *
- *    Copyright (C) 2006-2020 by Ken Sakamura.
+ *    Copyright (C) 2006-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2020/05/29.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/04.
  *
  *----------------------------------------------------------------------
  */
@@ -101,6 +101,13 @@ EXPORT void EnableInt( UINT intno, INT level )
 {
 	UINT	imask;
 
+#if USE_GROUP_INT	// Group INterrupt
+	if(intno >= INTNO_GROUP_TOP) {
+		knl_enable_gint( intno);
+		return;
+	}
+#endif /* USE_GROUP_INT */
+
 	if((intno < 16) && (intno > 255)) {
 		return;
 	}
@@ -126,6 +133,13 @@ EXPORT void EnableInt( UINT intno, INT level )
  */
 EXPORT void DisableInt( UINT intno )
 {
+#if USE_GROUP_INT	// Group INterrupt
+	if(intno >= INTNO_GROUP_TOP) {
+		knl_disable_gint( intno);
+		return;
+	}
+#endif /* USE_GROUP_INT */
+
 	if((intno < 16) && (intno > 255)) {
 		return;
 	}
@@ -143,6 +157,13 @@ EXPORT void DisableInt( UINT intno )
  */
 EXPORT void ClearInt( UINT intno )
 {
+#if USE_GROUP_INT	// Group INterrupt
+	if(intno >= INTNO_GROUP_TOP) {
+		knl_clear_gint( intno);
+		return;
+	}
+#endif /* USE_GROUP_INT */
+
 	*(_UB*)(ICU_IR(intno)) = 0;
 }
 

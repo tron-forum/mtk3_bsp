@@ -1,6 +1,6 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.0
+ *    Device Driver for μT-Kernel 3.0
  *
  *    Copyright (C) 2020-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -13,7 +13,7 @@
 
 
 /*
- *	i2c_cnf_stm32l4.h 
+ *	i2c_cnf_sysdep.h 
  *	I2C device configuration file
  *		for STM32L4
  */

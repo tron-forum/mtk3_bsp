@@ -1,6 +1,6 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.0
+ *    Device Driver for μT-Kernel 3.0
  *
  *    Copyright (C) 2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -12,7 +12,7 @@
  */
 
 /*
- *	ser_cnf_stm32h7.h 
+ *	ser_cnf_sysdep.h 
  *	Serial Device configuration file
  *		for STM32H7
  */

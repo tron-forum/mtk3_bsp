@@ -1,6 +1,6 @@
 /*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.00
+ *    Device Driver for μT-Kernel 3.0
  *
  *    Copyright (C) 2020-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -246,7 +246,7 @@ ER dev_i2c_eventfn( INT evttyp, void *evtinf, T_MSDI *msdi)
 }
 
 /*----------------------------------------------------------------------
- * Serial communication Device initialization and registration
+ * Device driver initialization and registration
  */
 EXPORT ER dev_init_i2c( UW unit )
 {
@@ -304,6 +304,10 @@ err_2:
 	Kfree(p_dcb);
 	return err;
 }
+
+/*----------------------------------------------------------------------
+ * I2C register access support function
+ */
 
 EXPORT ER i2c_read_reg(ID dd, UW sadr, UW radr, UB *data)
 {

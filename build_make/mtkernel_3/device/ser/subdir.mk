@@ -1,5 +1,5 @@
 ################################################################################
-# micro T-Kernel 3.00.03  makefile
+# micro T-Kernel 3.0 BSP  makefile
 ################################################################################
 
 OBJS += \
@@ -30,4 +30,8 @@ endif
 
 ifeq ($(TARGET), _IOTE_RZA2M_)
 -include mtkernel_3/device/ser/sysdepend/rza2m/subdir.mk
+endif
+
+ifeq ($(TARGET), _NUCLEO_H723_)
+-include mtkernel_3/device/ser/sysdepend/stm32h7/subdir.mk
 endif

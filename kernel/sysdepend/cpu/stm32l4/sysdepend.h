@@ -1,12 +1,12 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.03
+ *    micro T-Kernel 3.00.06.B0
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2006-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/03/31.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -26,9 +26,9 @@
  */
 IMPORT void startup_clock(ATR clkatr);
 /* ATR clkatr: Clock attribute */
-#define	CLKATR_MSI		0x00000001
-#define	CLKATR_HSI		0x00000002
-#define	CLKATR_HSE		0x00000004
+#define	CLKATR_MSI		0x00000000
+#define	CLKATR_HSI		0x00000001
+#define	CLKATR_HSE		0x00000002
 
 #define CLKATR_USE_PLL		0x00000010
 #define CLKATR_USE_PLLSAI1	0x00000020
