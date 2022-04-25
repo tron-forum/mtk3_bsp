@@ -36,10 +36,9 @@ LOCAL void task_1(INT stacd, void *exinf)
 	}
 }
 
-/* usermain関数 */
 EXPORT INT usermain(void)
 {
-	tm_printf((UB*)"hello,world\n");
+	tm_printf((UB*)"User program started\n");
 
 	tskid_1 = tk_cre_tsk(&ctsk_1);
 	tk_sta_tsk(tskid_1, 0);
