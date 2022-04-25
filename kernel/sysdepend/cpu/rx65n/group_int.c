@@ -77,6 +77,8 @@ EXPORT void knl_group_inthdr(UW intno)
 		grp = in_w(ICU_GRPAL1);
 		hdrno = 160;
 		break;
+	default:
+		return;
 	}
 
 	for(i = 0; i < 32; i++) {

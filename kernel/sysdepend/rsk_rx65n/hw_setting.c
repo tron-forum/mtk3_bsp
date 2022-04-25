@@ -19,6 +19,13 @@
  *	startup / shoutdown processing for hardware
  *	
  *	Pin function Setting (for IoT-Engine Starter board)
+ *		P03  : SW1
+ *		P05  : SW2
+ *		P07  : SW3
+ *		P73  : LED0
+ *		PG5  : LED3
+ *		PG6  : LED2
+ *		PG7  : LED1
  *		PJ1  : SCI8 RXD8
  *		PJ2  : SCI8 TXD8
  *
@@ -82,6 +89,13 @@ LOCAL const T_SETUP_REG pinfnc_tbl[] = {
  * Setup port mode Tadle
  */
 LOCAL const T_SETUP_REG portmode_tbl[] = {
+	/* P73 : LED0 */
+	{PORT7_PODR, 0x08},	
+	{PORT7_PDR, 0x08},
+	/* PG5-7 : LED1-3 */
+	{PORTG_PODR, 0xE0},	
+	{PORTG_PDR, 0xE0},
+
 	/* PJ1:SCI8 RXD8 PJ2:SCI8 TXD8 */
 	{PORTJ_PMR, 0x06},		/* PJ1&PJ2 peripheral function. */
 	{PORTJ_PODR, 0x04},		/* PJ2 = 'H' */
