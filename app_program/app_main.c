@@ -4,7 +4,7 @@
 /* usermain関数 */
 EXPORT INT usermain(void)
 {
-	tm_printf((UB*)"User program started\n");
+	tm_printf((UB*)"hello,world\n");
 
 	return 0;
 }

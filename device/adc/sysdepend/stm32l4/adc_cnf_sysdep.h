@@ -1,6 +1,6 @@
 ﻿/*
  *----------------------------------------------------------------------
- *    Device Driver for micro T-Kernel for μT-Kernel 3.0
+ *    Device Driver for μT-Kernel 3.0
  *
  *    Copyright (C) 2021-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
@@ -13,7 +13,7 @@
 
 
 /*
- *	adc_cnf_stm32l4.h 
+ *	adc_cnf_sysdep.h 
  *	A/D converter device driver configuration file
  *		for STM32L4
  */
@@ -27,7 +27,7 @@
 /* Device control data */
 /* Common */
 #define	DEVCNF_ADC_CKMODE	0	// ADC clock mode  0:Asynchronous clock mode
-#define	DEVCNF_ADC_PRESC	0	// ADC prescaler  0:Do not divide
+#define	DEVCNF_ADC_PRESC	10	// ADC prescaler  0 ~ 11
 
 /* ADC1 */
 #define	DEVCONF_ADC1_SMPR1	0x00000000	// Sampling time (ADC_SMPR1 initial value)

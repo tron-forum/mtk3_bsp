@@ -1,20 +1,12 @@
 /*
  *----------------------------------------------------------------------
-<<<<<<< HEAD
- *    micro T-Kernel 3.00.05.B0
-=======
- *    micro T-Kernel 3.00.05
->>>>>>> release_30005
+ *    micro T-Kernel 3.00.06.B0
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2006-2022 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
-<<<<<<< HEAD
- *    Released by TRON Forum(http://www.tron.org) at 2021/08.
-=======
- *    Released by TRON Forum(http://www.tron.org) at 2021/11.
->>>>>>> release_30005
+ *    Released by TRON Forum(http://www.tron.org) at 2022/02.
  *
  *----------------------------------------------------------------------
  */
@@ -37,6 +29,8 @@
 /*
  **** CPU-depeneded profile (RZ/A2M)
  */
+
+#define	TARGET_CPU_DIR		rza2m		/* Sysdepend-CPU-Directory name */
 
 
 #endif /* __SYS_SYSDEPEND_MACHINE_CPU_H__ */
