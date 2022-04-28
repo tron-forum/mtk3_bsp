@@ -12,3 +12,5 @@ Please download from the following branch for each development board.
 | --- | ----------------------- | ------ | -------- |
 | nucleo_stm32l476 | STM32L476 | Nucleo-64 | STM32CubeIDE |
 | nucleo_stm32h723 | STM32H723 | Nucleo-144 | STM32CubeIDE |
+| rtb_rx65n | RX65N | Renesas Target Board | e2Studio |
+| rsk_rx65n | RX65N | Renesas Starter Kit+ | e2Studio |
