@@ -100,7 +100,7 @@ EXPORT ER StartPhysicalTimer( UINT ptmrno, UW limit, UINT mode)
 		SetPERI(p_cb->intno, INTFN_CMIA(ptmrno));	// Set PERIB
 	} else {
 		out_b(TMR_TCR, TCR_OVIE);			// Enable OVIn
-		SetPERI(p_cb->intno, INTFN_OVI(ptmrno));		// Set PERIB
+		SetPERI(p_cb->intno, INTFN_OVI(ptmrno));	// Set PERIB
 	}
 
 	/* Register interrupt handler */

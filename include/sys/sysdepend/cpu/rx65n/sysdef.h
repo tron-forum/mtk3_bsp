@@ -167,11 +167,12 @@
 /*
  * Number of Interrupt vectors
  */
-#define	N_INTVEC0	256
+
+#define	N_INTVEC0	256	/* INTVEC0 is the number of interrupts other than group interrupts */
 
 #if USE_GROUP_INT
-	#define N_GROUP_INT		(32*6)	/* Number of factors for group interrupts */
 
+	#define N_GROUP_INT		(32*6)	/* Number of factors for group interrupts */
 	#define N_INTVEC		(N_INTVEC0 + N_GROUP_INT)
 	
 	#define INTNO_GROUP_TOP		(N_INTVEC0)
@@ -181,11 +182,11 @@
 	#define	INTNO_GROUP_BL2		(INTNO_GROUP_TOP + 96)
 	#define	INTNO_GROUP_AL0		(INTNO_GROUP_TOP + 128)
 	#define	INTNO_GROUP_AL1		(INTNO_GROUP_TOP + 160)
-
 #else
-	#define N_INTVEC		(N_INTVEC0)
+	#define	N_INTVEC		(N_INTVEC0)
 
 #endif /* USE_GROUP_INT */
+
 /*
  * Interrupt Priority Levels
  */
@@ -472,8 +473,8 @@
 /* Physical timer interrupt factor number
  *	Can be set between INTB128 and INTB207
  */
-#define INTNO_PTMR1		128
-#define INTNO_PTMR2		129
+#define INTNO_PTMR1		128		// INTB128
+#define INTNO_PTMR2		129		// INTB129
 
 /* Physical timer interrupt priority */
 #define INTPRI_PTMR1		5

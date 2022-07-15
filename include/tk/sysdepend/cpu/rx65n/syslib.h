@@ -50,6 +50,7 @@ IMPORT ER SetPERI(UINT intno, UINT fctno);	/* Set Software Configurable Interrup
 IMPORT void knl_enable_gint( UINT intno);
 IMPORT void knl_disable_gint( UINT intno);
 IMPORT void knl_clear_gint( UINT intno);
+IMPORT BOOL knl_check_gint( UINT intno);
 
 #endif /* USE_GROUP_INT */
 

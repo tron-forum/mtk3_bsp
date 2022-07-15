@@ -6,16 +6,16 @@
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/02.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/07.
  *
  *----------------------------------------------------------------------
  */
 
 #include <sys/machine.h>
-#ifdef CPU_STM32L4
+#ifdef NUCLEO_L476
 
 /*
- *	cpu_clock.c (STM32L4)
+ *	cpu_clock.c (Nucleo-64 STM32L476)
  *	Clock Setting
  */
 
@@ -96,4 +96,4 @@ EXPORT void shutdown_clock(void)
 
 }
 
-#endif /* CPU_STM32L467 */
+#endif /* NUCLEO_L476 */

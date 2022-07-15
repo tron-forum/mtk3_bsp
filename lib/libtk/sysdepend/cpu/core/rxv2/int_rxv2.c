@@ -101,7 +101,7 @@ EXPORT void EnableInt( UINT intno, INT level )
 {
 	UINT	imask;
 
-#if USE_GROUP_INT	// Group INterrupt
+#if USE_GROUP_INT	// Group Interrupt
 	if(intno >= INTNO_GROUP_TOP) {
 		knl_enable_gint( intno);
 		return;
@@ -182,6 +182,12 @@ EXPORT void EndOfInt(UINT intno)
  */
 EXPORT BOOL CheckInt( UINT intno )
 {
+#if USE_GROUP_INT	// Group INterrupt
+	if(intno >= INTNO_GROUP_TOP) {
+		return knl_check_gint( intno);
+	}
+#endif /* USE_GROUP_INT */
+
 	return (*(_UB*)(ICU_IR(intno)));
 }
 
@@ -192,6 +198,12 @@ EXPORT void SetIntMode(UINT intno, UINT mode)
 {
 	UINT	imask;
 	UB	irqmd;
+
+#if USE_GROUP_INT	// Group INterrupt
+	if(intno >= INTNO_GROUP_TOP) {
+		return;
+	}
+#endif /* USE_GROUP_INT */
 
 	switch (mode) {
 	case (IM_LEVEL | IM_LOW):
