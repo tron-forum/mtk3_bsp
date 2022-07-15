@@ -11,7 +11,6 @@
  *----------------------------------------------------------------------
  */
 
-
 /*
  *	adc_cnf_sysdep.h 
  *	A/D converter device driver configuration file

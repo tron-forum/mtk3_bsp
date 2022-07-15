@@ -122,7 +122,9 @@
 /*
  * Number of Interrupt vectors
  */
-#define N_INTVEC		256	/* Number of Interrupt vectors */
+
+#define	N_INTVEC0	256		/* INTVEC0 is the number of interrupts other than group interrupts */
+#define N_INTVEC	(N_INTVEC0)	/* RX231 has no group interrupt, INTVEC and INTVEC0 are always equal. */
 
 /*
  * Interrupt Priority Levels
