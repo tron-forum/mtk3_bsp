@@ -6,13 +6,13 @@
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/02.
+ *    Released by TRON Forum(http://www.tron.org) at 2022/11.
  *
  *----------------------------------------------------------------------
  */
 
 /*
- *	app_main.c (Nucleo-64 STM32L476)
+ *	app_main.c
  *	Application main program
  */
 
@@ -31,7 +31,6 @@ LOCAL T_CTSK	ctsk_1 = {
 LOCAL void task_1(INT stacd, void *exinf)
 {
 	while(1) {
-		out_w(GPIO_ODR(A), (in_w(GPIO_ODR(A)))^(1<<5));
 		tk_dly_tsk(500);
 	}
 }

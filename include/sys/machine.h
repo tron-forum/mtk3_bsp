@@ -63,6 +63,10 @@
 #define Csym(sym) _##sym
 #endif
 
+#ifdef _PICO_RP2040_
+#include "sysdepend/pico_rp2040/machine.h"
+#define Csym(sym) sym
+#endif
 
 /* ===== C compiler dependencies definitions ============================= */
 

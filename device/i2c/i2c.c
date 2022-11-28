@@ -17,7 +17,6 @@
 #include "i2c.h"
 #include "../include/dev_def.h"
 #if DEV_IIC_ENABLE
-
 /*
  *	i2c.c
  *	I2C device driver
