@@ -18,6 +18,7 @@
 
 #include <tk/tkernel.h>
 #include <tm/tmonitor.h>
+#include <bsp/libbsp.h>
 
 LOCAL void task_1(INT stacd, void *exinf);
 LOCAL ID	tskid_1;
@@ -30,7 +31,12 @@ LOCAL T_CTSK	ctsk_1 = {
 
 LOCAL void task_1(INT stacd, void *exinf)
 {
+	/* P25 : On board LED*/
 	while(1) {
+		gpio_set_val(25,1);
+		tk_dly_tsk(500);
+
+		gpio_set_val(25,0);
 		tk_dly_tsk(500);
 	}
 }
