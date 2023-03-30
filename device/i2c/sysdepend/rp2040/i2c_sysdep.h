@@ -120,8 +120,19 @@
 #define	I2C_DATA_CMD_CMD_READ		(1<<8)
 #define	I2C_DATA_CMD_DAT		(0x000000FF)
 
-#define	I2C_RAW_INTR_STAT_RX_DONE	(1<<7)
-#define	I2C_RAW_INTR_STAT_TX_EMPTY	(1<<4)
+#define	I2C_INT_RESTART_DET		(1<<12)	// Detect RESTART condition (slave)
+#define	I2C_INT_GEN_CALL		(1<<11)	// Receive general call address 
+#define	I2C_INT_START_DET		(1<<10)	// Detect STRAT & RESTART condition (master & slave)
+#define	I2C_INT_STOP_DET		(1<<9)	// Detect STOP condition (master & slave)
+#define	I2C_INT_ACTIVITY		(1<<8)	// Captures activity
+#define	I2C_INT_RX_DONE			(1<<7)	// Transfer completed(slave)
+#define	I2C_INT_TX_ABRT			(1<<6)	// Transmit abort  (master & slave)
+#define	I2C_INT_RD_REQ			(1<<5)	// Request to receive (slave)
+#define	I2C_INT_TX_EMPTY		(1<<4)	// Transmit buffer empty
+#define	I2C_INT_TX_OVER			(1<<3)	// Transmit buffer over
+#define	I2C_INT_RX_FULL			(1<<2)	// Receive buffer full
+#define	I2C_INT_RX_OVER			(1<<1)	// Receive buffer over
+#define	I2C_INT_RX_UNDER		(1<<0)	// Receive buffer under
 
 #define	I2C_STATUS_RFF			(1<<4)
 #define	I2C_STATUS_RFNE			(1<<3)

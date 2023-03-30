@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2022 by Ken Sakamura.
+ *    Copyright (C) 2022-2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/3.
  *
  *----------------------------------------------------------------------
  */
@@ -38,8 +38,8 @@
  * Physical timer
  */
 #if USE_PTMR
-#define TK_SUPPORT_PTIMER	FALSE		/* Support of physical timer */
-#define TK_MAX_PTIMER		0		/* Maximum number of physical timers. */
+#define TK_SUPPORT_PTIMER	TRUE		/* Support of physical timer */
+#define TK_MAX_PTIMER		8		/* Maximum number of physical timers. */
 #else
 #define TK_SUPPORT_PTIMER	FALSE		/* Support of physical timer */
 #define TK_MAX_PTIMER		0		/* Maximum number of physical timers. */
