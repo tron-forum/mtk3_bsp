@@ -1,12 +1,12 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.05
+ *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2006-2021 by Ken Sakamura.
+ *    Copyright (C) 2006-2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2021/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/05.
  *
  *----------------------------------------------------------------------
  */
@@ -44,13 +44,13 @@
 #define CNF_MAX_TSKID		32	/* Task */
 #define CNF_MAX_SEMID		16	/* Semaphore */
 #define CNF_MAX_FLGID		16	/* Event flag */
-#define CNF_MAX_MBXID		8	/* Mailbox*/
+#define CNF_MAX_MBXID		4	/* Mailbox*/
 #define CNF_MAX_MTXID		4	/* Mutex */
-#define CNF_MAX_MBFID		8	/* Message buffer */
+#define CNF_MAX_MBFID		4	/* Message buffer */
 #define CNF_MAX_MPLID		4	/* Memory pool */
-#define CNF_MAX_MPFID		8	/* Fixed size memory pool */
+#define CNF_MAX_MPFID		4	/* Fixed size memory pool */
 #define CNF_MAX_CYCID		4	/* Cyclic handler */
-#define CNF_MAX_ALMID		8	/* Alarm handler */
+#define CNF_MAX_ALMID		4	/* Alarm handler */
 
 /* Device configuration */
 #define CNF_MAX_REGDEV		(8)	/* Max registered device */
@@ -73,8 +73,8 @@
 /* Backwards compatible api support 
  *      micro T-Kernel2.0 API support (Rendezvous)
  */
-#define USE_LEGACY_API		(1)	/* 1: Valid  0: Invalid */
-#define CNF_MAX_PORID		(4)	/* Maximum number of Rendezvous */
+#define USE_LEGACY_API		(0)	/* 1: Valid  0: Invalid */
+#define CNF_MAX_PORID		(0)	/* Maximum number of Rendezvous */
 
 
 /*---------------------------------------------------------------------- */
@@ -122,8 +122,8 @@
 /* Debugger support function
  *   1: Valid  0: Invalid
  */
-#define USE_DBGSPT		(1)	/* Use mT-Kernel/DS */
-#define USE_OBJECT_NAME		(1)	/* Use DS object name */
+#define USE_DBGSPT		(0)	/* Use mT-Kernel/DS */
+#define USE_OBJECT_NAME		(0)	/* Use DS object name */
 
 #define OBJECT_NAME_LENGTH	(8)	/* DS Object name length */
 

@@ -98,7 +98,7 @@ EXPORT void startup_clock(ATR clkatr)
 	/* PLL2 Configuration */
 	if(clkatr & CLKATR_PLL2) {
 		*(_UW*)RCC_CR &= ~RCC_CR_PLL2ON;			// PLL2 disable
-		while( (*((_UW*)RCC_CR) & RCC_CR_PLL2RDY) != 0 );	// Wait PLL2 ready
+		while( (*((_UW*)RCC_CR) & RCC_CR_PLL2RDY) != 0 );	// Wait PLL2 disable
 
 		out_w(RCC_PLLCKSELR, (in_w(RCC_PLLCKSELR) & ~RCC_PLLCKSELR_DIVM2)|(RCC_PLLCKSELR_DIVM2_INIT<<12));
 		out_w(RCC_PLL2DIVR, RCC_PLL2DIVR_INIT);
@@ -112,13 +112,13 @@ EXPORT void startup_clock(ATR clkatr)
 		*(_UW*)RCC_PLLCFGR |= RCC_PLLCFGR_PLL2FRACEN;	// PLL2 fractional latch enable
 		
 		*(_UW*)RCC_CR |= RCC_CR_PLL2ON;				// PLL2 Enable
-		while( (*((_UW*)RCC_CR) & RCC_CR_PLL2RDY) != 0 );	// Wait PLL2 ready
+		while( (*((_UW*)RCC_CR) & RCC_CR_PLL2RDY) == 0 );	// Wait PLL2 ready
 	}
 
 	/* PLL3 Configuration */
 	if(clkatr & CLKATR_PLL3) {
 		*(_UW*)RCC_CR &= ~RCC_CR_PLL3ON;			// PLL3 disable
-		while( (*((_UW*)RCC_CR) & RCC_CR_PLL3RDY) != 0 );	// Wait PLL3 ready
+		while( (*((_UW*)RCC_CR) & RCC_CR_PLL3RDY) != 0 );	// Wait PLL3 disable
 
 		out_w(RCC_PLLCKSELR, (in_w(RCC_PLLCKSELR) & ~RCC_PLLCKSELR_DIVM3)|(RCC_PLLCKSELR_DIVM3_INIT<<20));
 		out_w(RCC_PLL3DIVR, RCC_PLL3DIVR_INIT);
@@ -132,7 +132,7 @@ EXPORT void startup_clock(ATR clkatr)
 		*(_UW*)RCC_PLLCFGR |= RCC_PLLCFGR_PLL3FRACEN;	// PLL3 fractional latch enable
 		
 		*(_UW*)RCC_CR |= RCC_CR_PLL3ON;				// PLL3 Enable
-		while( (*((_UW*)RCC_CR) & RCC_CR_PLL3RDY) != 0 );	// Wait PLL3 ready
+		while( (*((_UW*)RCC_CR) & RCC_CR_PLL3RDY) == 0 );	// Wait PLL3 ready
 	}
 
 	/* Disable all interrupts */

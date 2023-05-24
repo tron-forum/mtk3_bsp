@@ -69,7 +69,7 @@ LOCAL const T_SETUP_REG pinfnc_tbl[] = {
 	{GPIO_OTYPER(B),	0x00000000},	// GPIOB output type
 	{GPIO_OSPEEDR(B),	0x000000C0},	// GPIOB output speed
 	{GPIO_PUPDR(B),		0x00000100},	// GPIOB Pull-up/down
-	{GPIO_SFRH(B),		0x00000044},	// GPIOB alternate function high
+	{GPIO_AFRH(B),		0x00000044},	// GPIOB alternate function high
 
 	/* GPIOC Setting   PC13:Button */
 	{GPIO_MODER(C),		0xF3FFFFFF},	// GPIOC mode
@@ -146,7 +146,7 @@ EXPORT void knl_startup_hw(void)
 	}
 
 	/* Startup clock */
-	startup_clock(CLKATR_HSE | CLKATR_HSEBYP | CLKATR_PLL1 | CLKATR_PLL2);
+	startup_clock(CLKATR_HSE | CLKATR_HSEBYP | CLKATR_PLL1);
 
 	/* Setup Pin Function */
 	for(p = pinfnc_tbl; p->addr != 0; p++) {

@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    Device Driver for μT-Kernel 3.0
  *
- *    Copyright (C) 2021-2022 by Ken Sakamura.
+ *    Copyright (C) 2022-2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/05.
  *
  *----------------------------------------------------------------------
  */
@@ -40,7 +40,7 @@
 #define	DEVCONF_ADC_PIN_INIT_3	FALSE
 
 /* Interrupt t priority */
-#define	DEVCNF_ADC_INTPRI	10
+#define	DEVCNF_ADC_INTPRI	2
 
 /* A/D conversion timeout time */
 #define	DEVCNF_ADC_TMOSCAN	1000

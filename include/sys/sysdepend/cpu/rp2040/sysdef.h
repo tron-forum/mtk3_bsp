@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2021-2022 by Ken Sakamura.
+ *    Copyright (C) 2022-2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/05.
  *
  *----------------------------------------------------------------------
  */
@@ -71,7 +71,7 @@
 #define INTPRI_MAX_EXTINT_PRI	1	/* Highest Ext. interrupt level */
 #define INTPRI_SVC		0	/* SVCall */
 #define INTPRI_SYSTICK		0	/* SysTick */
-#define INTPRI_PENDSV		2	/* PendSV */
+#define INTPRI_PENDSV		3	/* PendSV */
 
 /*
  * Time-event handler interrupt level
@@ -237,5 +237,95 @@
 #define GPIO_OE_SET		(SIO_BASE+0x024)
 #define GPIO_OE_CLR		(SIO_BASE+0x028)
 #define GPIO_OE_XOR		(SIO_BASE+0x02C)
+
+/* Timer */
+#define TIMER_BASE		0x40054000
+
+#define TIMER_TIMEHW		(TIMER_BASE+0x00)
+#define TIMER_TIMELW		(TIMER_BASE+0x04)
+#define TIMER_TIMEHR		(TIMER_BASE+0x08)
+#define TIMER_TIMELR		(TIMER_BASE+0x0C)
+
+#define TIMER_ALARM0		(TIMER_BASE+0x10)
+#define TIMER_ALARM1		(TIMER_BASE+0x14)
+#define TIMER_ALARM2		(TIMER_BASE+0x18)
+#define TIMER_ALARM3		(TIMER_BASE+0x1C)
+
+#define TIMER_ARMED		(TIMER_BASE+0x20)
+#define TIMER_TIMERAWH		(TIMER_BASE+0x24)
+#define TIMER_TIMERAWL		(TIMER_BASE+0x28)
+#define TIMER_DBGPAUSE		(TIMER_BASE+0x2C)
+#define TIMER_PAUSE		(TIMER_BASE+0x30)
+
+#define TIMER_INTR		(TIMER_BASE+0x34)
+#define TIMER_INTE		(TIMER_BASE+0x38)
+#define TIMER_INTF		(TIMER_BASE+0x3C)
+#define TIMER_INTS		(TIMER_BASE+0x40)
+
+/* PWM(GPIO) */
+#define	PWM_BASE		0x40050000
+
+#define	PWM_CH0_BASE		(PWM_BASE+(0x14*0))
+#define	PWM_CH1_BASE		(PWM_BASE+(0x14*1))
+#define	PWM_CH2_BASE		(PWM_BASE+(0x14*2))
+#define	PWM_CH3_BASE		(PWM_BASE+(0x14*3))
+#define	PWM_CH4_BASE		(PWM_BASE+(0x14*4))
+#define	PWM_CH5_BASE		(PWM_BASE+(0x14*5))
+#define	PWM_CH6_BASE		(PWM_BASE+(0x14*6))
+#define	PWM_CH7_BASE		(PWM_BASE+(0x14*7))
+
+#define	PWM_CHx_CSR		(0x00)
+#define	PWM_CHx_DIV		(0x04)
+#define	PWM_CHx_CTR		(0x08)
+#define	PWM_CHx_CC 		(0x0C)
+#define	PWM_CHx_TOP		(0x10)
+
+#define	PWM_EN			(PWM_BASE + 0xA0)
+#define	PWM_INTR		(PWM_BASE + 0xA4)
+#define	PWM_INTE		(PWM_BASE + 0xA8)
+#define	PWM_INTF		(PWM_BASE + 0xAC)
+#define	PWM_INTS		(PWM_BASE + 0xB0)
+
+#define	PWM_CH_CSR_EN		(1<<0)
+
+#define INTNO_PWM		4	// PWM_IRQ_WRAP
+
+/* ------------------------------------------------------------------------ */
+/*
+ * Physical timer (for RP2040)
+ */
+#define	CPU_HAS_PTMR	(1)
+
+/* Clock division (to PWM_DIV) */
+#define PTMR_DIV_CH0	(1<<4)
+#define PTMR_DIV_CH1	(1<<4)
+#define PTMR_DIV_CH2	(1<<4)
+#define PTMR_DIV_CH3	(1<<4)
+#define PTMR_DIV_CH4	(1<<4)
+#define PTMR_DIV_CH5	(1<<4)
+#define PTMR_DIV_CH6	(1<<4)
+#define PTMR_DIV_CH7	(1<<4)
+
+/* Physical timer interrupt number */
+#define INTNO_PTIM	INTNO_PWM
+
+/* Physical timer interrupt priority */
+#define INTPRI_PTIM	2
+
+/* Phycail timer Maximum count */
+#define PTMR_MAX_CNT	(0x0000FFFF)
+
+/* ------------------------------------------------------------------------ */
+/*
+ * Coprocessor
+ */
+#define CPU_HAS_FPU			0
+#define CPU_HAS_DPS			0
+
+/*
+ *  Number of coprocessors to use. 
+ *    There is no coprocessor for this microcomputer.
+ */
+#define NUM_COPROCESSOR		0
 
 #endif /* __TK_SYSDEF_DEPEND_CPU_H__ */

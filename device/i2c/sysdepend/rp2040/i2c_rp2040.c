@@ -6,7 +6,7 @@
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/03.
  *
  *----------------------------------------------------------------------
  */
@@ -24,11 +24,6 @@
  *	System-dependent definition for RP2040
  */
 
-/*
- **** This program is beta version.
- **** It operates by polling without using interrupts.
- */
-
 /*----------------------------------------------------------------------
  * Device register base address
 */
@@ -38,7 +33,6 @@ const LOCAL UW ba[DEV_I2C_UNITNM] = { I2C0_BASE, I2C1_BASE };
  * Device data
  **** This data is not used in beta version
 */
-#if 0
 const LOCAL struct {
 	UINT	intno;		// Interrupt number
 	PRI	intpri;		// Interrupt priority
@@ -55,110 +49,150 @@ const LOCAL struct {
 		.timout		= DEVCNF_I2C1_TMO,
 	},
 };
-#endif
 
 /*----------------------------------------------------------------------
  * Device control data
 */
 typedef struct {
-	ID	wait_tskid;	/* Wait Task ID */
-//	UW	state;		/* Operating state */
-	UW	sadr;		/* Slave address */
-	ER	ioerr;		/* Communication error */
-	UW	abort_reason;
-	UW	sdat_num;	/* Number of send data */
-	UW	rdat_num;	/* Number of receive data */
-	UB	*sbuf;		/* Send buffer */
-	UB	*rbuf;		/* Receive buffer */
+	ID	wait_tskid;	// Wait Task ID
+	UW	state;		// Operating state
+	UW	sadr;		// Slave address
+	ER	ioerr;		// Communication error
+	UW	err_reason;	// Error reason
+	UW	sdat_num;	// Number of send data
+	UW	rdat_num;	// Number of receive data
+	UB	*sbuf;		// Send buffer
+	UB	*rbuf;		// Receive buffer
 } T_I2C_LLDCB;
 LOCAL T_I2C_LLDCB	ll_devcb[DEV_I2C_UNITNM];
 
+#define I2C_INT_ERROR	(I2C_INT_TX_ABRT|I2C_INT_TX_OVER|I2C_INT_RX_OVER|I2C_INT_RX_UNDER)
+
 /*-------------------------------------------------------
  * Interrupt handler
- ******* This handler is not used in beta version
  */
-#if 0
 LOCAL void i2c_inthdr( UINT intno )
 {
-	ClearInt(intno);
+	T_I2C_LLDCB	*p_cb;
+	UW		i2c_sts, cmd;
+	INT		unit;
+	BOOL		abort	= FALSE;
+	BOOL		wup	= FALSE;
+
+	for ( unit = 0; unit < DEV_I2C_UNITNM; unit++ ) {
+		if ( ll_devdat[unit].intno == intno ) {
+			p_cb = &ll_devcb[unit];
+			break;
+		}
+	}
+	if(unit >= DEV_I2C_UNITNM) {
+		ClearInt(intno);	// Clear interrupt
+		return;
+	}
+
+	i2c_sts = in_w(I2C_INTR_STAT(unit));
+	switch ( p_cb->state ) {
+	case I2C_STS_SEND:
+		if(i2c_sts & I2C_INT_TX_EMPTY) {
+			cmd = *(p_cb->sbuf)++ & I2C_DATA_CMD_DAT;
+			if(--(p_cb->sdat_num)) {
+				cmd |= I2C_DATA_CMD_CMD_WRITE;
+			} else {	// Last data
+				clr_w(I2C_INTR_MASK(unit), I2C_INT_TX_EMPTY);
+				if(p_cb->rdat_num) {
+					cmd |= I2C_DATA_CMD_CMD_WRITE | I2C_DATA_CMD_RESTART;
+					p_cb->state = I2C_STS_START;
+				} else {
+					cmd |= I2C_DATA_CMD_CMD_WRITE | I2C_DATA_CMD_STOP;
+					p_cb->state = I2C_STS_STOP;
+				}
+				wup = TRUE;
+			}
+			out_w(I2C_DATA_CMD(unit), cmd);			
+		} else {	// Error
+			abort = TRUE;	// Error
+		}
+		break;
+	case I2C_STS_RECV:
+		if(i2c_sts & I2C_INT_RX_FULL) {
+			*(p_cb->rbuf)++ = in_w(I2C_DATA_CMD(unit)) & I2C_DATA_CMD_DAT;
+			if(--(p_cb->rdat_num)) {
+				cmd = I2C_DATA_CMD_CMD_READ;
+				out_w(I2C_DATA_CMD(unit), cmd);
+			} else {	// Last data
+				clr_w(I2C_INTR_MASK(unit), I2C_INT_RX_FULL);
+				p_cb->state = I2C_STS_STOP;
+				wup = TRUE;
+			}
+		} else {
+			abort = TRUE;	// Error
+		}
+		break;
+	default:
+		abort = TRUE;	// Error
+	}
+
+	if(abort) {
+		out_w(I2C_INTR_MASK(unit), 0);	// Mask all innterrupts
+		p_cb->ioerr = E_IO;
+		p_cb->err_reason = i2c_sts;
+		p_cb->state = I2C_STS_STOP;
+		wup = TRUE;
+	}
+
+	out_w(I2C_CLR_INTR(unit), 0);	// Clear all Interrupt Registers
+	ClearInt(intno);		// Clear interrupt
+
+	if(wup) {
+		if(p_cb->wait_tskid) {
+			tk_wup_tsk(p_cb->wait_tskid);
+			p_cb->wait_tskid = 0;
+		}
+	}
 }
-#endif
 /*----------------------------------------------------------------------
  * Execution of communication
  */
 LOCAL ER i2c_trans(INT unit, T_I2C_LLDCB *p_cb)
 {
-	UW	cmd, sts;
-	UINT	state	= I2C_STS_START;
-	UW	abort;
-	ER	err	= E_OK;
+	UW	cmd;
+	UINT	imask;
+	ER	err;
 
-	p_cb->ioerr		= E_OK;
-	p_cb->wait_tskid	= 0;
+	p_cb->ioerr = err = E_OK;
 
-	out_w(I2C_TAR(unit), p_cb->sadr & I2C_TAR_7BIT_ADR);		// Set slave address
-	out_w(I2C_ENABLE(unit), I2C_ENABLE_ENABLE);			// Enable I2C
+	out_w(I2C_TAR(unit), p_cb->sadr & I2C_TAR_7BIT_ADR);	// Set slave address
+	out_w(I2C_INTR_MASK(unit), 0);				// Mask all innterrupts
+	out_w(I2C_ENABLE(unit), I2C_ENABLE_ENABLE);		// Enable I2C
+	out_w(I2C_CLR_INTR(unit), 0);				// Clear all Interrupt Registers
+	in_w(I2C_CLR_TX_ABRT(unit));				// Clear Transmit abort
 
-	if(p_cb->sdat_num) {
-		state = I2C_STS_SEND;
-	} else if(p_cb->rdat_num) {
-		state = I2C_STS_RECV;
-	} else {
-		err = E_PAR;
-		state = I2C_STS_STOP;
-	}
-
-	out_w(I2C_CLR_INTR(unit), 0);	// Clear all Interrupt Registers
-	in_w(I2C_CLR_TX_ABRT(unit));	// Clear Transmit abort
-
-	while(state != I2C_STS_STOP) {
-		switch(state){
-		case I2C_STS_SEND:
-			cmd = *(p_cb->sbuf)++ & I2C_DATA_CMD_DAT;
-			if(--(p_cb->sdat_num)) {
-				cmd |= I2C_DATA_CMD_CMD_WRITE;
-			} else {	// Last data
-				if(p_cb->rdat_num) {
-					cmd |= I2C_DATA_CMD_CMD_WRITE | I2C_DATA_CMD_RESTART;
-					state = I2C_STS_RECV;
-				} else {
-					cmd |= I2C_DATA_CMD_CMD_WRITE | I2C_DATA_CMD_STOP;
-					state = I2C_STS_STOP;
-				}
-			}
-			out_w(I2C_DATA_CMD(unit), cmd);
-
-			while(1) {
-				sts = in_w(I2C_RAW_INTR_STAT(unit));
-				if(sts & I2C_RAW_INTR_STAT_TX_EMPTY) break;
-			}
-
-			break;
-		case I2C_STS_RECV:
-			if(--(p_cb->rdat_num)) {
+	while (p_cb->state != I2C_STS_STOP) {
+		DI(imask);
+		p_cb->wait_tskid = tk_get_tid();
+		if(p_cb->sdat_num > 0 ) {	/* Send */
+			set_w(I2C_INTR_MASK(unit), I2C_INT_TX_EMPTY|I2C_INT_ERROR);
+			p_cb->state = I2C_STS_SEND;
+		} else {			/* Receive */
+			if(p_cb->rdat_num > 1) {
 				cmd = I2C_DATA_CMD_CMD_READ;
 			} else {	// Last data
 				cmd = I2C_DATA_CMD_CMD_READ | I2C_DATA_CMD_STOP;
-				state = I2C_STS_STOP;
 			}
-			out_w(I2C_DATA_CMD(unit), cmd);
+			set_w(I2C_INTR_MASK(unit), I2C_INT_RX_FULL|I2C_INT_ERROR);
+			out_w(I2C_DATA_CMD(unit), cmd);				
+			p_cb->state = I2C_STS_RECV;
+		}
+		EI(imask);
 
-			while(1) {
-				abort = in_w(I2C_TX_ABRT_SOURCE(unit));
-				if(abort != 0) {
-					p_cb->abort_reason = abort;
-					p_cb->ioerr = err = E_IO;
-					state = I2C_STS_STOP;
-					break;
-				}
-				sts = in_w(I2C_RXFLR(unit));
-				if(sts != 0) break;
-			}
-			*(p_cb->rbuf)++ = in_w(I2C_DATA_CMD(unit)) & I2C_DATA_CMD_DAT;
-			break;
-		default:
+		if(p_cb->ioerr != E_OK) {
+			err = p_cb->ioerr;
 			break;
 		}
+
+		err = tk_slp_tsk(ll_devdat[unit].timout);
+		if ( err < E_OK ) break;
+		else err = p_cb->ioerr;
 	}
 	out_w(I2C_ENABLE(unit), 0);				// Disable I2C
 
@@ -170,7 +204,7 @@ LOCAL ER i2c_trans(INT unit, T_I2C_LLDCB *p_cb)
  */
 Inline void set_com_start(UW unit, UW sadr, UW sdat_num, UW rdat_num, UB *sbuf, UB *rbuf)
 {
-//	ll_devcb[unit].state	= I2C_STS_START;
+	ll_devcb[unit].state	= I2C_STS_START;
 	ll_devcb[unit].sadr	= sadr;		/* Slave address */
 	ll_devcb[unit].sdat_num	= sdat_num;	/* Number of send data */
 	ll_devcb[unit].rdat_num	= rdat_num;	/* Number of receive data */
@@ -186,6 +220,8 @@ EXPORT W dev_i2c_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
 {
 	T_I2C_EXEC	*p_ex;
 	ER		err	= E_OK;
+
+	p_ex = (T_I2C_EXEC*)pp;
 
 	switch(cmd) {
 	case LLD_I2C_OPEN:
@@ -207,28 +243,27 @@ EXPORT W dev_i2c_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
 		out_w(I2C_SDA_HOLD(unit), 38);
 
 		/* I2C interrupt enable */
-//		EnableInt(ll_devdat[unit].intno, ll_devdat[unit].intpri);
+		EnableInt(ll_devdat[unit].intno, ll_devdat[unit].intpri);
 		break;
 
 	case LLD_I2C_CLOSE:
 		/* I2C interrupt disable */
-//		DisableInt(ll_devdat[unit].intno);
+		DisableInt(ll_devdat[unit].intno);
 		break;
 
 	case LLD_I2C_READ:
 		set_com_start( unit, p1, 0, p2, NULL, (UB*)pp);
 		err = i2c_trans(unit, &ll_devcb[unit]);
-		if(err >= E_OK) err = p1 - ll_devcb[unit].sdat_num;
+		if(err >= E_OK) err = p_ex->rcv_size - ll_devcb[unit].rdat_num;
 		break;
 
 	case LLD_I2C_WRITE:
 		set_com_start( unit, p1, p2, 0, (UB*)pp, NULL);
 		err = i2c_trans(unit, &ll_devcb[unit]);
-		if(err >= E_OK) err = p1 - ll_devcb[unit].sdat_num;
+		if(err >= E_OK) err = p_ex->snd_size - ll_devcb[unit].sdat_num;
 		break;
 
 	case LLD_I2C_EXEC:
-		p_ex = (T_I2C_EXEC*)pp;
 		set_com_start( unit, p_ex->sadr, p_ex->snd_size, p_ex->rcv_size, p_ex->snd_data, p_ex->rcv_data);
 		err = i2c_trans(unit, &ll_devcb[unit]);
 		if(err >= E_OK) err = p_ex->snd_size + p_ex->rcv_size;
@@ -243,7 +278,7 @@ EXPORT W dev_i2c_llctl( UW unit, INT cmd, UW p1, UW p2, UW *pp)
  */
 EXPORT ER dev_i2c_llinit( T_I2C_DCB *p_dcb)
 {
-//	T_DINT	dint;
+	T_DINT	dint;
 	UW	unit;
 	ER	err	= E_OK;
 
@@ -288,10 +323,10 @@ EXPORT ER dev_i2c_llinit( T_I2C_DCB *p_dcb)
 	out_w(I2C_ENABLE(unit), 0);			// Disable I2C
 
 	/* Interrupt handler definition */
-//	dint.intatr	= TA_HLNG;
-//	dint.inthdr	= i2c_inthdr;
+	dint.intatr	= TA_HLNG;
+	dint.inthdr	= i2c_inthdr;
 	
-//	err = tk_def_int(ll_devdat[unit].intno, &dint);
+	err = tk_def_int(ll_devdat[unit].intno, &dint);
 
 	return err;
 }

@@ -45,10 +45,14 @@ LOCAL const UW module_tbl[] = {
 	RESETS_RESET_PADS_BANK0,	/* PADS_BANK0 */
 	RESETS_RESET_UART0,		/* UART0 */
 
+#if USE_PTMR
+	RESETS_RESET_PWM,		/* PWM */
+#endif	/* USE_PTMR */
+
 #if USE_SDEV_DRV	// Do not use sample device driver
 	RESETS_RESET_ADC,		/* A/DC */
 	RESETS_RESET_I2C0,		/* I2C0 */
-#endif /* !USE_SDEV_DRV */
+#endif /* USE_SDEV_DRV */
 	0
 };
 

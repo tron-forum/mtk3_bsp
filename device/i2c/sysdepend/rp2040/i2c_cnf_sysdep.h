@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    Device Driver for μT-Kernel 3.0
  *
- *    Copyright (C) 2020-2022 by Ken Sakamura.
+ *    Copyright (C) 2022-2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/05.
  *
  *----------------------------------------------------------------------
  */
@@ -26,8 +26,8 @@
 /* Register initial value */
 
 // Interrupt priority
-#define	DEVCNF_I2C0_INTPRI	5
-#define	DEVCNF_I2C1_INTPRI	5
+#define	DEVCNF_I2C0_INTPRI	2
+#define	DEVCNF_I2C1_INTPRI	2
 
 /* Communication timeout time */
 #define	DEVCNF_I2C0_TMO		1000
