@@ -1,12 +1,12 @@
 /*
  *----------------------------------------------------------------------
- *    micro T-Kernel 3.00.06A
+ *    micro T-Kernel 3.0 BSP
  *
  *    Copyright (C) 2006-2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2023/03.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/05.
  *
  *----------------------------------------------------------------------
  */
@@ -44,13 +44,13 @@
 #define CNF_MAX_TSKID		32	/* Task */
 #define CNF_MAX_SEMID		16	/* Semaphore */
 #define CNF_MAX_FLGID		16	/* Event flag */
-#define CNF_MAX_MBXID		8	/* Mailbox*/
+#define CNF_MAX_MBXID		4	/* Mailbox*/
 #define CNF_MAX_MTXID		4	/* Mutex */
-#define CNF_MAX_MBFID		8	/* Message buffer */
+#define CNF_MAX_MBFID		4	/* Message buffer */
 #define CNF_MAX_MPLID		4	/* Memory pool */
-#define CNF_MAX_MPFID		8	/* Fixed size memory pool */
+#define CNF_MAX_MPFID		4	/* Fixed size memory pool */
 #define CNF_MAX_CYCID		4	/* Cyclic handler */
-#define CNF_MAX_ALMID		8	/* Alarm handler */
+#define CNF_MAX_ALMID		4	/* Alarm handler */
 
 /* Device configuration */
 #define CNF_MAX_REGDEV		(8)	/* Max registered device */
@@ -122,7 +122,7 @@
 /* Debugger support function
  *   1: Valid  0: Invalid
  */
-#define USE_DBGSPT		(1)	/* Use mT-Kernel/DS */
+#define USE_DBGSPT		(0)	/* Use mT-Kernel/DS */
 #define USE_OBJECT_NAME		(0)	/* Use DS object name */
 
 #define OBJECT_NAME_LENGTH	(8)	/* DS Object name length */
@@ -153,7 +153,7 @@
 /* Use Sample device driver.
  *  1: Valid  0: Invalid
  */
-#define USE_SDEV_DRV		(0)	/* Use Sample device driver */
+#define USE_SDEV_DRV		(1)	/* Use Sample device driver */
 
 /*---------------------------------------------------------------------- */
 /*

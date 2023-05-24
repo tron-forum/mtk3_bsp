@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2021-2022 by Ken Sakamura.
+ *    Copyright (C) 2022-2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/05.
  *
  *----------------------------------------------------------------------
  */
@@ -99,7 +99,7 @@ EXPORT void Reset_Handler(void)
 
 	/* Configure exception priorities */
 	*(_UW*)SCB_SHPR2 = SCB_SHPR2_VAL;	// SVC pri = 0
-	*(_UW*)SCB_SHPR3 = SCB_SHPR3_VAL;	// SysTick = 0 , PendSV = 2
+	*(_UW*)SCB_SHPR3 = SCB_SHPR3_VAL;	// SysTick = 0 , PendSV = 3
 
 	/* Startup Kernel */
 	main();		/**** No return ****/

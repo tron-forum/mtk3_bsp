@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2021-2023 by Ken Sakamura.
+ *    Copyright (C) 2022-2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2023/3.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/05.
  *
  *----------------------------------------------------------------------
  */
@@ -71,7 +71,7 @@
 #define INTPRI_MAX_EXTINT_PRI	1	/* Highest Ext. interrupt level */
 #define INTPRI_SVC		0	/* SVCall */
 #define INTPRI_SYSTICK		0	/* SysTick */
-#define INTPRI_PENDSV		2	/* PendSV */
+#define INTPRI_PENDSV		3	/* PendSV */
 
 /*
  * Time-event handler interrupt level
@@ -310,7 +310,7 @@
 #define INTNO_PTIM	INTNO_PWM
 
 /* Physical timer interrupt priority */
-#define INTPRI_PTIM	5
+#define INTPRI_PTIM	2
 
 /* Phycail timer Maximum count */
 #define PTMR_MAX_CNT	(0x0000FFFF)
