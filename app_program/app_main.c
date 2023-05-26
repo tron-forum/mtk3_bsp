@@ -2,18 +2,18 @@
  *----------------------------------------------------------------------
  *    micro T-Kernel 3.0 BSP
  *
- *    Copyright (C) 2022 by Ken Sakamura.
+ *    Copyright (C) 2022-23 by Ken Sakamura.
  *    This software is distributed under the T-License 2.2.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2022/11.
+ *    Released by TRON Forum(http://www.tron.org) at 2023/05.
  *
  *----------------------------------------------------------------------
  */
 
 /*
  *	app_main.c
- *	Application main program
+ *	Application main program for STM32Nucleo-64
  */
 
 #include <tk/tkernel.h>
@@ -31,6 +31,7 @@ LOCAL T_CTSK	ctsk_1 = {
 LOCAL void task_1(INT stacd, void *exinf)
 {
 	while(1) {
+		out_w(GPIO_ODR(A), (in_w(GPIO_ODR(A)))^(1<<5));
 		tk_dly_tsk(500);
 	}
 }
